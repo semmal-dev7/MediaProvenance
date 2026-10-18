@@ -1,0 +1,68 @@
+# ProvenanceLab Requirements
+# Generated: 2026-10-19
+# Python: 3.11.x
+
+# ── Core scientific stack ─────────────────────────────────────────────────────
+numpy==1.26.4
+scipy==1.16.3
+scikit-learn==1.7.2
+pandas==2.3.3
+matplotlib==3.10.7
+seaborn==0.13.2
+statsmodels>=0.14.0
+
+# ── Image processing ──────────────────────────────────────────────────────────
+Pillow==12.0.0
+opencv-python-headless>=4.9.0
+
+# ── Deep learning (CPU-only for now; no PyTorch, use TF/Keras) ───────────────
+# TrustMark requires torch — install CPU torch separately if needed
+# tensorflow==2.16.1  (already installed system-wide)
+einops==0.8.1
+
+# ── Watermark carriers ────────────────────────────────────────────────────────
+# TrustMark: pip install trustmark
+# (installs its own torch dependency)
+trustmark>=0.2.0
+
+# ── API backend ───────────────────────────────────────────────────────────────
+fastapi==0.146.0
+uvicorn[standard]==0.54.0
+pydantic==2.13.5
+pydantic-settings==2.16.0
+python-multipart==0.0.32
+python-dotenv==1.2.4
+
+# ── Database ──────────────────────────────────────────────────────────────────
+SQLAlchemy==2.1.5
+aiosqlite>=0.20.0
+
+# ── Cryptography ─────────────────────────────────────────────────────────────
+pycryptodome==3.23.0
+cryptography==46.0.3
+
+# ── Blockchain / Web3 ────────────────────────────────────────────────────────
+web3==8.0.0
+eth-account==0.14.0
+
+# ── Hashing / bit manipulation ────────────────────────────────────────────────
+bitarray==3.11.0
+xxhash==4.0.1
+
+# ── Utilities ─────────────────────────────────────────────────────────────────
+tqdm==4.67.1
+click==8.1.8
+rich==14.2.0
+PyYAML==6.0.3
+toml==0.10.2
+joblib==1.5.2
+psutil==7.1.2
+
+# ── Testing ───────────────────────────────────────────────────────────────────
+pytest>=8.0.0
+pytest-asyncio>=0.23.0
+pytest-cov>=5.0.0
+httpx==0.28.1
+
+# ── Report generation ─────────────────────────────────────────────────────────
+jinja2==3.1.5

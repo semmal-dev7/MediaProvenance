@@ -1,0 +1,98 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.env
+.venv
+venv/
+ENV/
+env/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node
+node_modules/
+.npm
+*.log
+
+# Build outputs
+frontend/dist/
+frontend/.vite/
+*.tsbuildinfo
+
+# ZK artifacts (generated, not secrets)
+circuits/build/
+*.ptau
+*.wasm
+*.zkey
+*.r1cs
+*.sym
+
+# Blockchain
+artifacts/
+cache/
+deployments/local/
+.openzeppelin/
+
+# Experiment outputs (tracked via manifests, not raw data)
+experiments/data/images/
+experiments/data/raw/
+*.pkl
+*.h5
+*.pt
+*.pth
+
+# Secrets (NEVER commit)
+.env.local
+.env.production
+*_secret*
+*_private*
+*.pem
+*.key
+keystore/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+logs/
+*.log
+
+# Checkpoints saved locally
+checkpoints/
+
+# Large model files
+*.safetensors
+*.bin
+models/weights/

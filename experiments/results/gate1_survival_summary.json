@@ -1,0 +1,18 @@
+{
+  "p_H1_mle": 0.09118421052631578,
+  "test_goodness_of_fit": {
+    "chi2": 334.8762503540309,
+    "p_value": 0.0,
+    "dof": 7,
+    "n_samples": 76,
+    "p_H1_model": 0.09118421052631578,
+    "interpretation": "Chi-squared = 334.88, df = 7, p = 0.0000. REJECT the Binomial model at \u03b1=0.05. Bit errors may be correlated. Consider BetaBinomialModel."
+  },
+  "test_ece": 0.07961322667778015,
+  "test_brier": 0.040603995274247046,
+  "experiment_id": "gate1_survival",
+  "total_trials": 160,
+  "decodable_rate": 1.0,
+  "carrier": "TrustMark-Q",
+  "csv_path": "experiments/results\\gate1_survival_raw.csv"
+}

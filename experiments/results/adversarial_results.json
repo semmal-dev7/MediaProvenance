@@ -1,0 +1,67 @@
+[
+  {
+    "attack_name": "Attack A: Unrelated-Image False Attribution",
+    "target_component": "Statistical Likelihood-Ratio Engine",
+    "threat_model": "Adversary submits unrelated media claiming derivative provenance under severe degradation.",
+    "baseline_vulnerability": "Naive BER thresholds with loose boundaries attribute random noise as degraded signal.",
+    "defense_mechanism": "Bayesian Likelihood Ratio with strict Binomial/BetaBinomial H0 testing (tau <= 35 bits).",
+    "trials_attempted": 15,
+    "trials_succeeded": 0,
+    "attack_success_rate": 0.0,
+    "detection_rate": 1.0,
+    "mean_log10_lr": -22.491153948585897,
+    "summary_findings": "Zero false attributions observed across 15 trials (ASR: 0.0%). Likelihood ratio decisively rejects unrelated images."
+  },
+  {
+    "attack_name": "Attack B: Decoder Substitution",
+    "target_component": "Audit Contract & Verifier Interface",
+    "threat_model": "Malicious prover registers one decoder but verifies against a permissive backdoor decoder.",
+    "baseline_vulnerability": "Off-chain unanchored verification allows arbitrary local decoder modifications.",
+    "defense_mechanism": "Solidity AuditSession binds decoderVersion and model digest into immutable contract state.",
+    "trials_attempted": 3,
+    "trials_succeeded": 0,
+    "attack_success_rate": 0.0,
+    "detection_rate": 1.0,
+    "mean_log10_lr": null,
+    "summary_findings": "100% of decoder substitutions detected via immutable contract state binding."
+  },
+  {
+    "attack_name": "Attack C: Proof Replay Attack",
+    "target_component": "Zero-Knowledge Verification Circuit",
+    "threat_model": "Adversary sniffs a valid provenance proof from the mempool and re-submits it for a victim image.",
+    "baseline_vulnerability": "Stateless ZK proofs without context binding can be replayed across arbitrary media.",
+    "defense_mechanism": "Circuit enforces public input constraints on suspect_image_sha256 and session_nonce.",
+    "trials_attempted": 10,
+    "trials_succeeded": 0,
+    "attack_success_rate": 0.0,
+    "detection_rate": 1.0,
+    "mean_log10_lr": null,
+    "summary_findings": "Proof replay completely defeated: public input cryptographic binding prevents cross-image reuse."
+  },
+  {
+    "attack_name": "Attack D: Watermark Transplantation",
+    "target_component": "Spatial Watermark Embedding Layer",
+    "threat_model": "Adversary isolates the additive watermark noise residual from an authorized image and splices it onto an unauthorized target.",
+    "baseline_vulnerability": "Linear additive watermarks without image-dependent non-linear features are vulnerable to transplantation.",
+    "defense_mechanism": "Deep neural feature-conditioning; suspect image hash binding in ZK statement.",
+    "trials_attempted": 1,
+    "trials_succeeded": 0,
+    "attack_success_rate": 0.0,
+    "detection_rate": 1.0,
+    "mean_log10_lr": null,
+    "summary_findings": "Transplantation failed (deep features rejected transfer). Even if spatial residual transfers, ZK proof binding to suspect_image_sha256 prevents creating a valid cryptographic provenance certificate."
+  },
+  {
+    "attack_name": "Attack E: Biased Audit Selection",
+    "target_component": "On-Chain Random Sampling Mechanism",
+    "threat_model": "Malicious prover pre-selects favorable negative images where accidental watermark collisions are minimized.",
+    "baseline_vulnerability": "Prover-selected audit samples allow cherry-picking benign negative images.",
+    "defense_mechanism": "Commit-reveal future blockhash seed: datasetRoot committed before targetBlock is mined.",
+    "trials_attempted": 20,
+    "trials_succeeded": 0,
+    "attack_success_rate": 0.0,
+    "detection_rate": 1.0,
+    "mean_log10_lr": null,
+    "summary_findings": "Prover cannot bias future blockhash without controlling >51% miner hashpower/validator stake. Independent deterministic sampling reproduced."
+  }
+]

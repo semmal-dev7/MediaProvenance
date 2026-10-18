@@ -1,0 +1,104 @@
+{
+  "version": "1.0.0",
+  "total_images": 10,
+  "calibration_count": 6,
+  "test_count": 4,
+  "categories": [
+    "photographic_sim",
+    "geometric_textures",
+    "high_freq_noise",
+    "smooth_gradient"
+  ],
+  "images": [
+    {
+      "image_id": "img_calibration_000_phot",
+      "sha256": "088229c4603f14e06eb0c09617861737a494f2ab544dc2ed8285824a78e6bde1",
+      "relative_path": "images/img_calibration_000_phot.png",
+      "width": 512,
+      "height": 512,
+      "category": "photographic_sim",
+      "split": "calibration"
+    },
+    {
+      "image_id": "img_calibration_001_geom",
+      "sha256": "3707da6385d39905778d67f68e786a98167b4341784d001fb135d07dfa33ecce",
+      "relative_path": "images/img_calibration_001_geom.png",
+      "width": 512,
+      "height": 512,
+      "category": "geometric_textures",
+      "split": "calibration"
+    },
+    {
+      "image_id": "img_calibration_002_high",
+      "sha256": "f14ea9ddaeb204d1ec542475978aa83e168d993d12f191112ec32d0cb4e4d346",
+      "relative_path": "images/img_calibration_002_high.png",
+      "width": 512,
+      "height": 512,
+      "category": "high_freq_noise",
+      "split": "calibration"
+    },
+    {
+      "image_id": "img_calibration_003_smoo",
+      "sha256": "d2e7e546bd95d416bd7f70ade3fd919ff23e93e6c7ed654dcd7d233e1d9153a5",
+      "relative_path": "images/img_calibration_003_smoo.png",
+      "width": 512,
+      "height": 512,
+      "category": "smooth_gradient",
+      "split": "calibration"
+    },
+    {
+      "image_id": "img_calibration_004_phot",
+      "sha256": "868b8207608c136a3374cf0d7eaab1ff3fd9a701810b40c821b4eba3fee003f1",
+      "relative_path": "images/img_calibration_004_phot.png",
+      "width": 512,
+      "height": 512,
+      "category": "photographic_sim",
+      "split": "calibration"
+    },
+    {
+      "image_id": "img_calibration_005_geom",
+      "sha256": "cbad24b40cb09da19634c457ebaa5cb99228759f632e0a8fcd169b00d1b46925",
+      "relative_path": "images/img_calibration_005_geom.png",
+      "width": 512,
+      "height": 512,
+      "category": "geometric_textures",
+      "split": "calibration"
+    },
+    {
+      "image_id": "img_test_006_high",
+      "sha256": "ce10882178f9823b5ecdc80a4561ab739816af10e137a9136a9d296108f486e9",
+      "relative_path": "images/img_test_006_high.png",
+      "width": 512,
+      "height": 512,
+      "category": "high_freq_noise",
+      "split": "test"
+    },
+    {
+      "image_id": "img_test_007_smoo",
+      "sha256": "bb72be1516a6ce0cdd0d48242547ce017377ae74113559043c0ff5de2f44315c",
+      "relative_path": "images/img_test_007_smoo.png",
+      "width": 512,
+      "height": 512,
+      "category": "smooth_gradient",
+      "split": "test"
+    },
+    {
+      "image_id": "img_test_008_phot",
+      "sha256": "2b328f86ccfaea65e35d220dc7b195fdc452a8c44c36525043132d42ef07d6df",
+      "relative_path": "images/img_test_008_phot.png",
+      "width": 512,
+      "height": 512,
+      "category": "photographic_sim",
+      "split": "test"
+    },
+    {
+      "image_id": "img_test_009_geom",
+      "sha256": "04bdf3df02c862fc9106a16c55587b9fa6375b10a6addb8c1584538849b1d953",
+      "relative_path": "images/img_test_009_geom.png",
+      "width": 512,
+      "height": 512,
+      "category": "geometric_textures",
+      "split": "test"
+    }
+  ]
+}
