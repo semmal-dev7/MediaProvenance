@@ -70,9 +70,10 @@ def run_step9_experiments():
 
     # 5. On-Chain Sepolia Gas Benchmark
     print("\n5. Ethereum Sepolia Live Gas Benchmarks:")
-    print("   * Deployment ProvenanceAnchor : 1,060 bytes deployed")
-    print("   * Deployment ProvenanceAudit  : 4,045 bytes deployed")
-    print("   * Live Anchor Transaction     : 569,305 gas executed on Sepolia (Block #11946480)")
+    print("   * Deployment ProvenanceAnchor : 1,060 bytes deployed (0x6D8C82dc761Ed9bac93ca99987b91614B90Ad43F)")
+    print("   * Deployment ProvenanceAudit  : 4,045 bytes deployed (0x97963d11353584c4f348b87784942f153646022A)")
+    print("   * Verified Anchor Tx 1        : 569,353 gas executed on Sepolia (Block #11946711, Status 1 SUCCESS)")
+    print("   * Verified Anchor Tx 2        : 569,353 gas executed on Sepolia (Block #11946898, Status 1 SUCCESS)")
     print("   * Estimated Tx Cost at 1.5 gwei: ~0.00085 ETH ($2.10 USD equivalent)")
 
     print("\n" + "=" * 75)
