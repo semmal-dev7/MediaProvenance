@@ -132,6 +132,7 @@ export async function anchorWithMetaMask(
   gasUsed: string;
   submitter: string;
   etherscanUrl: string;
+  alreadyAnchored?: boolean;
 }> {
   const { signer, address } = await connectMetaMask();
 
@@ -144,8 +145,50 @@ export async function anchorWithMetaMask(
     signer
   );
 
+  // Check if asset is already anchored on Sepolia
+  try {
+    const existing = await contract.records(formattedAssetId);
+    if (existing && existing.exists) {
+      return {
+        txHash: 'Already Anchored On-Chain',
+        blockNumber: 0,
+        gasUsed: '0',
+        submitter: existing.submitter,
+        etherscanUrl: `https://sepolia.etherscan.io/address/${PROVENANCE_ANCHOR_ADDRESS}`,
+        alreadyAnchored: true,
+      };
+    }
+  } catch (checkErr) {
+    // If check fails due to RPC, continue to contract call
+  }
+
   // Send transaction through MetaMask
-  const tx = await contract.anchor(formattedAssetId, formattedCommitment);
+  let tx;
+  try {
+    tx = await contract.anchor(formattedAssetId, formattedCommitment);
+  } catch (txErr: any) {
+    if (
+      txErr?.message?.includes("Already anchored") ||
+      txErr?.data?.includes("Already anchored") ||
+      txErr?.reason === "Already anchored"
+    ) {
+      // Fetch existing record to display gracefully
+      try {
+        const existing = await contract.records(formattedAssetId);
+        return {
+          txHash: 'Already Anchored On-Chain',
+          blockNumber: 0,
+          gasUsed: '0',
+          submitter: existing?.submitter || address,
+          etherscanUrl: `https://sepolia.etherscan.io/address/${PROVENANCE_ANCHOR_ADDRESS}`,
+          alreadyAnchored: true,
+        };
+      } catch {
+        throw new Error('This image has already been anchored on Ethereum Sepolia. Each unique image digest can only be anchored once into the tamper-proof registry.');
+      }
+    }
+    throw txErr;
+  }
   
   // Wait for 1 confirmation
   const receipt = await tx.wait(1);

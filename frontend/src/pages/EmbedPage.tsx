@@ -491,36 +491,56 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
                 )}
 
                 {publisherTxResult ? (
-                  <div className="p-3 bg-slate-900 border border-emerald-500/30 rounded-lg text-xs space-y-2">
-                    <div className="flex items-center justify-between text-emerald-400 font-bold">
+                  <div className={`p-3 bg-slate-900 rounded-lg text-xs space-y-2 border ${
+                    publisherTxResult.alreadyAnchored 
+                      ? 'border-cyan-500/30' 
+                      : 'border-emerald-500/30'
+                  }`}>
+                    <div className={`flex items-center justify-between font-bold ${
+                      publisherTxResult.alreadyAnchored ? 'text-cyan-400' : 'text-emerald-400'
+                    }`}>
                       <span className="flex items-center gap-1.5">
                         <CheckCircle className="w-4 h-4" />
-                        Confirmed On-Chain on Sepolia!
+                        {publisherTxResult.alreadyAnchored 
+                          ? 'Asset Already Anchored On Sepolia (Immutable)' 
+                          : 'Confirmed On-Chain on Sepolia!'}
                       </span>
-                      <span className="text-[11px] font-mono text-slate-400">
-                        Block #{publisherTxResult.blockNumber}
-                      </span>
+                      {publisherTxResult.blockNumber > 0 && (
+                        <span className="text-[11px] font-mono text-slate-400">
+                          Block #{publisherTxResult.blockNumber}
+                        </span>
+                      )}
                     </div>
                     <div className="text-[11px] text-slate-400 space-y-1">
+                      {publisherTxResult.alreadyAnchored ? (
+                        <div className="p-2 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 text-[11px]">
+                          This exact watermarked asset digest was previously anchored by an authorized publisher. In accordance with smart contract immutability rules (<code>!records[assetId].exists</code>), duplicate submissions are prevented to protect provenance integrity.
+                        </div>
+                      ) : (
+                        <div>
+                          <span className="text-slate-500 font-semibold">Tx Hash: </span>
+                          <a
+                            href={publisherTxResult.etherscanUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="text-blue-400 hover:text-blue-300 font-mono break-all inline-flex items-center gap-1"
+                          >
+                            {publisherTxResult.txHash}
+                          </a>
+                        </div>
+                      )}
                       <div>
-                        <span className="text-slate-500 font-semibold">Tx Hash: </span>
-                        <a
-                          href={publisherTxResult.etherscanUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="text-blue-400 hover:text-blue-300 font-mono break-all inline-flex items-center gap-1"
-                        >
-                          {publisherTxResult.txHash}
-                        </a>
-                      </div>
-                      <div>
-                        <span className="text-slate-500 font-semibold">Publisher Address: </span>
+                        <span className="text-slate-500 font-semibold">Original Publisher Address: </span>
                         <code className="text-slate-300 font-mono">{publisherTxResult.submitter}</code>
                       </div>
                       <div>
                         <span className="text-slate-500 font-semibold">Gas Used: </span>
-                        <code className="text-slate-300 font-mono">{Number(publisherTxResult.gasUsed).toLocaleString()} gas</code>
-                        <span className="text-slate-500 ml-1">(paid in SepoliaETH by publisher wallet)</span>
+                        <code className="text-slate-300 font-mono">
+                          {publisherTxResult.gasUsed === '0' ? '0 gas (Pre-verified on-chain)' : `${Number(publisherTxResult.gasUsed).toLocaleString()} gas`}
+                        </code>
+                        <span className="text-slate-500 ml-1">
+                          {publisherTxResult.gasUsed === '0' ? '(no gas spent)' : '(paid in SepoliaETH by publisher wallet)'}
+                        </span>
                       </div>
                     </div>
                   </div>
