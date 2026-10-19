@@ -161,11 +161,12 @@ class EZKLProvingEngine:
             clean_image_sha = image_sha256 if image_sha256.startswith("0x") else "0x" + image_sha256
             session_nonce = "0x" + secrets.token_hex(16)
 
-            # Proof digest over hex_proof
-            raw_hex_proof = proof_data.get("hex_proof", "")
-            if not raw_hex_proof and "proof" in proof_data:
-                raw_hex_proof = bytes(proof_data["proof"]).hex()
-            proof_digest = "0x" + hashlib.sha256(raw_hex_proof.encode("utf-8")).hexdigest()
+            # Proof digest: Keccak-256 over canonical proof.json representation
+            from Crypto.Hash import keccak
+            canonical_proof_json = json.dumps(proof_data, sort_keys=True, separators=(",", ":")).encode("utf-8")
+            keccak_hasher = keccak.new(digest_bits=256)
+            keccak_hasher.update(canonical_proof_json)
+            proof_digest = "0x" + keccak_hasher.hexdigest()
 
             return {
                 "success": True,
