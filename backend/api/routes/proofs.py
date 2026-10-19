@@ -19,10 +19,12 @@ class CreateProofRequest(BaseModel):
     payload_hex: str = Field(..., description="Recovered watermark payload in hex")
     image_sha256: str = Field(..., description="SHA-256 content digest of image")
     prover_address: Optional[str] = Field("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
+    image_features: Optional[List[float]] = Field(None, description="64-dimensional latent features from HiDDeN decoder")
+    allow_synthetic: Optional[bool] = Field(False, description="Test-only option to allow synthetic test features")
 
 
 class VerifyProofRequest(BaseModel):
-    proof: Dict[str, Any] = Field(..., description="Groth16/EZKL proof calldata")
+    proof: Dict[str, Any] = Field(..., description="EZKL proof calldata")
     public_inputs: Dict[str, Any] = Field(..., description="Bound public inputs")
 
 
@@ -32,10 +34,18 @@ async def submit_proof_job(req: CreateProofRequest):
     Queue an asynchronous zero-knowledge proof and blockchain anchoring job.
     Returns the assigned job_id for state tracking.
     """
+    clean_sha = req.image_sha256.lower().strip()
+    features = req.image_features
+    if features is None:
+        from backend.zk.features import get_cached_features
+        features = get_cached_features(clean_sha)
+
     job = job_manager.create_job(
         payload_hex=req.payload_hex,
-        image_sha256=req.image_sha256,
+        image_sha256=clean_sha,
         prover_address=req.prover_address or "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        image_features=features,
+        allow_synthetic=bool(req.allow_synthetic),
     )
     return {
         "job_id": job.job_id,
@@ -48,20 +58,28 @@ async def submit_proof_job(req: CreateProofRequest):
 @router.post("/generate")
 async def generate_proof_direct(req: CreateProofRequest):
     """
-    Directly generates the genuine Groth16 zero-knowledge proof without server-side anchoring,
+    Directly generates the genuine EZKL zero-knowledge proof without server-side anchoring,
     returning the proof bundle, asset_id, and commitment for publisher MetaMask submission.
     """
-    import hashlib
-
     clean_sha = req.image_sha256.lower().strip()
     if not clean_sha.startswith("0x"):
         clean_sha = "0x" + clean_sha
 
-    proof_result = zk_engine.generate_proof(
-        payload_hex=req.payload_hex,
-        image_sha256=clean_sha,
-        prover_address=req.prover_address or "0x0000000000000000000000000000000000000000",
-    )
+    features = req.image_features
+    if features is None:
+        from backend.zk.features import get_cached_features
+        features = get_cached_features(clean_sha)
+
+    try:
+        proof_result = zk_engine.generate_proof(
+            payload_hex=req.payload_hex,
+            image_sha256=clean_sha,
+            prover_address=req.prover_address or "0x0000000000000000000000000000000000000000",
+            image_features=features,
+            allow_synthetic=bool(req.allow_synthetic),
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
     commitment = proof_result["public_inputs"]["payload_commitment"]
     asset_id = clean_sha

@@ -65,6 +65,8 @@ class JobRecord:
     payload_hex: str
     image_sha256: str
     prover_address: str
+    image_features: Optional[List[float]] = None
+    allow_synthetic: bool = False
     error: Optional[str] = None
     proof_result: Optional[Dict[str, Any]] = None
     anchor_record: Optional[AnchorRecord] = None
@@ -137,6 +139,8 @@ class JobManager:
         payload_hex: str,
         image_sha256: str,
         prover_address: str = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        image_features: Optional[List[float]] = None,
+        allow_synthetic: bool = False,
     ) -> JobRecord:
         """Create and queue a new asynchronous proof & anchor job."""
         job_id = f"job_{secrets.token_hex(8)}"
@@ -150,6 +154,8 @@ class JobManager:
             payload_hex=payload_hex,
             image_sha256=image_sha256,
             prover_address=prover_address,
+            image_features=image_features,
+            allow_synthetic=allow_synthetic,
         )
         self._jobs[job_id] = job
         # Launch async execution
@@ -176,11 +182,13 @@ class JobManager:
             job.status = JobStatus.PROVING
             job.progress = 40
             job.updated_at = time.time()
-            # Generate ZK proof
+            # Generate ZK proof with genuine image features
             proof_data = zk_engine.generate_proof(
                 payload_hex=job.payload_hex,
                 image_sha256=job.image_sha256,
                 prover_address=job.prover_address,
+                image_features=job.image_features,
+                allow_synthetic=job.allow_synthetic,
             )
             await asyncio.sleep(0.5)
 

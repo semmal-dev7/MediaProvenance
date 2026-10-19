@@ -147,7 +147,7 @@ export const DashboardPage: React.FC<DashboardProps> = ({ onNavigate }) => {
             <div className="flex items-center justify-between p-3 rounded-lg bg-slate-950/60 border border-slate-800">
               <div>
                 <span className="text-xs font-semibold text-slate-200 block">ONNX Model Compilation</span>
-                <span className="text-xs text-slate-400">models/onnx/feature_decoder_ezkl.onnx (Halo2 Compiled)</span>
+                <span className="text-xs text-slate-400">models/onnx/hidden_decoder_32bit.onnx (HiDDeN Halo2 Compiled)</span>
               </div>
               <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20">
                 VALIDATED

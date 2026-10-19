@@ -93,15 +93,43 @@ class HiddenDecoder(nn.Module):
         # Linear classifier for 32 bits
         self.fc = nn.Linear(channels, message_bits)
 
-    def forward(self, image: torch.Tensor) -> torch.Tensor:
+    def extract_features(self, image: torch.Tensor) -> torch.Tensor:
         """
+        Extract 64-dimensional pooled latent feature vector from image tensor.
         image: (B, 3, H, W) in range [-1, 1]
-        returns: (B, 32) logits
+        returns: (B, 64) latent embedding
         """
         x = self.conv1(image)
         x = self.conv2(x)
         x = self.conv3(x)
         x = self.conv4(x)
         pooled = self.pool(x).flatten(1)
+        return pooled
+
+    def forward(self, image: torch.Tensor) -> torch.Tensor:
+        """
+        image: (B, 3, H, W) in range [-1, 1]
+        returns: (B, 32) logits
+        """
+        pooled = self.extract_features(image)
         logits = self.fc(pooled)
         return logits
+
+    def load_onnx_weights(self, onnx_path: str) -> None:
+        """Load trained weights directly from the exported HiDDeN ONNX model."""
+        import onnx
+        import onnx.numpy_helper as nh
+        m = onnx.load(str(onnx_path))
+        inits = {i.name: torch.from_numpy(nh.to_array(i).copy()) for i in m.graph.initializer}
+        if "conv1.conv.weight" in inits:
+            self.conv1.conv.weight.data = inits["conv1.conv.weight"]
+        if "conv2.conv.weight" in inits:
+            self.conv2.conv.weight.data = inits["conv2.conv.weight"]
+        if "conv3.conv.weight" in inits:
+            self.conv3.conv.weight.data = inits["conv3.conv.weight"]
+        if "conv4.conv.weight" in inits:
+            self.conv4.conv.weight.data = inits["conv4.conv.weight"]
+        if "fc.weight" in inits:
+            self.fc.weight.data = inits["fc.weight"]
+        if "fc.bias" in inits:
+            self.fc.bias.data = inits["fc.bias"]
