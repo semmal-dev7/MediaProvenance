@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Upload, Cpu, Download, ArrowRight, ShieldCheck, RefreshCw, CheckCircle, Image as ImageIcon } from 'lucide-react';
+import { connectMetaMask, anchorWithMetaMask } from '../services/web3';
 
 interface EmbedPageProps {
   onProceedToVerify?: (imageFile: File, payloadHex: string) => void;
@@ -14,6 +15,61 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
   const [embedResult, setEmbedResult] = useState<any | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+
+  // MetaMask Publisher State
+  const [publisherAccount, setPublisherAccount] = useState<string | null>(null);
+  const [isConnectingWallet, setIsConnectingWallet] = useState<boolean>(false);
+  const [isPublishing, setIsPublishing] = useState<boolean>(false);
+  const [publishStep, setPublishStep] = useState<string>('');
+  const [publisherTxResult, setPublisherTxResult] = useState<any | null>(null);
+  const [publisherTxError, setPublisherTxError] = useState<string | null>(null);
+
+  const handleConnectMetaMask = async () => {
+    setIsConnectingWallet(true);
+    setPublisherTxError(null);
+    try {
+      const { address } = await connectMetaMask();
+      setPublisherAccount(address);
+    } catch (err: any) {
+      setPublisherTxError(err.message || 'Failed to connect MetaMask');
+    } finally {
+      setIsConnectingWallet(false);
+    }
+  };
+
+  const handlePublishWithMetaMask = async () => {
+    if (!embedResult) return;
+    setIsPublishing(true);
+    setPublisherTxError(null);
+    setPublisherTxResult(null);
+
+    try {
+      setPublishStep('1/2 Generating ZK Groth16 Proof...');
+      const genRes = await fetch('/api/v1/proofs/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          payload_hex: embedResult.payload_hex,
+          image_sha256: embedResult.image_sha256,
+          prover_address: publisherAccount || '0x0000000000000000000000000000000000000000',
+        }),
+      });
+
+      const genData = await genRes.json();
+      if (!genData.success) {
+        throw new Error(genData.error || 'Failed to generate ZK proof');
+      }
+
+      setPublishStep('2/2 Prompting MetaMask to submit transaction...');
+      const txRes = await anchorWithMetaMask(genData.asset_id, genData.commitment);
+      setPublisherTxResult(txRes);
+    } catch (err: any) {
+      setPublisherTxError(err.message || 'MetaMask transaction rejected or failed.');
+    } finally {
+      setIsPublishing(false);
+      setPublishStep('');
+    }
+  };
 
   const handleGeneratePayload = () => {
     if (carrier === 'hidden') {
@@ -319,10 +375,108 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
                 {onProceedToVerify && (
                   <button
                     onClick={() => onProceedToVerify(file!, embedResult.payload_hex)}
-                    className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow transition"
+                    className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition"
                   >
-                    Proceed to Verification <ArrowRight className="w-3.5 h-3.5" />
+                    Test Verification Flow <ArrowRight className="w-3.5 h-3.5" />
                   </button>
+                )}
+              </div>
+
+              {/* Image Publisher (MetaMask Anchoring Card) */}
+              <div className="mt-4 p-4 rounded-xl border border-amber-500/30 bg-amber-500/5 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="p-1.5 rounded-lg bg-amber-500/20 text-amber-400">
+                      <ShieldCheck className="w-4 h-4" />
+                    </span>
+                    <div>
+                      <h4 className="text-xs font-bold text-amber-300 uppercase tracking-wide">
+                        Image Publisher Role (MetaMask Required)
+                      </h4>
+                      <p className="text-[11px] text-slate-400">
+                        Generate zero-knowledge proof and anchor commitment to Sepolia. Publisher pays transaction gas in SepoliaETH.
+                      </p>
+                    </div>
+                  </div>
+                  {publisherAccount && (
+                    <span className="text-[10px] font-mono bg-slate-900 border border-slate-800 text-amber-400 px-2 py-0.5 rounded">
+                      {publisherAccount.slice(0, 6)}...{publisherAccount.slice(-4)}
+                    </span>
+                  )}
+                </div>
+
+                {publisherTxError && (
+                  <div className="p-2.5 rounded bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs">
+                    {publisherTxError}
+                  </div>
+                )}
+
+                {publisherTxResult ? (
+                  <div className="p-3 bg-slate-900 border border-emerald-500/30 rounded-lg text-xs space-y-2">
+                    <div className="flex items-center justify-between text-emerald-400 font-bold">
+                      <span className="flex items-center gap-1.5">
+                        <CheckCircle className="w-4 h-4" />
+                        Confirmed On-Chain on Sepolia!
+                      </span>
+                      <span className="text-[11px] font-mono text-slate-400">
+                        Block #{publisherTxResult.blockNumber}
+                      </span>
+                    </div>
+                    <div className="text-[11px] text-slate-400 space-y-1">
+                      <div>
+                        <span className="text-slate-500 font-semibold">Tx Hash: </span>
+                        <a
+                          href={publisherTxResult.etherscanUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-blue-400 hover:text-blue-300 font-mono break-all inline-flex items-center gap-1"
+                        >
+                          {publisherTxResult.txHash}
+                        </a>
+                      </div>
+                      <div>
+                        <span className="text-slate-500 font-semibold">Publisher Address: </span>
+                        <code className="text-slate-300 font-mono">{publisherTxResult.submitter}</code>
+                      </div>
+                      <div>
+                        <span className="text-slate-500 font-semibold">Gas Used: </span>
+                        <code className="text-slate-300 font-mono">{Number(publisherTxResult.gasUsed).toLocaleString()} gas</code>
+                        <span className="text-slate-500 ml-1">(paid in SepoliaETH by publisher wallet)</span>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {!publisherAccount ? (
+                      <button
+                        type="button"
+                        onClick={handleConnectMetaMask}
+                        disabled={isConnectingWallet}
+                        className="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 shadow transition"
+                      >
+                        {isConnectingWallet ? 'Connecting...' : 'Connect MetaMask (Sepolia)'}
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={handlePublishWithMetaMask}
+                        disabled={isPublishing}
+                        className="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 shadow transition disabled:opacity-60"
+                      >
+                        {isPublishing ? (
+                          <>
+                            <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                            {publishStep || 'Publishing with MetaMask...'}
+                          </>
+                        ) : (
+                          <>
+                            <ShieldCheck className="w-3.5 h-3.5" />
+                            Publish Proof &amp; Anchor via MetaMask (Pay Gas)
+                          </>
+                        )}
+                      </button>
+                    )}
+                  </div>
                 )}
               </div>
             </div>

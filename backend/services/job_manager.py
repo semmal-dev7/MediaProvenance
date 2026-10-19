@@ -367,6 +367,33 @@ class JobManager:
         self._anchors[normalized_asset_id] = rec
         return rec
 
+    def record_onchain_anchor(
+        self,
+        asset_id: str,
+        commitment: str,
+        submitter: str,
+        tx_hash: str,
+        block_number: int,
+    ) -> AnchorRecord:
+        """Register an on-chain anchor submitted directly via the publisher's MetaMask."""
+        normalized_asset_id = asset_id.lower()
+        rec = AnchorRecord(
+            asset_id=asset_id,
+            commitment=commitment,
+            submitter=submitter,
+            timestamp=int(time.time()),
+            block_number=block_number,
+            tx_hash=tx_hash,
+            network="sepolia",
+            etherscan_url=f"https://sepolia.etherscan.io/tx/{tx_hash}",
+            exists=True,
+            is_onchain=True,
+            is_simulated=False,
+            status="CONFIRMED_ON_CHAIN",
+        )
+        self._anchors[normalized_asset_id] = rec
+        return rec
+
     def get_anchor(self, asset_id: str) -> Optional[AnchorRecord]:
         clean_id = asset_id.lower()
         if not clean_id.startswith("0x"):

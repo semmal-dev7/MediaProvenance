@@ -20,6 +20,14 @@ class CreateAnchorRequest(BaseModel):
     submitter: Optional[str] = Field("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
 
 
+class RecordMetamaskTxRequest(BaseModel):
+    asset_id: str = Field(..., description="Bytes32 hex digest of candidate image or asset")
+    commitment: str = Field(..., description="Bytes32 hex commitment C = H(m || k)")
+    submitter: str = Field(..., description="MetaMask publisher address")
+    tx_hash: str = Field(..., description="Confirmed Sepolia transaction hash")
+    block_number: int = Field(..., description="Confirmed Sepolia block number")
+
+
 @router.post("")
 async def create_anchor(req: CreateAnchorRequest):
     """Anchor a verification commitment on the Provenance registry."""
@@ -27,6 +35,22 @@ async def create_anchor(req: CreateAnchorRequest):
         asset_id=req.asset_id,
         commitment=req.commitment,
         submitter=req.submitter or "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    )
+    return {
+        "success": True,
+        "record": record.__dict__,
+    }
+
+
+@router.post("/record_tx")
+async def record_metamask_anchor(req: RecordMetamaskTxRequest):
+    """Register an on-chain anchor submitted directly via the publisher's MetaMask."""
+    record = job_manager.record_onchain_anchor(
+        asset_id=req.asset_id,
+        commitment=req.commitment,
+        submitter=req.submitter,
+        tx_hash=req.tx_hash,
+        block_number=req.block_number,
     )
     return {
         "success": True,

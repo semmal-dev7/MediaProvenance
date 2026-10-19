@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Upload, CheckCircle2, XCircle, ShieldAlert, Cpu, Blocks, Clock, ArrowRight, RefreshCw, KeyRound, AlertTriangle, ExternalLink } from 'lucide-react';
+import { Upload, CheckCircle2, XCircle, ShieldAlert, Cpu, Blocks, Clock, ArrowRight, RefreshCw, KeyRound, AlertTriangle, ExternalLink, ShieldCheck } from 'lucide-react';
+import { readRecordFromSepoliaFree, OnChainRecord } from '../services/web3';
 
 export const VerifyPage: React.FC = () => {
   const [carrier, setCarrier] = useState<'hidden' | 'trustmark'>('hidden');
@@ -22,6 +23,28 @@ export const VerifyPage: React.FC = () => {
   // Negative test state
   const [negativeResult, setNegativeResult] = useState<any | null>(null);
   const [testingNegative, setTestingNegative] = useState<boolean>(false);
+
+  // Image Verifier (Zero Gas) State
+  const [isVerifyingFree, setIsVerifyingFree] = useState<boolean>(false);
+  const [onChainRecord, setOnChainRecord] = useState<OnChainRecord | null>(null);
+  const [verifierError, setVerifierError] = useState<string | null>(null);
+
+  const handleVerifyFreeOnChain = async () => {
+    if (!decodeResult) return;
+    setIsVerifyingFree(true);
+    setVerifierError(null);
+    setOnChainRecord(null);
+
+    try {
+      const assetId = decodeResult.image_sha256 || ('0x' + decodeResult.payload_hex.padEnd(64, '0'));
+      const rec = await readRecordFromSepoliaFree(assetId);
+      setOnChainRecord(rec);
+    } catch (err: any) {
+      setVerifierError(err.message || 'Error querying Sepolia contract state.');
+    } finally {
+      setIsVerifyingFree(false);
+    }
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -329,15 +352,103 @@ export const VerifyPage: React.FC = () => {
                 </div>
               )}
 
-              {/* Action: Trigger ZK Proving */}
-              <div className="pt-2">
+              {/* Action: Image Verifier (Free Sepolia Read) & Proving Pipeline */}
+              <div className="pt-2 space-y-3">
+                <div className="p-3.5 bg-slate-950 rounded-xl border border-blue-500/30 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-blue-300 uppercase tracking-wide flex items-center gap-1.5">
+                      <ShieldCheck className="w-4 h-4 text-blue-400" />
+                      Image Verifier Role (Free / Zero Gas)
+                    </span>
+                    <span className="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded font-mono font-bold">
+                      Gas Fee: 0.00 ETH ($0.00)
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-slate-400 leading-relaxed">
+                    Verify this suspect image off-chain and read the publisher's registered commitment directly from the Ethereum Sepolia smart contract. No MetaMask wallet connection or gas payment required.
+                  </p>
+
+                  <button
+                    onClick={handleVerifyFreeOnChain}
+                    disabled={isVerifyingFree || !decodeResult.decodable}
+                    className={`w-full py-2 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition ${
+                      isVerifyingFree || !decodeResult.decodable
+                        ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
+                        : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm'
+                    }`}
+                  >
+                    {isVerifyingFree ? (
+                      <>
+                        <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                        Querying Sepolia Contract (Free)...
+                      </>
+                    ) : (
+                      <>
+                        <Blocks className="w-3.5 h-3.5" />
+                        Audit On-Chain Record (Free / 0 Gas)
+                      </>
+                    )}
+                  </button>
+
+                  {verifierError && (
+                    <div className="p-2 rounded bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs">
+                      {verifierError}
+                    </div>
+                  )}
+
+                  {onChainRecord && (
+                    <div className="mt-2 p-3 bg-slate-900 border border-slate-800 rounded-lg text-xs space-y-2">
+                      <div className="flex items-center justify-between font-bold">
+                        <span className={onChainRecord.exists ? 'text-emerald-400 flex items-center gap-1' : 'text-amber-400 flex items-center gap-1'}>
+                          {onChainRecord.exists ? <CheckCircle2 className="w-3.5 h-3.5" /> : <AlertTriangle className="w-3.5 h-3.5" />}
+                          {onChainRecord.exists ? 'Authentic Record Confirmed on Sepolia' : 'Not Yet Anchored On-Chain'}
+                        </span>
+                        <span className="text-[10px] text-slate-500 font-mono">Cost: 0 Gas</span>
+                      </div>
+
+                      {onChainRecord.exists ? (
+                        <div className="text-[11px] text-slate-300 space-y-1 pt-1 border-t border-slate-800">
+                          <div>
+                            <span className="text-slate-500 font-semibold">Publisher Wallet: </span>
+                            <code className="text-amber-300 font-mono break-all">{onChainRecord.submitter}</code>
+                          </div>
+                          <div>
+                            <span className="text-slate-500 font-semibold">Registered Timestamp: </span>
+                            <span>{onChainRecord.dateFormatted}</span>
+                          </div>
+                          <div>
+                            <span className="text-slate-500 font-semibold">On-Chain Commitment: </span>
+                            <code className="text-blue-300 font-mono break-all block mt-0.5">{onChainRecord.commitment}</code>
+                          </div>
+                          <div>
+                            <span className="text-slate-500 font-semibold">Contract: </span>
+                            <a
+                              href="https://sepolia.etherscan.io/address/0x6D8C82dc761Ed9bac93ca99987b91614B90Ad43F"
+                              target="_blank"
+                              rel="noreferrer"
+                              className="text-blue-400 hover:text-blue-300 inline-flex items-center gap-1 font-mono"
+                            >
+                              0x6D8C82...d43F <ExternalLink className="w-3 h-3" />
+                            </a>
+                          </div>
+                        </div>
+                      ) : (
+                        <p className="text-[11px] text-slate-400">
+                          No matching commitment found in ProvenanceAnchor.sol for this image hash.
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {/* Alternative Automated Pipeline */}
                 <button
                   onClick={handleStartProvingAndAnchor}
                   disabled={isProving || !decodeResult.decodable}
                   className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow transition ${
                     isProving || !decodeResult.decodable
                       ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
-                      : 'bg-blue-600 hover:bg-blue-500 text-white shadow-blue-500/20'
+                      : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700'
                   }`}
                 >
                   {isProving ? (
@@ -345,15 +456,10 @@ export const VerifyPage: React.FC = () => {
                       <RefreshCw className="w-4 h-4 animate-spin" />
                       Executing Proving Pipeline ({jobProgress}%)...
                     </>
-                  ) : !decodeResult.decodable ? (
-                    <>
-                      <XCircle className="w-4 h-4 text-rose-500" />
-                      Cannot Anchor: No Valid Watermark Detected
-                    </>
                   ) : (
                     <>
                       <KeyRound className="w-4 h-4" />
-                      Generate Zero-Knowledge Proof &amp; Anchor on Blockchain
+                      Run Full ZK Benchmark &amp; Service Pipeline
                     </>
                   )}
                 </button>

@@ -45,6 +45,35 @@ async def submit_proof_job(req: CreateProofRequest):
     }
 
 
+@router.post("/generate")
+async def generate_proof_direct(req: CreateProofRequest):
+    """
+    Directly generates the genuine Groth16 zero-knowledge proof without server-side anchoring,
+    returning the proof bundle, asset_id, and commitment for publisher MetaMask submission.
+    """
+    import hashlib
+
+    clean_sha = req.image_sha256.lower().strip()
+    if not clean_sha.startswith("0x"):
+        clean_sha = "0x" + clean_sha
+
+    proof_result = zk_engine.generate_proof(
+        payload_hex=req.payload_hex,
+        image_sha256=clean_sha,
+        prover_address=req.prover_address or "0x0000000000000000000000000000000000000000",
+    )
+
+    commitment = proof_result["public_inputs"]["payload_commitment"]
+    asset_id = clean_sha
+
+    return {
+        "success": True,
+        "asset_id": asset_id,
+        "commitment": commitment,
+        "proof_result": proof_result,
+    }
+
+
 @router.post("/verify")
 async def verify_proof(req: VerifyProofRequest):
     """
