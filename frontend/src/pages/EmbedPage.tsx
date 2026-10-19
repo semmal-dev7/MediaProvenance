@@ -21,10 +21,10 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
       const val = Math.floor(Math.random() * 0xffffffff);
       setPayloadHex(val.toString(16).padStart(8, '0'));
     } else {
-      // 100-bit: 25 hex chars
+      // 100-bit: 25 hex chars starting with a5 synchronization preamble
       const chars = '0123456789abcdef';
-      let res = '';
-      for (let i = 0; i < 25; i++) {
+      let res = 'a5';
+      for (let i = 0; i < 23; i++) {
         res += chars.charAt(Math.floor(Math.random() * chars.length));
       }
       setPayloadHex(res);
@@ -36,7 +36,7 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
     if (newCarrier === 'hidden') {
       setPayloadHex('a1b2c3d4');
     } else {
-      setPayloadHex('0123456789abcdef012345678');
+      setPayloadHex('a5123456789abcdef01234567');
     }
   };
 

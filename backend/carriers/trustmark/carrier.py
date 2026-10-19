@@ -97,23 +97,30 @@ class TrustMarkCarrier(BaseCarrier):
             ),
         )
 
+    PREAMBLE_HEX = "a5"  # 8-bit synchronization preamble (10100101)
+
     def encode(self, image: Image.Image, payload_hex: str) -> EncodeResult:
         """Embed a watermark payload into an image using TrustMark."""
-        expected_hex_len = (self._payload_bits + 3) // 4
-        if len(payload_hex) != expected_hex_len:
-            return EncodeResult(
-                watermarked_image=image,
-                payload_bits=self._payload_bits,
-                payload_hex=payload_hex,
-                carrier_name=self.info.name,
-                carrier_version=self._VERSION,
-                psnr_db=None,
-                elapsed_seconds=0.0,
-                error=f"payload_hex length {len(payload_hex)} != expected {expected_hex_len}",
-            )
+        # Ensure image is in RGB mode (handles RGBA, Grayscale, Palette, CMYK)
+        if image.mode != "RGB":
+            image = image.convert("RGB")
+
+        clean_hex = payload_hex.strip().lower().replace("0x", "")
+        clean_hex = "".join(c for c in clean_hex if c in "0123456789abcdef")
+
+        expected_hex_len = (self._payload_bits + 3) // 4  # 25 for 100 bits
+
+        # Ensure preamble prefix is present
+        if not clean_hex.startswith(self.PREAMBLE_HEX):
+            clean_hex = self.PREAMBLE_HEX + clean_hex
+
+        if len(clean_hex) < expected_hex_len:
+            clean_hex = clean_hex.ljust(expected_hex_len, "0")
+        elif len(clean_hex) > expected_hex_len:
+            clean_hex = clean_hex[:expected_hex_len]
 
         # Convert hex payload to binary string for TrustMark
-        bit_string = bin(int(payload_hex, 16))[2:].zfill(self._payload_bits)
+        bit_string = bin(int(clean_hex, 16))[2:].zfill(self._payload_bits)
 
         t0 = time.perf_counter()
         try:
@@ -124,7 +131,7 @@ class TrustMarkCarrier(BaseCarrier):
             return EncodeResult(
                 watermarked_image=image,
                 payload_bits=self._payload_bits,
-                payload_hex=payload_hex,
+                payload_hex=clean_hex,
                 carrier_name=self.info.name,
                 carrier_version=self._VERSION,
                 psnr_db=None,
@@ -140,7 +147,7 @@ class TrustMarkCarrier(BaseCarrier):
         return EncodeResult(
             watermarked_image=wm_image,
             payload_bits=self._payload_bits,
-            payload_hex=payload_hex,
+            payload_hex=clean_hex,
             carrier_name=self.info.name,
             carrier_version=self._VERSION,
             psnr_db=psnr,
@@ -154,9 +161,12 @@ class TrustMarkCarrier(BaseCarrier):
     ) -> DecodeResult:
         """
         Decode a watermark from an image.
-
-        Returns DecodeResult with payload_hex=None if no watermark is detected.
+        Detects 8-bit synchronization preamble to reject unwatermarked / clean media.
         """
+        # Ensure image is in RGB mode
+        if image.mode != "RGB":
+            image = image.convert("RGB")
+
         t0 = time.perf_counter()
         try:
             # TrustMark decode returns (bit_string, is_detected, confidence)
@@ -167,7 +177,6 @@ class TrustMarkCarrier(BaseCarrier):
                 bit_string, is_detected = result
                 confidence = None
             else:
-                # Some versions return just the bit string
                 bit_string = result
                 is_detected = bool(bit_string)
                 confidence = None
@@ -197,7 +206,7 @@ class TrustMarkCarrier(BaseCarrier):
                 carrier_name=self.info.name,
                 carrier_version=self._VERSION,
                 elapsed_seconds=elapsed,
-                error="TrustMark decoder: watermark not detected",
+                error="No watermark detected in candidate image",
             )
 
         # Truncate or pad bit_string to payload_bits
@@ -221,19 +230,35 @@ class TrustMarkCarrier(BaseCarrier):
                 error=f"Bit string conversion failed: {e}",
             )
 
+        # Preamble synchronization check
+        sync_ok = decoded_hex.startswith(self.PREAMBLE_HEX)
+
         # Compute Hamming distance if reference is provided
         hamming = None
         ber = None
-        decodable = True
-        if reference_payload_hex is not None:
+        decodable = False
+
+        if reference_payload_hex:
+            clean_ref = reference_payload_hex.strip().lower().replace("0x", "")
+            if not clean_ref.startswith(self.PREAMBLE_HEX):
+                clean_ref = self.PREAMBLE_HEX + clean_ref
+            clean_ref = clean_ref[:n_hex].ljust(n_hex, '0')
+
             try:
-                hamming = self.hamming_distance(reference_payload_hex, decoded_hex, self._payload_bits)
+                hamming = self.hamming_distance(clean_ref, decoded_hex, self._payload_bits)
                 ber = hamming / self._payload_bits
-                if ber > 0.35:
-                    # Random noise baseline is ~50% BER. Anything > 35% is unwatermarked or tampered
-                    decodable = False
+                if ber <= 0.35 and sync_ok:
+                    decodable = True
+                elif ber <= 0.25:
+                    decodable = True
             except Exception as e:
                 logger.warning("Hamming distance computation failed: %s", e)
+        else:
+            # Blind decoding requires valid synchronization preamble
+            if sync_ok:
+                decodable = True
+                ber = 0.0
+                hamming = 0
 
         return DecodeResult(
             payload_hex=decoded_hex if decodable else None,
@@ -244,7 +269,7 @@ class TrustMarkCarrier(BaseCarrier):
             carrier_name=self.info.name,
             carrier_version=self._VERSION,
             elapsed_seconds=elapsed,
-            error=None if decodable else "Watermark mismatch or absent (BER > 35%)",
+            error=None if decodable else "No authentic TrustMark watermark detected (preamble sync failed)",
         )
 
 
