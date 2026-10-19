@@ -50,6 +50,8 @@ class AnchorRecord:
     network: str = "sepolia"
     etherscan_url: str = ""
     exists: bool = True
+    is_onchain: bool = True
+    status: str = "CONFIRMED_ON_CHAIN"
 
 
 @dataclass
@@ -310,6 +312,8 @@ class JobManager:
                     tx_hash_bytes = w3.eth.send_raw_transaction(signed_tx.raw_transaction)
                     tx_hash = w3.to_hex(tx_hash_bytes)
                     receipt = w3.eth.wait_for_transaction_receipt(tx_hash, timeout=60)
+                    if receipt.status != 1:
+                        raise RuntimeError(f"Sepolia transaction reverted on-chain (status: {receipt.status})")
 
                     rec = AnchorRecord(
                         asset_id=asset_id,
@@ -321,25 +325,28 @@ class JobManager:
                         network="sepolia",
                         etherscan_url=f"https://sepolia.etherscan.io/tx/{tx_hash}",
                         exists=True,
+                        is_onchain=True,
+                        status="CONFIRMED_ON_CHAIN",
                     )
                     self._anchors[normalized_asset_id] = rec
                     return rec
             except Exception as e:
-                logger.warning("Sepolia on-chain transaction failed (%s); falling back to registry.", e)
+                logger.error("Sepolia on-chain transaction failed: %s", e)
+                raise RuntimeError(f"On-chain anchoring failed on Sepolia: {e}")
 
-        # Fallback to deterministic registry with Sepolia Etherscan link layout
-        tx_hash = "0x" + hashlib.sha256(f"{asset_id}:{commitment}:{time.time()}".encode()).hexdigest()
-        block_num = 5684000 + len(self._anchors)
+        # Local sandbox record when no on-chain private key or contracts are configured
         rec = AnchorRecord(
             asset_id=asset_id,
             commitment=commitment,
             submitter=submitter,
             timestamp=int(time.time()),
-            block_number=block_num,
-            tx_hash=tx_hash,
-            network="sepolia",
-            etherscan_url=f"https://sepolia.etherscan.io/tx/{tx_hash}",
+            block_number=0,
+            tx_hash="local_sandbox_" + hashlib.sha256(f"{asset_id}:{commitment}".encode()).hexdigest()[:16],
+            network="local-sandbox",
+            etherscan_url="",
             exists=True,
+            is_onchain=False,
+            status="LOCAL_SANDBOX_UNCONFIRMED",
         )
         self._anchors[normalized_asset_id] = rec
         return rec

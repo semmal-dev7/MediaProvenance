@@ -97,3 +97,6 @@ checkpoints/
 *.bin
 models/weights/
 models/onnx/*.data
+
+# Local compiler binaries
+bin/*.exe
