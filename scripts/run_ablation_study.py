@@ -21,10 +21,13 @@ import json
 import os
 import sys
 import time
+from pathlib import Path
 from typing import Any, Dict, List
 
 import numpy as np
 from PIL import Image
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from backend.carriers.factory import get_carrier
 from backend.services.job_manager import job_manager

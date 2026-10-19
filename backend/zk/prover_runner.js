@@ -77,9 +77,7 @@ async function prove(payloadHex, imageSha256, modelDigest, nonceHex, secretKeyHe
             session_nonce: '0x' + nonceBigInt.toString(16),
             public_nullifier: '0x' + publicNullifier.toString(16).padStart(64, '0')
         },
-        secret_key_hex: '0x' + secretKeyBigInt.toString(16),
-        proving_time_seconds: provingTimeSec,
-        is_valid: true
+        proving_time_seconds: provingTimeSec
     };
 }
 
@@ -136,7 +134,7 @@ async function proveNeural(params) {
     const packedPayload = packedPayloadBigInt.toString();
 
     const imageFeaturesField = imageFeatures.map(toField);
-    const suspectImageCommitment = posHash(imageFeaturesField);
+    const computedSuspectCommitment = posHash(imageFeaturesField);
 
     const rowHashes = [];
     for (let i = 0; i < nBits; i++) {
@@ -148,8 +146,18 @@ async function proveNeural(params) {
     const biasBlock1 = posHash(biases.slice(0, 16).map(toField));
     const biasBlock2 = posHash(biases.slice(16, 32).map(toField));
 
-    const modelDigest = posHash([BigInt(rowBlock1), BigInt(rowBlock2), BigInt(biasBlock1), BigInt(biasBlock2)]);
-    const expectedCommitment = posHash([BigInt(packedPayload), secretKeyBigInt]);
+    const computedModelDigest = posHash([BigInt(rowBlock1), BigInt(rowBlock2), BigInt(biasBlock1), BigInt(biasBlock2)]);
+    const modelDigest = params.modelDigest ? (hexToBigInt(params.modelDigest) % F.p).toString() : computedModelDigest;
+
+    const suspectImageCommitment = params.suspectImageCommitment
+        ? (hexToBigInt(params.suspectImageCommitment) % F.p).toString()
+        : computedSuspectCommitment;
+
+    const computedCommitment = posHash([BigInt(packedPayload), secretKeyBigInt]);
+    const expectedCommitment = params.expectedCommitment
+        ? (hexToBigInt(params.expectedCommitment) % F.p).toString()
+        : computedCommitment;
+
     const publicNullifier = posHash([
         BigInt(packedPayload),
         BigInt(suspectImageCommitment),
@@ -184,10 +192,8 @@ async function proveNeural(params) {
             session_nonce: '0x' + sessionNonceBigInt.toString(16),
             public_nullifier: '0x' + BigInt(publicNullifier).toString(16).padStart(64, '0')
         },
-        secret_key_hex: '0x' + secretKeyBigInt.toString(16),
         proving_time_seconds: provingTimeSec,
-        circuit_type: "neural_inference",
-        is_valid: true
+        circuit_type: "neural_inference"
     };
 }
 

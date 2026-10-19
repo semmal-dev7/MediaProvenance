@@ -1,6 +1,6 @@
 {
   "experiment_id": "ablation_study_v1",
-  "timestamp": 1792386204.116642,
+  "timestamp": 1792400276.2833107,
   "total_trials": 40,
   "configurations": {
     "A": {
@@ -9,13 +9,13 @@
       "watermark": true,
       "zk_proof": false,
       "blockchain_anchor": false,
-      "mean_psnr_db": 26.781,
-      "mean_ber": 0.49375,
+      "mean_psnr_db": 44.917,
+      "mean_ber": 0.0,
       "mean_proving_time_ms": 0.0,
       "mean_verification_time_ms": 0.0,
       "proof_size_bytes": 0,
       "gas_used": 0,
-      "mean_total_latency_ms": 42.065999999999995
+      "mean_total_latency_ms": 30.162
     },
     "B": {
       "name": "ZK Baseline",
@@ -23,13 +23,13 @@
       "watermark": true,
       "zk_proof": true,
       "blockchain_anchor": false,
-      "mean_psnr_db": 26.781,
-      "mean_ber": 0.49375,
-      "mean_proving_time_ms": 0.10500000000000001,
-      "mean_verification_time_ms": 0.0068000000000000005,
-      "proof_size_bytes": 341,
+      "mean_psnr_db": 44.917,
+      "mean_ber": 0.0,
+      "mean_proving_time_ms": 1862.8190000000002,
+      "mean_verification_time_ms": 1183.5505,
+      "proof_size_bytes": 741,
       "gas_used": 0,
-      "mean_total_latency_ms": 38.552
+      "mean_total_latency_ms": 3103.065
     },
     "C": {
       "name": "Anchor Baseline",
@@ -37,13 +37,13 @@
       "watermark": true,
       "zk_proof": false,
       "blockchain_anchor": true,
-      "mean_psnr_db": 26.781,
-      "mean_ber": 0.49375,
+      "mean_psnr_db": 44.917,
+      "mean_ber": 0.0,
       "mean_proving_time_ms": 0.0,
       "mean_verification_time_ms": 0.0,
       "proof_size_bytes": 0,
       "gas_used": 45280,
-      "mean_total_latency_ms": 38.589000000000006
+      "mean_total_latency_ms": 18142.754999999997
     },
     "D": {
       "name": "Full Pipeline",
@@ -51,13 +51,13 @@
       "watermark": true,
       "zk_proof": true,
       "blockchain_anchor": true,
-      "mean_psnr_db": 26.781,
-      "mean_ber": 0.49375,
-      "mean_proving_time_ms": 0.06799999999999999,
-      "mean_verification_time_ms": 0.0063,
-      "proof_size_bytes": 341,
+      "mean_psnr_db": 44.917,
+      "mean_ber": 0.0,
+      "mean_proving_time_ms": 1127.951,
+      "mean_verification_time_ms": 698.9815,
+      "proof_size_bytes": 741,
       "gas_used": 45280,
-      "mean_total_latency_ms": 40.584999999999994
+      "mean_total_latency_ms": 1839.1910000000003
     }
   }
 }

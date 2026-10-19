@@ -51,6 +51,7 @@ class AnchorRecord:
     etherscan_url: str = ""
     exists: bool = True
     is_onchain: bool = True
+    is_simulated: bool = False
     status: str = "CONFIRMED_ON_CHAIN"
 
 
@@ -78,7 +79,7 @@ class JobManager:
         self._init_seed_anchors()
 
     def _init_seed_anchors(self):
-        """Seed sample historical verification anchors for testing and dashboard display."""
+        """Seed historical verification anchors, strictly labeling mock records as simulated."""
         seed_asset_1 = "0x" + hashlib.sha256(b"sample_reuters_photo_2026_01").hexdigest()
         seed_commit_1 = "0x" + hashlib.sha256(b"payload_commitment_reuters_01").hexdigest()
         self._anchors[seed_asset_1.lower()] = AnchorRecord(
@@ -86,8 +87,14 @@ class JobManager:
             commitment=seed_commit_1,
             submitter="0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
             timestamp=int(time.time()) - 86400,
-            block_number=19845210,
+            block_number=0,
             tx_hash="0x" + hashlib.sha256(b"tx_anchor_sample_1").hexdigest(),
+            network="simulated_sandbox",
+            etherscan_url="",
+            exists=True,
+            is_onchain=False,
+            is_simulated=True,
+            status="SIMULATED_LOCAL_SANDBOX",
         )
 
         seed_asset_2 = "0x" + hashlib.sha256(b"sample_ap_news_wire_2026_02").hexdigest()
@@ -97,23 +104,32 @@ class JobManager:
             commitment=seed_commit_2,
             submitter="0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
             timestamp=int(time.time()) - 43200,
-            block_number=19846850,
+            block_number=0,
             tx_hash="0x" + hashlib.sha256(b"tx_anchor_sample_2").hexdigest(),
+            network="simulated_sandbox",
+            etherscan_url="",
+            exists=True,
+            is_onchain=False,
+            is_simulated=True,
+            status="SIMULATED_LOCAL_SANDBOX",
         )
 
-        # Verified on-chain Sepolia deployment transaction
-        sepolia_asset = "0x7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b"
-        sepolia_commit = "0x11223344556677889900aabbccddeeff00112233445566778899aabbccddeeff"
-        self._anchors[sepolia_asset.lower()] = AnchorRecord(
-            asset_id=sepolia_asset,
-            commitment=sepolia_commit,
+        # Verified on-chain Sepolia anchor transaction (Block #11946711)
+        sepolia_asset_1 = "0x7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b"
+        sepolia_commit_1 = "0x11223344556677889900aabbccddeeff00112233445566778899aabbccddeeff"
+        self._anchors[sepolia_asset_1.lower()] = AnchorRecord(
+            asset_id=sepolia_asset_1,
+            commitment=sepolia_commit_1,
             submitter="0xc3105176265bd16F86d0A3ff61f3aC0fE00e6007",
             timestamp=1771481500,
-            block_number=11946285,
-            tx_hash="0x6bbb54b58a77efaf123e29c58370a52435e738cefe856df9340803f8025dc424",
+            block_number=11946711,
+            tx_hash="0x432c2f47aebfcd859ce3aec4b33b0ea3b727f7e6cfc1380a388168378a9b76a9",
             network="sepolia",
-            etherscan_url="https://sepolia.etherscan.io/tx/0x6bbb54b58a77efaf123e29c58370a52435e738cefe856df9340803f8025dc424",
+            etherscan_url="https://sepolia.etherscan.io/tx/0x432c2f47aebfcd859ce3aec4b33b0ea3b727f7e6cfc1380a388168378a9b76a9",
             exists=True,
+            is_onchain=True,
+            is_simulated=False,
+            status="CONFIRMED_ON_CHAIN",
         )
 
     def create_job(

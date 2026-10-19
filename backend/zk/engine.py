@@ -34,6 +34,7 @@ class ZKProvingEngine:
 
     CIRCUIT_VERSION = "watermark_verifier_v2_poseidon"
     PROOF_SYSTEM = "Groth16-BN254"
+    CANONICAL_NEURAL_MODEL_DIGEST = "0x0970c433546701903e23c97bc1b518e59a8e6b3e6f6640ab9d9efa03aea565c3"
 
     def __init__(self, onnx_model_path: str = "models/onnx/hidden_decoder_32bit.onnx"):
         self.onnx_model_path = onnx_model_path
@@ -85,6 +86,10 @@ class ZKProvingEngine:
             res = subprocess.run(cmd, capture_output=True, text=True, check=True)
             output = json.loads(res.stdout)
             
+            # Privacy: never leak private witness or salt to callers
+            output.pop("secret_key_hex", None)
+            output.pop("is_valid", None)
+
             output["public_inputs"]["prover_address"] = prover_address
             output["circuit_version"] = self.CIRCUIT_VERSION
             output["witness_constraints"] = 537
@@ -101,26 +106,44 @@ class ZKProvingEngine:
 
     def generate_neural_proof(
         self,
+        image: Optional[Any] = None,
         image_features: Optional[List[int]] = None,
         weights: Optional[List[List[int]]] = None,
         biases: Optional[List[int]] = None,
         secret_key_hex: Optional[str] = None,
+        model_digest: Optional[str] = None,
         prover_address: str = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
     ) -> Dict[str, Any]:
         """
         Generate a genuine Groth16 zero-knowledge proof of neural decoder inference.
-        Constrains linear inference, step-activation, image feature commitment,
-        and model weight digest directly in R1CS.
+        Extracts real latent features directly from the input image and model parameters,
+        constraining linear inference, step-activation, and model integrity in R1CS.
         """
+        from backend.zk.features import extract_latent_features_from_image, get_quantized_decoder_parameters
+
+        if image_features is None:
+            if image is not None:
+                image_features = extract_latent_features_from_image(image)
+            else:
+                raise ValueError("Must provide either a suspect image or extracted image_features")
+
+        if weights is None or biases is None:
+            def_w, def_b = get_quantized_decoder_parameters()
+            weights = weights if weights is not None else def_w
+            biases = biases if biases is not None else def_b
+
         if secret_key_hex is None:
             secret_key_hex = secrets.token_hex(16)
         session_nonce = secrets.token_hex(16)
 
+        target_model_digest = model_digest or self.CANONICAL_NEURAL_MODEL_DIGEST
+
         with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as tf:
             input_data = {
-                "imageFeatures": image_features or [142, -58, 210, -95, 320, -15, 88, 175],
-                "weights": weights or [],
-                "biases": biases or [],
+                "imageFeatures": image_features,
+                "weights": weights,
+                "biases": biases,
+                "modelDigest": target_model_digest,
                 "nonceHex": session_nonce,
                 "secretKeyHex": secret_key_hex,
             }
@@ -131,6 +154,10 @@ class ZKProvingEngine:
             cmd = ["node", str(self.runner_script), "neural_prove", input_path]
             res = subprocess.run(cmd, capture_output=True, text=True, check=True)
             output = json.loads(res.stdout)
+
+            # Privacy: never leak private witness or salt to callers
+            output.pop("secret_key_hex", None)
+            output.pop("is_valid", None)
 
             output["public_inputs"]["prover_address"] = prover_address
             output["circuit_version"] = "watermark_neural_inference_v1"
