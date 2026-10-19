@@ -54,6 +54,7 @@ app.include_router(anchors_router, prefix="/api/v1")
 app.include_router(experiments_router, prefix="/api/v1")
 
 
+@app.get("/health")
 @app.get("/api/v1/health")
 async def health_check():
     """Health status and environment capabilities."""

@@ -81,8 +81,8 @@ export const VerifyPage: React.FC = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           payload_hex: decodeResult.payload_hex,
-          image_sha256: decodeResult.payload_hex + '00000000000000000000000000000000000000000000000000000000',
-          prover_address: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
+          image_sha256: decodeResult.image_sha256 || ('0x' + decodeResult.payload_hex.padEnd(64, '0')),
+          prover_address: '0xc3105176265bd16F86d0A3ff61f3aC0fE00e6007',
         }),
       });
 

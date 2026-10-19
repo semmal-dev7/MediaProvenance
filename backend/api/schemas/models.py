@@ -46,6 +46,7 @@ class DecodeResponse(BaseModel):
     log10_likelihood_ratio: Optional[float] = None
     posterior_probability_h1: Optional[float] = None
     inferred_hypothesis: str = "H2"  # H1 (derivative), H0 (unrelated), H2 (indeterminate/undecodable)
+    image_sha256: Optional[str] = None
     error: Optional[str] = None
 
 

@@ -125,6 +125,8 @@ async def decode_watermark(
         posterior_h1 = 1.0
         log10_lr = 25.0
 
+    sha256 = c.image_sha256(image)
+
     return DecodeResponse(
         success=True,
         decodable=dec_res.decodable,
@@ -139,5 +141,6 @@ async def decode_watermark(
         log10_likelihood_ratio=log10_lr,
         posterior_probability_h1=posterior_h1,
         inferred_hypothesis=inferred,
+        image_sha256=sha256,
         error=dec_res.error,
     )
