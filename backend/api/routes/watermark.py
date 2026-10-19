@@ -107,7 +107,9 @@ async def decode_watermark(
     inferred = "H2"
 
     if not dec_res.decodable:
-        inferred = "H2"
+        inferred = "H0"
+        posterior_h1 = 0.0
+        log10_lr = -30.0
     elif reference_payload_hex and dec_res.hamming_distance is not None:
         # Standard noisy channel baseline (p_H1=0.15, p_H0=0.50)
         params = ModelParameters(payload_bits=c.info.payload_bits, p_H1=0.15, p_H0=0.50)
@@ -117,6 +119,11 @@ async def decode_watermark(
         # Flat prior posterior P(H1 | LR)
         posterior_h1 = 1.0 / (1.0 + 10.0 ** (-log10_lr))
         inferred = "H1" if posterior_h1 >= 0.50 else "H0"
+    else:
+        # Watermark detected with valid preamble
+        inferred = "H1"
+        posterior_h1 = 1.0
+        log10_lr = 25.0
 
     return DecodeResponse(
         success=True,

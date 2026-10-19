@@ -224,22 +224,27 @@ class TrustMarkCarrier(BaseCarrier):
         # Compute Hamming distance if reference is provided
         hamming = None
         ber = None
+        decodable = True
         if reference_payload_hex is not None:
             try:
                 hamming = self.hamming_distance(reference_payload_hex, decoded_hex, self._payload_bits)
                 ber = hamming / self._payload_bits
+                if ber > 0.35:
+                    # Random noise baseline is ~50% BER. Anything > 35% is unwatermarked or tampered
+                    decodable = False
             except Exception as e:
                 logger.warning("Hamming distance computation failed: %s", e)
 
         return DecodeResult(
-            payload_hex=decoded_hex,
+            payload_hex=decoded_hex if decodable else None,
             payload_bits=self._payload_bits,
             hamming_distance=hamming,
             bit_error_rate=ber,
-            confidence=float(confidence) if confidence is not None else None,
+            confidence=float(confidence) if confidence is not None else (1.0 - (ber if ber is not None else 0.0)),
             carrier_name=self.info.name,
             carrier_version=self._VERSION,
             elapsed_seconds=elapsed,
+            error=None if decodable else "Watermark mismatch or absent (BER > 35%)",
         )
 
 
