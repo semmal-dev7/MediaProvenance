@@ -301,7 +301,7 @@ class JobManager:
                     ).build_transaction({
                         "from": account.address,
                         "nonce": nonce,
-                        "gas": 90000,
+                        "gas": 700000,
                         "gasPrice": gas_price,
                         "chainId": 11155111,
                     })

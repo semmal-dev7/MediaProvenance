@@ -66,16 +66,33 @@ def test_embed_and_decode():
         print(f"[PASS] 2. Embed HiDDeN-32: PSNR = {res['psnr_db']:.2f} dB, SHA256 = {res['image_sha256'][:16]}...")
         image_sha256 = res["image_sha256"]
 
-    # 2. Test Decode
+    # 2. Test Decode of Watermarked Image
+    import base64
+    wm_bytes = base64.b64decode(res["watermarked_image_base64"].split(",")[1])
+    wm_body = (
+        f"--{boundary}\r\n"
+        f'Content-Disposition: form-data; name="file"; filename="watermarked.png"\r\n'
+        f"Content-Type: image/png\r\n\r\n"
+    ).encode("utf-8") + wm_bytes + (
+        f"\r\n--{boundary}\r\n"
+        f'Content-Disposition: form-data; name="carrier"\r\n\r\n'
+        f"hidden\r\n"
+        f"--{boundary}\r\n"
+        f'Content-Disposition: form-data; name="reference_payload_hex"\r\n\r\n'
+        f"{payload_hex}\r\n"
+        f"--{boundary}--\r\n"
+    ).encode("utf-8")
+
     req2 = urllib.request.Request(
         f"{BASE_URL}/api/v1/watermarks/decode",
-        data=body,
+        data=wm_body,
         headers={"Content-Type": f"multipart/form-data; boundary={boundary}"},
         method="POST",
     )
     with urllib.request.urlopen(req2) as resp:
         res2 = json.loads(resp.read().decode())
         assert res2["success"] is True
+        assert res2["decodable"] is True
         print(f"[PASS] 3. Decode HiDDeN-32: payload = {res2['payload_hex']}, decodable = {res2['decodable']}")
 
     return payload_hex, image_sha256
@@ -86,7 +103,7 @@ def test_proof_lifecycle(payload_hex: str, image_sha256: str):
     submit_data = json.dumps({
         "payload_hex": payload_hex,
         "image_sha256": image_sha256,
-        "prover_address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        "prover_address": "0xc3105176265bd16F86d0A3ff61f3aC0fE00e6007",
     }).encode("utf-8")
 
     req = urllib.request.Request(
@@ -101,7 +118,7 @@ def test_proof_lifecycle(payload_hex: str, image_sha256: str):
         print(f"[PASS] 4. Proof Job Submitted: {job_id}, status = {job['status']}")
 
     # 2. Poll job status until confirmed
-    max_wait = 10
+    max_wait = 40
     confirmed = False
     final_job = None
     for _ in range(max_wait):
