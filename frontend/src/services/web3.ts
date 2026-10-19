@@ -120,6 +120,31 @@ export async function connectMetaMask(): Promise<{ address: string; provider: et
 }
 
 /**
+ * Prompts MetaMask to open the interactive account switcher dialog
+ * using wallet_requestPermissions, allowing the user to select or switch accounts.
+ */
+export async function switchMetaMaskAccount(): Promise<{ address: string; provider: ethers.BrowserProvider; signer: ethers.Signer }> {
+  if (typeof window === 'undefined' || !(window as any).ethereum) {
+    throw new Error('MetaMask is not detected. Please install MetaMask from https://metamask.io');
+  }
+
+  const ethereum = (window as any).ethereum;
+
+  try {
+    await ethereum.request({
+      method: 'wallet_requestPermissions',
+      params: [{ eth_accounts: {} }],
+    });
+  } catch (err: any) {
+    if (err.code === 4001) {
+      throw new Error('Account switch cancelled in MetaMask.');
+    }
+  }
+
+  return connectMetaMask();
+}
+
+/**
  * Publisher Action: Sign and submit proof commitment to Sepolia smart contract.
  * Publisher pays gas in Sepolia ETH.
  */
