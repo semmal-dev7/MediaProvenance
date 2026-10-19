@@ -16,11 +16,11 @@ import numpy as np
 from PIL import Image
 
 
-def extract_latent_features_from_image(image_input: Union[Image.Image, bytes, str, Path]) -> List[int]:
+def extract_latent_features_from_image(image_input: Union[Image.Image, bytes, str, Path], num_features: int = 64) -> List[float]:
     """
-    Extracts 8 quantized latent features from a real suspect image.
-    Divides luminance channel into spatial quadrants, central focal rings,
-    and high-frequency gradient metrics.
+    Extracts 64 normalized latent spatial-frequency features from a real suspect image.
+    Divides luminance channel into 8x8 spatial grid tiles, computing tile-level
+    normalized frequency energy and gradients.
     """
     if isinstance(image_input, (str, Path)):
         img = Image.open(image_input).convert("RGB")
@@ -33,29 +33,23 @@ def extract_latent_features_from_image(image_input: Union[Image.Image, bytes, st
 
     # Standardize resolution for invariant latent extraction
     img = img.resize((128, 128))
-    # Work on luminance Y = 0.299 R + 0.587 G + 0.114 B
     arr = np.array(img, dtype=np.float32)
-    y = 0.299 * arr[:, :, 0] + 0.587 * arr[:, :, 1] + 0.114 * arr[:, :, 2] - 128.0
+    # Work on luminance Y = 0.299 R + 0.587 G + 0.114 B normalized to [-1.0, 1.0]
+    y = (0.299 * arr[:, :, 0] + 0.587 * arr[:, :, 1] + 0.114 * arr[:, :, 2]) / 127.5 - 1.0
 
-    h, w = y.shape
-    # 1-4: Spatial quadrant mean energies
-    q1 = float(y[:h // 2, :w // 2].mean())
-    q2 = float(y[:h // 2, w // 2:].mean())
-    q3 = float(y[h // 2:, :w // 2].mean())
-    q4 = float(y[h // 2:, w // 2:].mean())
+    # Extract 8x8 grid (64 features) of local block mean energies
+    block_h = y.shape[0] // 8
+    block_w = y.shape[1] // 8
+    features: List[float] = []
 
-    # 5-6: Central focal annular regions
-    c1 = float(y[h // 4: 3 * h // 4, w // 4: 3 * w // 4].mean())
-    c2 = float(y[3 * h // 8: 5 * h // 8, 3 * w // 8: 5 * w // 8].mean())
+    for r in range(8):
+        for c in range(8):
+            tile = y[r * block_h: (r + 1) * block_h, c * block_w: (c + 1) * block_w]
+            features.append(float(np.mean(tile)))
 
-    # 7-8: High-frequency differential gradients
-    d1 = float((y[::2, ::2] - y[1::2, 1::2]).mean())
-    d2 = float((y[::2, 1::2] - y[1::2, ::2]).mean())
-
-    raw_features = [q1, q2, q3, q4, c1, c2, d1, d2]
-    # Quantize to integer domain for field arithmetic (-1000 to +1000)
-    quantized = [int(round(f * 4.0)) for f in raw_features]
-    return quantized
+    if len(features) < num_features:
+        features.extend([0.0] * (num_features - len(features)))
+    return features[:num_features]
 
 
 def get_quantized_decoder_parameters() -> Tuple[List[List[int]], List[int]]:

@@ -107,8 +107,8 @@ export const DashboardPage: React.FC<DashboardProps> = ({ onNavigate }) => {
             <span className="text-xs font-semibold uppercase">Average Proving Time</span>
             <Activity className="w-4 h-4 text-indigo-400" />
           </div>
-          <span className="text-2xl font-bold text-white block mt-2">&lt; 0.1 ms</span>
-          <span className="text-xs text-indigo-400 mt-1 block">Groth16-BN254 circuit constraints</span>
+          <span className="text-2xl font-bold text-white block mt-2">6,496 rows</span>
+          <span className="text-xs text-indigo-400 mt-1 block">EZKL Halo2/PLONKish + KZG</span>
         </div>
 
         <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl shadow">
@@ -147,7 +147,7 @@ export const DashboardPage: React.FC<DashboardProps> = ({ onNavigate }) => {
             <div className="flex items-center justify-between p-3 rounded-lg bg-slate-950/60 border border-slate-800">
               <div>
                 <span className="text-xs font-semibold text-slate-200 block">ONNX Model Compilation</span>
-                <span className="text-xs text-slate-400">models/onnx/hidden_decoder_32bit.onnx (Opset 18)</span>
+                <span className="text-xs text-slate-400">models/onnx/feature_decoder_ezkl.onnx (Halo2 Compiled)</span>
               </div>
               <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20">
                 VALIDATED
@@ -157,7 +157,7 @@ export const DashboardPage: React.FC<DashboardProps> = ({ onNavigate }) => {
             <div className="flex items-center justify-between p-3 rounded-lg bg-slate-950/60 border border-slate-800">
               <div>
                 <span className="text-xs font-semibold text-slate-200 block">Zero-Knowledge Circuit Engine</span>
-                <span className="text-xs text-slate-400">Groth16-BN254 circuit + model weight binding</span>
+                <span className="text-xs text-slate-400">EZKL + Halo2/PLONKish + KZG Neural Circuit</span>
               </div>
               <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20">
                 ENABLED

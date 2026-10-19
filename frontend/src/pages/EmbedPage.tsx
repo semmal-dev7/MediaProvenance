@@ -65,7 +65,7 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
     setPublisherTxResult(null);
 
     try {
-      setPublishStep('1/2 Generating ZK Groth16 Proof...');
+      setPublishStep('1/2 Generating EZKL Halo2/PLONKish + KZG Proof...');
       const genRes = await fetch('/api/v1/proofs/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
