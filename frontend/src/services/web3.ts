@@ -149,20 +149,18 @@ export async function anchorWithMetaMask(
   try {
     const existing = await contract.records(formattedAssetId);
     if (existing && existing.exists) {
-      return {
-        txHash: 'Already Anchored On-Chain',
-        blockNumber: 0,
-        gasUsed: '0',
-        submitter: existing.submitter,
-        etherscanUrl: `https://sepolia.etherscan.io/address/${PROVENANCE_ANCHOR_ADDRESS}`,
-        alreadyAnchored: true,
-      };
+      throw new Error(
+        `This image (assetId: ${formattedAssetId.slice(0, 10)}...) is ALREADY anchored on Sepolia by ${existing.submitter.slice(0, 6)}...${existing.submitter.slice(-4)}. Smart contract rules forbid duplicate registrations. Please click 'Random' to generate a new payload or select a new image to publish with your connected account.`
+      );
     }
-  } catch (checkErr) {
-    // If check fails due to RPC, continue to contract call
+  } catch (checkErr: any) {
+    if (checkErr?.message?.includes('ALREADY anchored')) {
+      throw checkErr;
+    }
+    // If check fails due to RPC network error, continue to contract call
   }
 
-  // Send transaction through MetaMask
+  // Send transaction through MetaMask (Connected account pays gas)
   let tx;
   try {
     tx = await contract.anchor(formattedAssetId, formattedCommitment);
@@ -172,20 +170,9 @@ export async function anchorWithMetaMask(
       txErr?.data?.includes("Already anchored") ||
       txErr?.reason === "Already anchored"
     ) {
-      // Fetch existing record to display gracefully
-      try {
-        const existing = await contract.records(formattedAssetId);
-        return {
-          txHash: 'Already Anchored On-Chain',
-          blockNumber: 0,
-          gasUsed: '0',
-          submitter: existing?.submitter || address,
-          etherscanUrl: `https://sepolia.etherscan.io/address/${PROVENANCE_ANCHOR_ADDRESS}`,
-          alreadyAnchored: true,
-        };
-      } catch {
-        throw new Error('This image has already been anchored on Ethereum Sepolia. Each unique image digest can only be anchored once into the tamper-proof registry.');
-      }
+      throw new Error(
+        'This image has already been anchored on Ethereum Sepolia. To submit a new transaction and pay gas with your connected account, please click "Random" payload above to embed a fresh unique watermark.'
+      );
     }
     throw txErr;
   }

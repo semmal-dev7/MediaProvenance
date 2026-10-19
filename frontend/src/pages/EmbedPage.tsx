@@ -93,6 +93,8 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
   };
 
   const handleGeneratePayload = () => {
+    setPublisherTxResult(null);
+    setPublisherTxError(null);
     if (carrier === 'hidden') {
       // 32-bit: 8 hex chars
       const val = Math.floor(Math.random() * 0xffffffff);
@@ -110,6 +112,8 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
 
   const handleCarrierChange = (newCarrier: 'hidden' | 'trustmark') => {
     setCarrier(newCarrier);
+    setPublisherTxResult(null);
+    setPublisherTxError(null);
     if (newCarrier === 'hidden') {
       setPayloadHex('a1b2c3d4');
     } else {
@@ -124,6 +128,8 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
       setPreview(URL.createObjectURL(f));
       setWatermarkedImg(null);
       setEmbedResult(null);
+      setPublisherTxResult(null);
+      setPublisherTxError(null);
       setError(null);
     }
   };
@@ -139,6 +145,8 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
     }
     setLoading(true);
     setError(null);
+    setPublisherTxResult(null);
+    setPublisherTxError(null);
 
     try {
       const formData = new FormData();
