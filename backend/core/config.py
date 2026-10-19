@@ -33,14 +33,17 @@ class Settings(BaseSettings):
     TRUSTMARK_VARIANT: str = "Q"
     TRUSTMARK_PAYLOAD_BITS: int = 100
 
-    # Blockchain
-    ETH_RPC_URL: str = "http://127.0.0.1:8545"
-    CHAIN_ID: int = 31337
-    AUDIT_CONTRACT_ADDRESS: str = ""
+    # Sepolia Testnet
+    SEPOLIA_RPC_URL: str = "https://ethereum-sepolia-rpc.publicnode.com"
+    SEPOLIA_PRIVATE_KEY: str = ""
+    ETHERSCAN_API_KEY: str = ""
+    PROVENANCE_ANCHOR_ADDRESS: str = ""
+    PROVENANCE_AUDIT_ADDRESS: str = ""
 
     class Config:
         case_sensitive = True
         env_file = ".env"
+        extra = "allow"
 
 
 settings = Settings()
