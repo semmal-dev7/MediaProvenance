@@ -23,8 +23,12 @@ import json
 import time
 import hashlib
 import urllib.request
+from pathlib import Path
 from PIL import Image
 from web3 import Web3
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
 from backend.core.config import settings
 
 # UTF-8 terminal output safety
