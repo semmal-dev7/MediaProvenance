@@ -56,6 +56,20 @@ export function formatBytes32(hex: string): string {
   return '0x' + clean.padStart(64, '0');
 }
 
+export async function getConnectedAccount(): Promise<string | null> {
+  if (typeof window === 'undefined' || !(window as any).ethereum) {
+    return null;
+  }
+  try {
+    const ethereum = (window as any).ethereum;
+    const provider = new ethers.BrowserProvider(ethereum);
+    const accounts = await provider.listAccounts();
+    return accounts.length > 0 ? accounts[0].address : null;
+  } catch {
+    return null;
+  }
+}
+
 /**
  * Connects to user's MetaMask extension, switching to Sepolia if needed.
  */

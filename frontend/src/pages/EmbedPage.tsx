@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Upload, Cpu, Download, ArrowRight, ShieldCheck, RefreshCw, CheckCircle, Image as ImageIcon } from 'lucide-react';
-import { connectMetaMask, anchorWithMetaMask } from '../services/web3';
+import React, { useState, useEffect } from 'react';
+import { Upload, Cpu, Download, ArrowRight, ShieldCheck, RefreshCw, CheckCircle, Image as ImageIcon, Wallet, AlertCircle } from 'lucide-react';
+import { connectMetaMask, anchorWithMetaMask, getConnectedAccount } from '../services/web3';
 
 interface EmbedPageProps {
   onProceedToVerify?: (imageFile: File, payloadHex: string) => void;
@@ -23,6 +23,27 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
   const [publishStep, setPublishStep] = useState<string>('');
   const [publisherTxResult, setPublisherTxResult] = useState<any | null>(null);
   const [publisherTxError, setPublisherTxError] = useState<string | null>(null);
+
+  // Check if MetaMask is already connected on mount & listen to account changes
+  useEffect(() => {
+    getConnectedAccount().then((addr) => {
+      if (addr) setPublisherAccount(addr);
+    });
+
+    if (typeof window !== 'undefined' && (window as any).ethereum) {
+      const handleAccounts = (accounts: string[]) => {
+        if (accounts.length > 0) {
+          setPublisherAccount(accounts[0]);
+        } else {
+          setPublisherAccount(null);
+        }
+      };
+      (window as any).ethereum.on('accountsChanged', handleAccounts);
+      return () => {
+        (window as any).ethereum?.removeListener('accountsChanged', handleAccounts);
+      };
+    }
+  }, []);
 
   const handleConnectMetaMask = async () => {
     setIsConnectingWallet(true);
@@ -108,6 +129,10 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
   };
 
   const handleEmbed = async () => {
+    if (!publisherAccount) {
+      setError('MetaMask wallet required: Please connect your MetaMask account to identify yourself as the publisher.');
+      return;
+    }
     if (!file) {
       setError('Please select an image file first.');
       return;
@@ -164,6 +189,55 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
           <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider">
             1. Carrier &amp; Payload Settings
           </h3>
+
+          {/* Publisher MetaMask Account Status & Connect Button */}
+          <div className={`p-3.5 rounded-xl border transition ${
+            publisherAccount 
+              ? 'bg-emerald-500/10 border-emerald-500/30' 
+              : 'bg-amber-500/10 border-amber-500/30'
+          }`}>
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="flex items-center gap-1.5 text-xs font-bold text-slate-200">
+                <Wallet className={`w-4 h-4 ${publisherAccount ? 'text-emerald-400' : 'text-amber-400'}`} />
+                Publisher Identity (MetaMask)
+              </span>
+              {publisherAccount ? (
+                <span className="text-[10px] px-2 py-0.5 rounded-full font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1">
+                  <CheckCircle className="w-3 h-3" /> Connected
+                </span>
+              ) : (
+                <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                  Required
+                </span>
+              )}
+            </div>
+
+            {publisherAccount ? (
+              <div className="space-y-1">
+                <p className="text-[11px] text-slate-400">
+                  Authenticated publisher address:
+                </p>
+                <div className="font-mono text-xs text-emerald-300 bg-slate-950/80 p-1.5 rounded border border-slate-800 break-all select-all">
+                  {publisherAccount}
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                <p className="text-[11px] text-slate-400 leading-snug">
+                  The image uploader must connect their MetaMask account to bind provenance and authorize the Sepolia publisher contract.
+                </p>
+                <button
+                  type="button"
+                  onClick={handleConnectMetaMask}
+                  disabled={isConnectingWallet}
+                  className="w-full py-2 px-3 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 shadow transition disabled:opacity-50"
+                >
+                  <Wallet className="w-3.5 h-3.5" />
+                  {isConnectingWallet ? 'Connecting MetaMask...' : 'Connect MetaMask (Sepolia)'}
+                </button>
+              </div>
+            )}
+          </div>
 
           {/* Carrier Selection */}
           <div>
@@ -249,9 +323,9 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
           {/* Embed Button */}
           <button
             onClick={handleEmbed}
-            disabled={!file || loading}
+            disabled={!file || loading || !publisherAccount}
             className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow transition ${
-              !file || loading
+              !file || loading || !publisherAccount
                 ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
                 : 'bg-blue-600 hover:bg-blue-500 text-white shadow-blue-500/20'
             }`}
@@ -260,6 +334,11 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
               <>
                 <RefreshCw className="w-4 h-4 animate-spin" />
                 Embedding Watermark...
+              </>
+            ) : !publisherAccount ? (
+              <>
+                <Wallet className="w-4 h-4" />
+                Connect MetaMask to Embed
               </>
             ) : (
               <>
