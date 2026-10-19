@@ -1,0 +1,63 @@
+{
+  "experiment_id": "ablation_study_v1",
+  "timestamp": 1792386204.116642,
+  "total_trials": 40,
+  "configurations": {
+    "A": {
+      "name": "Decoder Baseline",
+      "description": "Raw neural payload recovery without cryptographic verification",
+      "watermark": true,
+      "zk_proof": false,
+      "blockchain_anchor": false,
+      "mean_psnr_db": 26.781,
+      "mean_ber": 0.49375,
+      "mean_proving_time_ms": 0.0,
+      "mean_verification_time_ms": 0.0,
+      "proof_size_bytes": 0,
+      "gas_used": 0,
+      "mean_total_latency_ms": 42.065999999999995
+    },
+    "B": {
+      "name": "ZK Baseline",
+      "description": "Model-private proof generation & verification without public anchor",
+      "watermark": true,
+      "zk_proof": true,
+      "blockchain_anchor": false,
+      "mean_psnr_db": 26.781,
+      "mean_ber": 0.49375,
+      "mean_proving_time_ms": 0.10500000000000001,
+      "mean_verification_time_ms": 0.0068000000000000005,
+      "proof_size_bytes": 341,
+      "gas_used": 0,
+      "mean_total_latency_ms": 38.552
+    },
+    "C": {
+      "name": "Anchor Baseline",
+      "description": "Public tamper-evident anchoring without zero-knowledge verification",
+      "watermark": true,
+      "zk_proof": false,
+      "blockchain_anchor": true,
+      "mean_psnr_db": 26.781,
+      "mean_ber": 0.49375,
+      "mean_proving_time_ms": 0.0,
+      "mean_verification_time_ms": 0.0,
+      "proof_size_bytes": 0,
+      "gas_used": 45280,
+      "mean_total_latency_ms": 38.589000000000006
+    },
+    "D": {
+      "name": "Full Pipeline",
+      "description": "End-to-end integration: watermark + ZK proof + blockchain anchor",
+      "watermark": true,
+      "zk_proof": true,
+      "blockchain_anchor": true,
+      "mean_psnr_db": 26.781,
+      "mean_ber": 0.49375,
+      "mean_proving_time_ms": 0.06799999999999999,
+      "mean_verification_time_ms": 0.0063,
+      "proof_size_bytes": 341,
+      "gas_used": 45280,
+      "mean_total_latency_ms": 40.584999999999994
+    }
+  }
+}

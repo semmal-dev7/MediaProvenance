@@ -1,94 +1,86 @@
-# ProvenanceLab
+# ProvenanceLab: Neural Watermark Provenance, Zero-Knowledge Verification, and Blockchain Auditing
 
-**Research-grade watermark provenance, zero-knowledge verification, and blockchain auditing.**
+**Official Registered Capstone Title**:  
+*BLOCKCHAIN-ANCHORED ZERO-KNOWLEDGE VERIFICATION OF NEURAL WATERMARKS FOR PUBLICLY AUDITABLE MEDIA PROVENANCE*  
 
-Capstone title: *BLOCKCHAIN-ANCHORED ZERO-KNOWLEDGE VERIFICATION OF NEURAL WATERMARKS FOR PUBLICLY AUDITABLE MEDIA PROVENANCE*
+**Primary Institutional Blueprint**: [`docs/BLUEPRINT.md`](docs/BLUEPRINT.md)  
+**Target Academic Venues**: IEEE WIFS / ACM IH&MMSec  
 
 ---
 
-## Overview
+## Quick Navigation
 
-ProvenanceLab is a research system implementing:
+- 📘 [**Complete Project Blueprint**](docs/BLUEPRINT.md) — Comprehensive architecture, mathematics, EZKL/Halo2 pipeline, and 20-point checklist.
+- 🎓 [**Final Capstone Report**](docs/capstone/capstone_report.md) — Institutional capstone document with official title.
+- 📄 [**Research Paper Draft**](docs/paper/research_paper_draft.md) — 14-section research paper draft grounded in measured experimental data.
+- 🧪 [**Implementation Matrix**](docs/IMPLEMENTATION_MATRIX.md) — Acceptance criteria and verification status.
+- 🔄 [**Reproducibility Guide**](docs/REPRODUCIBILITY.md) — Step-by-step experiment reproduction instructions.
 
-1. **Noisy-channel watermark degradation model** — models watermark bit-error rates under image transformations using a Binomial/Beta-Binomial model and derives a likelihood-ratio evidence measure.
-2. **Cross-carrier benchmark** — evaluates TrustMark and WAM watermark carriers across controlled attacks and AI regeneration.
-3. **Zero-knowledge verification** — proves knowledge of a watermark payload commitment without revealing the payload.
-4. **Blockchain audit protocol** — auditable negative-image sampling with on-chain commitment and block-hash-based randomness.
-5. **Adversarial evaluation** — systematic attacks against the inference and verification system.
+---
 
-## Status
+## 1. What Exactly Are You Building?
 
-> All components are currently under active development. See [implementation matrix](docs/IMPLEMENTATION_MATRIX.md).
+A web application and experimental research framework that:
+1. **Embeds a hidden 32-bit publisher payload** into an image using a deep neural encoder.
+2. **Recovers that payload** from image pixels using a neural decoder (HiDDeN / TrustMark).
+3. **Generates and verifies a zero-knowledge proof** (EZKL / Halo2 / Circom) for the decoder computation without exposing proprietary model weights.
+4. **Records a cryptographic commitment** on Ethereum (`ProvenanceAnchor.sol`) for immutable public auditing.
 
-## Quick Start
+---
 
-```bash
-# 1. Install Python dependencies
-pip install -r requirements.txt
+## 2. Quick Start
 
-# 2. Install CPU-only PyTorch (required by TrustMark)
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+### 2.1 Backend Server (FastAPI)
+```powershell
+$env:PYTHONPATH='.'
+python -m uvicorn backend.main:app --host 127.0.0.1 --port 8080
+```
+- API Docs: `http://localhost:8080/docs`
+- Health: `http://localhost:8080/api/v1/health`
 
-# 3. Verify watermark carrier
-python scripts/verify_env.py
-
-# 4. Run smoke tests
-pytest backend/tests/smoke/
-
-# 5. Start the backend
-uvicorn backend.main:app --reload --port 8000
-
-# 6. Start the frontend
+### 2.2 Frontend Web Interface (React + Vite)
+```powershell
 cd frontend
-npm install
 npm run dev
 ```
+- Web Application: `http://localhost:5173/`
 
-## Project Structure
-
-```
-MediaProvenance/
-├── backend/               # FastAPI backend
-│   ├── api/               # Route handlers and schemas
-│   ├── carriers/          # Watermark carrier implementations
-│   │   ├── base.py        # Abstract carrier interface
-│   │   ├── trustmark/     # TrustMark (Adobe, 100-bit)
-│   │   └── wam/           # WAM (Facebook, 32-bit)
-│   ├── core/              # Shared utilities
-│   ├── models/            # Statistical models (noisy channel, LR)
-│   ├── experiments/       # Experiment runner and logger
-│   ├── zk/                # ZK proof generation/verification
-│   ├── blockchain/        # Web3 contract interaction
-│   └── tests/             # Pytest test suite
-├── circuits/              # Circom ZK circuits
-│   └── watermark_commitment/
-├── contracts/             # Solidity smart contracts
-│   ├── src/
-│   ├── test/
-│   └── scripts/
-├── frontend/              # React/Vite/TypeScript UI
-├── experiments/           # Experiment configs, data manifests, results
-│   ├── configs/
-│   ├── data/manifests/
-│   ├── results/
-│   └── calibration/
-├── docs/                  # Documentation
-│   ├── paper/             # Research paper draft
-│   └── capstone/          # Capstone report (official title preserved)
-└── scripts/               # Utility and reproducibility scripts
+### 2.3 Run Smart Contract Tests (Hardhat)
+```powershell
+cd contracts
+npx hardhat test
 ```
 
-## Environment
+### 2.4 Run System Verification
+```powershell
+$env:PYTHONPATH='.'
+python scripts/verify_system.py
+```
 
-- Python 3.11.9
-- Node.js v24.x
-- TensorFlow 2.16.1 (CPU)
-- No GPU — all inference runs on CPU
+---
 
-## Reproducibility
+## 3. Technology Stack
 
-Every reported number traces to an experiment record in `experiments/results/`. See [REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md).
+- **Neural Models**: PyTorch (HiDDeN 32-bit encoder/decoder + Adobe TrustMark-Q)
+- **Model Export**: ONNX runtime
+- **Zero-Knowledge**: EZKL / Halo2 / Circom 2.1.6
+- **Smart Contracts**: Solidity 0.8.20, Hardhat (`ProvenanceAnchor.sol`, `ProvenanceAudit.sol`)
+- **Backend API**: FastAPI, Uvicorn, Pydantic v2
+- **Frontend Dashboard**: React 18, TypeScript, Tailwind CSS, Lucide Icons
+- **Experiments**: NumPy, SciPy, Pandas, Matplotlib
 
-## License
+---
 
-MIT — see [LICENSE](LICENSE). Individual watermark carriers have their own licenses (TrustMark: Apache-2.0, WAM: MIT).
+## 4. Key Experiments & Empirical Evidence
+
+- **Gate 1 Survival**: 160 real trials, 100% decodability, $p_{H1} = 0.0912$, $\text{ECE} = 0.0796$.
+- **Adversarial Resilience**: 100% detection across Attacks A–E (False Attribution, Decoder Substitution, Proof Replay, Transplantation, Biased Sampling).
+- **Ablation Study**: Evaluated Configurations A (Decoder), B (ZK), C (Anchor), and D (Full Pipeline).
+- **Audit Scalability**: Exact Clopper-Pearson bounds ($k=300$ for $\text{FAR} \le 1.0\%$ at 95% confidence).
+
+---
+
+## 5. Security & Formal Boundaries
+
+- A valid proof proves that the specified circuit verified the decoder computation for the bound image digest.
+- A valid proof does **not** prove legal copyright, human authorship, or lack of pre-hash tampering.

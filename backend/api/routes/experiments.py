@@ -44,6 +44,7 @@ async def run_experiment_endpoint(req: RunExperimentRequest):
         raise HTTPException(status_code=500, detail=f"Experiment run failed: {e}")
 
 
+@router.get("")
 @router.get("/list")
 async def list_experiments():
     """List all completed experiment result summaries."""
@@ -54,7 +55,7 @@ async def list_experiments():
     files = [f for f in os.listdir(results_dir) if f.endswith("_summary.json")]
     summaries = []
     import json
-    for f in files:
+    for f in sorted(files, reverse=True):
         try:
             with open(os.path.join(results_dir, f), "r", encoding="utf-8") as fp:
                 summaries.append(json.load(fp))

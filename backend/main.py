@@ -14,7 +14,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from backend.api.routes.experiments import router as experiments_router
-from backend.api.routes.watermark import router as watermark_router
+from backend.api.routes.watermark import router as watermark_router, watermarks_router
+from backend.api.routes.proofs import router as proofs_router, jobs_router
+from backend.api.routes.anchors import router as anchors_router
 from backend.core.config import settings
 
 # Setup logging
@@ -45,6 +47,10 @@ app.add_middleware(
 
 # Include routers
 app.include_router(watermark_router, prefix="/api/v1")
+app.include_router(watermarks_router, prefix="/api/v1")
+app.include_router(proofs_router, prefix="/api/v1")
+app.include_router(jobs_router, prefix="/api/v1")
+app.include_router(anchors_router, prefix="/api/v1")
 app.include_router(experiments_router, prefix="/api/v1")
 
 

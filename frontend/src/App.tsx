@@ -1,27 +1,28 @@
 import React, { useState } from 'react';
-import { WatermarkStudio } from './components/WatermarkStudio';
-import { SurvivalDashboard } from './components/SurvivalDashboard';
-import { AdversarialMatrix } from './components/AdversarialMatrix';
-import { BlockchainAuditPanel } from './components/BlockchainAuditPanel';
-import { Shield, Activity, Crosshair, Blocks, BookOpen } from 'lucide-react';
+import { DashboardPage } from './pages/DashboardPage';
+import { EmbedPage } from './pages/EmbedPage';
+import { VerifyPage } from './pages/VerifyPage';
+import { BlockchainAuditPage } from './pages/BlockchainAuditPage';
+import { ExperimentsPage } from './pages/ExperimentsPage';
+import { Shield, Activity, Crosshair, Blocks, BookOpen, Cpu, CheckCircle2, LayoutDashboard } from 'lucide-react';
 
 export const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'studio' | 'survival' | 'adversarial' | 'blockchain' | 'publications'>('studio');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'embed' | 'verify' | 'audit' | 'experiments' | 'publications'>('dashboard');
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
       {/* Top Banner / Capstone Registered Title */}
-      <header className="bg-slate-900 border-b border-slate-800 py-4 px-6 sticky top-0 z-50 shadow-md">
+      <header className="bg-slate-900 border-b border-slate-800 py-3.5 px-6 sticky top-0 z-50 shadow-md">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
               <h1 className="text-lg font-bold text-white tracking-tight">ProvenanceLab</h1>
               <span className="text-xs bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2 py-0.5 rounded font-mono">
-                v0.1.0-research
+                v1.0.0-blueprint
               </span>
             </div>
-            <p className="text-xs text-slate-400 mt-1 max-w-3xl leading-relaxed">
+            <p className="text-xs text-slate-400 mt-0.5 max-w-3xl leading-relaxed">
               <span className="text-slate-500 uppercase font-semibold">Official Capstone:</span>{' '}
               <strong className="text-slate-200">
                 BLOCKCHAIN-ANCHORED ZERO-KNOWLEDGE VERIFICATION OF NEURAL WATERMARKS FOR PUBLICLY AUDITABLE MEDIA PROVENANCE
@@ -29,62 +30,73 @@ export const App: React.FC = () => {
             </p>
           </div>
 
-          {/* Navigation Tabs */}
-          <nav className="flex items-center gap-1 bg-slate-950/80 p-1 rounded-xl border border-slate-800 self-start md:self-auto overflow-x-auto max-w-full">
+          {/* Navigation Tabs (5 Core Pages + Publication) */}
+          <nav className="flex items-center gap-1 bg-slate-950/90 p-1 rounded-xl border border-slate-800 self-start md:self-auto overflow-x-auto max-w-full">
             <button
-              onClick={() => setActiveTab('studio')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition ${
-                activeTab === 'studio'
+              onClick={() => setActiveTab('dashboard')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                activeTab === 'dashboard'
                   ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
               }`}
             >
-              <Shield className="w-3.5 h-3.5" />
-              Watermark Studio
+              <LayoutDashboard className="w-3.5 h-3.5" />
+              Dashboard
             </button>
             <button
-              onClick={() => setActiveTab('survival')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition ${
-                activeTab === 'survival'
+              onClick={() => setActiveTab('embed')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                activeTab === 'embed'
                   ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
               }`}
             >
-              <Activity className="w-3.5 h-3.5" />
-              Gate 1 Survival
+              <Cpu className="w-3.5 h-3.5" />
+              Embed Watermark
             </button>
             <button
-              onClick={() => setActiveTab('adversarial')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition ${
-                activeTab === 'adversarial'
+              onClick={() => setActiveTab('verify')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                activeTab === 'verify'
                   ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
               }`}
             >
-              <Crosshair className="w-3.5 h-3.5" />
-              Adversarial Suite
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              Verify Image
             </button>
             <button
-              onClick={() => setActiveTab('blockchain')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition ${
-                activeTab === 'blockchain'
+              onClick={() => setActiveTab('audit')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                activeTab === 'audit'
                   ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
               }`}
             >
               <Blocks className="w-3.5 h-3.5" />
               Blockchain Audit
             </button>
             <button
+              onClick={() => setActiveTab('experiments')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                activeTab === 'experiments'
+                  ? 'bg-blue-600 text-white shadow-sm'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+              }`}
+            >
+              <Activity className="w-3.5 h-3.5" />
+              Experiments &amp; Ablation
+            </button>
+            <button
               onClick={() => setActiveTab('publications')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
                 activeTab === 'publications'
                   ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
               }`}
             >
               <BookOpen className="w-3.5 h-3.5" />
-              Research Paper
+              Paper Draft
             </button>
           </nav>
         </div>
@@ -92,10 +104,11 @@ export const App: React.FC = () => {
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-7xl w-full mx-auto p-6">
-        {activeTab === 'studio' && <WatermarkStudio />}
-        {activeTab === 'survival' && <SurvivalDashboard />}
-        {activeTab === 'adversarial' && <AdversarialMatrix />}
-        {activeTab === 'blockchain' && <BlockchainAuditPanel />}
+        {activeTab === 'dashboard' && <DashboardPage onNavigate={(tab: any) => setActiveTab(tab)} />}
+        {activeTab === 'embed' && <EmbedPage onProceedToVerify={() => setActiveTab('verify')} />}
+        {activeTab === 'verify' && <VerifyPage />}
+        {activeTab === 'audit' && <BlockchainAuditPage />}
+        {activeTab === 'experiments' && <ExperimentsPage />}
         {activeTab === 'publications' && (
           <div className="bg-slate-900 border border-slate-800 rounded-xl p-8 max-w-4xl mx-auto shadow-2xl space-y-6">
             <div className="border-b border-slate-800 pb-4">
@@ -118,14 +131,11 @@ export const App: React.FC = () => {
                 trusting a centralized oracle or exposing sensitive watermark payloads. In this paper, we formulate a
                 rigorous noisy-channel model of neural-watermark degradation under realistic image transformations,
                 characterizing bit degradation via Binomial and Beta-Binomial channels with empirical Platt calibration.
-                We evaluate our model across 160 real neural watermark trials on the 100-bit Adobe Research TrustMark
-                architecture under controlled JPEG, blur, cropping, additive noise, and AI regeneration attacks.
-                Our empirical results establish a baseline channel bit-error rate of p_H1 = 0.0912 with an Expected
-                Calibration Error (ECE) of 0.0796 on held-out test data. Furthermore, we design a zero-knowledge
-                payload commitment scheme binding watermark verification to suspect image digests without leaking the
-                secret payload, anchored to an auditable commit-reveal blockchain sampling protocol. Adversarial testing
-                across five attack vectors achieves a 100% detection rate against unauthorized decoder substitution,
-                proof replay, and biased audit selection.
+              </p>
+              <p>
+                We demonstrate that the empirical degradation satisfies Gate 1 survival requirements (100% decodability across 160 trials),
+                formalize a Zero-Knowledge payload commitment protocol satisfying strict non-repudiation while keeping model weights confidential,
+                and deploy an on-chain commitment registry (<code className="text-amber-300 font-mono">ProvenanceAnchor.sol</code>) with fixed $O(1)$ gas complexity.
               </p>
             </div>
           </div>
@@ -133,8 +143,10 @@ export const App: React.FC = () => {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-slate-900 bg-slate-950 py-4 px-6 text-center text-xs text-slate-500">
-        ProvenanceLab Scientific Workspace &bull; Grounded in Real Measured Observations &bull; All Rights Reserved
+      <footer className="border-t border-slate-800/80 bg-slate-900/60 py-4 px-6 text-center text-xs text-slate-500">
+        <p>
+          ProvenanceLab Experimental Framework · Institutional Final-Year Capstone (BCSE497J) · Vit University
+        </p>
       </footer>
     </div>
   );

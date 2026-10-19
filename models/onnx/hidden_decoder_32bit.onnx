@@ -1,0 +1,344 @@
+
+pytorch
+2.14.1+cpu:Ìã
+ˆ
+image_tensor
+conv1.conv.weightgetitemnode_Conv_69"Conv*
+auto_pad"NOTSET†*
+	dilations@@†*
+group†*
+kernel_shape@@†*
+pads@@@@†*
+strides@@†JÙ
+	namespaceÊ: backend.carriers.hidden.model.HiddenDecoder/conv1: backend.carriers.hidden.model.ConvBNRelu/conv1.bn: torch.nn.modules.batchnorm.BatchNorm2d/_native_batch_norm_legit_no_training: aten._native_batch_norm_legit_no_training.defaultJr
+!pkg.onnxscript.rewriter.rule_nameMRemoveOptionalBiasFromConv, FuseBatchNormIntoConv, RemoveOptionalBiasFromConvJ›
+pkg.torch.onnx.class_hierarchy∫['backend.carriers.hidden.model.HiddenDecoder', 'backend.carriers.hidden.model.ConvBNRelu', 'torch.nn.modules.batchnorm.BatchNorm2d', 'aten._native_batch_norm_legit_no_training.default']J®
+pkg.torch.onnx.fx_nodeç%_native_batch_norm_legit_no_training : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv2d, %p_conv1_bn_weight, %p_conv1_bn_bias, %b_conv1_bn_running_mean, %b_conv1_bn_running_var, 0.1, 1e-05), kwargs = {})J_
+pkg.torch.onnx.name_scopesA['', 'conv1', 'conv1.bn', '_native_batch_norm_legit_no_training']JÈ
+pkg.torch.onnx.stack_trace File "D:\MediaProvenance\backend\carriers\hidden\model.py", line 101, in forward
+    x = self.conv1(image)
+  File "D:\MediaProvenance\backend\carriers\hidden\model.py", line 27, in forward
+    return self.relu(self.bn(self.conv(x)))
+  File "C:\Users\SEMMAL\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\torch\nn\modules\batchnorm.py", line 210, in forward
+    return F.batch_norm(
+⁄
+getitemrelu	node_relu"ReluJ∞
+	namespace¢: backend.carriers.hidden.model.HiddenDecoder/conv1: backend.carriers.hidden.model.ConvBNRelu/conv1.relu: torch.nn.modules.activation.ReLU/relu: aten.relu.defaultJ∑
+pkg.torch.onnx.class_hierarchyî['backend.carriers.hidden.model.HiddenDecoder', 'backend.carriers.hidden.model.ConvBNRelu', 'torch.nn.modules.activation.ReLU', 'aten.relu.default']JÑ
+pkg.torch.onnx.fx_nodej%relu : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%getitem,), kwargs = {})JA
+pkg.torch.onnx.name_scopes#['', 'conv1', 'conv1.relu', 'relu']JÄ
+pkg.torch.onnx.stack_trace·File "D:\MediaProvenance\backend\carriers\hidden\model.py", line 101, in forward
+    x = self.conv1(image)
+  File "D:\MediaProvenance\backend\carriers\hidden\model.py", line 27, in forward
+    return self.relu(self.bn(self.conv(x)))
+  File "C:\Users\SEMMAL\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\torch\nn\modules\activation.py", line 143, in forward
+    return F.relu(input, inplace=self.inplace)
+Ù
+relu
+conv2.conv.weight	getitem_3node_Conv_72"Conv*
+auto_pad"NOTSET†*
+	dilations@@†*
+group†*
+kernel_shape@@†*
+pads@@@@†*
+strides@@†Jˆ
+	namespaceË: backend.carriers.hidden.model.HiddenDecoder/conv2: backend.carriers.hidden.model.ConvBNRelu/conv2.bn: torch.nn.modules.batchnorm.BatchNorm2d/_native_batch_norm_legit_no_training_1: aten._native_batch_norm_legit_no_training.defaultJr
+!pkg.onnxscript.rewriter.rule_nameMRemoveOptionalBiasFromConv, FuseBatchNormIntoConv, RemoveOptionalBiasFromConvJ›
+pkg.torch.onnx.class_hierarchy∫['backend.carriers.hidden.model.HiddenDecoder', 'backend.carriers.hidden.model.ConvBNRelu', 'torch.nn.modules.batchnorm.BatchNorm2d', 'aten._native_batch_norm_legit_no_training.default']J¨
+pkg.torch.onnx.fx_nodeë%_native_batch_norm_legit_no_training_1 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv2d_1, %p_conv2_bn_weight, %p_conv2_bn_bias, %b_conv2_bn_running_mean, %b_conv2_bn_running_var, 0.1, 1e-05), kwargs = {})Ja
+pkg.torch.onnx.name_scopesC['', 'conv2', 'conv2.bn', '_native_batch_norm_legit_no_training_1']JÂ
+pkg.torch.onnx.stack_trace∆File "D:\MediaProvenance\backend\carriers\hidden\model.py", line 102, in forward
+    x = self.conv2(x)
+  File "D:\MediaProvenance\backend\carriers\hidden\model.py", line 27, in forward
+    return self.relu(self.bn(self.conv(x)))
+  File "C:\Users\SEMMAL\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\torch\nn\modules\batchnorm.py", line 210, in forward
+    return F.batch_norm(
+‰
+	getitem_3relu_1node_relu_1"ReluJ≤
+	namespace§: backend.carriers.hidden.model.HiddenDecoder/conv2: backend.carriers.hidden.model.ConvBNRelu/conv2.relu: torch.nn.modules.activation.ReLU/relu_1: aten.relu.defaultJ∑
+pkg.torch.onnx.class_hierarchyî['backend.carriers.hidden.model.HiddenDecoder', 'backend.carriers.hidden.model.ConvBNRelu', 'torch.nn.modules.activation.ReLU', 'aten.relu.default']Jà
+pkg.torch.onnx.fx_noden%relu_1 : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%getitem_3,), kwargs = {})JC
+pkg.torch.onnx.name_scopes%['', 'conv2', 'conv2.relu', 'relu_1']J¸
+pkg.torch.onnx.stack_trace›File "D:\MediaProvenance\backend\carriers\hidden\model.py", line 102, in forward
+    x = self.conv2(x)
+  File "D:\MediaProvenance\backend\carriers\hidden\model.py", line 27, in forward
+    return self.relu(self.bn(self.conv(x)))
+  File "C:\Users\SEMMAL\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\torch\nn\modules\activation.py", line 143, in forward
+    return F.relu(input, inplace=self.inplace)
+ˆ
+relu_1
+conv3.conv.weight	getitem_6node_Conv_75"Conv*
+auto_pad"NOTSET†*
+	dilations@@†*
+group†*
+kernel_shape@@†*
+pads@@@@†*
+strides@@†Jˆ
+	namespaceË: backend.carriers.hidden.model.HiddenDecoder/conv3: backend.carriers.hidden.model.ConvBNRelu/conv3.bn: torch.nn.modules.batchnorm.BatchNorm2d/_native_batch_norm_legit_no_training_2: aten._native_batch_norm_legit_no_training.defaultJr
+!pkg.onnxscript.rewriter.rule_nameMRemoveOptionalBiasFromConv, FuseBatchNormIntoConv, RemoveOptionalBiasFromConvJ›
+pkg.torch.onnx.class_hierarchy∫['backend.carriers.hidden.model.HiddenDecoder', 'backend.carriers.hidden.model.ConvBNRelu', 'torch.nn.modules.batchnorm.BatchNorm2d', 'aten._native_batch_norm_legit_no_training.default']J¨
+pkg.torch.onnx.fx_nodeë%_native_batch_norm_legit_no_training_2 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv2d_2, %p_conv3_bn_weight, %p_conv3_bn_bias, %b_conv3_bn_running_mean, %b_conv3_bn_running_var, 0.1, 1e-05), kwargs = {})Ja
+pkg.torch.onnx.name_scopesC['', 'conv3', 'conv3.bn', '_native_batch_norm_legit_no_training_2']JÂ
+pkg.torch.onnx.stack_trace∆File "D:\MediaProvenance\backend\carriers\hidden\model.py", line 103, in forward
+    x = self.conv3(x)
+  File "D:\MediaProvenance\backend\carriers\hidden\model.py", line 27, in forward
+    return self.relu(self.bn(self.conv(x)))
+  File "C:\Users\SEMMAL\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\torch\nn\modules\batchnorm.py", line 210, in forward
+    return F.batch_norm(
+‰
+	getitem_6relu_2node_relu_2"ReluJ≤
+	namespace§: backend.carriers.hidden.model.HiddenDecoder/conv3: backend.carriers.hidden.model.ConvBNRelu/conv3.relu: torch.nn.modules.activation.ReLU/relu_2: aten.relu.defaultJ∑
+pkg.torch.onnx.class_hierarchyî['backend.carriers.hidden.model.HiddenDecoder', 'backend.carriers.hidden.model.ConvBNRelu', 'torch.nn.modules.activation.ReLU', 'aten.relu.default']Jà
+pkg.torch.onnx.fx_noden%relu_2 : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%getitem_6,), kwargs = {})JC
+pkg.torch.onnx.name_scopes%['', 'conv3', 'conv3.relu', 'relu_2']J¸
+pkg.torch.onnx.stack_trace›File "D:\MediaProvenance\backend\carriers\hidden\model.py", line 103, in forward
+    x = self.conv3(x)
+  File "D:\MediaProvenance\backend\carriers\hidden\model.py", line 27, in forward
+    return self.relu(self.bn(self.conv(x)))
+  File "C:\Users\SEMMAL\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\torch\nn\modules\activation.py", line 143, in forward
+    return F.relu(input, inplace=self.inplace)
+ˆ
+relu_2
+conv4.conv.weight	getitem_9node_Conv_78"Conv*
+auto_pad"NOTSET†*
+	dilations@@†*
+group†*
+kernel_shape@@†*
+pads@@@@†*
+strides@@†Jˆ
+	namespaceË: backend.carriers.hidden.model.HiddenDecoder/conv4: backend.carriers.hidden.model.ConvBNRelu/conv4.bn: torch.nn.modules.batchnorm.BatchNorm2d/_native_batch_norm_legit_no_training_3: aten._native_batch_norm_legit_no_training.defaultJr
+!pkg.onnxscript.rewriter.rule_nameMRemoveOptionalBiasFromConv, FuseBatchNormIntoConv, RemoveOptionalBiasFromConvJ›
+pkg.torch.onnx.class_hierarchy∫['backend.carriers.hidden.model.HiddenDecoder', 'backend.carriers.hidden.model.ConvBNRelu', 'torch.nn.modules.batchnorm.BatchNorm2d', 'aten._native_batch_norm_legit_no_training.default']J¨
+pkg.torch.onnx.fx_nodeë%_native_batch_norm_legit_no_training_3 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv2d_3, %p_conv4_bn_weight, %p_conv4_bn_bias, %b_conv4_bn_running_mean, %b_conv4_bn_running_var, 0.1, 1e-05), kwargs = {})Ja
+pkg.torch.onnx.name_scopesC['', 'conv4', 'conv4.bn', '_native_batch_norm_legit_no_training_3']JÂ
+pkg.torch.onnx.stack_trace∆File "D:\MediaProvenance\backend\carriers\hidden\model.py", line 104, in forward
+    x = self.conv4(x)
+  File "D:\MediaProvenance\backend\carriers\hidden\model.py", line 27, in forward
+    return self.relu(self.bn(self.conv(x)))
+  File "C:\Users\SEMMAL\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\torch\nn\modules\batchnorm.py", line 210, in forward
+    return F.batch_norm(
+‰
+	getitem_9relu_3node_relu_3"ReluJ≤
+	namespace§: backend.carriers.hidden.model.HiddenDecoder/conv4: backend.carriers.hidden.model.ConvBNRelu/conv4.relu: torch.nn.modules.activation.ReLU/relu_3: aten.relu.defaultJ∑
+pkg.torch.onnx.class_hierarchyî['backend.carriers.hidden.model.HiddenDecoder', 'backend.carriers.hidden.model.ConvBNRelu', 'torch.nn.modules.activation.ReLU', 'aten.relu.default']Jà
+pkg.torch.onnx.fx_noden%relu_3 : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%getitem_9,), kwargs = {})JC
+pkg.torch.onnx.name_scopes%['', 'conv4', 'conv4.relu', 'relu_3']J¸
+pkg.torch.onnx.stack_trace›File "D:\MediaProvenance\backend\carriers\hidden\model.py", line 104, in forward
+    x = self.conv4(x)
+  File "D:\MediaProvenance\backend\carriers\hidden\model.py", line 27, in forward
+    return self.relu(self.bn(self.conv(x)))
+  File "C:\Users\SEMMAL\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\torch\nn\modules\activation.py", line 143, in forward
+    return F.relu(input, inplace=self.inplace)
+Õ
+relu_3
+val_50mean	node_mean"
+ReduceMean*
+keepdims†*
+noop_with_empty_axes †J
+	namespacer: backend.carriers.hidden.model.HiddenDecoder/pool: torch.nn.modules.pooling.AdaptiveAvgPool2d/mean: aten.mean.dimJê
+pkg.torch.onnx.class_hierarchyn['backend.carriers.hidden.model.HiddenDecoder', 'torch.nn.modules.pooling.AdaptiveAvgPool2d', 'aten.mean.dim']Jé
+pkg.torch.onnx.fx_nodet%mean : [num_users=1] = call_function[target=torch.ops.aten.mean.dim](args = (%relu_3, [-1, -2], True), kwargs = {})J2
+pkg.torch.onnx.name_scopes['', 'pool', 'mean']Jñ
+pkg.torch.onnx.stack_trace˜File "D:\MediaProvenance\backend\carriers\hidden\model.py", line 105, in forward
+    pooled = self.pool(x).flatten(1)
+  File "C:\Users\SEMMAL\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\torch\nn\modules\pooling.py", line 1514, in forward
+    return F.adaptive_avg_pool2d(input, self.output_size)
+ñ
+mean
+val_55viewnode_Reshape_81"Reshape*
+	allowzero†JR
+	namespaceE: backend.carriers.hidden.model.HiddenDecoder/view: aten.view.defaultJ<
+!pkg.onnxscript.rewriter.rule_nameMaterializeReshapeShapeJf
+pkg.torch.onnx.class_hierarchyD['backend.carriers.hidden.model.HiddenDecoder', 'aten.view.default']Jó
+pkg.torch.onnx.fx_node}%view : [num_users=1] = call_function[target=torch.ops.aten.view.default](args = (%mean, [%sym_size_int_1, 64]), kwargs = {})J*
+pkg.torch.onnx.name_scopes['', 'view']Jì
+pkg.torch.onnx.stack_traceuFile "D:\MediaProvenance\backend\carriers\hidden\model.py", line 105, in forward
+    pooled = self.pool(x).flatten(1)
+‚
+view
+	fc.weight
+fc.biaspayload_logitsnode_linear"Gemm*
+alpha  Ä?†*
+beta  Ä?†*
+transA †*
+transB†Jy
+	namespacel: backend.carriers.hidden.model.HiddenDecoder/fc: torch.nn.modules.linear.Linear/linear: aten.linear.defaultJä
+pkg.torch.onnx.class_hierarchyh['backend.carriers.hidden.model.HiddenDecoder', 'torch.nn.modules.linear.Linear', 'aten.linear.default']Jü
+pkg.torch.onnx.fx_nodeÑ%linear : [num_users=1] = call_function[target=torch.ops.aten.linear.default](args = (%view, %p_fc_weight, %p_fc_bias), kwargs = {})J2
+pkg.torch.onnx.name_scopes['', 'fc', 'linear']JÖ
+pkg.torch.onnx.stack_traceÊFile "D:\MediaProvenance\backend\carriers\hidden\model.py", line 106, in forward
+    logits = self.fc(pooled)
+  File "C:\Users\SEMMAL\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\torch\nn\modules\linear.py", line 134, in forward
+    return F.linear(input, self.weight, self.bias)
+main_graph*h@Bconv1.conv.weightj*
+locationhidden_decoder_32bit.onnx.dataj
+offset0j
+length6912p*n@@Bconv2.conv.weightj*
+locationhidden_decoder_32bit.onnx.dataj
+offset15104j
+length147456p*o@@Bconv3.conv.weightj*
+locationhidden_decoder_32bit.onnx.dataj
+offset162560j
+length147456p*o@@Bconv4.conv.weightj*
+locationhidden_decoder_32bit.onnx.dataj
+offset310016j
+length147456p*_ @B	fc.weightj*
+locationhidden_decoder_32bit.onnx.dataj
+offset6912j
+length8192p*ê Bfc.biasJÄÏ¢∆Ω2‰ÙΩ∏S=öÒàΩ˙EÛ=p\ŸºÙΩÃcΩp8=‹Ωêú©Ω–:º•Ωêã:=∆Ò«=búîΩÄuúªz=’=ˆ;Ω“*ûΩ»Oº88Ω¿ª‰ç/=‡ﬁ)Ω∞πA=–Íß<ÿhw=Ëçl=DÕ≥ΩRÈ¨=u Ω*Bval_50Jˇˇˇˇˇˇˇˇ˛ˇˇˇˇˇˇˇ*Bval_55Jˇˇˇˇˇˇˇˇ@       Z◊
+image_tensor
+
+batch
+
+Ä
+Ä"=
+/pkg.torch.export.graph_signature.InputSpec.kind
+USER_INPUT"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"*
+!pkg.torch.onnx.original_node_nameimagebì
+payload_logits
+
+batch
+ "?
+0pkg.torch.export.graph_signature.OutputSpec.kindUSER_OUTPUT"+
+!pkg.torch.onnx.original_node_namelinearj+
+conv1.conv.weight
+
+@
+
+
+j+
+conv2.conv.weight
+
+@
+@
+
+j+
+conv3.conv.weight
+
+@
+@
+
+j+
+conv4.conv.weight
+
+@
+@
+
+j 
+	fc.weight
+
+ 
+@"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"0
+!pkg.torch.onnx.original_node_namep_fc_weightj¬
+fc.bias
+
+
+ "<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone".
+!pkg.torch.onnx.original_node_name	p_fc_biasjR
+val_50
+
+
+"<
+$pkg.onnxscript.optimizer.folded_from['val_48', 'val_49']j
+val_55
+
+
+j(
+getitem
+
+batch
+@
+Ä
+Äj%
+relu
+
+batch
+@
+Ä
+Äj*
+	getitem_3
+
+batch
+@
+Ä
+Äj'
+relu_1
+
+batch
+@
+Ä
+Äj*
+	getitem_6
+
+batch
+@
+Ä
+Äj'
+relu_2
+
+batch
+@
+Ä
+Äj*
+	getitem_9
+
+batch
+@
+Ä
+Äj'
+relu_3
+
+batch
+@
+Ä
+Äj#
+mean
+
+batch
+@
+
+j
+view
+
+batch
+@Ç¨
+0pkg.torch.export.ExportedProgram.graph_signature˜
+# inputs
+p_conv1_conv_weight: PARAMETER target='conv1.conv.weight'
+p_conv1_bn_weight: PARAMETER target='conv1.bn.weight'
+p_conv1_bn_bias: PARAMETER target='conv1.bn.bias'
+p_conv2_conv_weight: PARAMETER target='conv2.conv.weight'
+p_conv2_bn_weight: PARAMETER target='conv2.bn.weight'
+p_conv2_bn_bias: PARAMETER target='conv2.bn.bias'
+p_conv3_conv_weight: PARAMETER target='conv3.conv.weight'
+p_conv3_bn_weight: PARAMETER target='conv3.bn.weight'
+p_conv3_bn_bias: PARAMETER target='conv3.bn.bias'
+p_conv4_conv_weight: PARAMETER target='conv4.conv.weight'
+p_conv4_bn_weight: PARAMETER target='conv4.bn.weight'
+p_conv4_bn_bias: PARAMETER target='conv4.bn.bias'
+p_fc_weight: PARAMETER target='fc.weight'
+p_fc_bias: PARAMETER target='fc.bias'
+b_conv1_bn_running_mean: BUFFER target='conv1.bn.running_mean' persistent=True
+b_conv1_bn_running_var: BUFFER target='conv1.bn.running_var' persistent=True
+b_conv1_bn_num_batches_tracked: BUFFER target='conv1.bn.num_batches_tracked' persistent=True
+b_conv2_bn_running_mean: BUFFER target='conv2.bn.running_mean' persistent=True
+b_conv2_bn_running_var: BUFFER target='conv2.bn.running_var' persistent=True
+b_conv2_bn_num_batches_tracked: BUFFER target='conv2.bn.num_batches_tracked' persistent=True
+b_conv3_bn_running_mean: BUFFER target='conv3.bn.running_mean' persistent=True
+b_conv3_bn_running_var: BUFFER target='conv3.bn.running_var' persistent=True
+b_conv3_bn_num_batches_tracked: BUFFER target='conv3.bn.num_batches_tracked' persistent=True
+b_conv4_bn_running_mean: BUFFER target='conv4.bn.running_mean' persistent=True
+b_conv4_bn_running_var: BUFFER target='conv4.bn.running_var' persistent=True
+b_conv4_bn_num_batches_tracked: BUFFER target='conv4.bn.num_batches_tracked' persistent=True
+image: USER_INPUT
+
+# outputs
+linear: USER_OUTPUT
+ÇJ
+2pkg.torch.export.ExportedProgram.range_constraints{s40: VR[0, int_oo]}B
+ 

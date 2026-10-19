@@ -38,4 +38,14 @@ def get_carrier(name: str = "trustmark") -> BaseCarrier:
             logger.warning("Could not instantiate TrustMark carrier (%s). Checking fallbacks.", e)
             raise
 
+    if "hidden" in name_clean:
+        try:
+            from backend.carriers.hidden.carrier import HiddenCarrier
+            carrier = HiddenCarrier()
+            _CARRIER_REGISTRY[name_clean] = carrier
+            return carrier
+        except Exception as e:
+            logger.warning("Could not instantiate HiDDeN carrier (%s).", e)
+            raise
+
     raise ValueError(f"Unknown or unsupported watermark carrier: {name}")

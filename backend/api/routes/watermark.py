@@ -16,9 +16,13 @@ from backend.carriers.factory import get_carrier
 from backend.models.noisy_channel import BinomialModel, ModelParameters
 
 router = APIRouter(prefix="/watermark", tags=["watermark"])
+watermarks_router = APIRouter(prefix="/watermarks", tags=["watermarks"])
 
 
 @router.post("/encode", response_model=EncodeResponse)
+@router.post("/embed", response_model=EncodeResponse)
+@watermarks_router.post("/encode", response_model=EncodeResponse)
+@watermarks_router.post("/embed", response_model=EncodeResponse)
 async def encode_watermark(
     file: UploadFile = File(...),
     carrier: str = Form("trustmark"),
@@ -78,6 +82,7 @@ async def encode_watermark(
 
 
 @router.post("/decode", response_model=DecodeResponse)
+@watermarks_router.post("/decode", response_model=DecodeResponse)
 async def decode_watermark(
     file: UploadFile = File(...),
     carrier: str = Form("trustmark"),
