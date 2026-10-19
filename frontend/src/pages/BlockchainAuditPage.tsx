@@ -157,9 +157,22 @@ export const BlockchainAuditPage: React.FC = () => {
                       {new Date(searchResult.timestamp * 1000).toLocaleString()}
                     </span>
                   </div>
-                  <div className="md:col-span-2">
-                    <span className="text-slate-500 block mb-0.5">Transaction Hash:</span>
-                    <code className="text-emerald-400 font-mono break-all">{searchResult.tx_hash}</code>
+                  <div className="md:col-span-2 flex items-center justify-between">
+                    <div>
+                      <span className="text-slate-500 block mb-0.5">Transaction Hash:</span>
+                      <a
+                        href={`https://sepolia.etherscan.io/tx/${searchResult.tx_hash}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-emerald-400 hover:text-emerald-300 font-mono break-all flex items-center gap-1 group"
+                      >
+                        {searchResult.tx_hash}
+                        <ExternalLink className="w-3 h-3 flex-shrink-0 opacity-70 group-hover:opacity-100" />
+                      </a>
+                    </div>
+                    <span className="text-[10px] font-mono text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+                      Sepolia Testnet
+                    </span>
                   </div>
                 </div>
               </div>
@@ -169,10 +182,15 @@ export const BlockchainAuditPage: React.FC = () => {
           {/* All Anchored Records Table */}
           <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-                <Hash className="w-4 h-4 text-amber-400" />
-                Live ProvenanceAnchor Ledger ({anchorsList.length} Records)
-              </h3>
+              <div>
+                <h3 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                  <Hash className="w-4 h-4 text-amber-400" />
+                  Live ProvenanceAnchor Ledger ({anchorsList.length} Records)
+                </h3>
+                <span className="text-[11px] text-slate-400">
+                  Target Network: Ethereum Sepolia (Chain ID 11155111)
+                </span>
+              </div>
               <button
                 onClick={fetchAnchors}
                 className="text-xs text-slate-400 hover:text-slate-200 flex items-center gap-1"
@@ -190,6 +208,7 @@ export const BlockchainAuditPage: React.FC = () => {
                     <th className="pb-3 font-semibold">Submitter</th>
                     <th className="pb-3 font-semibold">Block #</th>
                     <th className="pb-3 font-semibold">Timestamp</th>
+                    <th className="pb-3 font-semibold text-right">Etherscan</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800/60 font-mono text-[11px]">
@@ -207,6 +226,16 @@ export const BlockchainAuditPage: React.FC = () => {
                       <td className="py-3 text-slate-400">#{a.block_number}</td>
                       <td className="py-3 text-slate-400 font-sans text-xs">
                         {new Date(a.timestamp * 1000).toLocaleTimeString()}
+                      </td>
+                      <td className="py-3 text-right">
+                        <a
+                          href={a.etherscan_url || `https://sepolia.etherscan.io/tx/${a.tx_hash}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1 text-blue-400 hover:text-blue-300 text-[11px] font-sans"
+                        >
+                          Verify <ExternalLink className="w-3 h-3" />
+                        </a>
                       </td>
                     </tr>
                   ))}

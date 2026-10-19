@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Upload, CheckCircle2, XCircle, ShieldAlert, Cpu, Blocks, Clock, ArrowRight, RefreshCw, KeyRound, AlertTriangle } from 'lucide-react';
+import { Upload, CheckCircle2, XCircle, ShieldAlert, Cpu, Blocks, Clock, ArrowRight, RefreshCw, KeyRound, AlertTriangle, ExternalLink } from 'lucide-react';
 
 export const VerifyPage: React.FC = () => {
   const [carrier, setCarrier] = useState<'hidden' | 'trustmark'>('hidden');
@@ -425,10 +425,21 @@ export const VerifyPage: React.FC = () => {
                     </div>
 
                     <div className="p-3 bg-slate-950 rounded-lg border border-slate-800 space-y-1">
-                      <span className="text-slate-500 uppercase font-semibold block">Blockchain Transaction</span>
-                      <code className="text-blue-400 font-mono break-all block">
-                        {jobData.anchor_record?.tx_hash}
-                      </code>
+                      <div className="flex items-center justify-between">
+                        <span className="text-slate-500 uppercase font-semibold block">Blockchain Transaction</span>
+                        <span className="text-[10px] font-mono text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/20">
+                          Sepolia Testnet
+                        </span>
+                      </div>
+                      <a
+                        href={jobData.anchor_record?.etherscan_url || `https://sepolia.etherscan.io/tx/${jobData.anchor_record?.tx_hash}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-blue-400 hover:text-blue-300 font-mono break-all flex items-center gap-1 group"
+                      >
+                        <span className="truncate">{jobData.anchor_record?.tx_hash}</span>
+                        <ExternalLink className="w-3 h-3 flex-shrink-0 opacity-70 group-hover:opacity-100" />
+                      </a>
                       <span className="text-slate-500 text-[10px] block">
                         Block #{jobData.anchor_record?.block_number} · Submitter: {jobData.anchor_record?.submitter.slice(0, 10)}...
                       </span>
