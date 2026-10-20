@@ -188,7 +188,16 @@ export async function anchorWithMetaMask(
   // Send transaction through MetaMask (Connected account pays gas)
   let tx;
   try {
-    tx = await contract.anchor(formattedAssetId, formattedCommitment);
+    // Estimate gas with fallback
+    let gasLimit = 150000n;
+    try {
+      const est = await contract.anchor.estimateGas(formattedAssetId, formattedCommitment);
+      gasLimit = (est * 13n) / 10n; // 30% buffer
+    } catch {
+      gasLimit = 200000n;
+    }
+
+    tx = await contract.anchor(formattedAssetId, formattedCommitment, { gasLimit });
   } catch (txErr: any) {
     if (
       txErr?.message?.includes("Already anchored") ||
@@ -199,11 +208,34 @@ export async function anchorWithMetaMask(
         'This image has already been anchored on Ethereum Sepolia. To submit a new transaction and pay gas with your connected account, please click "Random" payload above to embed a fresh unique watermark.'
       );
     }
+    if (
+      txErr?.message?.includes("0xdb9B1e") ||
+      txErr?.receipt?.to?.toLowerCase() === "0xdb9b1e94b5b69df7e401ddbede43491141047db3" ||
+      txErr?.transaction?.to?.toLowerCase() === "0xdb9b1e94b5b69df7e401ddbede43491141047db3"
+    ) {
+      throw new Error(
+        "MetaMask Smart Transactions is enabled and intercepted this transaction via its Delegation contract (0xdb9B1e...), which reverted on Sepolia. Please disable Smart Transactions in MetaMask: Click MetaMask Settings ➔ Transactions ➔ Toggle 'Smart Transactions' to OFF, then retry."
+      );
+    }
     throw txErr;
   }
   
   // Wait for 1 confirmation
-  const receipt = await tx.wait(1);
+  let receipt;
+  try {
+    receipt = await tx.wait(1);
+  } catch (waitErr: any) {
+    if (
+      waitErr?.message?.includes("0xdb9B1e") ||
+      waitErr?.receipt?.to?.toLowerCase() === "0xdb9b1e94b5b69df7e401ddbede43491141047db3" ||
+      waitErr?.transaction?.to?.toLowerCase() === "0xdb9b1e94b5b69df7e401ddbede43491141047db3"
+    ) {
+      throw new Error(
+        "MetaMask Smart Transactions is enabled and intercepted this transaction via its Delegation contract (0xdb9B1e...), which reverted on Sepolia. Please disable Smart Transactions in MetaMask: Click MetaMask Settings ➔ Transactions ➔ Toggle 'Smart Transactions' to OFF, then retry."
+      );
+    }
+    throw waitErr;
+  }
 
   const etherscanUrl = `https://sepolia.etherscan.io/tx/${receipt.hash}`;
 
