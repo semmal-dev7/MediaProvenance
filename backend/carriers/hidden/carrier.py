@@ -230,8 +230,7 @@ class HiddenCarrier(BaseCarrier):
             hamming = self.hamming_distance(clean_ref, decoded_hex, self._PAYLOAD_BITS)
             ber = hamming / self._PAYLOAD_BITS
             # If bit error is above 35%, signal does not match publisher reference
-            if ber > 0.35:
-                has_watermark = False
+            has_watermark = (ber <= 0.35)
             confidence = max(0.0, min(1.0, 1.0 - ber))
         elif cached_feat is not None:
             confidence = 1.0
