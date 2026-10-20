@@ -20,11 +20,10 @@ class ConvBNRelu(nn.Module):
     def __init__(self, in_channels: int, out_channels: int):
         super().__init__()
         self.conv = nn.Conv2d(in_channels, out_channels, kernel_size=3, padding=1, bias=False)
-        self.bn = nn.BatchNorm2d(out_channels)
         self.relu = nn.ReLU(inplace=True)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        return self.relu(self.bn(self.conv(x)))
+        return self.relu(self.conv(x))
 
 
 class HiddenEncoder(nn.Module):
@@ -32,9 +31,10 @@ class HiddenEncoder(nn.Module):
     HiDDeN Encoder: Spatially replicates 32-bit message, concatenates with image
     convolutions, and outputs watermarked image via residual addition.
     """
-    def __init__(self, message_bits: int = 32, channels: int = 64):
+    def __init__(self, message_bits: int = 32, channels: int = 64, residual_scale: float = 0.12):
         super().__init__()
         self.message_bits = message_bits
+        self.residual_scale = residual_scale
 
         # Image feature extractor
         self.conv1 = ConvBNRelu(3, channels)
@@ -66,8 +66,8 @@ class HiddenEncoder(nn.Module):
         x = self.conv3(joint)
         x = self.conv4(x)
 
-        # Residual perturbation
-        delta = torch.tanh(self.residual_conv(x)) * 0.10  # Clamp perturbation for high PSNR (>35 dB)
+        # Residual perturbation scaled by configurable factor
+        delta = torch.tanh(self.residual_conv(x)) * self.residual_scale
         watermarked = torch.clamp(image + delta, -1.0, 1.0)
         return watermarked
 
@@ -121,15 +121,54 @@ class HiddenDecoder(nn.Module):
         import onnx.numpy_helper as nh
         m = onnx.load(str(onnx_path))
         inits = {i.name: torch.from_numpy(nh.to_array(i).copy()) for i in m.graph.initializer}
-        if "conv1.conv.weight" in inits:
-            self.conv1.conv.weight.data = inits["conv1.conv.weight"]
-        if "conv2.conv.weight" in inits:
-            self.conv2.conv.weight.data = inits["conv2.conv.weight"]
-        if "conv3.conv.weight" in inits:
-            self.conv3.conv.weight.data = inits["conv3.conv.weight"]
-        if "conv4.conv.weight" in inits:
-            self.conv4.conv.weight.data = inits["conv4.conv.weight"]
+        for i, block in enumerate([self.conv1, self.conv2, self.conv3, self.conv4], start=1):
+            w_key = f"conv{i}.conv.weight"
+            b_key = f"conv{i}.conv.weight_bias"
+            if w_key in inits:
+                block.conv.weight.data = inits[w_key]
+            if b_key in inits and block.conv.bias is not None:
+                block.conv.bias.data = inits[b_key]
         if "fc.weight" in inits:
             self.fc.weight.data = inits["fc.weight"]
         if "fc.bias" in inits:
             self.fc.bias.data = inits["fc.bias"]
+
+
+class HiddenModel(nn.Module):
+    """
+    Unified HiDDeN Neural Architecture combining Encoder and Decoder.
+    Supports end-to-end joint training, evaluation, and checkpoint persistence.
+    """
+    def __init__(self, message_bits: int = 32, channels: int = 64, residual_scale: float = 0.12):
+        super().__init__()
+        self.encoder = HiddenEncoder(message_bits=message_bits, channels=channels, residual_scale=residual_scale)
+        self.decoder = HiddenDecoder(message_bits=message_bits, channels=channels)
+
+    def forward(self, image: torch.Tensor, message: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
+        """
+        Runs joint forward pass:
+        image: (B, 3, H, W) normalized to [-1, 1]
+        message: (B, 32) binary tensor {0, 1}
+        returns: (watermarked_image, recovered_logits)
+        """
+        watermarked = self.encoder(image, message)
+        logits = self.decoder(watermarked)
+        return watermarked, logits
+
+    def save_checkpoint(self, checkpoint_path: str, metadata: Optional[dict] = None) -> None:
+        """Save full model weights and training metadata."""
+        import os
+        os.makedirs(os.path.dirname(checkpoint_path), exist_ok=True)
+        state = {
+            "encoder": self.encoder.state_dict(),
+            "decoder": self.decoder.state_dict(),
+            "metadata": metadata or {},
+        }
+        torch.save(state, checkpoint_path)
+
+    def load_checkpoint(self, checkpoint_path: str) -> dict:
+        """Load full model weights from checkpoint."""
+        state = torch.load(checkpoint_path, map_location="cpu", weights_only=True)
+        self.encoder.load_state_dict(state["encoder"])
+        self.decoder.load_state_dict(state["decoder"])
+        return state.get("metadata", {})

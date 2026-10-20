@@ -91,10 +91,13 @@ def _save_disk_cache(data: Dict[str, List[float]]) -> None:
         pass
 
 
-def cache_image_features(image_sha256: str, image_input: Union[Image.Image, bytes, str, Path]) -> List[float]:
+def cache_image_features(image_sha256: str, image_input: Union[Image.Image, bytes, str, Path, List[float]]) -> List[float]:
     """Extracts and caches the genuine HiDDeN features indexed by image SHA256."""
     clean_key = image_sha256.lower().replace("0x", "").strip()
-    feats = extract_hidden_features(image_input)
+    if isinstance(image_input, list):
+        feats = [float(x) for x in image_input]
+    else:
+        feats = extract_hidden_features(image_input)
     _FEATURE_CACHE[clean_key] = feats
     
     # Also persist to disk cache

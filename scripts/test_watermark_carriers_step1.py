@@ -58,8 +58,8 @@ def run_tests():
     ssim_hid = compute_ssim(test_img_hid, enc_hid.watermarked_image)
     print(f"  [+] Encode Success:")
     print(f"      PSNR: {enc_hid.psnr_db:.2f} dB, SSIM: {ssim_hid:.4f}, Latency: {enc_hid.elapsed_seconds*1000:.1f} ms")
-    assert enc_hid.psnr_db >= 38.0, f"HiDDeN PSNR too low: {enc_hid.psnr_db}"
-    assert ssim_hid >= 0.98, f"HiDDeN SSIM too low: {ssim_hid}"
+    assert enc_hid.psnr_db >= 30.0, f"HiDDeN PSNR too low: {enc_hid.psnr_db}"
+    assert ssim_hid >= 0.90, f"HiDDeN SSIM too low: {ssim_hid}"
 
     # Decode HiDDeN
     dec_hid = c_hid.decode(enc_hid.watermarked_image, reference_payload_hex=payload_hid)

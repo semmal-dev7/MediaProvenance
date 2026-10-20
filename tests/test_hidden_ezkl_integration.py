@@ -78,17 +78,8 @@ class TestHiddenEZKLIntegration(unittest.TestCase):
 
     def test_03_pytorch_vs_onnx_parity(self):
         """Task C: Verify PyTorch and ONNX decoder outputs agree within 1e-5 tolerance."""
-        # Load weights into PyTorch
-        m_onnx = onnx.load(str(self.full_model_path))
-        inits = {i.name: torch.from_numpy(nh.to_array(i).copy()) for i in m_onnx.graph.initializer}
-
         pytorch_decoder = HiddenDecoder(message_bits=32, channels=64)
-        pytorch_decoder.conv1.conv.weight.data = inits["conv1.conv.weight"]
-        pytorch_decoder.conv2.conv.weight.data = inits["conv2.conv.weight"]
-        pytorch_decoder.conv3.conv.weight.data = inits["conv3.conv.weight"]
-        pytorch_decoder.conv4.conv.weight.data = inits["conv4.conv.weight"]
-        pytorch_decoder.fc.weight.data = inits["fc.weight"]
-        pytorch_decoder.fc.bias.data = inits["fc.bias"]
+        pytorch_decoder.load_onnx_weights(str(self.full_model_path))
         pytorch_decoder.eval()
 
         np.random.seed(123)

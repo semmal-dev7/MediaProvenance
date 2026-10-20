@@ -117,7 +117,11 @@ def verify_all():
     print("\n[5/7] Verifying ZK Proving Engine & Negative Claim Rejection...")
     try:
         from backend.zk.engine import zk_engine
-        proof_res = zk_engine.generate_proof("a1b2c3d4", "3036c3933c3413a7b63f533a1e4c029471131ef5e1428359be24419ad2231bfa")
+        from backend.zk.features import extract_hidden_features
+        test_img = Image.new("RGB", (128, 128), (120, 140, 160))
+        img_sha = "0x3036c3933c3413a7b63f533a1e4c029471131ef5e1428359be24419ad2231bfa"
+        features = extract_hidden_features(test_img)
+        proof_res = zk_engine.generate_proof("a1b2c3d4", img_sha, image_features=features)
         v_ok = zk_engine.verify_proof(proof_res["proof"], proof_res["public_inputs"])
         assert v_ok["valid"] is True
 
