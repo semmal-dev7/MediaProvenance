@@ -57,6 +57,7 @@ circuits/build/
 *.r1cs
 *.sym
 *.srs
+*.compiled
 models/ezkl_artifacts/*.srs
 models/ezkl_artifacts/*.key
 models/ezkl_artifacts/*.compiled
@@ -68,6 +69,7 @@ deployments/local/
 .openzeppelin/
 
 # Experiment outputs (tracked via manifests, not raw data)
+experiments/data/tmp*
 experiments/data/images/
 experiments/data/raw/
 *.pkl

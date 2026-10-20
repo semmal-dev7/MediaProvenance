@@ -28,6 +28,16 @@ def get_carrier(name: str = "trustmark") -> BaseCarrier:
     if name_clean in _CARRIER_REGISTRY:
         return _CARRIER_REGISTRY[name_clean]
 
+    if "pureconv" in name_clean:
+        try:
+            from backend.carriers.pureconv.carrier import PureConvCarrier
+            carrier = PureConvCarrier()
+            _CARRIER_REGISTRY[name_clean] = carrier
+            return carrier
+        except Exception as e:
+            logger.warning("Could not instantiate PureConv carrier (%s).", e)
+            raise
+
     if "trustmark" in name_clean:
         try:
             from backend.carriers.trustmark.carrier import TrustMarkCarrier

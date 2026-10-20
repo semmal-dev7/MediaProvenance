@@ -1,0 +1,96 @@
+{
+  "seed": 4242,
+  "conditions": [
+    {
+      "condition": "Clean",
+      "trials": 128,
+      "mean_ber": 0.0,
+      "std_ber": 0.0,
+      "ber_ci95": 0.0,
+      "exact_recovery_rate": 1.0,
+      "exact_count": "128/128",
+      "mean_psnr_db": 34.578590601035344,
+      "mean_ssim": 0.9909302451542852,
+      "mean_enc_lat_ms": 3.4449625031811593,
+      "mean_dec_lat_ms": 1.0189585977968818
+    },
+    {
+      "condition": "JPEG 90",
+      "trials": 128,
+      "mean_ber": 0.0,
+      "std_ber": 0.0,
+      "ber_ci95": 0.0,
+      "exact_recovery_rate": 1.0,
+      "exact_count": "128/128",
+      "mean_psnr_db": 30.070329326303437,
+      "mean_ssim": 0.9084193428948306,
+      "mean_enc_lat_ms": 3.8077046865510056,
+      "mean_dec_lat_ms": 0.9833585959313496
+    },
+    {
+      "condition": "JPEG 75",
+      "trials": 128,
+      "mean_ber": 0.0,
+      "std_ber": 0.0,
+      "ber_ci95": 0.0,
+      "exact_recovery_rate": 1.0,
+      "exact_count": "128/128",
+      "mean_psnr_db": 28.38852433923931,
+      "mean_ssim": 0.8695241732543825,
+      "mean_enc_lat_ms": 3.483321094790881,
+      "mean_dec_lat_ms": 1.0169250017497689
+    },
+    {
+      "condition": "JPEG 50",
+      "trials": 128,
+      "mean_ber": 0.0,
+      "std_ber": 0.0,
+      "ber_ci95": 0.0,
+      "exact_recovery_rate": 1.0,
+      "exact_count": "128/128",
+      "mean_psnr_db": 27.182576706716763,
+      "mean_ssim": 0.8439950730887954,
+      "mean_enc_lat_ms": 3.78877500179442,
+      "mean_dec_lat_ms": 0.9872429682218353
+    },
+    {
+      "condition": "JPEG 30",
+      "trials": 128,
+      "mean_ber": 0.0,
+      "std_ber": 0.0,
+      "ber_ci95": 0.0,
+      "exact_recovery_rate": 1.0,
+      "exact_count": "128/128",
+      "mean_psnr_db": 26.373916413505203,
+      "mean_ssim": 0.825896758086136,
+      "mean_enc_lat_ms": 3.509726557695103,
+      "mean_dec_lat_ms": 0.9813851602302748
+    },
+    {
+      "condition": "Resize 75%",
+      "trials": 128,
+      "mean_ber": 0.0,
+      "std_ber": 0.0,
+      "ber_ci95": 0.0,
+      "exact_recovery_rate": 1.0,
+      "exact_count": "128/128",
+      "mean_psnr_db": 26.45141202150733,
+      "mean_ssim": 0.898351454735334,
+      "mean_enc_lat_ms": 3.608477339184901,
+      "mean_dec_lat_ms": 1.0498101610210142
+    },
+    {
+      "condition": "Resize 50%",
+      "trials": 128,
+      "mean_ber": 0.0,
+      "std_ber": 0.0,
+      "ber_ci95": 0.0,
+      "exact_recovery_rate": 1.0,
+      "exact_count": "128/128",
+      "mean_psnr_db": 25.202843311893155,
+      "mean_ssim": 0.8361040019667867,
+      "mean_enc_lat_ms": 3.820576564521616,
+      "mean_dec_lat_ms": 0.8293609362226562
+    }
+  ]
+}

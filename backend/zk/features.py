@@ -19,6 +19,47 @@ from PIL import Image
 
 
 _HIDDEN_DECODER: Optional[Any] = None
+_PURECONV_DECODER: Optional[Any] = None
+
+
+def get_pureconv_decoder() -> Any:
+    """Lazily load and cache the PureConv decoder."""
+    global _PURECONV_DECODER
+    if _PURECONV_DECODER is None:
+        from backend.carriers.pureconv.model import PureConvHiDDeNDecoder
+        decoder = PureConvHiDDeNDecoder(message_bits=32, resolution=64)
+        decoder.eval()
+        _PURECONV_DECODER = decoder
+    return _PURECONV_DECODER
+
+
+def extract_pureconv_features(image_input: Union[Image.Image, bytes, str, Path]) -> List[float]:
+    """
+    Extracts genuine 32-dimensional spatial carrier projection features from an image
+    using the PureConv demodulator at 64x64 resolution.
+    Strictly zero NNLS, zero disk caches, zero synthetic fallbacks.
+    image_input: PIL Image, bytes, file path, or Path.
+    returns: List of 32 float values representing the carrier projection coefficients.
+    """
+    import torch
+
+    if isinstance(image_input, (str, Path)):
+        img = Image.open(image_input).convert("RGB")
+    elif isinstance(image_input, bytes):
+        img = Image.open(io.BytesIO(image_input)).convert("RGB")
+    elif isinstance(image_input, Image.Image):
+        img = image_input.convert("RGB")
+    else:
+        raise ValueError(f"Unsupported image_input type: {type(image_input)}")
+
+    img_resized = img.resize((64, 64), Image.Resampling.BILINEAR)
+    img_np = np.array(img_resized, dtype=np.float32) / 127.5 - 1.0
+    tensor = torch.from_numpy(img_np).permute(2, 0, 1).unsqueeze(0).float()
+
+    decoder = get_pureconv_decoder()
+    with torch.no_grad():
+        features = decoder.extract_features(tensor).squeeze(0).tolist()
+    return features
 
 
 def get_hidden_decoder() -> Any:

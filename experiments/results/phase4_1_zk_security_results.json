@@ -1,0 +1,123 @@
+[
+  {
+    "test_id": "BASE-01",
+    "description": "Baseline: Untampered proof and public inputs with image validation",
+    "category": "Baseline",
+    "expected": "VALID",
+    "actual": "VALID",
+    "pass_fail": "PASS",
+    "enforcement_mechanism": "Cryptographic Pairing + Application Claim Binding",
+    "error_message": null,
+    "detail": "Legitimate proof correctly passes cryptographic pairing, model digest, and claim commitment checks."
+  },
+  {
+    "test_id": "BIND-01",
+    "description": "Image Substitution: Suspect image SHA-256 altered in public inputs",
+    "category": "Image Binding",
+    "expected": "REJECTED",
+    "actual": "REJECTED",
+    "pass_fail": "PASS",
+    "enforcement_mechanism": "Application Layer (Claim Commitment Verification)",
+    "error_message": "Claim commitment mismatch: claim commitment does not bind image, payload commitment, model, and prover.",
+    "detail": "Application caught altered image digest via multi-factor claim commitment binding."
+  },
+  {
+    "test_id": "BIND-01B",
+    "description": "Image Content Mismatch: Wrong physical image passed to verifier",
+    "category": "Image Binding",
+    "expected": "REJECTED",
+    "actual": "REJECTED",
+    "pass_fail": "PASS",
+    "enforcement_mechanism": "Application Layer (Direct Image Digest Assertion)",
+    "error_message": "Image digest mismatch: provided image SHA-256 0x88ea481c93cbd00a393cabb23420731d8fd4e83a9325dc9b8373779f66d26117 does not match suspect_image_sha256 0x8c2d15369061cbdabd04ee09704a39d58cda3e704c2c39d8f1b08c2bbddeb87d",
+    "detail": "Verifier directly checked SHA-256 of candidate media against suspect_image_sha256 and rejected mismatch."
+  },
+  {
+    "test_id": "BIND-02",
+    "description": "Feature Forgery: Client supplies untrusted synthetic features to API endpoint",
+    "category": "Input Provenance",
+    "expected": "REJECTED",
+    "actual": "REJECTED",
+    "pass_fail": "PASS",
+    "enforcement_mechanism": "Application / API Pre-validation Layer",
+    "error_message": "Untrusted client-supplied image features rejected. Features must be extracted server-side from uploaded media.",
+    "detail": "API endpoint rejected untrusted client-supplied features when allow_synthetic is False."
+  },
+  {
+    "test_id": "PAYL-01",
+    "description": "Payload Alteration without Recomputing Commitment",
+    "category": "Payload Commitment",
+    "expected": "REJECTED",
+    "actual": "REJECTED",
+    "pass_fail": "PASS",
+    "enforcement_mechanism": "Application Layer (Payload Commitment Verification)",
+    "error_message": "Circuit output payload mismatch: constrained circuit outputs recover '0xdeadbeff', which does not match claimed payload '1337c0de'",
+    "detail": "Application caught commitment mismatch: Circuit output payload mismatch: constrained circuit outputs recover '0xdeadbeff', which does not match claimed payload '1337c0de'"
+  },
+  {
+    "test_id": "PAYL-02",
+    "description": "Payload Relabeling with Recomputed Commitments C=H(fake||digest)",
+    "category": "Payload Binding",
+    "expected": "REJECTED",
+    "actual": "REJECTED",
+    "pass_fail": "PASS",
+    "enforcement_mechanism": "Application Layer (Circuit Output Consistency Enforcement)",
+    "error_message": "Circuit output payload mismatch: constrained circuit outputs recover '0xdeadbeff', which does not match claimed payload '1337c0de'",
+    "detail": "Verifier derived circuit output from proof and rejected relabeled payload: Circuit output payload mismatch: constrained circuit outputs recover '0xdeadbeff', which does not match claimed payload '1337c0de'"
+  },
+  {
+    "test_id": "EZKL-01",
+    "description": "Public Instances Mutation: Tampering with public input vector in proof.json",
+    "category": "Cryptographic Integrity",
+    "expected": "REJECTED",
+    "actual": "REJECTED",
+    "pass_fail": "PASS",
+    "enforcement_mechanism": "Cryptographic Layer (Halo2 / KZG Pairing Engine)",
+    "error_message": "Transcript error / KZG polynomial commitment mismatch",
+    "detail": "Halo2 SNARK verifier rejects proof when public instance values do not match committed polynomial evaluations."
+  },
+  {
+    "test_id": "EZKL-02",
+    "description": "Verification Key Mismatch: PureConv proof verified against HiDDeN vk.key",
+    "category": "Cryptographic Integrity",
+    "expected": "REJECTED",
+    "actual": "REJECTED",
+    "pass_fail": "PASS",
+    "enforcement_mechanism": "Cryptographic Layer (Halo2 VK Transcript Check)",
+    "error_message": "Failed to run verify: [halo2] Transcript error",
+    "detail": "Cross-circuit verification key substitution strictly rejected by Halo2 circuit transcript checks."
+  },
+  {
+    "test_id": "MODL-01",
+    "description": "Model Digest Mutation in Public Inputs",
+    "category": "Model Identity",
+    "expected": "REJECTED",
+    "actual": "REJECTED",
+    "pass_fail": "PASS",
+    "enforcement_mechanism": "Application Layer (verify_proof Model Digest Check)",
+    "error_message": "Model digest mismatch: claimed 0x0000000000000000000000000000000000000000000000000000000000000000 does not match trained HiDDeN decoder 0xb7f866bfc990c5a32eb45ae9df4f336bc9620953c13c300775a0fbf15b9eef7f",
+    "detail": "Application rejected untrusted model digest: Model digest mismatch: claimed 0x0000000000000000000000000000000000000000000000000000000000000000 does not match trained HiDDeN decoder 0xb7f866bfc990c5a32eb45ae9df4f336bc9620953c13c300775a0fbf15b9eef7f"
+  },
+  {
+    "test_id": "EZKL-03",
+    "description": "Proof Byte Corruption: Inverting bytes in proof byte-array",
+    "category": "Cryptographic Integrity",
+    "expected": "REJECTED",
+    "actual": "REJECTED",
+    "pass_fail": "PASS",
+    "enforcement_mechanism": "Cryptographic Layer (Halo2 EC Point Encoding Check)",
+    "error_message": "Invalid elliptic curve point encoding / pairing failure",
+    "detail": "Invalid elliptic curve encoding / KZG pairing failure strictly detected and rejected."
+  },
+  {
+    "test_id": "SOL-01",
+    "description": "On-Chain Anchor Verification: anchor(assetId, commitment)",
+    "category": "Smart Contract Binding",
+    "expected": "REJECTED (if unproven)",
+    "actual": "UNCONSTRAINED",
+    "pass_fail": "DOCUMENTED LIMITATION",
+    "enforcement_mechanism": "Unconstrained (Contract lacks EVM Verifier Call)",
+    "error_message": "Contract records (assetId, commitment) tuples without EVM ZK verification.",
+    "detail": "ProvenanceAnchor.sol accepts arbitrary (assetId, commitment) pairs. EVM verification requires deploying a Halo2 verifier."
+  }
+]

@@ -303,3 +303,62 @@ export async function readRecordFromSepoliaFree(assetIdHex: string): Promise<OnC
     };
   }
 }
+
+// =============================================================================
+// PHASE 5.0 — AUTHENTICATED EIP-712 REGISTRATION & HALO2 ON-CHAIN VERIFICATION
+// =============================================================================
+
+export const PROVENANCE_ANCHOR_V2_ABI = [
+  "function registerProvenance(tuple(tuple(bytes32 assetId, bytes32 imageDigest, bytes32 payloadCommitment, bytes32 modelDigest, bytes32 proofDigest, address publisher, uint256 nonce, uint256 deadline) claim, bytes signature, bytes zkProof, uint256[] instances) bundle) external returns (bool)",
+  "function getRecord(bytes32 assetId) external view returns (tuple(bytes32 assetId, bytes32 imageDigest, bytes32 payloadCommitment, bytes32 modelDigest, bytes32 proofDigest, address publisher, uint256 timestamp, bool exists))",
+  "function records(bytes32) external view returns (bytes32 assetId, bytes32 imageDigest, bytes32 payloadCommitment, bytes32 modelDigest, bytes32 proofDigest, address publisher, uint256 timestamp, bool exists)",
+  "function nonces(address) external view returns (uint256)",
+  "function DOMAIN_SEPARATOR() external view returns (bytes32)",
+  "event ProvenanceRegistered(bytes32 indexed assetId, bytes32 indexed imageDigest, bytes32 payloadCommitment, bytes32 proofDigest, address indexed publisher, uint256 timestamp)"
+];
+
+export const EIP712_PROVENANCE_TYPES = {
+  ProvenanceClaim: [
+    { name: "assetId", type: "bytes32" },
+    { name: "imageDigest", type: "bytes32" },
+    { name: "payloadCommitment", type: "bytes32" },
+    { name: "modelDigest", type: "bytes32" },
+    { name: "proofDigest", type: "bytes32" },
+    { name: "publisher", type: "address" },
+    { name: "nonce", type: "uint256" },
+    { name: "deadline", type: "uint256" },
+  ],
+};
+
+export interface ProvenanceClaimV2 {
+  assetId: string;
+  imageDigest: string;
+  payloadCommitment: string;
+  modelDigest: string;
+  proofDigest: string;
+  publisher: string;
+  nonce: bigint | number;
+  deadline: bigint | number;
+}
+
+/**
+ * Signs an EIP-712 authenticated claim with publisher's connected MetaMask wallet.
+ */
+export async function signProvenanceClaimEIP712(
+  contractAddress: string,
+  claim: ProvenanceClaimV2
+): Promise<string> {
+  const { signer, provider } = await connectMetaMask();
+  const network = await provider.getNetwork();
+
+  const domain = {
+    name: "MediaProvenance",
+    version: "2.0",
+    chainId: network.chainId,
+    verifyingContract: contractAddress,
+  };
+
+  const signature = await signer.signTypedData(domain, EIP712_PROVENANCE_TYPES, claim);
+  return signature;
+}
+

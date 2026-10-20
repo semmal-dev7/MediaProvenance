@@ -1,0 +1,102 @@
+[
+  {
+    "test_id": "BASE-01",
+    "description": "Baseline: Untampered proof and public inputs",
+    "category": "Baseline",
+    "expected": "VALID",
+    "actual": "VALID",
+    "pass_fail": "PASS",
+    "rejecting_layer": null,
+    "detail": "Legitimate proof correctly passes cryptographic pairing and input integrity checks."
+  },
+  {
+    "test_id": "BIND-01",
+    "description": "Image Substitution: Suspect image SHA-256 altered in public inputs",
+    "category": "Image Binding",
+    "expected": "REJECTED",
+    "actual": "VALID",
+    "pass_fail": "FAIL (VULNERABILITY)",
+    "rejecting_layer": null,
+    "detail": "Circuit does NOT constrain image content or SHA-256. Verifier accepts substituted image hash."
+  },
+  {
+    "test_id": "BIND-02",
+    "description": "Feature Forgery: Proof generated over handcrafted arbitrary features",
+    "category": "Input Provenance",
+    "expected": "REJECTED",
+    "actual": "VALID",
+    "pass_fail": "FAIL (VULNERABILITY)",
+    "rejecting_layer": null,
+    "detail": "Prover can supply arbitrary feature inputs off-circuit. Circuit only verifies linear head."
+  },
+  {
+    "test_id": "PAYL-01",
+    "description": "Payload Alteration without Recomputing Commitment",
+    "category": "Payload Commitment",
+    "expected": "REJECTED",
+    "actual": "REJECTED",
+    "pass_fail": "PASS",
+    "rejecting_layer": "Application Layer (verify_proof)",
+    "detail": "Application caught commitment mismatch: Payload commitment mismatch: claimed commitment does not bind payload '1337c0de' to model"
+  },
+  {
+    "test_id": "PAYL-02",
+    "description": "Payload Substitution with Recomputed Commitment C=H(fake||digest)",
+    "category": "Payload Binding",
+    "expected": "REJECTED",
+    "actual": "VALID",
+    "pass_fail": "FAIL (VULNERABILITY)",
+    "rejecting_layer": null,
+    "detail": "Verifier only checks C == H(payload || digest); it does NOT check circuit output logits against claimed payload!"
+  },
+  {
+    "test_id": "EZKL-01",
+    "description": "Public Instances Mutation: Tampering with public input vector in proof.json",
+    "category": "Cryptographic Integrity",
+    "expected": "REJECTED",
+    "actual": "REJECTED",
+    "pass_fail": "PASS",
+    "rejecting_layer": "EZKL Halo2 / KZG Pairing Engine",
+    "detail": "Halo2 SNARK verifier rejects proof when public instance values do not match committed polynomial evaluations."
+  },
+  {
+    "test_id": "EZKL-02",
+    "description": "Verification Key Mismatch: PureConv proof verified against HiDDeN vk.key",
+    "category": "Cryptographic Integrity",
+    "expected": "REJECTED",
+    "actual": "REJECTED",
+    "pass_fail": "PASS",
+    "rejecting_layer": "EZKL Halo2 / Circuit Verifier",
+    "detail": "Cross-circuit verification key substitution strictly rejected by Halo2 circuit transcript checks."
+  },
+  {
+    "test_id": "MODL-01",
+    "description": "Model Digest Mutation in Public Inputs",
+    "category": "Model Identity",
+    "expected": "REJECTED",
+    "actual": "REJECTED",
+    "pass_fail": "PASS",
+    "rejecting_layer": "Application Layer (verify_proof)",
+    "detail": "Application rejected untrusted model digest: Model digest mismatch: claimed 0x0000000000000000000000000000000000000000000000000000000000000000 does not match trained HiDDeN decoder 0xb7f866bfc990c5a32eb45ae9df4f336bc9620953c13c300775a0fbf15b9eef7f"
+  },
+  {
+    "test_id": "EZKL-03",
+    "description": "Proof Byte Corruption: Inverting bytes in proof byte-array",
+    "category": "Cryptographic Integrity",
+    "expected": "REJECTED",
+    "actual": "REJECTED",
+    "pass_fail": "PASS",
+    "rejecting_layer": "EZKL Halo2 / KZG Verifier",
+    "detail": "Invalid elliptic curve encoding / KZG pairing failure strictly detected and rejected."
+  },
+  {
+    "test_id": "SOL-01",
+    "description": "On-Chain Anchor Verification: anchor(assetId, commitment)",
+    "category": "Smart Contract Binding",
+    "expected": "REJECTED (if unproven)",
+    "actual": "UNCONSTRAINED",
+    "pass_fail": "FAIL (ARCHITECTURAL LIMITATION)",
+    "rejecting_layer": null,
+    "detail": "ProvenanceAnchor.sol records arbitrary (assetId, commitment) tuples without EVM proof verification or proof digest checks."
+  }
+]

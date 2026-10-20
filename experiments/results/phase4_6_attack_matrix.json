@@ -1,0 +1,139 @@
+{
+  "audit_phase": "Phase 4.6",
+  "timestamp": 1792516804.9812396,
+  "total_tests": 11,
+  "attack_matrix": [
+    {
+      "test_id": "ATTACK-00",
+      "name": "Baseline Verification",
+      "category": "Baseline",
+      "attack_description": "Untampered proof, matching image B, matching public inputs",
+      "expected_secure_outcome": "ACCEPTED",
+      "actual_outcome": "ACCEPTED",
+      "decision_layer": "Cryptographic (Halo2) + Application",
+      "vulnerability_confirmed": false,
+      "error_message": "None",
+      "details": "Untampered baseline verified successfully."
+    },
+    {
+      "test_id": "ATTACK-01",
+      "name": "Image A with features from Image B",
+      "category": "Cross-Image Feature Substitution",
+      "attack_description": "Proof generated from Image B submitted to verify unwatermarked Image A with recomputed claim commitment",
+      "expected_secure_outcome": "REJECTED",
+      "actual_outcome": "REJECTED",
+      "decision_layer": "Application Verifier",
+      "vulnerability_confirmed": false,
+      "error_message": "Feature provenance mismatch: proof input features do not match features extracted from candidate image (24/32 features mismatch, max_diff=0.00781). Cross-image feature substitution rejected.",
+      "details": "Verifier checked Image A hash against suspect_image_sha256, but circuit did not constrain that features were derived from Image A."
+    },
+    {
+      "test_id": "ATTACK-02A",
+      "name": "Replacing image digest (naive)",
+      "category": "Image Digest Replay",
+      "attack_description": "Altering suspect_image_sha256 while leaving claim_commitment untouched",
+      "expected_secure_outcome": "REJECTED",
+      "actual_outcome": "REJECTED",
+      "decision_layer": "Application Verifier (Claim Commitment Check)",
+      "vulnerability_confirmed": false,
+      "error_message": "Claim commitment mismatch: claim commitment does not bind image, payload commitment, model, prover, and proof.",
+      "details": "Rejected because C_claim = H(sha_a || ...) does not match claimed C_claim."
+    },
+    {
+      "test_id": "ATTACK-02B",
+      "name": "Replacing image digest (recomputed commitment, no raw media)",
+      "category": "Image Digest Replay",
+      "attack_description": "Proof reused for different image digest by recomputing claim commitment off-chain",
+      "expected_secure_outcome": "REJECTED",
+      "actual_outcome": "ACCEPTED",
+      "decision_layer": "None (Accepted!)",
+      "vulnerability_confirmed": true,
+      "error_message": "None",
+      "details": "Accepted because the circuit does not constrain the image digest and no raw image was supplied for re-extraction."
+    },
+    {
+      "test_id": "ATTACK-03A",
+      "name": "Handcrafted features (direct ZK proving)",
+      "category": "Feature Forgery",
+      "attack_description": "Attacker generates proof using handcrafted feature vector without an image",
+      "expected_secure_outcome": "REJECTED",
+      "actual_outcome": "ACCEPTED",
+      "decision_layer": "None (Accepted!)",
+      "vulnerability_confirmed": true,
+      "error_message": "None",
+      "details": "Circuit successfully proves y = W*x + b for handcrafted x. Circuit does not know x is synthetic."
+    },
+    {
+      "test_id": "ATTACK-03B",
+      "name": "Handcrafted features via REST API",
+      "category": "Feature Forgery",
+      "attack_description": "Untrusted client submits custom feature array to /proofs/generate endpoint",
+      "expected_secure_outcome": "REJECTED",
+      "actual_outcome": "REJECTED",
+      "decision_layer": "Application / API Boundary Guard",
+      "vulnerability_confirmed": false,
+      "error_message": "Untrusted client-supplied image features rejected. Features must be extracted server-side from uploaded media.",
+      "details": "API rejects client features because they are not present in server feature cache."
+    },
+    {
+      "test_id": "ATTACK-04",
+      "name": "Changing claimed payload",
+      "category": "Payload Tampering",
+      "attack_description": "Claiming payload 1337c0de on proof that constrained deadbeef",
+      "expected_secure_outcome": "REJECTED",
+      "actual_outcome": "REJECTED",
+      "decision_layer": "Application Verifier (Circuit Output Match Check)",
+      "vulnerability_confirmed": false,
+      "error_message": "Circuit output payload mismatch: constrained circuit outputs recover '0xdeadbeff', which does not match claimed payload '1337c0de'",
+      "details": "Verifier extracted constrained circuit outputs from proof and caught mismatch with claimed payload."
+    },
+    {
+      "test_id": "ATTACK-05",
+      "name": "Recomputing commitment after payload change",
+      "category": "Payload Commitment Forgery",
+      "attack_description": "Recomputing C_payload and C_claim to match fake payload 1337c0de while keeping proof instances",
+      "expected_secure_outcome": "REJECTED",
+      "actual_outcome": "REJECTED",
+      "decision_layer": "Application Verifier (Circuit Output Consistency)",
+      "vulnerability_confirmed": false,
+      "error_message": "Circuit output payload mismatch: constrained circuit outputs recover '0xdeadbeff', which does not match claimed payload '1337c0de'",
+      "details": "Even though commitments match 1337c0de, proof's constrained outputs still evaluate to deadbeff, triggering rejection."
+    },
+    {
+      "test_id": "ATTACK-06",
+      "name": "Mismatched model digest and verification key",
+      "category": "Model & Circuit Integrity",
+      "attack_description": "6a: Altered model digest in public inputs. 6b: Verifying PureConv proof with HiDDeN vk.key",
+      "expected_secure_outcome": "REJECTED",
+      "actual_outcome": "REJECTED",
+      "decision_layer": "Application Check (Model Digest) + Cryptographic Halo2 VK Pairing",
+      "vulnerability_confirmed": false,
+      "error_message": "Model: Model digest mismatch: claimed 0x0000000000000000000000000000000000000000000000000000000000000000 does not match trained HiDDeN decoder 0xb7f866bfc990c5a32eb45ae9df4f336bc9620953c13c300775a0fbf15b9eef7f; VK: Claim commitment mismatch: claim commitment does not bind image, payload commitment, model, prover, and proof.",
+      "details": "Altered model digest caught by application; mismatched VK fails Halo2 transcript verification."
+    },
+    {
+      "test_id": "ATTACK-07",
+      "name": "Proof replay across publisher addresses",
+      "category": "Publisher / Asset Identity Binding",
+      "attack_description": "Attacker takes valid proof and re-submits with attacker prover_address and recomputed claim commitment",
+      "expected_secure_outcome": "REJECTED",
+      "actual_outcome": "ACCEPTED",
+      "decision_layer": "None (Accepted!)",
+      "vulnerability_confirmed": true,
+      "error_message": "None",
+      "details": "Accepted because the proof contains no cryptographic signature from the prover, and claim commitment can be recomputed by anyone."
+    },
+    {
+      "test_id": "ATTACK-08",
+      "name": "Unconstrained blockchain commitment anchoring",
+      "category": "Smart Contract Soundness",
+      "attack_description": "Attacker calls anchor(assetId, commitment) with arbitrary fake data and zero proof",
+      "expected_secure_outcome": "REJECTED",
+      "actual_outcome": "ACCEPTED",
+      "decision_layer": "None (Accepted on contract!)",
+      "vulnerability_confirmed": true,
+      "error_message": "None (Contract accepted arbitrary commitment)",
+      "details": "ProvenanceAnchor.sol is merely a key-value registry; it does not invoke an EVM verifier or check proof calldata."
+    }
+  ]
+}

@@ -1,0 +1,1101 @@
+trial_id,image_name,condition,target_payload,baseline_psnr_db,baseline_ssim,baseline_recovered_hex,baseline_ber,baseline_exact,siapc_psnr_db,siapc_ssim,siapc_recovered_hex,siapc_ber,siapc_exact
+1,unseen_01_portrait.png,Clean,9e3779b9,34.8,0.9754,9e3779b9,0.0,True,34.8,0.9754,9e3779b9,0.0,True
+2,unseen_01_portrait.png,JPEG 90,9e3779b9,32.74,0.9605,9e3779b9,0.0,True,32.74,0.9605,9e3779b9,0.0,True
+3,unseen_01_portrait.png,JPEG 75,9e3779b9,31.37,0.9444,9e3779b9,0.0,True,31.37,0.9444,9e3779b9,0.0,True
+4,unseen_01_portrait.png,JPEG 50,9e3779b9,30.79,0.9364,9e3779b9,0.0,True,30.79,0.9364,9e3779b9,0.0,True
+5,unseen_01_portrait.png,JPEG 30,9e3779b9,30.43,0.9305,9e3779b9,0.0,True,30.43,0.9305,9e3779b9,0.0,True
+6,unseen_01_portrait.png,Resize 75%,9e3779b9,32.74,0.958,9e3779b9,0.0,True,32.74,0.958,9e3779b9,0.0,True
+7,unseen_01_portrait.png,Resize 50%,9e3779b9,32.58,0.9558,9e3779b9,0.0,True,32.58,0.9558,9e3779b9,0.0,True
+8,unseen_01_portrait.png,Gaussian Blur (r=0.5),9e3779b9,34.44,0.9724,9e3779b9,0.0,True,34.44,0.9724,9e3779b9,0.0,True
+9,unseen_01_portrait.png,Brightness (+10%),9e3779b9,26.39,0.965,9e3779b9,0.0,True,26.39,0.965,9e3779b9,0.0,True
+10,unseen_01_portrait.png,Contrast (-10%),9e3779b9,33.98,0.9729,9e3779b9,0.0,True,33.98,0.9729,9e3779b9,0.0,True
+11,unseen_01_portrait.png,Gaussian Noise (sigma=2),9e3779b9,33.93,0.9708,9e3779b9,0.0,True,33.96,0.971,9e3779b9,0.0,True
+12,unseen_01_portrait.png,Clean,7f4c1a8d,34.8,0.9754,7f4c1a8d,0.0,True,34.8,0.9754,7f4c1a8d,0.0,True
+13,unseen_01_portrait.png,JPEG 90,7f4c1a8d,32.73,0.9604,7f4c1a8d,0.0,True,32.73,0.9604,7f4c1a8d,0.0,True
+14,unseen_01_portrait.png,JPEG 75,7f4c1a8d,31.34,0.9441,7f4c1a8d,0.0,True,31.34,0.9441,7f4c1a8d,0.0,True
+15,unseen_01_portrait.png,JPEG 50,7f4c1a8d,30.8,0.9364,7f4c1a8d,0.0,True,30.8,0.9364,7f4c1a8d,0.0,True
+16,unseen_01_portrait.png,JPEG 30,7f4c1a8d,30.51,0.9315,7f4c1a8d,0.0,True,30.51,0.9315,7f4c1a8d,0.0,True
+17,unseen_01_portrait.png,Resize 75%,7f4c1a8d,32.75,0.958,7f4c1a8d,0.0,True,32.75,0.958,7f4c1a8d,0.0,True
+18,unseen_01_portrait.png,Resize 50%,7f4c1a8d,32.57,0.9556,7f4c1a8d,0.0,True,32.57,0.9556,7f4c1a8d,0.0,True
+19,unseen_01_portrait.png,Gaussian Blur (r=0.5),7f4c1a8d,34.44,0.9724,7f4c1a8d,0.0,True,34.44,0.9724,7f4c1a8d,0.0,True
+20,unseen_01_portrait.png,Brightness (+10%),7f4c1a8d,26.39,0.965,7f4c1a8d,0.0,True,26.39,0.965,7f4c1a8d,0.0,True
+21,unseen_01_portrait.png,Contrast (-10%),7f4c1a8d,33.97,0.9729,7f4c1a8d,0.0,True,33.97,0.9729,7f4c1a8d,0.0,True
+22,unseen_01_portrait.png,Gaussian Noise (sigma=2),7f4c1a8d,33.92,0.9708,7f4c1a8d,0.0,True,33.93,0.9708,7f4c1a8d,0.0,True
+23,unseen_01_portrait.png,Clean,2b5e91c3,34.82,0.9755,2b5e91c3,0.0,True,34.84,0.9756,2b5e91c3,0.0,True
+24,unseen_01_portrait.png,JPEG 90,2b5e91c3,32.75,0.9605,2b5e91c3,0.0,True,32.76,0.9606,2b5e91c3,0.0,True
+25,unseen_01_portrait.png,JPEG 75,2b5e91c3,31.36,0.9443,2b5e91c3,0.0,True,31.36,0.9444,2b5e91c3,0.0,True
+26,unseen_01_portrait.png,JPEG 50,2b5e91c3,30.85,0.9371,2b5e91c3,0.0,True,30.86,0.9374,2b5e91c3,0.0,True
+27,unseen_01_portrait.png,JPEG 30,2b5e91c3,30.45,0.9303,2b5e91c3,0.0,True,30.46,0.9305,2b5e91c3,0.0,True
+28,unseen_01_portrait.png,Resize 75%,2b5e91c3,32.73,0.9579,2b5e91c3,0.0,True,32.74,0.958,2b5e91c3,0.0,True
+29,unseen_01_portrait.png,Resize 50%,2b5e91c3,32.57,0.9556,2b5e91c3,0.0,True,32.57,0.9557,2b5e91c3,0.0,True
+30,unseen_01_portrait.png,Gaussian Blur (r=0.5),2b5e91c3,34.46,0.9725,2b5e91c3,0.0,True,34.47,0.9726,2b5e91c3,0.0,True
+31,unseen_01_portrait.png,Brightness (+10%),2b5e91c3,26.39,0.9651,2b5e91c3,0.0,True,26.41,0.9653,2b5e91c3,0.0,True
+32,unseen_01_portrait.png,Contrast (-10%),2b5e91c3,33.98,0.973,2b5e91c3,0.0,True,33.99,0.9731,2b5e91c3,0.0,True
+33,unseen_01_portrait.png,Gaussian Noise (sigma=2),2b5e91c3,33.96,0.971,2b5e91c3,0.0,True,33.96,0.9711,2b5e91c3,0.0,True
+34,unseen_01_portrait.png,Clean,b00b1e55,34.8,0.9754,b00b1e55,0.0,True,34.82,0.9755,b00b1e55,0.0,True
+35,unseen_01_portrait.png,JPEG 90,b00b1e55,32.72,0.9602,b00b1e55,0.0,True,32.73,0.9604,b00b1e55,0.0,True
+36,unseen_01_portrait.png,JPEG 75,b00b1e55,31.37,0.9446,b00b1e55,0.0,True,31.39,0.9447,b00b1e55,0.0,True
+37,unseen_01_portrait.png,JPEG 50,b00b1e55,30.72,0.9353,b00b1e55,0.0,True,30.72,0.9353,b00b1e55,0.0,True
+38,unseen_01_portrait.png,JPEG 30,b00b1e55,30.46,0.9306,b00b1e55,0.0,True,30.48,0.931,b00b1e55,0.0,True
+39,unseen_01_portrait.png,Resize 75%,b00b1e55,32.73,0.9578,b00b1e55,0.0,True,32.74,0.958,b00b1e55,0.0,True
+40,unseen_01_portrait.png,Resize 50%,b00b1e55,32.56,0.9555,b00b1e55,0.0,True,32.56,0.9555,b00b1e55,0.0,True
+41,unseen_01_portrait.png,Gaussian Blur (r=0.5),b00b1e55,34.47,0.9725,b00b1e55,0.0,True,34.48,0.9727,b00b1e55,0.0,True
+42,unseen_01_portrait.png,Brightness (+10%),b00b1e55,26.39,0.965,b00b1e55,0.0,True,26.41,0.9652,b00b1e55,0.0,True
+43,unseen_01_portrait.png,Contrast (-10%),b00b1e55,33.97,0.9728,b00b1e55,0.0,True,33.98,0.973,b00b1e55,0.0,True
+44,unseen_01_portrait.png,Gaussian Noise (sigma=2),b00b1e55,33.93,0.9708,b00b1e55,0.0,True,33.94,0.9709,b00b1e55,0.0,True
+45,unseen_01_portrait.png,Clean,6d8f2a41,34.81,0.9754,6d8f2a41,0.0,True,34.83,0.9755,6d8f2a41,0.0,True
+46,unseen_01_portrait.png,JPEG 90,6d8f2a41,32.73,0.9604,6d8f2a41,0.0,True,32.74,0.9605,6d8f2a41,0.0,True
+47,unseen_01_portrait.png,JPEG 75,6d8f2a41,31.34,0.9442,6d8f2a41,0.0,True,31.35,0.9443,6d8f2a41,0.0,True
+48,unseen_01_portrait.png,JPEG 50,6d8f2a41,30.81,0.9364,6d8f2a41,0.0,True,30.82,0.9365,6d8f2a41,0.0,True
+49,unseen_01_portrait.png,JPEG 30,6d8f2a41,30.47,0.9309,6d8f2a41,0.0,True,30.48,0.931,6d8f2a41,0.0,True
+50,unseen_01_portrait.png,Resize 75%,6d8f2a41,32.73,0.9579,6d8f2a41,0.0,True,32.74,0.9579,6d8f2a41,0.0,True
+51,unseen_01_portrait.png,Resize 50%,6d8f2a41,32.56,0.9555,6d8f2a41,0.0,True,32.56,0.9556,6d8f2a41,0.0,True
+52,unseen_01_portrait.png,Gaussian Blur (r=0.5),6d8f2a41,34.45,0.9725,6d8f2a41,0.0,True,34.47,0.9725,6d8f2a41,0.0,True
+53,unseen_01_portrait.png,Brightness (+10%),6d8f2a41,26.39,0.9651,6d8f2a41,0.0,True,26.41,0.9652,6d8f2a41,0.0,True
+54,unseen_01_portrait.png,Contrast (-10%),6d8f2a41,33.97,0.9728,6d8f2a41,0.0,True,33.98,0.973,6d8f2a41,0.0,True
+55,unseen_01_portrait.png,Gaussian Noise (sigma=2),6d8f2a41,33.91,0.9707,6d8f2a41,0.0,True,33.95,0.971,6d8f2a41,0.0,True
+56,unseen_01_portrait.png,Clean,c4a19e37,34.78,0.9753,c4a19e37,0.0,True,34.78,0.9753,c4a19e37,0.0,True
+57,unseen_01_portrait.png,JPEG 90,c4a19e37,32.72,0.9602,c4a19e37,0.0,True,32.72,0.9602,c4a19e37,0.0,True
+58,unseen_01_portrait.png,JPEG 75,c4a19e37,31.35,0.9442,c4a19e37,0.0,True,31.35,0.9442,c4a19e37,0.0,True
+59,unseen_01_portrait.png,JPEG 50,c4a19e37,30.75,0.9355,c4a19e37,0.0,True,30.75,0.9355,c4a19e37,0.0,True
+60,unseen_01_portrait.png,JPEG 30,c4a19e37,30.4,0.93,c4a19e37,0.0,True,30.4,0.93,c4a19e37,0.0,True
+61,unseen_01_portrait.png,Resize 75%,c4a19e37,32.71,0.9576,c4a19e37,0.0,True,32.71,0.9576,c4a19e37,0.0,True
+62,unseen_01_portrait.png,Resize 50%,c4a19e37,32.54,0.9553,c4a19e37,0.0,True,32.54,0.9553,c4a19e37,0.0,True
+63,unseen_01_portrait.png,Gaussian Blur (r=0.5),c4a19e37,34.42,0.9722,c4a19e37,0.0,True,34.42,0.9722,c4a19e37,0.0,True
+64,unseen_01_portrait.png,Brightness (+10%),c4a19e37,26.39,0.9649,c4a19e37,0.0,True,26.39,0.9649,c4a19e37,0.0,True
+65,unseen_01_portrait.png,Contrast (-10%),c4a19e37,33.95,0.9727,c4a19e37,0.0,True,33.95,0.9727,c4a19e37,0.0,True
+66,unseen_01_portrait.png,Gaussian Noise (sigma=2),c4a19e37,33.92,0.9707,c4a19e37,0.0,True,33.92,0.9708,c4a19e37,0.0,True
+67,unseen_01_portrait.png,Clean,1f8b4c2e,34.8,0.9754,1f8b4c2e,0.0,True,34.8,0.9754,1f8b4c2e,0.0,True
+68,unseen_01_portrait.png,JPEG 90,1f8b4c2e,32.72,0.9603,1f8b4c2e,0.0,True,32.72,0.9603,1f8b4c2e,0.0,True
+69,unseen_01_portrait.png,JPEG 75,1f8b4c2e,31.35,0.9443,1f8b4c2e,0.0,True,31.35,0.9443,1f8b4c2e,0.0,True
+70,unseen_01_portrait.png,JPEG 50,1f8b4c2e,30.8,0.9363,1f8b4c2e,0.0,True,30.8,0.9363,1f8b4c2e,0.0,True
+71,unseen_01_portrait.png,JPEG 30,1f8b4c2e,30.42,0.9303,1f8b4c2e,0.0,True,30.42,0.9303,1f8b4c2e,0.0,True
+72,unseen_01_portrait.png,Resize 75%,1f8b4c2e,32.75,0.958,1f8b4c2e,0.0,True,32.75,0.958,1f8b4c2e,0.0,True
+73,unseen_01_portrait.png,Resize 50%,1f8b4c2e,32.57,0.9557,1f8b4c2e,0.0,True,32.57,0.9557,1f8b4c2e,0.0,True
+74,unseen_01_portrait.png,Gaussian Blur (r=0.5),1f8b4c2e,34.47,0.9726,1f8b4c2e,0.0,True,34.47,0.9726,1f8b4c2e,0.0,True
+75,unseen_01_portrait.png,Brightness (+10%),1f8b4c2e,26.39,0.965,1f8b4c2e,0.0,True,26.39,0.965,1f8b4c2e,0.0,True
+76,unseen_01_portrait.png,Contrast (-10%),1f8b4c2e,33.98,0.973,1f8b4c2e,0.0,True,33.98,0.973,1f8b4c2e,0.0,True
+77,unseen_01_portrait.png,Gaussian Noise (sigma=2),1f8b4c2e,33.93,0.9708,1f8b4c2e,0.0,True,33.92,0.9708,1f8b4c2e,0.0,True
+78,unseen_01_portrait.png,Clean,5d2a7f9c,34.79,0.9753,5d2a7f9c,0.0,True,34.79,0.9753,5d2a7f9c,0.0,True
+79,unseen_01_portrait.png,JPEG 90,5d2a7f9c,32.73,0.9604,5d2a7f9c,0.0,True,32.73,0.9604,5d2a7f9c,0.0,True
+80,unseen_01_portrait.png,JPEG 75,5d2a7f9c,31.35,0.9442,5d2a7f9c,0.0,True,31.35,0.9442,5d2a7f9c,0.0,True
+81,unseen_01_portrait.png,JPEG 50,5d2a7f9c,30.77,0.936,5d2a7f9c,0.0,True,30.77,0.936,5d2a7f9c,0.0,True
+82,unseen_01_portrait.png,JPEG 30,5d2a7f9c,30.45,0.9306,5d2a7f9c,0.0,True,30.45,0.9306,5d2a7f9c,0.0,True
+83,unseen_01_portrait.png,Resize 75%,5d2a7f9c,32.73,0.9578,5d2a7f9c,0.0,True,32.73,0.9578,5d2a7f9c,0.0,True
+84,unseen_01_portrait.png,Resize 50%,5d2a7f9c,32.56,0.9555,5d2a7f9c,0.0,True,32.56,0.9555,5d2a7f9c,0.0,True
+85,unseen_01_portrait.png,Gaussian Blur (r=0.5),5d2a7f9c,34.43,0.9723,5d2a7f9c,0.0,True,34.43,0.9723,5d2a7f9c,0.0,True
+86,unseen_01_portrait.png,Brightness (+10%),5d2a7f9c,26.39,0.9649,5d2a7f9c,0.0,True,26.39,0.9649,5d2a7f9c,0.0,True
+87,unseen_01_portrait.png,Contrast (-10%),5d2a7f9c,33.97,0.9728,5d2a7f9c,0.0,True,33.97,0.9728,5d2a7f9c,0.0,True
+88,unseen_01_portrait.png,Gaussian Noise (sigma=2),5d2a7f9c,33.92,0.9708,5d2a7f9c,0.0,True,33.93,0.9708,5d2a7f9c,0.0,True
+89,unseen_01_portrait.png,Clean,83e16b4d,34.77,0.9752,83e16b4d,0.0,True,34.79,0.9753,83e16b4d,0.0,True
+90,unseen_01_portrait.png,JPEG 90,83e16b4d,32.7,0.9602,83e16b4d,0.0,True,32.73,0.9604,83e16b4d,0.0,True
+91,unseen_01_portrait.png,JPEG 75,83e16b4d,31.35,0.9444,83e16b4d,0.0,True,31.37,0.9445,83e16b4d,0.0,True
+92,unseen_01_portrait.png,JPEG 50,83e16b4d,30.79,0.9362,83e16b4d,0.0,True,30.79,0.9362,83e16b4d,0.0,True
+93,unseen_01_portrait.png,JPEG 30,83e16b4d,30.44,0.9307,83e16b4d,0.0,True,30.44,0.9306,83e16b4d,0.0,True
+94,unseen_01_portrait.png,Resize 75%,83e16b4d,32.73,0.9578,83e16b4d,0.0,True,32.74,0.9579,83e16b4d,0.0,True
+95,unseen_01_portrait.png,Resize 50%,83e16b4d,32.56,0.9556,83e16b4d,0.0,True,32.56,0.9556,83e16b4d,0.0,True
+96,unseen_01_portrait.png,Gaussian Blur (r=0.5),83e16b4d,34.43,0.9723,83e16b4d,0.0,True,34.45,0.9724,83e16b4d,0.0,True
+97,unseen_01_portrait.png,Brightness (+10%),83e16b4d,26.38,0.9648,83e16b4d,0.0,True,26.4,0.965,83e16b4d,0.0,True
+98,unseen_01_portrait.png,Contrast (-10%),83e16b4d,33.95,0.9728,83e16b4d,0.0,True,33.96,0.9729,83e16b4d,0.0,True
+99,unseen_01_portrait.png,Gaussian Noise (sigma=2),83e16b4d,33.89,0.9705,83e16b4d,0.0,True,33.94,0.9709,83e16b4d,0.0,True
+100,unseen_01_portrait.png,Clean,3c7a9f24,34.75,0.9751,3c7a9f24,0.0,True,34.75,0.9751,3c7a9f24,0.0,True
+101,unseen_01_portrait.png,JPEG 90,3c7a9f24,32.7,0.9601,3c7a9f24,0.0,True,32.7,0.9601,3c7a9f24,0.0,True
+102,unseen_01_portrait.png,JPEG 75,3c7a9f24,31.35,0.9442,3c7a9f24,0.0,True,31.35,0.9442,3c7a9f24,0.0,True
+103,unseen_01_portrait.png,JPEG 50,3c7a9f24,30.74,0.9356,3c7a9f24,0.0,True,30.74,0.9356,3c7a9f24,0.0,True
+104,unseen_01_portrait.png,JPEG 30,3c7a9f24,30.42,0.9302,3c7a9f24,0.0,True,30.42,0.9302,3c7a9f24,0.0,True
+105,unseen_01_portrait.png,Resize 75%,3c7a9f24,32.71,0.9577,3c7a9f24,0.0,True,32.71,0.9577,3c7a9f24,0.0,True
+106,unseen_01_portrait.png,Resize 50%,3c7a9f24,32.56,0.9556,3c7a9f24,0.0,True,32.56,0.9556,3c7a9f24,0.0,True
+107,unseen_01_portrait.png,Gaussian Blur (r=0.5),3c7a9f24,34.41,0.9722,3c7a9f24,0.0,True,34.41,0.9722,3c7a9f24,0.0,True
+108,unseen_01_portrait.png,Brightness (+10%),3c7a9f24,26.38,0.9647,3c7a9f24,0.0,True,26.38,0.9647,3c7a9f24,0.0,True
+109,unseen_01_portrait.png,Contrast (-10%),3c7a9f24,33.94,0.9727,3c7a9f24,0.0,True,33.94,0.9727,3c7a9f24,0.0,True
+110,unseen_01_portrait.png,Gaussian Noise (sigma=2),3c7a9f24,33.86,0.9704,3c7a9f24,0.0,True,33.9,0.9707,3c7a9f24,0.0,True
+111,unseen_02_landscape.png,Clean,9e3779b9,34.8,0.9951,9e3779b9,0.0,True,34.81,0.9951,9e3779b9,0.0,True
+112,unseen_02_landscape.png,JPEG 90,9e3779b9,33.24,0.993,9e3779b9,0.0,True,33.25,0.993,9e3779b9,0.0,True
+113,unseen_02_landscape.png,JPEG 75,9e3779b9,30.99,0.9885,9e3779b9,0.0,True,30.99,0.9885,9e3779b9,0.0,True
+114,unseen_02_landscape.png,JPEG 50,9e3779b9,30.04,0.9858,9e3779b9,0.0,True,30.05,0.9858,9e3779b9,0.0,True
+115,unseen_02_landscape.png,JPEG 30,9e3779b9,29.58,0.9844,9e3779b9,0.0,True,29.6,0.9845,9e3779b9,0.0,True
+116,unseen_02_landscape.png,Resize 75%,9e3779b9,31.3,0.9895,9e3779b9,0.0,True,31.3,0.9895,9e3779b9,0.0,True
+117,unseen_02_landscape.png,Resize 50%,9e3779b9,30.57,0.9876,9e3779b9,0.0,True,30.57,0.9876,9e3779b9,0.0,True
+118,unseen_02_landscape.png,Gaussian Blur (r=0.5),9e3779b9,33.41,0.9934,9e3779b9,0.0,True,33.41,0.9934,9e3779b9,0.0,True
+119,unseen_02_landscape.png,Brightness (+10%),9e3779b9,26.7,0.9865,9e3779b9,0.0,True,26.71,0.9866,9e3779b9,0.0,True
+120,unseen_02_landscape.png,Contrast (-10%),9e3779b9,31.66,0.9901,9e3779b9,0.0,True,31.66,0.9901,9e3779b9,0.0,True
+121,unseen_02_landscape.png,Gaussian Noise (sigma=2),9e3779b9,33.91,0.9941,9e3779b9,0.0,True,33.93,0.9942,9e3779b9,0.0,True
+122,unseen_02_landscape.png,Clean,7f4c1a8d,34.8,0.9951,7f4c1a8d,0.0,True,34.8,0.9951,7f4c1a8d,0.0,True
+123,unseen_02_landscape.png,JPEG 90,7f4c1a8d,33.24,0.993,7f4c1a8d,0.0,True,33.25,0.993,7f4c1a8d,0.0,True
+124,unseen_02_landscape.png,JPEG 75,7f4c1a8d,31.0,0.9886,7f4c1a8d,0.0,True,31.01,0.9886,7f4c1a8d,0.0,True
+125,unseen_02_landscape.png,JPEG 50,7f4c1a8d,30.0,0.9856,7f4c1a8d,0.0,True,30.0,0.9856,7f4c1a8d,0.0,True
+126,unseen_02_landscape.png,JPEG 30,7f4c1a8d,29.63,0.9846,7f4c1a8d,0.0,True,29.62,0.9846,7f4c1a8d,0.0,True
+127,unseen_02_landscape.png,Resize 75%,7f4c1a8d,31.31,0.9895,7f4c1a8d,0.0,True,31.31,0.9895,7f4c1a8d,0.0,True
+128,unseen_02_landscape.png,Resize 50%,7f4c1a8d,30.57,0.9876,7f4c1a8d,0.0,True,30.57,0.9876,7f4c1a8d,0.0,True
+129,unseen_02_landscape.png,Gaussian Blur (r=0.5),7f4c1a8d,33.46,0.9934,7f4c1a8d,0.0,True,33.45,0.9934,7f4c1a8d,0.0,True
+130,unseen_02_landscape.png,Brightness (+10%),7f4c1a8d,26.7,0.9865,7f4c1a8d,0.0,True,26.7,0.9865,7f4c1a8d,0.0,True
+131,unseen_02_landscape.png,Contrast (-10%),7f4c1a8d,31.66,0.9901,7f4c1a8d,0.0,True,31.65,0.9901,7f4c1a8d,0.0,True
+132,unseen_02_landscape.png,Gaussian Noise (sigma=2),7f4c1a8d,33.92,0.9941,7f4c1a8d,0.0,True,33.94,0.9942,7f4c1a8d,0.0,True
+133,unseen_02_landscape.png,Clean,2b5e91c3,34.82,0.9951,2b5e91c3,0.0,True,34.81,0.9951,2b5e91c3,0.0,True
+134,unseen_02_landscape.png,JPEG 90,2b5e91c3,33.25,0.993,2b5e91c3,0.0,True,33.25,0.993,2b5e91c3,0.0,True
+135,unseen_02_landscape.png,JPEG 75,2b5e91c3,31.03,0.9886,2b5e91c3,0.0,True,31.04,0.9887,2b5e91c3,0.0,True
+136,unseen_02_landscape.png,JPEG 50,2b5e91c3,29.99,0.9856,2b5e91c3,0.0,True,29.99,0.9856,2b5e91c3,0.0,True
+137,unseen_02_landscape.png,JPEG 30,2b5e91c3,29.61,0.9845,2b5e91c3,0.0,True,29.6,0.9844,2b5e91c3,0.0,True
+138,unseen_02_landscape.png,Resize 75%,2b5e91c3,31.31,0.9895,2b5e91c3,0.0,True,31.31,0.9895,2b5e91c3,0.0,True
+139,unseen_02_landscape.png,Resize 50%,2b5e91c3,30.57,0.9876,2b5e91c3,0.0,True,30.57,0.9876,2b5e91c3,0.0,True
+140,unseen_02_landscape.png,Gaussian Blur (r=0.5),2b5e91c3,33.48,0.9935,2b5e91c3,0.0,True,33.48,0.9935,2b5e91c3,0.0,True
+141,unseen_02_landscape.png,Brightness (+10%),2b5e91c3,26.7,0.9865,2b5e91c3,0.0,True,26.71,0.9866,2b5e91c3,0.0,True
+142,unseen_02_landscape.png,Contrast (-10%),2b5e91c3,31.68,0.9901,2b5e91c3,0.0,True,31.66,0.9901,2b5e91c3,0.0,True
+143,unseen_02_landscape.png,Gaussian Noise (sigma=2),2b5e91c3,33.95,0.9942,2b5e91c3,0.0,True,33.92,0.9941,2b5e91c3,0.0,True
+144,unseen_02_landscape.png,Clean,b00b1e55,34.8,0.9951,b00b1e55,0.0,True,34.79,0.9951,b00b1e55,0.0,True
+145,unseen_02_landscape.png,JPEG 90,b00b1e55,33.24,0.993,b00b1e55,0.0,True,33.23,0.993,b00b1e55,0.0,True
+146,unseen_02_landscape.png,JPEG 75,b00b1e55,31.02,0.9886,b00b1e55,0.0,True,31.01,0.9886,b00b1e55,0.0,True
+147,unseen_02_landscape.png,JPEG 50,b00b1e55,30.03,0.9858,b00b1e55,0.0,True,30.03,0.9858,b00b1e55,0.0,True
+148,unseen_02_landscape.png,JPEG 30,b00b1e55,29.64,0.9846,b00b1e55,0.0,True,29.64,0.9846,b00b1e55,0.0,True
+149,unseen_02_landscape.png,Resize 75%,b00b1e55,31.3,0.9895,b00b1e55,0.0,True,31.3,0.9895,b00b1e55,0.0,True
+150,unseen_02_landscape.png,Resize 50%,b00b1e55,30.57,0.9876,b00b1e55,0.0,True,30.57,0.9876,b00b1e55,0.0,True
+151,unseen_02_landscape.png,Gaussian Blur (r=0.5),b00b1e55,33.4,0.9934,b00b1e55,0.0,True,33.39,0.9934,b00b1e55,0.0,True
+152,unseen_02_landscape.png,Brightness (+10%),b00b1e55,26.7,0.9865,b00b1e55,0.0,True,26.71,0.9865,b00b1e55,0.0,True
+153,unseen_02_landscape.png,Contrast (-10%),b00b1e55,31.66,0.9901,b00b1e55,0.0,True,31.65,0.99,b00b1e55,0.0,True
+154,unseen_02_landscape.png,Gaussian Noise (sigma=2),b00b1e55,33.91,0.9941,b00b1e55,0.0,True,33.93,0.9941,b00b1e55,0.0,True
+155,unseen_02_landscape.png,Clean,6d8f2a41,34.8,0.9951,6d8f2a41,0.0,True,34.8,0.9951,6d8f2a41,0.0,True
+156,unseen_02_landscape.png,JPEG 90,6d8f2a41,33.26,0.9931,6d8f2a41,0.0,True,33.24,0.993,6d8f2a41,0.0,True
+157,unseen_02_landscape.png,JPEG 75,6d8f2a41,31.04,0.9887,6d8f2a41,0.0,True,31.04,0.9887,6d8f2a41,0.0,True
+158,unseen_02_landscape.png,JPEG 50,6d8f2a41,30.02,0.9857,6d8f2a41,0.0,True,30.0,0.9857,6d8f2a41,0.0,True
+159,unseen_02_landscape.png,JPEG 30,6d8f2a41,29.6,0.9845,6d8f2a41,0.0,True,29.59,0.9844,6d8f2a41,0.0,True
+160,unseen_02_landscape.png,Resize 75%,6d8f2a41,31.3,0.9895,6d8f2a41,0.0,True,31.3,0.9895,6d8f2a41,0.0,True
+161,unseen_02_landscape.png,Resize 50%,6d8f2a41,30.56,0.9876,6d8f2a41,0.0,True,30.56,0.9876,6d8f2a41,0.0,True
+162,unseen_02_landscape.png,Gaussian Blur (r=0.5),6d8f2a41,33.42,0.9934,6d8f2a41,0.0,True,33.41,0.9934,6d8f2a41,0.0,True
+163,unseen_02_landscape.png,Brightness (+10%),6d8f2a41,26.7,0.9865,6d8f2a41,0.0,True,26.71,0.9866,6d8f2a41,0.0,True
+164,unseen_02_landscape.png,Contrast (-10%),6d8f2a41,31.66,0.9901,6d8f2a41,0.0,True,31.65,0.99,6d8f2a41,0.0,True
+165,unseen_02_landscape.png,Gaussian Noise (sigma=2),6d8f2a41,33.94,0.9942,6d8f2a41,0.0,True,33.91,0.9941,6d8f2a41,0.0,True
+166,unseen_02_landscape.png,Clean,c4a19e37,34.78,0.9951,c4a19e37,0.0,True,34.79,0.9951,c4a19e37,0.0,True
+167,unseen_02_landscape.png,JPEG 90,c4a19e37,33.22,0.993,c4a19e37,0.0,True,33.22,0.993,c4a19e37,0.0,True
+168,unseen_02_landscape.png,JPEG 75,c4a19e37,31.02,0.9886,c4a19e37,0.0,True,31.03,0.9886,c4a19e37,0.0,True
+169,unseen_02_landscape.png,JPEG 50,c4a19e37,30.03,0.9858,c4a19e37,0.0,True,30.04,0.9858,c4a19e37,0.0,True
+170,unseen_02_landscape.png,JPEG 30,c4a19e37,29.6,0.9844,c4a19e37,0.0,True,29.6,0.9844,c4a19e37,0.0,True
+171,unseen_02_landscape.png,Resize 75%,c4a19e37,31.3,0.9895,c4a19e37,0.0,True,31.3,0.9895,c4a19e37,0.0,True
+172,unseen_02_landscape.png,Resize 50%,c4a19e37,30.57,0.9876,c4a19e37,0.0,True,30.57,0.9876,c4a19e37,0.0,True
+173,unseen_02_landscape.png,Gaussian Blur (r=0.5),c4a19e37,33.41,0.9934,c4a19e37,0.0,True,33.42,0.9934,c4a19e37,0.0,True
+174,unseen_02_landscape.png,Brightness (+10%),c4a19e37,26.69,0.9865,c4a19e37,0.0,True,26.7,0.9865,c4a19e37,0.0,True
+175,unseen_02_landscape.png,Contrast (-10%),c4a19e37,31.66,0.9901,c4a19e37,0.0,True,31.65,0.9901,c4a19e37,0.0,True
+176,unseen_02_landscape.png,Gaussian Noise (sigma=2),c4a19e37,33.9,0.9941,c4a19e37,0.0,True,33.9,0.9941,c4a19e37,0.0,True
+177,unseen_02_landscape.png,Clean,1f8b4c2e,34.8,0.9951,1f8b4c2e,0.0,True,34.8,0.9951,1f8b4c2e,0.0,True
+178,unseen_02_landscape.png,JPEG 90,1f8b4c2e,33.24,0.993,1f8b4c2e,0.0,True,33.24,0.993,1f8b4c2e,0.0,True
+179,unseen_02_landscape.png,JPEG 75,1f8b4c2e,31.01,0.9886,1f8b4c2e,0.0,True,31.01,0.9886,1f8b4c2e,0.0,True
+180,unseen_02_landscape.png,JPEG 50,1f8b4c2e,30.02,0.9857,1f8b4c2e,0.0,True,30.02,0.9857,1f8b4c2e,0.0,True
+181,unseen_02_landscape.png,JPEG 30,1f8b4c2e,29.61,0.9845,1f8b4c2e,0.0,True,29.63,0.9846,1f8b4c2e,0.0,True
+182,unseen_02_landscape.png,Resize 75%,1f8b4c2e,31.3,0.9895,1f8b4c2e,0.0,True,31.3,0.9895,1f8b4c2e,0.0,True
+183,unseen_02_landscape.png,Resize 50%,1f8b4c2e,30.56,0.9876,1f8b4c2e,0.0,True,30.56,0.9876,1f8b4c2e,0.0,True
+184,unseen_02_landscape.png,Gaussian Blur (r=0.5),1f8b4c2e,33.46,0.9935,1f8b4c2e,0.0,True,33.46,0.9935,1f8b4c2e,0.0,True
+185,unseen_02_landscape.png,Brightness (+10%),1f8b4c2e,26.69,0.9865,1f8b4c2e,0.0,True,26.7,0.9865,1f8b4c2e,0.0,True
+186,unseen_02_landscape.png,Contrast (-10%),1f8b4c2e,31.67,0.9901,1f8b4c2e,0.0,True,31.66,0.9901,1f8b4c2e,0.0,True
+187,unseen_02_landscape.png,Gaussian Noise (sigma=2),1f8b4c2e,33.93,0.9941,1f8b4c2e,0.0,True,33.91,0.9941,1f8b4c2e,0.0,True
+188,unseen_02_landscape.png,Clean,5d2a7f9c,34.79,0.9951,5d2a7f9c,0.0,True,34.79,0.9951,5d2a7f9c,0.0,True
+189,unseen_02_landscape.png,JPEG 90,5d2a7f9c,33.22,0.993,5d2a7f9c,0.0,True,33.22,0.993,5d2a7f9c,0.0,True
+190,unseen_02_landscape.png,JPEG 75,5d2a7f9c,31.0,0.9886,5d2a7f9c,0.0,True,31.01,0.9886,5d2a7f9c,0.0,True
+191,unseen_02_landscape.png,JPEG 50,5d2a7f9c,30.04,0.9858,5d2a7f9c,0.0,True,30.03,0.9858,5d2a7f9c,0.0,True
+192,unseen_02_landscape.png,JPEG 30,5d2a7f9c,29.66,0.9847,5d2a7f9c,0.0,True,29.65,0.9846,5d2a7f9c,0.0,True
+193,unseen_02_landscape.png,Resize 75%,5d2a7f9c,31.29,0.9894,5d2a7f9c,0.0,True,31.29,0.9894,5d2a7f9c,0.0,True
+194,unseen_02_landscape.png,Resize 50%,5d2a7f9c,30.56,0.9876,5d2a7f9c,0.0,True,30.56,0.9876,5d2a7f9c,0.0,True
+195,unseen_02_landscape.png,Gaussian Blur (r=0.5),5d2a7f9c,33.39,0.9933,5d2a7f9c,0.0,True,33.39,0.9933,5d2a7f9c,0.0,True
+196,unseen_02_landscape.png,Brightness (+10%),5d2a7f9c,26.7,0.9865,5d2a7f9c,0.0,True,26.71,0.9865,5d2a7f9c,0.0,True
+197,unseen_02_landscape.png,Contrast (-10%),5d2a7f9c,31.65,0.9901,5d2a7f9c,0.0,True,31.64,0.99,5d2a7f9c,0.0,True
+198,unseen_02_landscape.png,Gaussian Noise (sigma=2),5d2a7f9c,33.9,0.9941,5d2a7f9c,0.0,True,33.92,0.9941,5d2a7f9c,0.0,True
+199,unseen_02_landscape.png,Clean,83e16b4d,34.77,0.9951,83e16b4d,0.0,True,34.77,0.9951,83e16b4d,0.0,True
+200,unseen_02_landscape.png,JPEG 90,83e16b4d,33.24,0.993,83e16b4d,0.0,True,33.23,0.993,83e16b4d,0.0,True
+201,unseen_02_landscape.png,JPEG 75,83e16b4d,31.01,0.9886,83e16b4d,0.0,True,31.02,0.9886,83e16b4d,0.0,True
+202,unseen_02_landscape.png,JPEG 50,83e16b4d,30.04,0.9858,83e16b4d,0.0,True,30.03,0.9857,83e16b4d,0.0,True
+203,unseen_02_landscape.png,JPEG 30,83e16b4d,29.57,0.9843,83e16b4d,0.0,True,29.57,0.9843,83e16b4d,0.0,True
+204,unseen_02_landscape.png,Resize 75%,83e16b4d,31.31,0.9895,83e16b4d,0.0,True,31.31,0.9895,83e16b4d,0.0,True
+205,unseen_02_landscape.png,Resize 50%,83e16b4d,30.57,0.9876,83e16b4d,0.0,True,30.57,0.9876,83e16b4d,0.0,True
+206,unseen_02_landscape.png,Gaussian Blur (r=0.5),83e16b4d,33.4,0.9934,83e16b4d,0.0,True,33.4,0.9934,83e16b4d,0.0,True
+207,unseen_02_landscape.png,Brightness (+10%),83e16b4d,26.69,0.9865,83e16b4d,0.0,True,26.7,0.9865,83e16b4d,0.0,True
+208,unseen_02_landscape.png,Contrast (-10%),83e16b4d,31.66,0.9901,83e16b4d,0.0,True,31.65,0.99,83e16b4d,0.0,True
+209,unseen_02_landscape.png,Gaussian Noise (sigma=2),83e16b4d,33.89,0.9941,83e16b4d,0.0,True,33.9,0.9941,83e16b4d,0.0,True
+210,unseen_02_landscape.png,Clean,3c7a9f24,34.75,0.9951,3c7a9f24,0.0,True,34.75,0.9951,3c7a9f24,0.0,True
+211,unseen_02_landscape.png,JPEG 90,3c7a9f24,33.21,0.993,3c7a9f24,0.0,True,33.21,0.993,3c7a9f24,0.0,True
+212,unseen_02_landscape.png,JPEG 75,3c7a9f24,30.99,0.9885,3c7a9f24,0.0,True,31.0,0.9886,3c7a9f24,0.0,True
+213,unseen_02_landscape.png,JPEG 50,3c7a9f24,29.98,0.9856,3c7a9f24,0.0,True,29.97,0.9856,3c7a9f24,0.0,True
+214,unseen_02_landscape.png,JPEG 30,3c7a9f24,29.57,0.9843,3c7a9f24,0.0,True,29.55,0.9842,3c7a9f24,0.0,True
+215,unseen_02_landscape.png,Resize 75%,3c7a9f24,31.29,0.9894,3c7a9f24,0.0,True,31.29,0.9894,3c7a9f24,0.0,True
+216,unseen_02_landscape.png,Resize 50%,3c7a9f24,30.56,0.9876,3c7a9f24,0.0,True,30.56,0.9876,3c7a9f24,0.0,True
+217,unseen_02_landscape.png,Gaussian Blur (r=0.5),3c7a9f24,33.41,0.9934,3c7a9f24,0.0,True,33.41,0.9934,3c7a9f24,0.0,True
+218,unseen_02_landscape.png,Brightness (+10%),3c7a9f24,26.7,0.9865,3c7a9f24,0.0,True,26.71,0.9865,3c7a9f24,0.0,True
+219,unseen_02_landscape.png,Contrast (-10%),3c7a9f24,31.64,0.99,3c7a9f24,0.0,True,31.63,0.99,3c7a9f24,0.0,True
+220,unseen_02_landscape.png,Gaussian Noise (sigma=2),3c7a9f24,33.86,0.994,3c7a9f24,0.0,True,33.88,0.9941,3c7a9f24,0.0,True
+221,unseen_03_mandala.png,Clean,9e3779b9,34.8,0.9945,9e3779b9,0.0,True,34.77,0.9944,9e3779b9,0.0,True
+222,unseen_03_mandala.png,JPEG 90,9e3779b9,28.78,0.9761,9e3779b9,0.0,True,28.77,0.9761,9e3779b9,0.0,True
+223,unseen_03_mandala.png,JPEG 75,9e3779b9,27.57,0.9667,9e3779b9,0.0,True,27.56,0.9667,9e3779b9,0.0,True
+224,unseen_03_mandala.png,JPEG 50,9e3779b9,25.53,0.9464,9e3779b9,0.0,True,25.51,0.9462,9e3779b9,0.0,True
+225,unseen_03_mandala.png,JPEG 30,9e3779b9,23.38,0.9047,9e3779b9,0.0,True,23.39,0.9049,9e3779b9,0.0,True
+226,unseen_03_mandala.png,Resize 75%,9e3779b9,33.24,0.9926,9e3779b9,0.0,True,33.22,0.9925,9e3779b9,0.0,True
+227,unseen_03_mandala.png,Resize 50%,9e3779b9,28.6,0.9783,9e3779b9,0.0,True,28.6,0.9783,9e3779b9,0.0,True
+228,unseen_03_mandala.png,Gaussian Blur (r=0.5),9e3779b9,34.83,0.9945,9e3779b9,0.0,True,34.8,0.9945,9e3779b9,0.0,True
+229,unseen_03_mandala.png,Brightness (+10%),9e3779b9,25.45,0.9858,9e3779b9,0.0,True,25.46,0.9858,9e3779b9,0.0,True
+230,unseen_03_mandala.png,Contrast (-10%),9e3779b9,31.92,0.9896,9e3779b9,0.0,True,31.91,0.9896,9e3779b9,0.0,True
+231,unseen_03_mandala.png,Gaussian Noise (sigma=2),9e3779b9,33.93,0.9934,9e3779b9,0.0,True,33.88,0.9933,9e3779b9,0.0,True
+232,unseen_03_mandala.png,Clean,7f4c1a8d,34.8,0.9944,7f4c1a8d,0.0,True,34.73,0.9944,7f4c1a8d,0.0,True
+233,unseen_03_mandala.png,JPEG 90,7f4c1a8d,28.74,0.9757,7f4c1a8d,0.0,True,28.74,0.9757,7f4c1a8d,0.0,True
+234,unseen_03_mandala.png,JPEG 75,7f4c1a8d,27.51,0.966,7f4c1a8d,0.0,True,27.51,0.966,7f4c1a8d,0.0,True
+235,unseen_03_mandala.png,JPEG 50,7f4c1a8d,25.51,0.9464,7f4c1a8d,0.0,True,25.48,0.9461,7f4c1a8d,0.0,True
+236,unseen_03_mandala.png,JPEG 30,7f4c1a8d,23.4,0.9053,7f4c1a8d,0.0,True,23.4,0.9054,7f4c1a8d,0.0,True
+237,unseen_03_mandala.png,Resize 75%,7f4c1a8d,33.22,0.9925,7f4c1a8d,0.0,True,33.19,0.9925,7f4c1a8d,0.0,True
+238,unseen_03_mandala.png,Resize 50%,7f4c1a8d,28.6,0.9783,7f4c1a8d,0.0,True,28.6,0.9783,7f4c1a8d,0.0,True
+239,unseen_03_mandala.png,Gaussian Blur (r=0.5),7f4c1a8d,34.81,0.9945,7f4c1a8d,0.0,True,34.75,0.9944,7f4c1a8d,0.0,True
+240,unseen_03_mandala.png,Brightness (+10%),7f4c1a8d,25.46,0.9858,7f4c1a8d,0.0,True,25.46,0.9857,7f4c1a8d,0.0,True
+241,unseen_03_mandala.png,Contrast (-10%),7f4c1a8d,31.92,0.9896,7f4c1a8d,0.0,True,31.89,0.9895,7f4c1a8d,0.0,True
+242,unseen_03_mandala.png,Gaussian Noise (sigma=2),7f4c1a8d,33.95,0.9934,7f4c1a8d,0.0,True,33.87,0.9933,7f4c1a8d,0.0,True
+243,unseen_03_mandala.png,Clean,2b5e91c3,34.82,0.9945,2b5e91c3,0.0,True,34.72,0.9944,2b5e91c3,0.0,True
+244,unseen_03_mandala.png,JPEG 90,2b5e91c3,28.77,0.9759,2b5e91c3,0.0,True,28.75,0.9758,2b5e91c3,0.0,True
+245,unseen_03_mandala.png,JPEG 75,2b5e91c3,27.57,0.9667,2b5e91c3,0.0,True,27.55,0.9666,2b5e91c3,0.0,True
+246,unseen_03_mandala.png,JPEG 50,2b5e91c3,25.5,0.946,2b5e91c3,0.0,True,25.49,0.9459,2b5e91c3,0.0,True
+247,unseen_03_mandala.png,JPEG 30,2b5e91c3,23.4,0.9053,2b5e91c3,0.0,True,23.4,0.9055,2b5e91c3,0.0,True
+248,unseen_03_mandala.png,Resize 75%,2b5e91c3,33.25,0.9926,2b5e91c3,0.0,True,33.2,0.9925,2b5e91c3,0.0,True
+249,unseen_03_mandala.png,Resize 50%,2b5e91c3,28.61,0.9784,2b5e91c3,0.0,True,28.6,0.9783,2b5e91c3,0.0,True
+250,unseen_03_mandala.png,Gaussian Blur (r=0.5),2b5e91c3,34.84,0.9945,2b5e91c3,0.0,True,34.76,0.9944,2b5e91c3,0.0,True
+251,unseen_03_mandala.png,Brightness (+10%),2b5e91c3,25.45,0.9858,2b5e91c3,0.0,True,25.45,0.9856,2b5e91c3,0.0,True
+252,unseen_03_mandala.png,Contrast (-10%),2b5e91c3,31.94,0.9897,2b5e91c3,0.0,True,31.9,0.9896,2b5e91c3,0.0,True
+253,unseen_03_mandala.png,Gaussian Noise (sigma=2),2b5e91c3,33.92,0.9934,2b5e91c3,0.0,True,33.84,0.9933,2b5e91c3,0.0,True
+254,unseen_03_mandala.png,Clean,b00b1e55,34.8,0.9944,b00b1e55,0.0,True,34.76,0.9944,b00b1e55,0.0,True
+255,unseen_03_mandala.png,JPEG 90,b00b1e55,28.72,0.9755,b00b1e55,0.0,True,28.71,0.9755,b00b1e55,0.0,True
+256,unseen_03_mandala.png,JPEG 75,b00b1e55,27.51,0.9661,b00b1e55,0.0,True,27.51,0.9661,b00b1e55,0.0,True
+257,unseen_03_mandala.png,JPEG 50,b00b1e55,25.51,0.9461,b00b1e55,0.0,True,25.5,0.9461,b00b1e55,0.0,True
+258,unseen_03_mandala.png,JPEG 30,b00b1e55,23.38,0.9047,b00b1e55,0.0,True,23.37,0.9044,b00b1e55,0.0,True
+259,unseen_03_mandala.png,Resize 75%,b00b1e55,33.2,0.9924,b00b1e55,0.0,True,33.19,0.9924,b00b1e55,0.0,True
+260,unseen_03_mandala.png,Resize 50%,b00b1e55,28.59,0.9782,b00b1e55,0.0,True,28.59,0.9781,b00b1e55,0.0,True
+261,unseen_03_mandala.png,Gaussian Blur (r=0.5),b00b1e55,34.81,0.9945,b00b1e55,0.0,True,34.78,0.9944,b00b1e55,0.0,True
+262,unseen_03_mandala.png,Brightness (+10%),b00b1e55,25.46,0.9858,b00b1e55,0.0,True,25.46,0.9858,b00b1e55,0.0,True
+263,unseen_03_mandala.png,Contrast (-10%),b00b1e55,31.92,0.9896,b00b1e55,0.0,True,31.9,0.9895,b00b1e55,0.0,True
+264,unseen_03_mandala.png,Gaussian Noise (sigma=2),b00b1e55,33.92,0.9934,b00b1e55,0.0,True,33.88,0.9933,b00b1e55,0.0,True
+265,unseen_03_mandala.png,Clean,6d8f2a41,34.81,0.9945,6d8f2a41,0.0,True,34.73,0.9944,6d8f2a41,0.0,True
+266,unseen_03_mandala.png,JPEG 90,6d8f2a41,28.78,0.9759,6d8f2a41,0.0,True,28.76,0.9759,6d8f2a41,0.0,True
+267,unseen_03_mandala.png,JPEG 75,6d8f2a41,27.53,0.9662,6d8f2a41,0.0,True,27.52,0.9662,6d8f2a41,0.0,True
+268,unseen_03_mandala.png,JPEG 50,6d8f2a41,25.52,0.9464,6d8f2a41,0.0,True,25.51,0.9465,6d8f2a41,0.0,True
+269,unseen_03_mandala.png,JPEG 30,6d8f2a41,23.4,0.9053,6d8f2a41,0.0,True,23.42,0.9057,6d8f2a41,0.0,True
+270,unseen_03_mandala.png,Resize 75%,6d8f2a41,33.23,0.9925,6d8f2a41,0.0,True,33.2,0.9925,6d8f2a41,0.0,True
+271,unseen_03_mandala.png,Resize 50%,6d8f2a41,28.61,0.9783,6d8f2a41,0.0,True,28.6,0.9783,6d8f2a41,0.0,True
+272,unseen_03_mandala.png,Gaussian Blur (r=0.5),6d8f2a41,34.82,0.9945,6d8f2a41,0.0,True,34.76,0.9944,6d8f2a41,0.0,True
+273,unseen_03_mandala.png,Brightness (+10%),6d8f2a41,25.45,0.9858,6d8f2a41,0.0,True,25.45,0.9857,6d8f2a41,0.0,True
+274,unseen_03_mandala.png,Contrast (-10%),6d8f2a41,31.93,0.9896,6d8f2a41,0.0,True,31.9,0.9896,6d8f2a41,0.0,True
+275,unseen_03_mandala.png,Gaussian Noise (sigma=2),6d8f2a41,33.92,0.9934,6d8f2a41,0.0,True,33.89,0.9933,6d8f2a41,0.0,True
+276,unseen_03_mandala.png,Clean,c4a19e37,34.78,0.9944,c4a19e37,0.0,True,34.78,0.9944,c4a19e37,0.0,True
+277,unseen_03_mandala.png,JPEG 90,c4a19e37,28.71,0.9756,c4a19e37,0.0,True,28.71,0.9755,c4a19e37,0.0,True
+278,unseen_03_mandala.png,JPEG 75,c4a19e37,27.5,0.9659,c4a19e37,0.0,True,27.5,0.9658,c4a19e37,0.0,True
+279,unseen_03_mandala.png,JPEG 50,c4a19e37,25.52,0.9463,c4a19e37,0.0,True,25.51,0.9463,c4a19e37,0.0,True
+280,unseen_03_mandala.png,JPEG 30,c4a19e37,23.38,0.9047,c4a19e37,0.0,True,23.38,0.9047,c4a19e37,0.0,True
+281,unseen_03_mandala.png,Resize 75%,c4a19e37,33.19,0.9924,c4a19e37,0.0,True,33.18,0.9924,c4a19e37,0.0,True
+282,unseen_03_mandala.png,Resize 50%,c4a19e37,28.58,0.9781,c4a19e37,0.0,True,28.58,0.9781,c4a19e37,0.0,True
+283,unseen_03_mandala.png,Gaussian Blur (r=0.5),c4a19e37,34.81,0.9945,c4a19e37,0.0,True,34.8,0.9945,c4a19e37,0.0,True
+284,unseen_03_mandala.png,Brightness (+10%),c4a19e37,25.45,0.9858,c4a19e37,0.0,True,25.46,0.9858,c4a19e37,0.0,True
+285,unseen_03_mandala.png,Contrast (-10%),c4a19e37,31.9,0.9895,c4a19e37,0.0,True,31.89,0.9895,c4a19e37,0.0,True
+286,unseen_03_mandala.png,Gaussian Noise (sigma=2),c4a19e37,33.9,0.9933,c4a19e37,0.0,True,33.91,0.9934,c4a19e37,0.0,True
+287,unseen_03_mandala.png,Clean,1f8b4c2e,34.8,0.9944,1f8b4c2e,0.0,True,34.81,0.9945,1f8b4c2e,0.0,True
+288,unseen_03_mandala.png,JPEG 90,1f8b4c2e,28.73,0.9756,1f8b4c2e,0.0,True,28.73,0.9757,1f8b4c2e,0.0,True
+289,unseen_03_mandala.png,JPEG 75,1f8b4c2e,27.54,0.9662,1f8b4c2e,0.0,True,27.55,0.9664,1f8b4c2e,0.0,True
+290,unseen_03_mandala.png,JPEG 50,1f8b4c2e,25.49,0.9454,1f8b4c2e,0.0,True,25.47,0.9453,1f8b4c2e,0.0,True
+291,unseen_03_mandala.png,JPEG 30,1f8b4c2e,23.36,0.9041,1f8b4c2e,0.0,True,23.37,0.9044,1f8b4c2e,0.0,True
+292,unseen_03_mandala.png,Resize 75%,1f8b4c2e,33.21,0.9924,1f8b4c2e,0.0,True,33.2,0.9925,1f8b4c2e,0.0,True
+293,unseen_03_mandala.png,Resize 50%,1f8b4c2e,28.59,0.9781,1f8b4c2e,0.0,True,28.58,0.9781,1f8b4c2e,0.0,True
+294,unseen_03_mandala.png,Gaussian Blur (r=0.5),1f8b4c2e,34.81,0.9945,1f8b4c2e,0.0,True,34.82,0.9945,1f8b4c2e,0.0,True
+295,unseen_03_mandala.png,Brightness (+10%),1f8b4c2e,25.45,0.9858,1f8b4c2e,0.0,True,25.47,0.9859,1f8b4c2e,0.0,True
+296,unseen_03_mandala.png,Contrast (-10%),1f8b4c2e,31.91,0.9895,1f8b4c2e,0.0,True,31.91,0.9895,1f8b4c2e,0.0,True
+297,unseen_03_mandala.png,Gaussian Noise (sigma=2),1f8b4c2e,33.94,0.9934,1f8b4c2e,0.0,True,33.92,0.9934,1f8b4c2e,0.0,True
+298,unseen_03_mandala.png,Clean,5d2a7f9c,34.79,0.9944,5d2a7f9c,0.0,True,34.74,0.9944,5d2a7f9c,0.0,True
+299,unseen_03_mandala.png,JPEG 90,5d2a7f9c,28.73,0.9757,5d2a7f9c,0.0,True,28.73,0.9757,5d2a7f9c,0.0,True
+300,unseen_03_mandala.png,JPEG 75,5d2a7f9c,27.51,0.966,5d2a7f9c,0.0,True,27.51,0.966,5d2a7f9c,0.0,True
+301,unseen_03_mandala.png,JPEG 50,5d2a7f9c,25.51,0.9463,5d2a7f9c,0.0,True,25.5,0.9463,5d2a7f9c,0.0,True
+302,unseen_03_mandala.png,JPEG 30,5d2a7f9c,23.38,0.9047,5d2a7f9c,0.0,True,23.38,0.9046,5d2a7f9c,0.0,True
+303,unseen_03_mandala.png,Resize 75%,5d2a7f9c,33.2,0.9925,5d2a7f9c,0.0,True,33.18,0.9924,5d2a7f9c,0.0,True
+304,unseen_03_mandala.png,Resize 50%,5d2a7f9c,28.58,0.9781,5d2a7f9c,0.0,True,28.58,0.9781,5d2a7f9c,0.0,True
+305,unseen_03_mandala.png,Gaussian Blur (r=0.5),5d2a7f9c,34.81,0.9945,5d2a7f9c,0.0,True,34.77,0.9944,5d2a7f9c,0.0,True
+306,unseen_03_mandala.png,Brightness (+10%),5d2a7f9c,25.45,0.9858,5d2a7f9c,0.0,True,25.45,0.9857,5d2a7f9c,0.0,True
+307,unseen_03_mandala.png,Contrast (-10%),5d2a7f9c,31.92,0.9896,5d2a7f9c,0.0,True,31.89,0.9895,5d2a7f9c,0.0,True
+308,unseen_03_mandala.png,Gaussian Noise (sigma=2),5d2a7f9c,33.92,0.9934,5d2a7f9c,0.0,True,33.87,0.9933,5d2a7f9c,0.0,True
+309,unseen_03_mandala.png,Clean,83e16b4d,34.77,0.9944,83e16b4d,0.0,True,34.7,0.9943,83e16b4d,0.0,True
+310,unseen_03_mandala.png,JPEG 90,83e16b4d,28.74,0.9757,83e16b4d,0.0,True,28.72,0.9757,83e16b4d,0.0,True
+311,unseen_03_mandala.png,JPEG 75,83e16b4d,27.5,0.9659,83e16b4d,0.0,True,27.49,0.9658,83e16b4d,0.0,True
+312,unseen_03_mandala.png,JPEG 50,83e16b4d,25.47,0.946,83e16b4d,0.0,True,25.46,0.9459,83e16b4d,0.0,True
+313,unseen_03_mandala.png,JPEG 30,83e16b4d,23.38,0.9045,83e16b4d,0.0,True,23.38,0.9046,83e16b4d,0.0,True
+314,unseen_03_mandala.png,Resize 75%,83e16b4d,33.2,0.9925,83e16b4d,0.0,True,33.17,0.9924,83e16b4d,0.0,True
+315,unseen_03_mandala.png,Resize 50%,83e16b4d,28.59,0.9782,83e16b4d,0.0,True,28.59,0.9782,83e16b4d,0.0,True
+316,unseen_03_mandala.png,Gaussian Blur (r=0.5),83e16b4d,34.78,0.9945,83e16b4d,0.0,True,34.73,0.9944,83e16b4d,0.0,True
+317,unseen_03_mandala.png,Brightness (+10%),83e16b4d,25.45,0.9857,83e16b4d,0.0,True,25.45,0.9857,83e16b4d,0.0,True
+318,unseen_03_mandala.png,Contrast (-10%),83e16b4d,31.91,0.9896,83e16b4d,0.0,True,31.88,0.9895,83e16b4d,0.0,True
+319,unseen_03_mandala.png,Gaussian Noise (sigma=2),83e16b4d,33.87,0.9933,83e16b4d,0.0,True,33.86,0.9933,83e16b4d,0.0,True
+320,unseen_03_mandala.png,Clean,3c7a9f24,34.75,0.9944,3c7a9f24,0.0,True,34.75,0.9944,3c7a9f24,0.0,True
+321,unseen_03_mandala.png,JPEG 90,3c7a9f24,28.68,0.9752,3c7a9f24,0.0,True,28.67,0.9752,3c7a9f24,0.0,True
+322,unseen_03_mandala.png,JPEG 75,3c7a9f24,27.46,0.9653,3c7a9f24,0.0,True,27.46,0.9654,3c7a9f24,0.0,True
+323,unseen_03_mandala.png,JPEG 50,3c7a9f24,25.45,0.9454,3c7a9f24,0.0,True,25.46,0.9456,3c7a9f24,0.0,True
+324,unseen_03_mandala.png,JPEG 30,3c7a9f24,23.37,0.9044,3c7a9f24,0.0,True,23.37,0.9043,3c7a9f24,0.0,True
+325,unseen_03_mandala.png,Resize 75%,3c7a9f24,33.16,0.9923,3c7a9f24,0.0,True,33.15,0.9923,3c7a9f24,0.0,True
+326,unseen_03_mandala.png,Resize 50%,3c7a9f24,28.57,0.978,3c7a9f24,0.0,True,28.57,0.978,3c7a9f24,0.0,True
+327,unseen_03_mandala.png,Gaussian Blur (r=0.5),3c7a9f24,34.76,0.9944,3c7a9f24,0.0,True,34.75,0.9944,3c7a9f24,0.0,True
+328,unseen_03_mandala.png,Brightness (+10%),3c7a9f24,25.46,0.9858,3c7a9f24,0.0,True,25.46,0.9858,3c7a9f24,0.0,True
+329,unseen_03_mandala.png,Contrast (-10%),3c7a9f24,31.88,0.9894,3c7a9f24,0.0,True,31.88,0.9894,3c7a9f24,0.0,True
+330,unseen_03_mandala.png,Gaussian Noise (sigma=2),3c7a9f24,33.87,0.9933,3c7a9f24,0.0,True,33.87,0.9933,3c7a9f24,0.0,True
+331,unseen_04_checkerboard.png,Clean,9e3779b9,34.8,0.9989,9e37f9b1,0.0625,False,33.27,0.9985,9e3779b9,0.0,True
+332,unseen_04_checkerboard.png,JPEG 90,9e3779b9,32.55,0.9982,9e37f9b1,0.0625,False,31.56,0.9977,9e3779b9,0.0,True
+333,unseen_04_checkerboard.png,JPEG 75,9e3779b9,27.44,0.9942,9e37f9b1,0.0625,False,27.15,0.9938,9e3779b9,0.0,True
+334,unseen_04_checkerboard.png,JPEG 50,9e3779b9,23.34,0.985,9e37f9b1,0.0625,False,23.24,0.9847,9e3779b9,0.0,True
+335,unseen_04_checkerboard.png,JPEG 30,9e3779b9,20.76,0.9725,9e37f9b1,0.0625,False,20.72,0.9722,9e3779b9,0.0,True
+336,unseen_04_checkerboard.png,Resize 75%,9e3779b9,16.16,0.9032,9e37f9b1,0.0625,False,16.14,0.9028,9e3779b9,0.0,True
+337,unseen_04_checkerboard.png,Resize 50%,9e3779b9,13.57,0.8012,9e37f9b1,0.0625,False,13.57,0.8009,9e3779b9,0.0,True
+338,unseen_04_checkerboard.png,Gaussian Blur (r=0.5),9e3779b9,22.45,0.9794,9e37f9b1,0.0625,False,22.34,0.9789,9e3779b9,0.0,True
+339,unseen_04_checkerboard.png,Brightness (+10%),9e3779b9,24.25,0.9913,9e37f9a1,0.0938,False,24.25,0.9912,9e3779b9,0.0,True
+340,unseen_04_checkerboard.png,Contrast (-10%),9e3779b9,27.42,0.9936,9e37f9b1,0.0625,False,27.12,0.9931,9e3779b9,0.0,True
+341,unseen_04_checkerboard.png,Gaussian Noise (sigma=2),9e3779b9,33.91,0.9987,9e37f9b1,0.0625,False,32.65,0.9983,9e3779b9,0.0,True
+342,unseen_04_checkerboard.png,Clean,7f4c1a8d,34.8,0.9989,7f0c9a85,0.0938,False,33.41,0.9985,7f4c1a8d,0.0,True
+343,unseen_04_checkerboard.png,JPEG 90,7f4c1a8d,32.54,0.9982,7f4c9a85,0.0625,False,31.63,0.9978,7f4c1a8d,0.0,True
+344,unseen_04_checkerboard.png,JPEG 75,7f4c1a8d,27.45,0.9942,7f0c9a85,0.0938,False,27.16,0.9938,7f4c1a8d,0.0,True
+345,unseen_04_checkerboard.png,JPEG 50,7f4c1a8d,23.35,0.9851,7f4c9a85,0.0625,False,23.26,0.9847,7f4c1a8d,0.0,True
+346,unseen_04_checkerboard.png,JPEG 30,7f4c1a8d,20.77,0.9725,7f0c9a85,0.0938,False,20.72,0.9722,7f4c1a8d,0.0,True
+347,unseen_04_checkerboard.png,Resize 75%,7f4c1a8d,16.16,0.9032,7f4c9a85,0.0625,False,16.14,0.9028,7f4c1a8d,0.0,True
+348,unseen_04_checkerboard.png,Resize 50%,7f4c1a8d,13.57,0.8013,7f4c9a85,0.0625,False,13.57,0.801,7f4c1a8d,0.0,True
+349,unseen_04_checkerboard.png,Gaussian Blur (r=0.5),7f4c1a8d,22.45,0.9795,7f4c9a85,0.0625,False,22.35,0.979,7f4c1a8d,0.0,True
+350,unseen_04_checkerboard.png,Brightness (+10%),7f4c1a8d,24.24,0.9913,7f0c9a85,0.0938,False,24.24,0.9912,7f4c1a8d,0.0,True
+351,unseen_04_checkerboard.png,Contrast (-10%),7f4c1a8d,27.43,0.9936,7f0c9a85,0.0938,False,27.16,0.9931,7f4c1a8d,0.0,True
+352,unseen_04_checkerboard.png,Gaussian Noise (sigma=2),7f4c1a8d,33.9,0.9987,7f0c9a85,0.0938,False,32.73,0.9983,7f4c1a8d,0.0,True
+353,unseen_04_checkerboard.png,Clean,2b5e91c3,34.81,0.9989,2b1e91c3,0.0312,False,33.55,0.9986,2b5e91c3,0.0,True
+354,unseen_04_checkerboard.png,JPEG 90,2b5e91c3,32.57,0.9982,2b5e91c3,0.0,True,31.76,0.9978,2b5e91c3,0.0,True
+355,unseen_04_checkerboard.png,JPEG 75,2b5e91c3,27.45,0.9942,2f1e91c3,0.0625,False,27.21,0.9939,2b5e91c3,0.0,True
+356,unseen_04_checkerboard.png,JPEG 50,2b5e91c3,23.35,0.9851,2f1e91c3,0.0625,False,23.26,0.9848,2b5e91c3,0.0,True
+357,unseen_04_checkerboard.png,JPEG 30,2b5e91c3,20.77,0.9726,2f1e91c3,0.0625,False,20.73,0.9723,2b5e91c3,0.0,True
+358,unseen_04_checkerboard.png,Resize 75%,2b5e91c3,16.16,0.9032,2f5e91c3,0.0312,False,16.15,0.9029,2b5e91c3,0.0,True
+359,unseen_04_checkerboard.png,Resize 50%,2b5e91c3,13.57,0.8012,2f5e91c3,0.0312,False,13.57,0.8009,2b5e91c3,0.0,True
+360,unseen_04_checkerboard.png,Gaussian Blur (r=0.5),2b5e91c3,22.45,0.9795,2b5e91c3,0.0,True,22.36,0.979,2b5e91c3,0.0,True
+361,unseen_04_checkerboard.png,Brightness (+10%),2b5e91c3,24.23,0.9912,2f1e91c1,0.0938,False,24.23,0.9912,2b5e91c3,0.0,True
+362,unseen_04_checkerboard.png,Contrast (-10%),2b5e91c3,27.43,0.9936,2b1e91c3,0.0312,False,27.19,0.9932,2b5e91c3,0.0,True
+363,unseen_04_checkerboard.png,Gaussian Noise (sigma=2),2b5e91c3,33.94,0.9987,2b1e91c3,0.0312,False,32.87,0.9983,2b5e91c3,0.0,True
+364,unseen_04_checkerboard.png,Clean,b00b1e55,34.8,0.9989,b00b9a55,0.0625,False,33.4,0.9985,b00b1e55,0.0,True
+365,unseen_04_checkerboard.png,JPEG 90,b00b1e55,32.55,0.9982,b40b9a55,0.0938,False,31.66,0.9978,b00b1e55,0.0,True
+366,unseen_04_checkerboard.png,JPEG 75,b00b1e55,27.44,0.9942,b00b9a45,0.0938,False,27.15,0.9938,b00b1e55,0.0,True
+367,unseen_04_checkerboard.png,JPEG 50,b00b1e55,23.35,0.9851,b40b9a55,0.0938,False,23.26,0.9848,b00b1e55,0.0,True
+368,unseen_04_checkerboard.png,JPEG 30,b00b1e55,20.79,0.9727,b40b9a45,0.125,False,20.75,0.9724,b00b1e55,0.0,True
+369,unseen_04_checkerboard.png,Resize 75%,b00b1e55,16.16,0.9032,b40b9a55,0.0938,False,16.15,0.9029,b00b1e55,0.0,True
+370,unseen_04_checkerboard.png,Resize 50%,b00b1e55,13.57,0.8012,b40b9a55,0.0938,False,13.57,0.801,b00b1a55,0.0312,False
+371,unseen_04_checkerboard.png,Gaussian Blur (r=0.5),b00b1e55,22.46,0.9795,b00b9a55,0.0625,False,22.36,0.979,b00b1e55,0.0,True
+372,unseen_04_checkerboard.png,Brightness (+10%),b00b1e55,24.26,0.9913,b40b9a45,0.125,False,24.26,0.9912,b00b1e55,0.0,True
+373,unseen_04_checkerboard.png,Contrast (-10%),b00b1e55,27.43,0.9936,b00b9a55,0.0625,False,27.16,0.9931,b00b1e55,0.0,True
+374,unseen_04_checkerboard.png,Gaussian Noise (sigma=2),b00b1e55,33.91,0.9987,b00b9a55,0.0625,False,32.73,0.9983,b00b1e55,0.0,True
+375,unseen_04_checkerboard.png,Clean,6d8f2a41,34.8,0.9989,6d0faa41,0.0625,False,33.86,0.9987,6d8f2a41,0.0,True
+376,unseen_04_checkerboard.png,JPEG 90,6d8f2a41,32.54,0.9982,6d0faa41,0.0625,False,31.96,0.9979,6d8f2a41,0.0,True
+377,unseen_04_checkerboard.png,JPEG 75,6d8f2a41,27.44,0.9942,6d0faa41,0.0625,False,27.25,0.9939,6d8f2a41,0.0,True
+378,unseen_04_checkerboard.png,JPEG 50,6d8f2a41,23.35,0.9851,6d0faa41,0.0625,False,23.29,0.9849,6d8f2a41,0.0,True
+379,unseen_04_checkerboard.png,JPEG 30,6d8f2a41,20.79,0.9727,6d0fba41,0.0938,False,20.75,0.9725,6d8f2a41,0.0,True
+380,unseen_04_checkerboard.png,Resize 75%,6d8f2a41,16.16,0.9033,6d0fba41,0.0938,False,16.15,0.903,6d8f2a41,0.0,True
+381,unseen_04_checkerboard.png,Resize 50%,6d8f2a41,13.57,0.8013,6d0fba41,0.0938,False,13.57,0.801,6d8f2a41,0.0,True
+382,unseen_04_checkerboard.png,Gaussian Blur (r=0.5),6d8f2a41,22.46,0.9795,6d0faa41,0.0625,False,22.39,0.9792,6d8f2a41,0.0,True
+383,unseen_04_checkerboard.png,Brightness (+10%),6d8f2a41,24.24,0.9913,6d0fba41,0.0938,False,24.24,0.9912,6d8f2a41,0.0,True
+384,unseen_04_checkerboard.png,Contrast (-10%),6d8f2a41,27.44,0.9936,6d0faa41,0.0625,False,27.26,0.9933,6d8f2a41,0.0,True
+385,unseen_04_checkerboard.png,Gaussian Noise (sigma=2),6d8f2a41,33.91,0.9987,6d0faa41,0.0625,False,33.12,0.9984,6d8f2a41,0.0,True
+386,unseen_04_checkerboard.png,Clean,c4a19e37,34.78,0.9989,c4219a37,0.0625,False,33.45,0.9985,c4a19e37,0.0,True
+387,unseen_04_checkerboard.png,JPEG 90,c4a19e37,32.52,0.9982,c4219a37,0.0625,False,31.7,0.9978,c4a19e37,0.0,True
+388,unseen_04_checkerboard.png,JPEG 75,c4a19e37,27.45,0.9942,c4219a37,0.0625,False,27.19,0.9939,c4a19e37,0.0,True
+389,unseen_04_checkerboard.png,JPEG 50,c4a19e37,23.34,0.9851,c4219a37,0.0625,False,23.25,0.9847,c4a19e37,0.0,True
+390,unseen_04_checkerboard.png,JPEG 30,c4a19e37,20.77,0.9726,c4219a27,0.0938,False,20.72,0.9722,c4a19e37,0.0,True
+391,unseen_04_checkerboard.png,Resize 75%,c4a19e37,16.16,0.9033,c4219a37,0.0625,False,16.15,0.9029,c4a19e37,0.0,True
+392,unseen_04_checkerboard.png,Resize 50%,c4a19e37,13.57,0.8013,c4219a37,0.0625,False,13.57,0.801,c4a19a37,0.0312,False
+393,unseen_04_checkerboard.png,Gaussian Blur (r=0.5),c4a19e37,22.46,0.9795,c4219a37,0.0625,False,22.37,0.979,c4a19e37,0.0,True
+394,unseen_04_checkerboard.png,Brightness (+10%),c4a19e37,24.25,0.9913,c4219a25,0.125,False,24.25,0.9912,c4a19e37,0.0,True
+395,unseen_04_checkerboard.png,Contrast (-10%),c4a19e37,27.44,0.9936,c4219a37,0.0625,False,27.18,0.9932,c4a19e37,0.0,True
+396,unseen_04_checkerboard.png,Gaussian Noise (sigma=2),c4a19e37,33.91,0.9987,c4219a37,0.0625,False,32.78,0.9983,c4a19e37,0.0,True
+397,unseen_04_checkerboard.png,Clean,1f8b4c2e,34.8,0.9989,1f0bc826,0.125,False,32.56,0.9982,1f8b4c2e,0.0,True
+398,unseen_04_checkerboard.png,JPEG 90,1f8b4c2e,32.55,0.9982,1f0bc826,0.125,False,31.07,0.9975,1f8b4c2e,0.0,True
+399,unseen_04_checkerboard.png,JPEG 75,1f8b4c2e,27.45,0.9942,1f0bc826,0.125,False,26.97,0.9935,1f8b4c2e,0.0,True
+400,unseen_04_checkerboard.png,JPEG 50,1f8b4c2e,23.34,0.985,1f0bc826,0.125,False,23.18,0.9844,1f8b4c2e,0.0,True
+401,unseen_04_checkerboard.png,JPEG 30,1f8b4c2e,20.75,0.9725,1f0bd826,0.1562,False,20.68,0.9719,1f8b4c2e,0.0,True
+402,unseen_04_checkerboard.png,Resize 75%,1f8b4c2e,16.16,0.9031,1f0bd826,0.1562,False,16.13,0.9024,1f8b4c2e,0.0,True
+403,unseen_04_checkerboard.png,Resize 50%,1f8b4c2e,13.57,0.801,1f0bd826,0.1562,False,13.56,0.8005,1f8b482e,0.0312,False
+404,unseen_04_checkerboard.png,Gaussian Blur (r=0.5),1f8b4c2e,22.44,0.9794,1f0bc826,0.125,False,22.27,0.9786,1f8b4c2e,0.0,True
+405,unseen_04_checkerboard.png,Brightness (+10%),1f8b4c2e,24.26,0.9913,1f0bd824,0.1875,False,24.25,0.9912,1f8b4c2e,0.0,True
+406,unseen_04_checkerboard.png,Contrast (-10%),1f8b4c2e,27.39,0.9935,1f0bc826,0.125,False,26.93,0.9928,1f8b4c2e,0.0,True
+407,unseen_04_checkerboard.png,Gaussian Noise (sigma=2),1f8b4c2e,33.93,0.9987,1f0bc826,0.125,False,32.01,0.998,1f8b4c2e,0.0,True
+408,unseen_04_checkerboard.png,Clean,5d2a7f9c,34.79,0.9989,5d2afb94,0.0938,False,33.0,0.9984,5d2a7f9c,0.0,True
+409,unseen_04_checkerboard.png,JPEG 90,5d2a7f9c,32.52,0.9982,5d2afb94,0.0938,False,31.39,0.9977,5d2a7f9c,0.0,True
+410,unseen_04_checkerboard.png,JPEG 75,5d2a7f9c,27.43,0.9942,5d2afb94,0.0938,False,27.08,0.9937,5d2a7f9c,0.0,True
+411,unseen_04_checkerboard.png,JPEG 50,5d2a7f9c,23.35,0.9851,5d2afb94,0.0938,False,23.23,0.9846,5d2a7f9c,0.0,True
+412,unseen_04_checkerboard.png,JPEG 30,5d2a7f9c,20.77,0.9726,5d2afb84,0.125,False,20.7,0.9721,5d2a7f9c,0.0,True
+413,unseen_04_checkerboard.png,Resize 75%,5d2a7f9c,16.16,0.9032,5d2afb94,0.0938,False,16.14,0.9027,5d2a7f9c,0.0,True
+414,unseen_04_checkerboard.png,Resize 50%,5d2a7f9c,13.57,0.8012,5d2afb94,0.0938,False,13.56,0.8008,5d2a7b9c,0.0312,False
+415,unseen_04_checkerboard.png,Gaussian Blur (r=0.5),5d2a7f9c,22.45,0.9794,5d2afb94,0.0938,False,22.32,0.9788,5d2a7f9c,0.0,True
+416,unseen_04_checkerboard.png,Brightness (+10%),5d2a7f9c,24.27,0.9913,5d2afb84,0.125,False,24.27,0.9912,5d2a7f9c,0.0,True
+417,unseen_04_checkerboard.png,Contrast (-10%),5d2a7f9c,27.41,0.9935,5d2afb94,0.0938,False,27.06,0.993,5d2a7f9c,0.0,True
+418,unseen_04_checkerboard.png,Gaussian Noise (sigma=2),5d2a7f9c,33.88,0.9987,5d2afb94,0.0938,False,32.37,0.9981,5d2a7f9c,0.0,True
+419,unseen_04_checkerboard.png,Clean,83e16b4d,34.76,0.9989,8761eb45,0.125,False,32.7,0.9983,83e16b4d,0.0,True
+420,unseen_04_checkerboard.png,JPEG 90,83e16b4d,32.51,0.9982,8721eb45,0.1562,False,31.18,0.9975,83e16b4d,0.0,True
+421,unseen_04_checkerboard.png,JPEG 75,83e16b4d,27.43,0.9942,8721eb45,0.1562,False,27.0,0.9936,83e16b4d,0.0,True
+422,unseen_04_checkerboard.png,JPEG 50,83e16b4d,23.34,0.985,8721fb45,0.1875,False,23.19,0.9845,83e16b4d,0.0,True
+423,unseen_04_checkerboard.png,JPEG 30,83e16b4d,20.79,0.9726,8721fb45,0.1875,False,20.69,0.972,83e16b4d,0.0,True
+424,unseen_04_checkerboard.png,Resize 75%,83e16b4d,16.16,0.9031,8761fb45,0.1562,False,16.13,0.9025,83e16b4d,0.0,True
+425,unseen_04_checkerboard.png,Resize 50%,83e16b4d,13.57,0.8011,8761fb45,0.1562,False,13.56,0.8007,83e16b4d,0.0,True
+426,unseen_04_checkerboard.png,Gaussian Blur (r=0.5),83e16b4d,22.44,0.9794,8361eb45,0.0938,False,22.29,0.9787,83e16b4d,0.0,True
+427,unseen_04_checkerboard.png,Brightness (+10%),83e16b4d,24.26,0.9913,8721fb45,0.1875,False,24.24,0.9912,83e16b4d,0.0,True
+428,unseen_04_checkerboard.png,Contrast (-10%),83e16b4d,27.39,0.9935,8761eb45,0.125,False,26.97,0.9928,83e16b4d,0.0,True
+429,unseen_04_checkerboard.png,Gaussian Noise (sigma=2),83e16b4d,33.89,0.9987,8361eb45,0.0938,False,32.12,0.998,83e16b4d,0.0,True
+430,unseen_04_checkerboard.png,Clean,3c7a9f24,34.75,0.9989,3c3a9b24,0.0625,False,33.67,0.9986,3c7a9f24,0.0,True
+431,unseen_04_checkerboard.png,JPEG 90,3c7a9f24,32.51,0.9982,3c3a9b24,0.0625,False,31.82,0.9979,3c7a9f24,0.0,True
+432,unseen_04_checkerboard.png,JPEG 75,3c7a9f24,27.43,0.9942,3c7a9b24,0.0312,False,27.22,0.9939,3c7a9f24,0.0,True
+433,unseen_04_checkerboard.png,JPEG 50,3c7a9f24,23.35,0.9851,3c3a9b24,0.0625,False,23.29,0.9849,3c7a9f24,0.0,True
+434,unseen_04_checkerboard.png,JPEG 30,3c7a9f24,20.77,0.9726,3c3a9b24,0.0625,False,20.73,0.9723,3c7a9f24,0.0,True
+435,unseen_04_checkerboard.png,Resize 75%,3c7a9f24,16.16,0.9032,3c7a9b24,0.0312,False,16.15,0.9029,3c7a9f24,0.0,True
+436,unseen_04_checkerboard.png,Resize 50%,3c7a9f24,13.57,0.8014,3c7a9b24,0.0312,False,13.57,0.801,3c7a9b24,0.0312,False
+437,unseen_04_checkerboard.png,Gaussian Blur (r=0.5),3c7a9f24,22.45,0.9795,3c7a9b24,0.0312,False,22.38,0.9791,3c7a9f24,0.0,True
+438,unseen_04_checkerboard.png,Brightness (+10%),3c7a9f24,24.24,0.9913,3c3a9b24,0.0625,False,24.25,0.9912,3c7a9f24,0.0,True
+439,unseen_04_checkerboard.png,Contrast (-10%),3c7a9f24,27.43,0.9936,3c3a9b24,0.0625,False,27.22,0.9932,3c7a9f24,0.0,True
+440,unseen_04_checkerboard.png,Gaussian Noise (sigma=2),3c7a9f24,33.87,0.9987,3c3a9b24,0.0625,False,32.97,0.9984,3c7a9f24,0.0,True
+441,unseen_05_voronoi.png,Clean,9e3779b9,34.8,0.9926,9e3779b9,0.0,True,34.8,0.9926,9e3779b9,0.0,True
+442,unseen_05_voronoi.png,JPEG 90,9e3779b9,34.12,0.9915,9e3779b9,0.0,True,34.12,0.9915,9e3779b9,0.0,True
+443,unseen_05_voronoi.png,JPEG 75,9e3779b9,33.44,0.9903,9e3779b9,0.0,True,33.44,0.9903,9e3779b9,0.0,True
+444,unseen_05_voronoi.png,JPEG 50,9e3779b9,32.59,0.9884,9e3779b9,0.0,True,32.6,0.9884,9e3779b9,0.0,True
+445,unseen_05_voronoi.png,JPEG 30,9e3779b9,31.63,0.9859,9e3779b9,0.0,True,31.62,0.9859,9e3779b9,0.0,True
+446,unseen_05_voronoi.png,Resize 75%,9e3779b9,37.53,0.996,9e3779b9,0.0,True,37.53,0.996,9e3779b9,0.0,True
+447,unseen_05_voronoi.png,Resize 50%,9e3779b9,40.36,0.9979,9e3779b9,0.0,True,40.36,0.9979,9e3779b9,0.0,True
+448,unseen_05_voronoi.png,Gaussian Blur (r=0.5),9e3779b9,34.82,0.9926,9e3779b9,0.0,True,34.82,0.9926,9e3779b9,0.0,True
+449,unseen_05_voronoi.png,Brightness (+10%),9e3779b9,26.37,0.9839,9e3779b9,0.0,True,26.37,0.9839,9e3779b9,0.0,True
+450,unseen_05_voronoi.png,Contrast (-10%),9e3779b9,30.55,0.9874,9e3779b9,0.0,True,30.53,0.9874,9e3779b9,0.0,True
+451,unseen_05_voronoi.png,Gaussian Noise (sigma=2),9e3779b9,33.92,0.9911,9e3779b9,0.0,True,33.92,0.9911,9e3779b9,0.0,True
+452,unseen_05_voronoi.png,Clean,7f4c1a8d,34.8,0.9926,7f4c1a8d,0.0,True,34.8,0.9926,7f4c1a8d,0.0,True
+453,unseen_05_voronoi.png,JPEG 90,7f4c1a8d,34.14,0.9915,7f4c1a8d,0.0,True,34.14,0.9915,7f4c1a8d,0.0,True
+454,unseen_05_voronoi.png,JPEG 75,7f4c1a8d,33.48,0.9904,7f4c1a8d,0.0,True,33.48,0.9904,7f4c1a8d,0.0,True
+455,unseen_05_voronoi.png,JPEG 50,7f4c1a8d,32.48,0.9881,7f4c1a8d,0.0,True,32.49,0.9882,7f4c1a8d,0.0,True
+456,unseen_05_voronoi.png,JPEG 30,7f4c1a8d,31.66,0.986,7f4c1a8d,0.0,True,31.67,0.9861,7f4c1a8d,0.0,True
+457,unseen_05_voronoi.png,Resize 75%,7f4c1a8d,37.52,0.996,7f4c1a8d,0.0,True,37.52,0.996,7f4c1a8d,0.0,True
+458,unseen_05_voronoi.png,Resize 50%,7f4c1a8d,40.38,0.9979,7f4c1a8d,0.0,True,40.38,0.9979,7f4c1a8d,0.0,True
+459,unseen_05_voronoi.png,Gaussian Blur (r=0.5),7f4c1a8d,34.81,0.9926,7f4c1a8d,0.0,True,34.81,0.9926,7f4c1a8d,0.0,True
+460,unseen_05_voronoi.png,Brightness (+10%),7f4c1a8d,26.37,0.9839,7f4c1a8d,0.0,True,26.37,0.9839,7f4c1a8d,0.0,True
+461,unseen_05_voronoi.png,Contrast (-10%),7f4c1a8d,30.55,0.9874,7f4c1a8d,0.0,True,30.53,0.9874,7f4c1a8d,0.0,True
+462,unseen_05_voronoi.png,Gaussian Noise (sigma=2),7f4c1a8d,33.95,0.9911,7f4c1a8d,0.0,True,33.92,0.9911,7f4c1a8d,0.0,True
+463,unseen_05_voronoi.png,Clean,2b5e91c3,34.82,0.9926,2b5e91c3,0.0,True,34.81,0.9926,2b5e91c3,0.0,True
+464,unseen_05_voronoi.png,JPEG 90,2b5e91c3,34.12,0.9915,2b5e91c3,0.0,True,34.12,0.9915,2b5e91c3,0.0,True
+465,unseen_05_voronoi.png,JPEG 75,2b5e91c3,33.5,0.9904,2b5e91c3,0.0,True,33.51,0.9904,2b5e91c3,0.0,True
+466,unseen_05_voronoi.png,JPEG 50,2b5e91c3,32.46,0.9881,2b5e91c3,0.0,True,32.44,0.988,2b5e91c3,0.0,True
+467,unseen_05_voronoi.png,JPEG 30,2b5e91c3,31.58,0.9858,2b5e91c3,0.0,True,31.57,0.9857,2b5e91c3,0.0,True
+468,unseen_05_voronoi.png,Resize 75%,2b5e91c3,37.55,0.996,2b5e91c3,0.0,True,37.55,0.996,2b5e91c3,0.0,True
+469,unseen_05_voronoi.png,Resize 50%,2b5e91c3,40.39,0.9979,2b5e91c3,0.0,True,40.38,0.9979,2b5e91c3,0.0,True
+470,unseen_05_voronoi.png,Gaussian Blur (r=0.5),2b5e91c3,34.84,0.9926,2b5e91c3,0.0,True,34.84,0.9926,2b5e91c3,0.0,True
+471,unseen_05_voronoi.png,Brightness (+10%),2b5e91c3,26.37,0.9839,2b5e91c3,0.0,True,26.38,0.9839,2b5e91c3,0.0,True
+472,unseen_05_voronoi.png,Contrast (-10%),2b5e91c3,30.55,0.9874,2b5e91c3,0.0,True,30.54,0.9874,2b5e91c3,0.0,True
+473,unseen_05_voronoi.png,Gaussian Noise (sigma=2),2b5e91c3,33.94,0.9911,2b5e91c3,0.0,True,33.95,0.9912,2b5e91c3,0.0,True
+474,unseen_05_voronoi.png,Clean,b00b1e55,34.8,0.9926,b00b1e55,0.0,True,34.8,0.9925,b00b1e55,0.0,True
+475,unseen_05_voronoi.png,JPEG 90,b00b1e55,34.13,0.9915,b00b1e55,0.0,True,34.13,0.9915,b00b1e55,0.0,True
+476,unseen_05_voronoi.png,JPEG 75,b00b1e55,33.49,0.9904,b00b1e55,0.0,True,33.49,0.9904,b00b1e55,0.0,True
+477,unseen_05_voronoi.png,JPEG 50,b00b1e55,32.54,0.9883,b00b1e55,0.0,True,32.53,0.9883,b00b1e55,0.0,True
+478,unseen_05_voronoi.png,JPEG 30,b00b1e55,31.64,0.9859,b00b1e55,0.0,True,31.64,0.9859,b00b1e55,0.0,True
+479,unseen_05_voronoi.png,Resize 75%,b00b1e55,37.52,0.996,b00b1e55,0.0,True,37.51,0.996,b00b1e55,0.0,True
+480,unseen_05_voronoi.png,Resize 50%,b00b1e55,40.37,0.9979,b00b1e55,0.0,True,40.36,0.9979,b00b1e55,0.0,True
+481,unseen_05_voronoi.png,Gaussian Blur (r=0.5),b00b1e55,34.81,0.9926,b00b1e55,0.0,True,34.81,0.9926,b00b1e55,0.0,True
+482,unseen_05_voronoi.png,Brightness (+10%),b00b1e55,26.37,0.9839,b00b1e55,0.0,True,26.38,0.9839,b00b1e55,0.0,True
+483,unseen_05_voronoi.png,Contrast (-10%),b00b1e55,30.54,0.9874,b00b1e55,0.0,True,30.53,0.9874,b00b1e55,0.0,True
+484,unseen_05_voronoi.png,Gaussian Noise (sigma=2),b00b1e55,33.91,0.9911,b00b1e55,0.0,True,33.93,0.9911,b00b1e55,0.0,True
+485,unseen_05_voronoi.png,Clean,6d8f2a41,34.81,0.9926,6d8f2a41,0.0,True,34.8,0.9926,6d8f2a41,0.0,True
+486,unseen_05_voronoi.png,JPEG 90,6d8f2a41,34.17,0.9916,6d8f2a41,0.0,True,34.17,0.9916,6d8f2a41,0.0,True
+487,unseen_05_voronoi.png,JPEG 75,6d8f2a41,33.48,0.9904,6d8f2a41,0.0,True,33.5,0.9904,6d8f2a41,0.0,True
+488,unseen_05_voronoi.png,JPEG 50,6d8f2a41,32.53,0.9883,6d8f2a41,0.0,True,32.51,0.9882,6d8f2a41,0.0,True
+489,unseen_05_voronoi.png,JPEG 30,6d8f2a41,31.66,0.986,6d8f2a41,0.0,True,31.65,0.986,6d8f2a41,0.0,True
+490,unseen_05_voronoi.png,Resize 75%,6d8f2a41,37.52,0.996,6d8f2a41,0.0,True,37.53,0.996,6d8f2a41,0.0,True
+491,unseen_05_voronoi.png,Resize 50%,6d8f2a41,40.36,0.9979,6d8f2a41,0.0,True,40.35,0.9979,6d8f2a41,0.0,True
+492,unseen_05_voronoi.png,Gaussian Blur (r=0.5),6d8f2a41,34.83,0.9926,6d8f2a41,0.0,True,34.83,0.9926,6d8f2a41,0.0,True
+493,unseen_05_voronoi.png,Brightness (+10%),6d8f2a41,26.37,0.9839,6d8f2a41,0.0,True,26.38,0.9839,6d8f2a41,0.0,True
+494,unseen_05_voronoi.png,Contrast (-10%),6d8f2a41,30.55,0.9874,6d8f2a41,0.0,True,30.54,0.9874,6d8f2a41,0.0,True
+495,unseen_05_voronoi.png,Gaussian Noise (sigma=2),6d8f2a41,33.93,0.9911,6d8f2a41,0.0,True,33.91,0.9911,6d8f2a41,0.0,True
+496,unseen_05_voronoi.png,Clean,c4a19e37,34.78,0.9925,c4a19e37,0.0,True,34.78,0.9925,c4a19e37,0.0,True
+497,unseen_05_voronoi.png,JPEG 90,c4a19e37,34.13,0.9915,c4a19e37,0.0,True,34.13,0.9915,c4a19e37,0.0,True
+498,unseen_05_voronoi.png,JPEG 75,c4a19e37,33.49,0.9904,c4a19e37,0.0,True,33.5,0.9904,c4a19e37,0.0,True
+499,unseen_05_voronoi.png,JPEG 50,c4a19e37,32.54,0.9883,c4a19e37,0.0,True,32.54,0.9883,c4a19e37,0.0,True
+500,unseen_05_voronoi.png,JPEG 30,c4a19e37,31.66,0.9859,c4a19e37,0.0,True,31.66,0.9859,c4a19e37,0.0,True
+501,unseen_05_voronoi.png,Resize 75%,c4a19e37,37.49,0.9959,c4a19e37,0.0,True,37.48,0.9959,c4a19e37,0.0,True
+502,unseen_05_voronoi.png,Resize 50%,c4a19e37,40.3,0.9979,c4a19e37,0.0,True,40.3,0.9979,c4a19e37,0.0,True
+503,unseen_05_voronoi.png,Gaussian Blur (r=0.5),c4a19e37,34.81,0.9926,c4a19e37,0.0,True,34.81,0.9926,c4a19e37,0.0,True
+504,unseen_05_voronoi.png,Brightness (+10%),c4a19e37,26.37,0.9839,c4a19e37,0.0,True,26.38,0.9839,c4a19e37,0.0,True
+505,unseen_05_voronoi.png,Contrast (-10%),c4a19e37,30.54,0.9874,c4a19e37,0.0,True,30.52,0.9873,c4a19e37,0.0,True
+506,unseen_05_voronoi.png,Gaussian Noise (sigma=2),c4a19e37,33.91,0.9911,c4a19e37,0.0,True,33.89,0.991,c4a19e37,0.0,True
+507,unseen_05_voronoi.png,Clean,1f8b4c2e,34.8,0.9926,1f8b4c2e,0.0,True,34.8,0.9926,1f8b4c2e,0.0,True
+508,unseen_05_voronoi.png,JPEG 90,1f8b4c2e,34.17,0.9916,1f8b4c2e,0.0,True,34.17,0.9916,1f8b4c2e,0.0,True
+509,unseen_05_voronoi.png,JPEG 75,1f8b4c2e,33.49,0.9904,1f8b4c2e,0.0,True,33.48,0.9904,1f8b4c2e,0.0,True
+510,unseen_05_voronoi.png,JPEG 50,1f8b4c2e,32.55,0.9883,1f8b4c2e,0.0,True,32.54,0.9883,1f8b4c2e,0.0,True
+511,unseen_05_voronoi.png,JPEG 30,1f8b4c2e,31.72,0.9861,1f8b4c2e,0.0,True,31.71,0.9861,1f8b4c2e,0.0,True
+512,unseen_05_voronoi.png,Resize 75%,1f8b4c2e,37.52,0.996,1f8b4c2e,0.0,True,37.52,0.996,1f8b4c2e,0.0,True
+513,unseen_05_voronoi.png,Resize 50%,1f8b4c2e,40.35,0.9979,1f8b4c2e,0.0,True,40.35,0.9979,1f8b4c2e,0.0,True
+514,unseen_05_voronoi.png,Gaussian Blur (r=0.5),1f8b4c2e,34.83,0.9926,1f8b4c2e,0.0,True,34.83,0.9926,1f8b4c2e,0.0,True
+515,unseen_05_voronoi.png,Brightness (+10%),1f8b4c2e,26.36,0.9839,1f8b4c2e,0.0,True,26.37,0.9839,1f8b4c2e,0.0,True
+516,unseen_05_voronoi.png,Contrast (-10%),1f8b4c2e,30.55,0.9874,1f8b4c2e,0.0,True,30.54,0.9874,1f8b4c2e,0.0,True
+517,unseen_05_voronoi.png,Gaussian Noise (sigma=2),1f8b4c2e,33.93,0.9911,1f8b4c2e,0.0,True,33.94,0.9911,1f8b4c2e,0.0,True
+518,unseen_05_voronoi.png,Clean,5d2a7f9c,34.79,0.9925,5d2a7f9c,0.0,True,34.79,0.9925,5d2a7f9c,0.0,True
+519,unseen_05_voronoi.png,JPEG 90,5d2a7f9c,34.11,0.9915,5d2a7f9c,0.0,True,34.1,0.9915,5d2a7f9c,0.0,True
+520,unseen_05_voronoi.png,JPEG 75,5d2a7f9c,33.4,0.9902,5d2a7f9c,0.0,True,33.43,0.9903,5d2a7f9c,0.0,True
+521,unseen_05_voronoi.png,JPEG 50,5d2a7f9c,32.5,0.9882,5d2a7f9c,0.0,True,32.5,0.9882,5d2a7f9c,0.0,True
+522,unseen_05_voronoi.png,JPEG 30,5d2a7f9c,31.63,0.9859,5d2a7f9c,0.0,True,31.63,0.9859,5d2a7f9c,0.0,True
+523,unseen_05_voronoi.png,Resize 75%,5d2a7f9c,37.5,0.996,5d2a7f9c,0.0,True,37.5,0.996,5d2a7f9c,0.0,True
+524,unseen_05_voronoi.png,Resize 50%,5d2a7f9c,40.31,0.9979,5d2a7f9c,0.0,True,40.31,0.9979,5d2a7f9c,0.0,True
+525,unseen_05_voronoi.png,Gaussian Blur (r=0.5),5d2a7f9c,34.8,0.9925,5d2a7f9c,0.0,True,34.8,0.9925,5d2a7f9c,0.0,True
+526,unseen_05_voronoi.png,Brightness (+10%),5d2a7f9c,26.36,0.9838,5d2a7f9c,0.0,True,26.37,0.9838,5d2a7f9c,0.0,True
+527,unseen_05_voronoi.png,Contrast (-10%),5d2a7f9c,30.54,0.9874,5d2a7f9c,0.0,True,30.53,0.9874,5d2a7f9c,0.0,True
+528,unseen_05_voronoi.png,Gaussian Noise (sigma=2),5d2a7f9c,33.9,0.9911,5d2a7f9c,0.0,True,33.92,0.9911,5d2a7f9c,0.0,True
+529,unseen_05_voronoi.png,Clean,83e16b4d,34.77,0.9925,83e16b4d,0.0,True,34.76,0.9925,83e16b4d,0.0,True
+530,unseen_05_voronoi.png,JPEG 90,83e16b4d,34.08,0.9914,83e16b4d,0.0,True,34.09,0.9915,83e16b4d,0.0,True
+531,unseen_05_voronoi.png,JPEG 75,83e16b4d,33.48,0.9904,83e16b4d,0.0,True,33.5,0.9904,83e16b4d,0.0,True
+532,unseen_05_voronoi.png,JPEG 50,83e16b4d,32.49,0.9881,83e16b4d,0.0,True,32.49,0.9881,83e16b4d,0.0,True
+533,unseen_05_voronoi.png,JPEG 30,83e16b4d,31.57,0.9856,83e16b4d,0.0,True,31.55,0.9856,83e16b4d,0.0,True
+534,unseen_05_voronoi.png,Resize 75%,83e16b4d,37.46,0.9959,83e16b4d,0.0,True,37.46,0.9959,83e16b4d,0.0,True
+535,unseen_05_voronoi.png,Resize 50%,83e16b4d,40.34,0.9979,83e16b4d,0.0,True,40.34,0.9979,83e16b4d,0.0,True
+536,unseen_05_voronoi.png,Gaussian Blur (r=0.5),83e16b4d,34.79,0.9925,83e16b4d,0.0,True,34.79,0.9925,83e16b4d,0.0,True
+537,unseen_05_voronoi.png,Brightness (+10%),83e16b4d,26.36,0.9838,83e16b4d,0.0,True,26.37,0.9838,83e16b4d,0.0,True
+538,unseen_05_voronoi.png,Contrast (-10%),83e16b4d,30.53,0.9873,83e16b4d,0.0,True,30.52,0.9873,83e16b4d,0.0,True
+539,unseen_05_voronoi.png,Gaussian Noise (sigma=2),83e16b4d,33.9,0.991,83e16b4d,0.0,True,33.9,0.991,83e16b4d,0.0,True
+540,unseen_05_voronoi.png,Clean,3c7a9f24,34.75,0.9925,3c7a9f24,0.0,True,34.75,0.9925,3c7a9f24,0.0,True
+541,unseen_05_voronoi.png,JPEG 90,3c7a9f24,34.11,0.9915,3c7a9f24,0.0,True,34.1,0.9915,3c7a9f24,0.0,True
+542,unseen_05_voronoi.png,JPEG 75,3c7a9f24,33.42,0.9903,3c7a9f24,0.0,True,33.41,0.9902,3c7a9f24,0.0,True
+543,unseen_05_voronoi.png,JPEG 50,3c7a9f24,32.5,0.9882,3c7a9f24,0.0,True,32.5,0.9882,3c7a9f24,0.0,True
+544,unseen_05_voronoi.png,JPEG 30,3c7a9f24,31.59,0.9858,3c7a9f24,0.0,True,31.59,0.9858,3c7a9f24,0.0,True
+545,unseen_05_voronoi.png,Resize 75%,3c7a9f24,37.43,0.9959,3c7a9f24,0.0,True,37.44,0.9959,3c7a9f24,0.0,True
+546,unseen_05_voronoi.png,Resize 50%,3c7a9f24,40.28,0.9979,3c7a9f24,0.0,True,40.27,0.9979,3c7a9f24,0.0,True
+547,unseen_05_voronoi.png,Gaussian Blur (r=0.5),3c7a9f24,34.76,0.9925,3c7a9f24,0.0,True,34.76,0.9925,3c7a9f24,0.0,True
+548,unseen_05_voronoi.png,Brightness (+10%),3c7a9f24,26.36,0.9838,3c7a9f24,0.0,True,26.36,0.9838,3c7a9f24,0.0,True
+549,unseen_05_voronoi.png,Contrast (-10%),3c7a9f24,30.53,0.9873,3c7a9f24,0.0,True,30.52,0.9873,3c7a9f24,0.0,True
+550,unseen_05_voronoi.png,Gaussian Noise (sigma=2),3c7a9f24,33.89,0.991,3c7a9f24,0.0,True,33.87,0.991,3c7a9f24,0.0,True
+551,unseen_06_speckle.png,Clean,9e3779b9,34.8,0.9915,9e3779b9,0.0,True,34.31,0.9904,9e3779b9,0.0,True
+552,unseen_06_speckle.png,JPEG 90,9e3779b9,31.33,0.9808,9e3779b9,0.0,True,31.11,0.9798,9e3779b9,0.0,True
+553,unseen_06_speckle.png,JPEG 75,9e3779b9,27.07,0.95,9e3779b9,0.0,True,26.97,0.9488,9e3779b9,0.0,True
+554,unseen_06_speckle.png,JPEG 50,9e3779b9,22.41,0.8561,9e3779b9,0.0,True,22.38,0.8553,9e3779b9,0.0,True
+555,unseen_06_speckle.png,JPEG 30,9e3779b9,19.94,0.7142,9e3779b9,0.0,True,19.93,0.7136,9e3779b9,0.0,True
+556,unseen_06_speckle.png,Resize 75%,9e3779b9,19.02,0.4478,9e3779b9,0.0,True,19.02,0.4469,9e3779b9,0.0,True
+557,unseen_06_speckle.png,Resize 50%,9e3779b9,17.85,0.2197,9e3779b9,0.0,True,17.85,0.2192,9e3779b9,0.0,True
+558,unseen_06_speckle.png,Gaussian Blur (r=0.5),9e3779b9,24.36,0.868,9e3779b9,0.0,True,24.32,0.8669,9e3779b9,0.0,True
+559,unseen_06_speckle.png,Brightness (+10%),9e3779b9,25.63,0.9824,9e3779b9,0.0,True,25.57,0.9813,9e3779b9,0.0,True
+560,unseen_06_speckle.png,Contrast (-10%),9e3779b9,32.93,0.987,9e3779b9,0.0,True,32.64,0.986,9e3779b9,0.0,True
+561,unseen_06_speckle.png,Gaussian Noise (sigma=2),9e3779b9,33.91,0.9898,9e3779b9,0.0,True,33.5,0.9887,9e3779b9,0.0,True
+562,unseen_06_speckle.png,Clean,7f4c1a8d,34.8,0.9914,7f4c1a8d,0.0,True,34.41,0.9906,7f4c1a8d,0.0,True
+563,unseen_06_speckle.png,JPEG 90,7f4c1a8d,31.34,0.9808,7f4c1a8d,0.0,True,31.15,0.9799,7f4c1a8d,0.0,True
+564,unseen_06_speckle.png,JPEG 75,7f4c1a8d,27.07,0.9499,7f4c1a8d,0.0,True,27.0,0.9491,7f4c1a8d,0.0,True
+565,unseen_06_speckle.png,JPEG 50,7f4c1a8d,22.41,0.8559,7f4c1a8d,0.0,True,22.38,0.8548,7f4c1a8d,0.0,True
+566,unseen_06_speckle.png,JPEG 30,7f4c1a8d,19.95,0.7143,7f4c1a8d,0.0,True,19.94,0.7138,7f4c1a8d,0.0,True
+567,unseen_06_speckle.png,Resize 75%,7f4c1a8d,19.02,0.447,7f4c1a8d,0.0,True,19.01,0.4462,7f4c1a8d,0.0,True
+568,unseen_06_speckle.png,Resize 50%,7f4c1a8d,17.85,0.2191,7f4c1a8d,0.0,True,17.85,0.2186,7f4c1a8d,0.0,True
+569,unseen_06_speckle.png,Gaussian Blur (r=0.5),7f4c1a8d,24.36,0.8678,7f4c1a8d,0.0,True,24.32,0.8669,7f4c1a8d,0.0,True
+570,unseen_06_speckle.png,Brightness (+10%),7f4c1a8d,25.64,0.9825,7f4c1a8d,0.0,True,25.59,0.9816,7f4c1a8d,0.0,True
+571,unseen_06_speckle.png,Contrast (-10%),7f4c1a8d,32.91,0.9869,7f4c1a8d,0.0,True,32.68,0.9861,7f4c1a8d,0.0,True
+572,unseen_06_speckle.png,Gaussian Noise (sigma=2),7f4c1a8d,33.92,0.9898,7f4c1a8d,0.0,True,33.58,0.989,7f4c1a8d,0.0,True
+573,unseen_06_speckle.png,Clean,2b5e91c3,34.82,0.9915,2b5e91c3,0.0,True,34.32,0.9904,2b5e91c3,0.0,True
+574,unseen_06_speckle.png,JPEG 90,2b5e91c3,31.32,0.9807,2b5e91c3,0.0,True,31.09,0.9796,2b5e91c3,0.0,True
+575,unseen_06_speckle.png,JPEG 75,2b5e91c3,27.07,0.9499,2b5e91c3,0.0,True,26.98,0.9488,2b5e91c3,0.0,True
+576,unseen_06_speckle.png,JPEG 50,2b5e91c3,22.42,0.8558,2b5e91c3,0.0,True,22.38,0.8549,2b5e91c3,0.0,True
+577,unseen_06_speckle.png,JPEG 30,2b5e91c3,19.95,0.7136,2b5e91c3,0.0,True,19.93,0.7124,2b5e91c3,0.0,True
+578,unseen_06_speckle.png,Resize 75%,2b5e91c3,19.02,0.4467,2b5e91c3,0.0,True,19.01,0.4456,2b5e91c3,0.0,True
+579,unseen_06_speckle.png,Resize 50%,2b5e91c3,17.85,0.2185,2b5e91c3,0.0,True,17.84,0.2179,2b5e91c3,0.0,True
+580,unseen_06_speckle.png,Gaussian Blur (r=0.5),2b5e91c3,24.36,0.8678,2b5e91c3,0.0,True,24.32,0.8666,2b5e91c3,0.0,True
+581,unseen_06_speckle.png,Brightness (+10%),2b5e91c3,25.64,0.9825,2b5e91c3,0.0,True,25.58,0.9815,2b5e91c3,0.0,True
+582,unseen_06_speckle.png,Contrast (-10%),2b5e91c3,32.9,0.9869,2b5e91c3,0.0,True,32.61,0.9859,2b5e91c3,0.0,True
+583,unseen_06_speckle.png,Gaussian Noise (sigma=2),2b5e91c3,33.92,0.9898,2b5e91c3,0.0,True,33.5,0.9887,2b5e91c3,0.0,True
+584,unseen_06_speckle.png,Clean,b00b1e55,34.8,0.9915,b00b1e55,0.0,True,34.51,0.9909,b00b1e55,0.0,True
+585,unseen_06_speckle.png,JPEG 90,b00b1e55,31.35,0.9809,b00b1e55,0.0,True,31.2,0.9802,b00b1e55,0.0,True
+586,unseen_06_speckle.png,JPEG 75,b00b1e55,27.08,0.9501,b00b1e55,0.0,True,27.03,0.9495,b00b1e55,0.0,True
+587,unseen_06_speckle.png,JPEG 50,b00b1e55,22.41,0.8561,b00b1e55,0.0,True,22.38,0.8552,b00b1e55,0.0,True
+588,unseen_06_speckle.png,JPEG 30,b00b1e55,19.95,0.7143,b00b1e55,0.0,True,19.95,0.7147,b00b1e55,0.0,True
+589,unseen_06_speckle.png,Resize 75%,b00b1e55,19.03,0.4491,b00b1e55,0.0,True,19.02,0.4487,b00b1e55,0.0,True
+590,unseen_06_speckle.png,Resize 50%,b00b1e55,17.85,0.2212,b00b1e55,0.0,True,17.85,0.2211,b00b1e55,0.0,True
+591,unseen_06_speckle.png,Gaussian Blur (r=0.5),b00b1e55,24.36,0.8684,b00b1e55,0.0,True,24.34,0.8677,b00b1e55,0.0,True
+592,unseen_06_speckle.png,Brightness (+10%),b00b1e55,25.62,0.9823,b00b1e55,0.0,True,25.59,0.9817,b00b1e55,0.0,True
+593,unseen_06_speckle.png,Contrast (-10%),b00b1e55,32.98,0.9871,b00b1e55,0.0,True,32.8,0.9866,b00b1e55,0.0,True
+594,unseen_06_speckle.png,Gaussian Noise (sigma=2),b00b1e55,33.94,0.9899,b00b1e55,0.0,True,33.68,0.9892,b00b1e55,0.0,True
+595,unseen_06_speckle.png,Clean,6d8f2a41,34.81,0.9915,6d8f2a41,0.0,True,34.23,0.9902,6d8f2a41,0.0,True
+596,unseen_06_speckle.png,JPEG 90,6d8f2a41,31.32,0.9807,6d8f2a41,0.0,True,31.05,0.9795,6d8f2a41,0.0,True
+597,unseen_06_speckle.png,JPEG 75,6d8f2a41,27.07,0.9498,6d8f2a41,0.0,True,26.96,0.9485,6d8f2a41,0.0,True
+598,unseen_06_speckle.png,JPEG 50,6d8f2a41,22.41,0.8558,6d8f2a41,0.0,True,22.37,0.8546,6d8f2a41,0.0,True
+599,unseen_06_speckle.png,JPEG 30,6d8f2a41,19.95,0.7132,6d8f2a41,0.0,True,19.93,0.7125,6d8f2a41,0.0,True
+600,unseen_06_speckle.png,Resize 75%,6d8f2a41,19.02,0.4467,6d8f2a41,0.0,True,19.01,0.4455,6d8f2a41,0.0,True
+601,unseen_06_speckle.png,Resize 50%,6d8f2a41,17.85,0.2187,6d8f2a41,0.0,True,17.84,0.2181,6d8f2a41,0.0,True
+602,unseen_06_speckle.png,Gaussian Blur (r=0.5),6d8f2a41,24.35,0.8677,6d8f2a41,0.0,True,24.31,0.8663,6d8f2a41,0.0,True
+603,unseen_06_speckle.png,Brightness (+10%),6d8f2a41,25.64,0.9825,6d8f2a41,0.0,True,25.57,0.9813,6d8f2a41,0.0,True
+604,unseen_06_speckle.png,Contrast (-10%),6d8f2a41,32.9,0.9868,6d8f2a41,0.0,True,32.55,0.9857,6d8f2a41,0.0,True
+605,unseen_06_speckle.png,Gaussian Noise (sigma=2),6d8f2a41,33.92,0.9898,6d8f2a41,0.0,True,33.45,0.9886,6d8f2a41,0.0,True
+606,unseen_06_speckle.png,Clean,c4a19e37,34.78,0.9914,c4a19e37,0.0,True,34.43,0.9907,c4a19e37,0.0,True
+607,unseen_06_speckle.png,JPEG 90,c4a19e37,31.33,0.9808,c4a19e37,0.0,True,31.18,0.9801,c4a19e37,0.0,True
+608,unseen_06_speckle.png,JPEG 75,c4a19e37,27.07,0.9499,c4a19e37,0.0,True,27.01,0.9493,c4a19e37,0.0,True
+609,unseen_06_speckle.png,JPEG 50,c4a19e37,22.41,0.8562,c4a19e37,0.0,True,22.39,0.8556,c4a19e37,0.0,True
+610,unseen_06_speckle.png,JPEG 30,c4a19e37,19.95,0.7134,c4a19e37,0.0,True,19.93,0.7133,c4a19e37,0.0,True
+611,unseen_06_speckle.png,Resize 75%,c4a19e37,19.02,0.4491,c4a19e37,0.0,True,19.02,0.4487,c4a19e37,0.0,True
+612,unseen_06_speckle.png,Resize 50%,c4a19e37,17.85,0.2213,c4a19e37,0.0,True,17.85,0.2211,c4a19e37,0.0,True
+613,unseen_06_speckle.png,Gaussian Blur (r=0.5),c4a19e37,24.35,0.8681,c4a19e37,0.0,True,24.33,0.8673,c4a19e37,0.0,True
+614,unseen_06_speckle.png,Brightness (+10%),c4a19e37,25.62,0.9823,c4a19e37,0.0,True,25.58,0.9815,c4a19e37,0.0,True
+615,unseen_06_speckle.png,Contrast (-10%),c4a19e37,32.95,0.987,c4a19e37,0.0,True,32.74,0.9864,c4a19e37,0.0,True
+616,unseen_06_speckle.png,Gaussian Noise (sigma=2),c4a19e37,33.94,0.9899,c4a19e37,0.0,True,33.6,0.989,c4a19e37,0.0,True
+617,unseen_06_speckle.png,Clean,1f8b4c2e,34.8,0.9915,1f8b4c2e,0.0,True,34.61,0.9911,1f8b4c2e,0.0,True
+618,unseen_06_speckle.png,JPEG 90,1f8b4c2e,31.34,0.9808,1f8b4c2e,0.0,True,31.25,0.9804,1f8b4c2e,0.0,True
+619,unseen_06_speckle.png,JPEG 75,1f8b4c2e,27.08,0.95,1f8b4c2e,0.0,True,27.04,0.9496,1f8b4c2e,0.0,True
+620,unseen_06_speckle.png,JPEG 50,1f8b4c2e,22.41,0.8559,1f8b4c2e,0.0,True,22.39,0.8555,1f8b4c2e,0.0,True
+621,unseen_06_speckle.png,JPEG 30,1f8b4c2e,19.95,0.7142,1f8b4c2e,0.0,True,19.94,0.7138,1f8b4c2e,0.0,True
+622,unseen_06_speckle.png,Resize 75%,1f8b4c2e,19.02,0.4477,1f8b4c2e,0.0,True,19.02,0.4474,1f8b4c2e,0.0,True
+623,unseen_06_speckle.png,Resize 50%,1f8b4c2e,17.85,0.2197,1f8b4c2e,0.0,True,17.85,0.2195,1f8b4c2e,0.0,True
+624,unseen_06_speckle.png,Gaussian Blur (r=0.5),1f8b4c2e,24.36,0.868,1f8b4c2e,0.0,True,24.34,0.8676,1f8b4c2e,0.0,True
+625,unseen_06_speckle.png,Brightness (+10%),1f8b4c2e,25.63,0.9824,1f8b4c2e,0.0,True,25.61,0.982,1f8b4c2e,0.0,True
+626,unseen_06_speckle.png,Contrast (-10%),1f8b4c2e,32.93,0.987,1f8b4c2e,0.0,True,32.82,0.9866,1f8b4c2e,0.0,True
+627,unseen_06_speckle.png,Gaussian Noise (sigma=2),1f8b4c2e,33.92,0.9898,1f8b4c2e,0.0,True,33.78,0.9894,1f8b4c2e,0.0,True
+628,unseen_06_speckle.png,Clean,5d2a7f9c,34.79,0.9914,5d2a7f9c,0.0,True,34.5,0.9908,5d2a7f9c,0.0,True
+629,unseen_06_speckle.png,JPEG 90,5d2a7f9c,31.33,0.9808,5d2a7f9c,0.0,True,31.18,0.9801,5d2a7f9c,0.0,True
+630,unseen_06_speckle.png,JPEG 75,5d2a7f9c,27.09,0.9501,5d2a7f9c,0.0,True,27.03,0.9495,5d2a7f9c,0.0,True
+631,unseen_06_speckle.png,JPEG 50,5d2a7f9c,22.41,0.8556,5d2a7f9c,0.0,True,22.39,0.8551,5d2a7f9c,0.0,True
+632,unseen_06_speckle.png,JPEG 30,5d2a7f9c,19.95,0.7143,5d2a7f9c,0.0,True,19.94,0.714,5d2a7f9c,0.0,True
+633,unseen_06_speckle.png,Resize 75%,5d2a7f9c,19.02,0.4479,5d2a7f9c,0.0,True,19.02,0.4475,5d2a7f9c,0.0,True
+634,unseen_06_speckle.png,Resize 50%,5d2a7f9c,17.85,0.2199,5d2a7f9c,0.0,True,17.85,0.2197,5d2a7f9c,0.0,True
+635,unseen_06_speckle.png,Gaussian Blur (r=0.5),5d2a7f9c,24.36,0.8681,5d2a7f9c,0.0,True,24.34,0.8674,5d2a7f9c,0.0,True
+636,unseen_06_speckle.png,Brightness (+10%),5d2a7f9c,25.63,0.9823,5d2a7f9c,0.0,True,25.6,0.9817,5d2a7f9c,0.0,True
+637,unseen_06_speckle.png,Contrast (-10%),5d2a7f9c,32.93,0.987,5d2a7f9c,0.0,True,32.76,0.9864,5d2a7f9c,0.0,True
+638,unseen_06_speckle.png,Gaussian Noise (sigma=2),5d2a7f9c,33.89,0.9897,5d2a7f9c,0.0,True,33.67,0.9892,5d2a7f9c,0.0,True
+639,unseen_06_speckle.png,Clean,83e16b4d,34.77,0.9914,83e16b4d,0.0,True,34.01,0.9897,83e16b4d,0.0,True
+640,unseen_06_speckle.png,JPEG 90,83e16b4d,31.29,0.9806,83e16b4d,0.0,True,30.92,0.9788,83e16b4d,0.0,True
+641,unseen_06_speckle.png,JPEG 75,83e16b4d,27.06,0.9497,83e16b4d,0.0,True,26.92,0.9481,83e16b4d,0.0,True
+642,unseen_06_speckle.png,JPEG 50,83e16b4d,22.4,0.8552,83e16b4d,0.0,True,22.35,0.854,83e16b4d,0.0,True
+643,unseen_06_speckle.png,JPEG 30,83e16b4d,19.95,0.714,83e16b4d,0.0,True,19.93,0.7127,83e16b4d,0.0,True
+644,unseen_06_speckle.png,Resize 75%,83e16b4d,19.02,0.4469,83e16b4d,0.0,True,19.01,0.4456,83e16b4d,0.0,True
+645,unseen_06_speckle.png,Resize 50%,83e16b4d,17.85,0.2192,83e16b4d,0.0,True,17.84,0.2182,83e16b4d,0.0,True
+646,unseen_06_speckle.png,Gaussian Blur (r=0.5),83e16b4d,24.35,0.8675,83e16b4d,0.0,True,24.29,0.8658,83e16b4d,0.0,True
+647,unseen_06_speckle.png,Brightness (+10%),83e16b4d,25.63,0.9824,83e16b4d,0.0,True,25.53,0.9807,83e16b4d,0.0,True
+648,unseen_06_speckle.png,Contrast (-10%),83e16b4d,32.88,0.9868,83e16b4d,0.0,True,32.44,0.9852,83e16b4d,0.0,True
+649,unseen_06_speckle.png,Gaussian Noise (sigma=2),83e16b4d,33.89,0.9897,83e16b4d,0.0,True,33.25,0.9881,83e16b4d,0.0,True
+650,unseen_06_speckle.png,Clean,3c7a9f24,34.75,0.9913,3c7a9f24,0.0,True,34.53,0.9909,3c7a9f24,0.0,True
+651,unseen_06_speckle.png,JPEG 90,3c7a9f24,31.31,0.9807,3c7a9f24,0.0,True,31.2,0.9802,3c7a9f24,0.0,True
+652,unseen_06_speckle.png,JPEG 75,3c7a9f24,27.07,0.9499,3c7a9f24,0.0,True,27.04,0.9496,3c7a9f24,0.0,True
+653,unseen_06_speckle.png,JPEG 50,3c7a9f24,22.4,0.8554,3c7a9f24,0.0,True,22.4,0.8555,3c7a9f24,0.0,True
+654,unseen_06_speckle.png,JPEG 30,3c7a9f24,19.95,0.7135,3c7a9f24,0.0,True,19.94,0.7138,3c7a9f24,0.0,True
+655,unseen_06_speckle.png,Resize 75%,3c7a9f24,19.02,0.4476,3c7a9f24,0.0,True,19.02,0.4474,3c7a9f24,0.0,True
+656,unseen_06_speckle.png,Resize 50%,3c7a9f24,17.85,0.22,3c7a9f24,0.0,True,17.85,0.2198,3c7a9f24,0.0,True
+657,unseen_06_speckle.png,Gaussian Blur (r=0.5),3c7a9f24,24.35,0.8678,3c7a9f24,0.0,True,24.34,0.8674,3c7a9f24,0.0,True
+658,unseen_06_speckle.png,Brightness (+10%),3c7a9f24,25.63,0.9823,3c7a9f24,0.0,True,25.61,0.9818,3c7a9f24,0.0,True
+659,unseen_06_speckle.png,Contrast (-10%),3c7a9f24,32.89,0.9869,3c7a9f24,0.0,True,32.77,0.9864,3c7a9f24,0.0,True
+660,unseen_06_speckle.png,Gaussian Noise (sigma=2),3c7a9f24,33.88,0.9897,3c7a9f24,0.0,True,33.69,0.9892,3c7a9f24,0.0,True
+661,unseen_07_diagonal_ramp.png,Clean,9e3779b9,34.81,0.9925,9e3779b9,0.0,True,34.8,0.9925,9e3779b9,0.0,True
+662,unseen_07_diagonal_ramp.png,JPEG 90,9e3779b9,34.63,0.9922,9e3779b9,0.0,True,34.63,0.9922,9e3779b9,0.0,True
+663,unseen_07_diagonal_ramp.png,JPEG 75,9e3779b9,34.3,0.9916,9e3779b9,0.0,True,34.3,0.9916,9e3779b9,0.0,True
+664,unseen_07_diagonal_ramp.png,JPEG 50,9e3779b9,34.09,0.9911,9e3779b9,0.0,True,34.09,0.9911,9e3779b9,0.0,True
+665,unseen_07_diagonal_ramp.png,JPEG 30,9e3779b9,33.19,0.9871,9e3779b9,0.0,True,33.21,0.9872,9e3779b9,0.0,True
+666,unseen_07_diagonal_ramp.png,Resize 75%,9e3779b9,37.6,0.996,9e3779b9,0.0,True,37.6,0.996,9e3779b9,0.0,True
+667,unseen_07_diagonal_ramp.png,Resize 50%,9e3779b9,41.13,0.9982,9e3779b9,0.0,True,41.13,0.9982,9e3779b9,0.0,True
+668,unseen_07_diagonal_ramp.png,Gaussian Blur (r=0.5),9e3779b9,34.81,0.9925,9e3779b9,0.0,True,34.81,0.9925,9e3779b9,0.0,True
+669,unseen_07_diagonal_ramp.png,Brightness (+10%),9e3779b9,25.56,0.9838,9e3779b9,0.0,True,25.57,0.9838,9e3779b9,0.0,True
+670,unseen_07_diagonal_ramp.png,Contrast (-10%),9e3779b9,32.26,0.9879,9e3779b9,0.0,True,32.26,0.9879,9e3779b9,0.0,True
+671,unseen_07_diagonal_ramp.png,Gaussian Noise (sigma=2),9e3779b9,33.92,0.9911,9e3779b9,0.0,True,33.93,0.991,9e3779b9,0.0,True
+672,unseen_07_diagonal_ramp.png,Clean,7f4c1a8d,34.81,0.9925,7f4c1a8d,0.0,True,34.8,0.9925,7f4c1a8d,0.0,True
+673,unseen_07_diagonal_ramp.png,JPEG 90,7f4c1a8d,34.65,0.9922,7f4c1a8d,0.0,True,34.65,0.9922,7f4c1a8d,0.0,True
+674,unseen_07_diagonal_ramp.png,JPEG 75,7f4c1a8d,34.35,0.9917,7f4c1a8d,0.0,True,34.36,0.9917,7f4c1a8d,0.0,True
+675,unseen_07_diagonal_ramp.png,JPEG 50,7f4c1a8d,34.05,0.991,7f4c1a8d,0.0,True,34.07,0.991,7f4c1a8d,0.0,True
+676,unseen_07_diagonal_ramp.png,JPEG 30,7f4c1a8d,33.14,0.9869,7f4c1a8d,0.0,True,33.14,0.987,7f4c1a8d,0.0,True
+677,unseen_07_diagonal_ramp.png,Resize 75%,7f4c1a8d,37.6,0.996,7f4c1a8d,0.0,True,37.6,0.996,7f4c1a8d,0.0,True
+678,unseen_07_diagonal_ramp.png,Resize 50%,7f4c1a8d,41.16,0.9982,7f4c1a8d,0.0,True,41.16,0.9982,7f4c1a8d,0.0,True
+679,unseen_07_diagonal_ramp.png,Gaussian Blur (r=0.5),7f4c1a8d,34.81,0.9925,7f4c1a8d,0.0,True,34.81,0.9925,7f4c1a8d,0.0,True
+680,unseen_07_diagonal_ramp.png,Brightness (+10%),7f4c1a8d,25.56,0.9838,7f4c1a8d,0.0,True,25.57,0.9838,7f4c1a8d,0.0,True
+681,unseen_07_diagonal_ramp.png,Contrast (-10%),7f4c1a8d,32.26,0.9879,7f4c1a8d,0.0,True,32.26,0.9879,7f4c1a8d,0.0,True
+682,unseen_07_diagonal_ramp.png,Gaussian Noise (sigma=2),7f4c1a8d,33.92,0.9911,7f4c1a8d,0.0,True,33.91,0.991,7f4c1a8d,0.0,True
+683,unseen_07_diagonal_ramp.png,Clean,2b5e91c3,34.82,0.9925,2b5e91c3,0.0,True,34.82,0.9925,2b5e91c3,0.0,True
+684,unseen_07_diagonal_ramp.png,JPEG 90,2b5e91c3,34.66,0.9923,2b5e91c3,0.0,True,34.65,0.9923,2b5e91c3,0.0,True
+685,unseen_07_diagonal_ramp.png,JPEG 75,2b5e91c3,34.4,0.9918,2b5e91c3,0.0,True,34.4,0.9918,2b5e91c3,0.0,True
+686,unseen_07_diagonal_ramp.png,JPEG 50,2b5e91c3,34.04,0.991,2b5e91c3,0.0,True,34.04,0.9909,2b5e91c3,0.0,True
+687,unseen_07_diagonal_ramp.png,JPEG 30,2b5e91c3,33.16,0.987,2b5e91c3,0.0,True,33.16,0.9871,2b5e91c3,0.0,True
+688,unseen_07_diagonal_ramp.png,Resize 75%,2b5e91c3,37.63,0.996,2b5e91c3,0.0,True,37.62,0.996,2b5e91c3,0.0,True
+689,unseen_07_diagonal_ramp.png,Resize 50%,2b5e91c3,41.17,0.9982,2b5e91c3,0.0,True,41.16,0.9982,2b5e91c3,0.0,True
+690,unseen_07_diagonal_ramp.png,Gaussian Blur (r=0.5),2b5e91c3,34.84,0.9926,2b5e91c3,0.0,True,34.84,0.9926,2b5e91c3,0.0,True
+691,unseen_07_diagonal_ramp.png,Brightness (+10%),2b5e91c3,25.56,0.9838,2b5e91c3,0.0,True,25.57,0.9838,2b5e91c3,0.0,True
+692,unseen_07_diagonal_ramp.png,Contrast (-10%),2b5e91c3,32.27,0.9879,2b5e91c3,0.0,True,32.26,0.9879,2b5e91c3,0.0,True
+693,unseen_07_diagonal_ramp.png,Gaussian Noise (sigma=2),2b5e91c3,33.93,0.9911,2b5e91c3,0.0,True,33.92,0.9911,2b5e91c3,0.0,True
+694,unseen_07_diagonal_ramp.png,Clean,b00b1e55,34.81,0.9925,b00b1e55,0.0,True,34.8,0.9925,b00b1e55,0.0,True
+695,unseen_07_diagonal_ramp.png,JPEG 90,b00b1e55,34.65,0.9922,b00b1e55,0.0,True,34.64,0.9922,b00b1e55,0.0,True
+696,unseen_07_diagonal_ramp.png,JPEG 75,b00b1e55,34.34,0.9917,b00b1e55,0.0,True,34.34,0.9917,b00b1e55,0.0,True
+697,unseen_07_diagonal_ramp.png,JPEG 50,b00b1e55,34.08,0.9911,b00b1e55,0.0,True,34.07,0.991,b00b1e55,0.0,True
+698,unseen_07_diagonal_ramp.png,JPEG 30,b00b1e55,33.19,0.987,b00b1e55,0.0,True,33.17,0.987,b00b1e55,0.0,True
+699,unseen_07_diagonal_ramp.png,Resize 75%,b00b1e55,37.61,0.996,b00b1e55,0.0,True,37.6,0.996,b00b1e55,0.0,True
+700,unseen_07_diagonal_ramp.png,Resize 50%,b00b1e55,41.12,0.9982,b00b1e55,0.0,True,41.12,0.9982,b00b1e55,0.0,True
+701,unseen_07_diagonal_ramp.png,Gaussian Blur (r=0.5),b00b1e55,34.81,0.9925,b00b1e55,0.0,True,34.81,0.9925,b00b1e55,0.0,True
+702,unseen_07_diagonal_ramp.png,Brightness (+10%),b00b1e55,25.55,0.9838,b00b1e55,0.0,True,25.56,0.9838,b00b1e55,0.0,True
+703,unseen_07_diagonal_ramp.png,Contrast (-10%),b00b1e55,32.26,0.9879,b00b1e55,0.0,True,32.25,0.9879,b00b1e55,0.0,True
+704,unseen_07_diagonal_ramp.png,Gaussian Noise (sigma=2),b00b1e55,33.91,0.9911,b00b1e55,0.0,True,33.92,0.9911,b00b1e55,0.0,True
+705,unseen_07_diagonal_ramp.png,Clean,6d8f2a41,34.81,0.9925,6d8f2a41,0.0,True,34.81,0.9925,6d8f2a41,0.0,True
+706,unseen_07_diagonal_ramp.png,JPEG 90,6d8f2a41,34.65,0.9923,6d8f2a41,0.0,True,34.64,0.9922,6d8f2a41,0.0,True
+707,unseen_07_diagonal_ramp.png,JPEG 75,6d8f2a41,34.38,0.9917,6d8f2a41,0.0,True,34.38,0.9917,6d8f2a41,0.0,True
+708,unseen_07_diagonal_ramp.png,JPEG 50,6d8f2a41,34.0,0.9908,6d8f2a41,0.0,True,34.02,0.9909,6d8f2a41,0.0,True
+709,unseen_07_diagonal_ramp.png,JPEG 30,6d8f2a41,33.24,0.9872,6d8f2a41,0.0,True,33.23,0.9872,6d8f2a41,0.0,True
+710,unseen_07_diagonal_ramp.png,Resize 75%,6d8f2a41,37.59,0.996,6d8f2a41,0.0,True,37.59,0.996,6d8f2a41,0.0,True
+711,unseen_07_diagonal_ramp.png,Resize 50%,6d8f2a41,41.14,0.9982,6d8f2a41,0.0,True,41.14,0.9982,6d8f2a41,0.0,True
+712,unseen_07_diagonal_ramp.png,Gaussian Blur (r=0.5),6d8f2a41,34.82,0.9926,6d8f2a41,0.0,True,34.82,0.9926,6d8f2a41,0.0,True
+713,unseen_07_diagonal_ramp.png,Brightness (+10%),6d8f2a41,25.56,0.9838,6d8f2a41,0.0,True,25.57,0.9839,6d8f2a41,0.0,True
+714,unseen_07_diagonal_ramp.png,Contrast (-10%),6d8f2a41,32.26,0.9879,6d8f2a41,0.0,True,32.25,0.9879,6d8f2a41,0.0,True
+715,unseen_07_diagonal_ramp.png,Gaussian Noise (sigma=2),6d8f2a41,33.91,0.991,6d8f2a41,0.0,True,33.92,0.9911,6d8f2a41,0.0,True
+716,unseen_07_diagonal_ramp.png,Clean,c4a19e37,34.78,0.9925,c4a19e37,0.0,True,34.78,0.9925,c4a19e37,0.0,True
+717,unseen_07_diagonal_ramp.png,JPEG 90,c4a19e37,34.61,0.9922,c4a19e37,0.0,True,34.61,0.9922,c4a19e37,0.0,True
+718,unseen_07_diagonal_ramp.png,JPEG 75,c4a19e37,34.36,0.9917,c4a19e37,0.0,True,34.37,0.9917,c4a19e37,0.0,True
+719,unseen_07_diagonal_ramp.png,JPEG 50,c4a19e37,34.01,0.9909,c4a19e37,0.0,True,33.99,0.9908,c4a19e37,0.0,True
+720,unseen_07_diagonal_ramp.png,JPEG 30,c4a19e37,33.12,0.987,c4a19e37,0.0,True,33.14,0.987,c4a19e37,0.0,True
+721,unseen_07_diagonal_ramp.png,Resize 75%,c4a19e37,37.57,0.996,c4a19e37,0.0,True,37.57,0.996,c4a19e37,0.0,True
+722,unseen_07_diagonal_ramp.png,Resize 50%,c4a19e37,41.08,0.9982,c4a19e37,0.0,True,41.08,0.9982,c4a19e37,0.0,True
+723,unseen_07_diagonal_ramp.png,Gaussian Blur (r=0.5),c4a19e37,34.8,0.9925,c4a19e37,0.0,True,34.8,0.9925,c4a19e37,0.0,True
+724,unseen_07_diagonal_ramp.png,Brightness (+10%),c4a19e37,25.55,0.9837,c4a19e37,0.0,True,25.56,0.9838,c4a19e37,0.0,True
+725,unseen_07_diagonal_ramp.png,Contrast (-10%),c4a19e37,32.25,0.9879,c4a19e37,0.0,True,32.24,0.9879,c4a19e37,0.0,True
+726,unseen_07_diagonal_ramp.png,Gaussian Noise (sigma=2),c4a19e37,33.9,0.9911,c4a19e37,0.0,True,33.91,0.991,c4a19e37,0.0,True
+727,unseen_07_diagonal_ramp.png,Clean,1f8b4c2e,34.81,0.9925,1f8b4c2e,0.0,True,34.81,0.9925,1f8b4c2e,0.0,True
+728,unseen_07_diagonal_ramp.png,JPEG 90,1f8b4c2e,34.64,0.9922,1f8b4c2e,0.0,True,34.64,0.9922,1f8b4c2e,0.0,True
+729,unseen_07_diagonal_ramp.png,JPEG 75,1f8b4c2e,34.35,0.9917,1f8b4c2e,0.0,True,34.35,0.9917,1f8b4c2e,0.0,True
+730,unseen_07_diagonal_ramp.png,JPEG 50,1f8b4c2e,33.99,0.9909,1f8b4c2e,0.0,True,33.98,0.9909,1f8b4c2e,0.0,True
+731,unseen_07_diagonal_ramp.png,JPEG 30,1f8b4c2e,33.2,0.9871,1f8b4c2e,0.0,True,33.21,0.9872,1f8b4c2e,0.0,True
+732,unseen_07_diagonal_ramp.png,Resize 75%,1f8b4c2e,37.61,0.996,1f8b4c2e,0.0,True,37.61,0.996,1f8b4c2e,0.0,True
+733,unseen_07_diagonal_ramp.png,Resize 50%,1f8b4c2e,41.14,0.9982,1f8b4c2e,0.0,True,41.14,0.9982,1f8b4c2e,0.0,True
+734,unseen_07_diagonal_ramp.png,Gaussian Blur (r=0.5),1f8b4c2e,34.83,0.9926,1f8b4c2e,0.0,True,34.83,0.9926,1f8b4c2e,0.0,True
+735,unseen_07_diagonal_ramp.png,Brightness (+10%),1f8b4c2e,25.56,0.9838,1f8b4c2e,0.0,True,25.57,0.9838,1f8b4c2e,0.0,True
+736,unseen_07_diagonal_ramp.png,Contrast (-10%),1f8b4c2e,32.27,0.9879,1f8b4c2e,0.0,True,32.26,0.9879,1f8b4c2e,0.0,True
+737,unseen_07_diagonal_ramp.png,Gaussian Noise (sigma=2),1f8b4c2e,33.94,0.9911,1f8b4c2e,0.0,True,33.92,0.9911,1f8b4c2e,0.0,True
+738,unseen_07_diagonal_ramp.png,Clean,5d2a7f9c,34.79,0.9925,5d2a7f9c,0.0,True,34.79,0.9925,5d2a7f9c,0.0,True
+739,unseen_07_diagonal_ramp.png,JPEG 90,5d2a7f9c,34.64,0.9922,5d2a7f9c,0.0,True,34.63,0.9922,5d2a7f9c,0.0,True
+740,unseen_07_diagonal_ramp.png,JPEG 75,5d2a7f9c,34.31,0.9916,5d2a7f9c,0.0,True,34.31,0.9916,5d2a7f9c,0.0,True
+741,unseen_07_diagonal_ramp.png,JPEG 50,5d2a7f9c,34.09,0.9911,5d2a7f9c,0.0,True,34.08,0.9911,5d2a7f9c,0.0,True
+742,unseen_07_diagonal_ramp.png,JPEG 30,5d2a7f9c,33.21,0.9871,5d2a7f9c,0.0,True,33.2,0.9871,5d2a7f9c,0.0,True
+743,unseen_07_diagonal_ramp.png,Resize 75%,5d2a7f9c,37.58,0.996,5d2a7f9c,0.0,True,37.58,0.996,5d2a7f9c,0.0,True
+744,unseen_07_diagonal_ramp.png,Resize 50%,5d2a7f9c,41.07,0.9982,5d2a7f9c,0.0,True,41.06,0.9982,5d2a7f9c,0.0,True
+745,unseen_07_diagonal_ramp.png,Gaussian Blur (r=0.5),5d2a7f9c,34.8,0.9925,5d2a7f9c,0.0,True,34.79,0.9925,5d2a7f9c,0.0,True
+746,unseen_07_diagonal_ramp.png,Brightness (+10%),5d2a7f9c,25.56,0.9838,5d2a7f9c,0.0,True,25.56,0.9838,5d2a7f9c,0.0,True
+747,unseen_07_diagonal_ramp.png,Contrast (-10%),5d2a7f9c,32.25,0.9879,5d2a7f9c,0.0,True,32.25,0.9879,5d2a7f9c,0.0,True
+748,unseen_07_diagonal_ramp.png,Gaussian Noise (sigma=2),5d2a7f9c,33.92,0.9911,5d2a7f9c,0.0,True,33.93,0.9911,5d2a7f9c,0.0,True
+749,unseen_07_diagonal_ramp.png,Clean,83e16b4d,34.77,0.9925,83e16b4d,0.0,True,34.77,0.9925,83e16b4d,0.0,True
+750,unseen_07_diagonal_ramp.png,JPEG 90,83e16b4d,34.59,0.9921,83e16b4d,0.0,True,34.59,0.9921,83e16b4d,0.0,True
+751,unseen_07_diagonal_ramp.png,JPEG 75,83e16b4d,34.32,0.9916,83e16b4d,0.0,True,34.3,0.9916,83e16b4d,0.0,True
+752,unseen_07_diagonal_ramp.png,JPEG 50,83e16b4d,33.96,0.9908,83e16b4d,0.0,True,33.99,0.9908,83e16b4d,0.0,True
+753,unseen_07_diagonal_ramp.png,JPEG 30,83e16b4d,32.95,0.9866,83e16b4d,0.0,True,32.96,0.9866,83e16b4d,0.0,True
+754,unseen_07_diagonal_ramp.png,Resize 75%,83e16b4d,37.56,0.996,83e16b4d,0.0,True,37.56,0.996,83e16b4d,0.0,True
+755,unseen_07_diagonal_ramp.png,Resize 50%,83e16b4d,41.1,0.9982,83e16b4d,0.0,True,41.1,0.9982,83e16b4d,0.0,True
+756,unseen_07_diagonal_ramp.png,Gaussian Blur (r=0.5),83e16b4d,34.79,0.9925,83e16b4d,0.0,True,34.79,0.9925,83e16b4d,0.0,True
+757,unseen_07_diagonal_ramp.png,Brightness (+10%),83e16b4d,25.55,0.9837,83e16b4d,0.0,True,25.56,0.9838,83e16b4d,0.0,True
+758,unseen_07_diagonal_ramp.png,Contrast (-10%),83e16b4d,32.25,0.9879,83e16b4d,0.0,True,32.24,0.9879,83e16b4d,0.0,True
+759,unseen_07_diagonal_ramp.png,Gaussian Noise (sigma=2),83e16b4d,33.92,0.991,83e16b4d,0.0,True,33.91,0.9911,83e16b4d,0.0,True
+760,unseen_07_diagonal_ramp.png,Clean,3c7a9f24,34.76,0.9924,3c7a9f24,0.0,True,34.75,0.9924,3c7a9f24,0.0,True
+761,unseen_07_diagonal_ramp.png,JPEG 90,3c7a9f24,34.6,0.9921,3c7a9f24,0.0,True,34.6,0.9921,3c7a9f24,0.0,True
+762,unseen_07_diagonal_ramp.png,JPEG 75,3c7a9f24,34.29,0.9916,3c7a9f24,0.0,True,34.3,0.9916,3c7a9f24,0.0,True
+763,unseen_07_diagonal_ramp.png,JPEG 50,3c7a9f24,33.99,0.9909,3c7a9f24,0.0,True,33.99,0.9909,3c7a9f24,0.0,True
+764,unseen_07_diagonal_ramp.png,JPEG 30,3c7a9f24,33.18,0.9871,3c7a9f24,0.0,True,33.17,0.9871,3c7a9f24,0.0,True
+765,unseen_07_diagonal_ramp.png,Resize 75%,3c7a9f24,37.53,0.996,3c7a9f24,0.0,True,37.53,0.996,3c7a9f24,0.0,True
+766,unseen_07_diagonal_ramp.png,Resize 50%,3c7a9f24,41.04,0.9982,3c7a9f24,0.0,True,41.03,0.9982,3c7a9f24,0.0,True
+767,unseen_07_diagonal_ramp.png,Gaussian Blur (r=0.5),3c7a9f24,34.76,0.9924,3c7a9f24,0.0,True,34.76,0.9924,3c7a9f24,0.0,True
+768,unseen_07_diagonal_ramp.png,Brightness (+10%),3c7a9f24,25.55,0.9837,3c7a9f24,0.0,True,25.56,0.9837,3c7a9f24,0.0,True
+769,unseen_07_diagonal_ramp.png,Contrast (-10%),3c7a9f24,32.24,0.9878,3c7a9f24,0.0,True,32.23,0.9878,3c7a9f24,0.0,True
+770,unseen_07_diagonal_ramp.png,Gaussian Noise (sigma=2),3c7a9f24,33.88,0.9909,3c7a9f24,0.0,True,33.89,0.991,3c7a9f24,0.0,True
+771,unseen_08_radial_vignette.png,Clean,9e3779b9,34.8,0.996,9e3779b9,0.0,True,34.8,0.996,9e3779b9,0.0,True
+772,unseen_08_radial_vignette.png,JPEG 90,9e3779b9,34.79,0.996,9e3779b9,0.0,True,34.8,0.996,9e3779b9,0.0,True
+773,unseen_08_radial_vignette.png,JPEG 75,9e3779b9,34.62,0.9959,9e3779b9,0.0,True,34.61,0.9958,9e3779b9,0.0,True
+774,unseen_08_radial_vignette.png,JPEG 50,9e3779b9,34.29,0.9955,9e3779b9,0.0,True,34.29,0.9955,9e3779b9,0.0,True
+775,unseen_08_radial_vignette.png,JPEG 30,9e3779b9,34.32,0.9955,9e3779b9,0.0,True,34.33,0.9955,9e3779b9,0.0,True
+776,unseen_08_radial_vignette.png,Resize 75%,9e3779b9,37.64,0.9979,9e3779b9,0.0,True,37.64,0.9979,9e3779b9,0.0,True
+777,unseen_08_radial_vignette.png,Resize 50%,9e3779b9,40.99,0.999,9e3779b9,0.0,True,40.99,0.999,9e3779b9,0.0,True
+778,unseen_08_radial_vignette.png,Gaussian Blur (r=0.5),9e3779b9,34.81,0.996,9e3779b9,0.0,True,34.81,0.996,9e3779b9,0.0,True
+779,unseen_08_radial_vignette.png,Brightness (+10%),9e3779b9,26.06,0.9877,9e3779b9,0.0,True,26.07,0.9877,9e3779b9,0.0,True
+780,unseen_08_radial_vignette.png,Contrast (-10%),9e3779b9,31.64,0.991,9e3779b9,0.0,True,31.63,0.991,9e3779b9,0.0,True
+781,unseen_08_radial_vignette.png,Gaussian Noise (sigma=2),9e3779b9,33.92,0.9952,9e3779b9,0.0,True,33.91,0.9952,9e3779b9,0.0,True
+782,unseen_08_radial_vignette.png,Clean,7f4c1a8d,34.8,0.996,7f4c1a8d,0.0,True,34.8,0.996,7f4c1a8d,0.0,True
+783,unseen_08_radial_vignette.png,JPEG 90,7f4c1a8d,34.81,0.996,7f4c1a8d,0.0,True,34.8,0.996,7f4c1a8d,0.0,True
+784,unseen_08_radial_vignette.png,JPEG 75,7f4c1a8d,34.62,0.9958,7f4c1a8d,0.0,True,34.62,0.9958,7f4c1a8d,0.0,True
+785,unseen_08_radial_vignette.png,JPEG 50,7f4c1a8d,34.31,0.9956,7f4c1a8d,0.0,True,34.32,0.9956,7f4c1a8d,0.0,True
+786,unseen_08_radial_vignette.png,JPEG 30,7f4c1a8d,34.38,0.9956,7f4c1a8d,0.0,True,34.38,0.9956,7f4c1a8d,0.0,True
+787,unseen_08_radial_vignette.png,Resize 75%,7f4c1a8d,37.61,0.9979,7f4c1a8d,0.0,True,37.61,0.9979,7f4c1a8d,0.0,True
+788,unseen_08_radial_vignette.png,Resize 50%,7f4c1a8d,41.06,0.999,7f4c1a8d,0.0,True,41.06,0.999,7f4c1a8d,0.0,True
+789,unseen_08_radial_vignette.png,Gaussian Blur (r=0.5),7f4c1a8d,34.8,0.996,7f4c1a8d,0.0,True,34.8,0.996,7f4c1a8d,0.0,True
+790,unseen_08_radial_vignette.png,Brightness (+10%),7f4c1a8d,26.07,0.9877,7f4c1a8d,0.0,True,26.08,0.9878,7f4c1a8d,0.0,True
+791,unseen_08_radial_vignette.png,Contrast (-10%),7f4c1a8d,31.64,0.991,7f4c1a8d,0.0,True,31.63,0.991,7f4c1a8d,0.0,True
+792,unseen_08_radial_vignette.png,Gaussian Noise (sigma=2),7f4c1a8d,33.92,0.9952,7f4c1a8d,0.0,True,33.91,0.9952,7f4c1a8d,0.0,True
+793,unseen_08_radial_vignette.png,Clean,2b5e91c3,34.82,0.996,2b5e91c3,0.0,True,34.81,0.996,2b5e91c3,0.0,True
+794,unseen_08_radial_vignette.png,JPEG 90,2b5e91c3,34.79,0.996,2b5e91c3,0.0,True,34.78,0.996,2b5e91c3,0.0,True
+795,unseen_08_radial_vignette.png,JPEG 75,2b5e91c3,34.65,0.9959,2b5e91c3,0.0,True,34.66,0.9959,2b5e91c3,0.0,True
+796,unseen_08_radial_vignette.png,JPEG 50,2b5e91c3,34.3,0.9955,2b5e91c3,0.0,True,34.28,0.9955,2b5e91c3,0.0,True
+797,unseen_08_radial_vignette.png,JPEG 30,2b5e91c3,34.34,0.9955,2b5e91c3,0.0,True,34.32,0.9955,2b5e91c3,0.0,True
+798,unseen_08_radial_vignette.png,Resize 75%,2b5e91c3,37.6,0.9979,2b5e91c3,0.0,True,37.6,0.9979,2b5e91c3,0.0,True
+799,unseen_08_radial_vignette.png,Resize 50%,2b5e91c3,41.03,0.999,2b5e91c3,0.0,True,41.03,0.999,2b5e91c3,0.0,True
+800,unseen_08_radial_vignette.png,Gaussian Blur (r=0.5),2b5e91c3,34.83,0.9961,2b5e91c3,0.0,True,34.83,0.996,2b5e91c3,0.0,True
+801,unseen_08_radial_vignette.png,Brightness (+10%),2b5e91c3,26.05,0.9877,2b5e91c3,0.0,True,26.06,0.9877,2b5e91c3,0.0,True
+802,unseen_08_radial_vignette.png,Contrast (-10%),2b5e91c3,31.64,0.991,2b5e91c3,0.0,True,31.63,0.991,2b5e91c3,0.0,True
+803,unseen_08_radial_vignette.png,Gaussian Noise (sigma=2),2b5e91c3,33.92,0.9952,2b5e91c3,0.0,True,33.94,0.9952,2b5e91c3,0.0,True
+804,unseen_08_radial_vignette.png,Clean,b00b1e55,34.8,0.996,b00b1e55,0.0,True,34.8,0.996,b00b1e55,0.0,True
+805,unseen_08_radial_vignette.png,JPEG 90,b00b1e55,34.79,0.996,b00b1e55,0.0,True,34.77,0.996,b00b1e55,0.0,True
+806,unseen_08_radial_vignette.png,JPEG 75,b00b1e55,34.63,0.9959,b00b1e55,0.0,True,34.63,0.9959,b00b1e55,0.0,True
+807,unseen_08_radial_vignette.png,JPEG 50,b00b1e55,34.23,0.9955,b00b1e55,0.0,True,34.26,0.9955,b00b1e55,0.0,True
+808,unseen_08_radial_vignette.png,JPEG 30,b00b1e55,34.43,0.9956,b00b1e55,0.0,True,34.42,0.9956,b00b1e55,0.0,True
+809,unseen_08_radial_vignette.png,Resize 75%,b00b1e55,37.62,0.9979,b00b1e55,0.0,True,37.62,0.9979,b00b1e55,0.0,True
+810,unseen_08_radial_vignette.png,Resize 50%,b00b1e55,41.04,0.999,b00b1e55,0.0,True,41.03,0.999,b00b1e55,0.0,True
+811,unseen_08_radial_vignette.png,Gaussian Blur (r=0.5),b00b1e55,34.81,0.996,b00b1e55,0.0,True,34.8,0.996,b00b1e55,0.0,True
+812,unseen_08_radial_vignette.png,Brightness (+10%),b00b1e55,26.06,0.9877,b00b1e55,0.0,True,26.07,0.9877,b00b1e55,0.0,True
+813,unseen_08_radial_vignette.png,Contrast (-10%),b00b1e55,31.64,0.991,b00b1e55,0.0,True,31.63,0.991,b00b1e55,0.0,True
+814,unseen_08_radial_vignette.png,Gaussian Noise (sigma=2),b00b1e55,33.91,0.9952,b00b1e55,0.0,True,33.93,0.9952,b00b1e55,0.0,True
+815,unseen_08_radial_vignette.png,Clean,6d8f2a41,34.81,0.996,6d8f2a41,0.0,True,34.8,0.996,6d8f2a41,0.0,True
+816,unseen_08_radial_vignette.png,JPEG 90,6d8f2a41,34.8,0.996,6d8f2a41,0.0,True,34.79,0.996,6d8f2a41,0.0,True
+817,unseen_08_radial_vignette.png,JPEG 75,6d8f2a41,34.61,0.9958,6d8f2a41,0.0,True,34.62,0.9959,6d8f2a41,0.0,True
+818,unseen_08_radial_vignette.png,JPEG 50,6d8f2a41,34.27,0.9955,6d8f2a41,0.0,True,34.26,0.9955,6d8f2a41,0.0,True
+819,unseen_08_radial_vignette.png,JPEG 30,6d8f2a41,34.44,0.9956,6d8f2a41,0.0,True,34.45,0.9956,6d8f2a41,0.0,True
+820,unseen_08_radial_vignette.png,Resize 75%,6d8f2a41,37.61,0.9979,6d8f2a41,0.0,True,37.62,0.9979,6d8f2a41,0.0,True
+821,unseen_08_radial_vignette.png,Resize 50%,6d8f2a41,41.09,0.9991,6d8f2a41,0.0,True,41.08,0.9991,6d8f2a41,0.0,True
+822,unseen_08_radial_vignette.png,Gaussian Blur (r=0.5),6d8f2a41,34.82,0.996,6d8f2a41,0.0,True,34.82,0.996,6d8f2a41,0.0,True
+823,unseen_08_radial_vignette.png,Brightness (+10%),6d8f2a41,26.05,0.9877,6d8f2a41,0.0,True,26.06,0.9877,6d8f2a41,0.0,True
+824,unseen_08_radial_vignette.png,Contrast (-10%),6d8f2a41,31.64,0.991,6d8f2a41,0.0,True,31.63,0.991,6d8f2a41,0.0,True
+825,unseen_08_radial_vignette.png,Gaussian Noise (sigma=2),6d8f2a41,33.93,0.9952,6d8f2a41,0.0,True,33.93,0.9952,6d8f2a41,0.0,True
+826,unseen_08_radial_vignette.png,Clean,c4a19e37,34.78,0.996,c4a19e37,0.0,True,34.78,0.996,c4a19e37,0.0,True
+827,unseen_08_radial_vignette.png,JPEG 90,c4a19e37,34.74,0.996,c4a19e37,0.0,True,34.73,0.996,c4a19e37,0.0,True
+828,unseen_08_radial_vignette.png,JPEG 75,c4a19e37,34.65,0.9959,c4a19e37,0.0,True,34.65,0.9959,c4a19e37,0.0,True
+829,unseen_08_radial_vignette.png,JPEG 50,c4a19e37,34.15,0.9954,c4a19e37,0.0,True,34.14,0.9954,c4a19e37,0.0,True
+830,unseen_08_radial_vignette.png,JPEG 30,c4a19e37,34.24,0.9954,c4a19e37,0.0,True,34.24,0.9954,c4a19e37,0.0,True
+831,unseen_08_radial_vignette.png,Resize 75%,c4a19e37,37.58,0.9979,c4a19e37,0.0,True,37.58,0.9979,c4a19e37,0.0,True
+832,unseen_08_radial_vignette.png,Resize 50%,c4a19e37,41.04,0.999,c4a19e37,0.0,True,41.03,0.999,c4a19e37,0.0,True
+833,unseen_08_radial_vignette.png,Gaussian Blur (r=0.5),c4a19e37,34.8,0.996,c4a19e37,0.0,True,34.8,0.996,c4a19e37,0.0,True
+834,unseen_08_radial_vignette.png,Brightness (+10%),c4a19e37,26.05,0.9877,c4a19e37,0.0,True,26.06,0.9877,c4a19e37,0.0,True
+835,unseen_08_radial_vignette.png,Contrast (-10%),c4a19e37,31.63,0.991,c4a19e37,0.0,True,31.62,0.9909,c4a19e37,0.0,True
+836,unseen_08_radial_vignette.png,Gaussian Noise (sigma=2),c4a19e37,33.88,0.9952,c4a19e37,0.0,True,33.89,0.9952,c4a19e37,0.0,True
+837,unseen_08_radial_vignette.png,Clean,1f8b4c2e,34.8,0.996,1f8b4c2e,0.0,True,34.8,0.996,1f8b4c2e,0.0,True
+838,unseen_08_radial_vignette.png,JPEG 90,1f8b4c2e,34.77,0.996,1f8b4c2e,0.0,True,34.77,0.996,1f8b4c2e,0.0,True
+839,unseen_08_radial_vignette.png,JPEG 75,1f8b4c2e,34.61,0.9958,1f8b4c2e,0.0,True,34.6,0.9958,1f8b4c2e,0.0,True
+840,unseen_08_radial_vignette.png,JPEG 50,1f8b4c2e,34.17,0.9954,1f8b4c2e,0.0,True,34.18,0.9954,1f8b4c2e,0.0,True
+841,unseen_08_radial_vignette.png,JPEG 30,1f8b4c2e,34.34,0.9955,1f8b4c2e,0.0,True,34.37,0.9956,1f8b4c2e,0.0,True
+842,unseen_08_radial_vignette.png,Resize 75%,1f8b4c2e,37.61,0.9979,1f8b4c2e,0.0,True,37.61,0.9979,1f8b4c2e,0.0,True
+843,unseen_08_radial_vignette.png,Resize 50%,1f8b4c2e,41.02,0.999,1f8b4c2e,0.0,True,41.02,0.999,1f8b4c2e,0.0,True
+844,unseen_08_radial_vignette.png,Gaussian Blur (r=0.5),1f8b4c2e,34.82,0.996,1f8b4c2e,0.0,True,34.82,0.996,1f8b4c2e,0.0,True
+845,unseen_08_radial_vignette.png,Brightness (+10%),1f8b4c2e,26.05,0.9877,1f8b4c2e,0.0,True,26.06,0.9877,1f8b4c2e,0.0,True
+846,unseen_08_radial_vignette.png,Contrast (-10%),1f8b4c2e,31.64,0.991,1f8b4c2e,0.0,True,31.63,0.991,1f8b4c2e,0.0,True
+847,unseen_08_radial_vignette.png,Gaussian Noise (sigma=2),1f8b4c2e,33.93,0.9952,1f8b4c2e,0.0,True,33.91,0.9952,1f8b4c2e,0.0,True
+848,unseen_08_radial_vignette.png,Clean,5d2a7f9c,34.79,0.996,5d2a7f9c,0.0,True,34.79,0.996,5d2a7f9c,0.0,True
+849,unseen_08_radial_vignette.png,JPEG 90,5d2a7f9c,34.76,0.996,5d2a7f9c,0.0,True,34.76,0.996,5d2a7f9c,0.0,True
+850,unseen_08_radial_vignette.png,JPEG 75,5d2a7f9c,34.6,0.9958,5d2a7f9c,0.0,True,34.6,0.9958,5d2a7f9c,0.0,True
+851,unseen_08_radial_vignette.png,JPEG 50,5d2a7f9c,34.25,0.9955,5d2a7f9c,0.0,True,34.25,0.9955,5d2a7f9c,0.0,True
+852,unseen_08_radial_vignette.png,JPEG 30,5d2a7f9c,34.46,0.9957,5d2a7f9c,0.0,True,34.45,0.9956,5d2a7f9c,0.0,True
+853,unseen_08_radial_vignette.png,Resize 75%,5d2a7f9c,37.57,0.9979,5d2a7f9c,0.0,True,37.57,0.9979,5d2a7f9c,0.0,True
+854,unseen_08_radial_vignette.png,Resize 50%,5d2a7f9c,41.0,0.999,5d2a7f9c,0.0,True,41.0,0.999,5d2a7f9c,0.0,True
+855,unseen_08_radial_vignette.png,Gaussian Blur (r=0.5),5d2a7f9c,34.79,0.996,5d2a7f9c,0.0,True,34.79,0.996,5d2a7f9c,0.0,True
+856,unseen_08_radial_vignette.png,Brightness (+10%),5d2a7f9c,26.06,0.9877,5d2a7f9c,0.0,True,26.07,0.9877,5d2a7f9c,0.0,True
+857,unseen_08_radial_vignette.png,Contrast (-10%),5d2a7f9c,31.63,0.991,5d2a7f9c,0.0,True,31.62,0.9909,5d2a7f9c,0.0,True
+858,unseen_08_radial_vignette.png,Gaussian Noise (sigma=2),5d2a7f9c,33.93,0.9952,5d2a7f9c,0.0,True,33.89,0.9952,5d2a7f9c,0.0,True
+859,unseen_08_radial_vignette.png,Clean,83e16b4d,34.77,0.996,83e16b4d,0.0,True,34.76,0.996,83e16b4d,0.0,True
+860,unseen_08_radial_vignette.png,JPEG 90,83e16b4d,34.73,0.9959,83e16b4d,0.0,True,34.73,0.996,83e16b4d,0.0,True
+861,unseen_08_radial_vignette.png,JPEG 75,83e16b4d,34.56,0.9958,83e16b4d,0.0,True,34.58,0.9958,83e16b4d,0.0,True
+862,unseen_08_radial_vignette.png,JPEG 50,83e16b4d,34.2,0.9954,83e16b4d,0.0,True,34.2,0.9955,83e16b4d,0.0,True
+863,unseen_08_radial_vignette.png,JPEG 30,83e16b4d,34.07,0.9952,83e16b4d,0.0,True,34.06,0.9952,83e16b4d,0.0,True
+864,unseen_08_radial_vignette.png,Resize 75%,83e16b4d,37.54,0.9979,83e16b4d,0.0,True,37.55,0.9979,83e16b4d,0.0,True
+865,unseen_08_radial_vignette.png,Resize 50%,83e16b4d,40.97,0.999,83e16b4d,0.0,True,40.98,0.999,83e16b4d,0.0,True
+866,unseen_08_radial_vignette.png,Gaussian Blur (r=0.5),83e16b4d,34.79,0.996,83e16b4d,0.0,True,34.78,0.996,83e16b4d,0.0,True
+867,unseen_08_radial_vignette.png,Brightness (+10%),83e16b4d,26.05,0.9876,83e16b4d,0.0,True,26.06,0.9876,83e16b4d,0.0,True
+868,unseen_08_radial_vignette.png,Contrast (-10%),83e16b4d,31.63,0.9909,83e16b4d,0.0,True,31.62,0.9909,83e16b4d,0.0,True
+869,unseen_08_radial_vignette.png,Gaussian Noise (sigma=2),83e16b4d,33.89,0.9952,83e16b4d,0.0,True,33.9,0.9952,83e16b4d,0.0,True
+870,unseen_08_radial_vignette.png,Clean,3c7a9f24,34.75,0.996,3c7a9f24,0.0,True,34.75,0.996,3c7a9f24,0.0,True
+871,unseen_08_radial_vignette.png,JPEG 90,3c7a9f24,34.73,0.996,3c7a9f24,0.0,True,34.73,0.996,3c7a9f24,0.0,True
+872,unseen_08_radial_vignette.png,JPEG 75,3c7a9f24,34.54,0.9958,3c7a9f24,0.0,True,34.54,0.9958,3c7a9f24,0.0,True
+873,unseen_08_radial_vignette.png,JPEG 50,3c7a9f24,34.24,0.9955,3c7a9f24,0.0,True,34.23,0.9955,3c7a9f24,0.0,True
+874,unseen_08_radial_vignette.png,JPEG 30,3c7a9f24,34.28,0.9955,3c7a9f24,0.0,True,34.28,0.9955,3c7a9f24,0.0,True
+875,unseen_08_radial_vignette.png,Resize 75%,3c7a9f24,37.53,0.9979,3c7a9f24,0.0,True,37.53,0.9979,3c7a9f24,0.0,True
+876,unseen_08_radial_vignette.png,Resize 50%,3c7a9f24,40.94,0.999,3c7a9f24,0.0,True,40.94,0.999,3c7a9f24,0.0,True
+877,unseen_08_radial_vignette.png,Gaussian Blur (r=0.5),3c7a9f24,34.75,0.996,3c7a9f24,0.0,True,34.75,0.996,3c7a9f24,0.0,True
+878,unseen_08_radial_vignette.png,Brightness (+10%),3c7a9f24,26.05,0.9876,3c7a9f24,0.0,True,26.06,0.9877,3c7a9f24,0.0,True
+879,unseen_08_radial_vignette.png,Contrast (-10%),3c7a9f24,31.62,0.9909,3c7a9f24,0.0,True,31.61,0.9909,3c7a9f24,0.0,True
+880,unseen_08_radial_vignette.png,Gaussian Noise (sigma=2),3c7a9f24,33.87,0.9952,3c7a9f24,0.0,True,33.85,0.9951,3c7a9f24,0.0,True
+881,unseen_09_text_blocks.png,Clean,9e3779b9,34.87,0.9987,9e3779b9,0.0,True,34.87,0.9987,9e3779b9,0.0,True
+882,unseen_09_text_blocks.png,JPEG 90,9e3779b9,34.84,0.9987,9e3779b9,0.0,True,34.84,0.9987,9e3779b9,0.0,True
+883,unseen_09_text_blocks.png,JPEG 75,9e3779b9,34.67,0.9986,9e3779b9,0.0,True,34.67,0.9986,9e3779b9,0.0,True
+884,unseen_09_text_blocks.png,JPEG 50,9e3779b9,33.79,0.9983,9e3779b9,0.0,True,33.8,0.9983,9e3779b9,0.0,True
+885,unseen_09_text_blocks.png,JPEG 30,9e3779b9,31.96,0.9974,9e3779b9,0.0,True,31.93,0.9974,9e3779b9,0.0,True
+886,unseen_09_text_blocks.png,Resize 75%,9e3779b9,19.4,0.9445,9e3779b9,0.0,True,19.4,0.9445,9e3779b9,0.0,True
+887,unseen_09_text_blocks.png,Resize 50%,9e3779b9,15.11,0.828,9e3779b9,0.0,True,15.1,0.8279,9e3779b9,0.0,True
+888,unseen_09_text_blocks.png,Gaussian Blur (r=0.5),9e3779b9,25.33,0.9871,9e3779b9,0.0,True,25.33,0.9871,9e3779b9,0.0,True
+889,unseen_09_text_blocks.png,Brightness (+10%),9e3779b9,28.87,0.9982,9e3779a9,0.0312,False,28.87,0.9982,9e3779a9,0.0312,False
+890,unseen_09_text_blocks.png,Contrast (-10%),9e3779b9,28.2,0.9933,9e3779b9,0.0,True,28.19,0.9933,9e3779b9,0.0,True
+891,unseen_09_text_blocks.png,Gaussian Noise (sigma=2),9e3779b9,34.03,0.9985,9e3779b9,0.0,True,33.99,0.9985,9e3779b9,0.0,True
+892,unseen_09_text_blocks.png,Clean,7f4c1a8d,34.88,0.9987,7f4c1a8d,0.0,True,34.89,0.9987,7f4c1a8d,0.0,True
+893,unseen_09_text_blocks.png,JPEG 90,7f4c1a8d,34.86,0.9987,7f4c1a8d,0.0,True,34.85,0.9987,7f4c1a8d,0.0,True
+894,unseen_09_text_blocks.png,JPEG 75,7f4c1a8d,34.73,0.9987,7f4c1a8d,0.0,True,34.73,0.9987,7f4c1a8d,0.0,True
+895,unseen_09_text_blocks.png,JPEG 50,7f4c1a8d,33.72,0.9983,7f4c1a8d,0.0,True,33.75,0.9983,7f4c1a8d,0.0,True
+896,unseen_09_text_blocks.png,JPEG 30,7f4c1a8d,31.93,0.9974,7f4c1a8d,0.0,True,31.92,0.9974,7f4c1a8d,0.0,True
+897,unseen_09_text_blocks.png,Resize 75%,7f4c1a8d,19.4,0.9444,7f4c1a8d,0.0,True,19.4,0.9444,7f4c1a8d,0.0,True
+898,unseen_09_text_blocks.png,Resize 50%,7f4c1a8d,15.1,0.828,7f4c1a8d,0.0,True,15.1,0.8279,7f4c1a8d,0.0,True
+899,unseen_09_text_blocks.png,Gaussian Blur (r=0.5),7f4c1a8d,25.34,0.9871,7f4c1a8d,0.0,True,25.33,0.9871,7f4c1a8d,0.0,True
+900,unseen_09_text_blocks.png,Brightness (+10%),7f4c1a8d,28.88,0.9982,7f0d1a0d,0.0938,False,28.88,0.9982,7f0d1a0d,0.0938,False
+901,unseen_09_text_blocks.png,Contrast (-10%),7f4c1a8d,28.2,0.9933,7f4c1a8d,0.0,True,28.19,0.9933,7f4c1a8d,0.0,True
+902,unseen_09_text_blocks.png,Gaussian Noise (sigma=2),7f4c1a8d,34.01,0.9985,7f4c1a8d,0.0,True,34.03,0.9985,7f4c1a8d,0.0,True
+903,unseen_09_text_blocks.png,Clean,2b5e91c3,34.9,0.9987,2b5e91c3,0.0,True,34.9,0.9987,2b5e91c3,0.0,True
+904,unseen_09_text_blocks.png,JPEG 90,2b5e91c3,34.86,0.9987,2b5e91c3,0.0,True,34.86,0.9987,2b5e91c3,0.0,True
+905,unseen_09_text_blocks.png,JPEG 75,2b5e91c3,34.77,0.9987,2b5e91c3,0.0,True,34.76,0.9987,2b5e91c3,0.0,True
+906,unseen_09_text_blocks.png,JPEG 50,2b5e91c3,33.69,0.9983,2b5e91c3,0.0,True,33.69,0.9983,2b5e91c3,0.0,True
+907,unseen_09_text_blocks.png,JPEG 30,2b5e91c3,31.91,0.9974,2b5e91c3,0.0,True,31.91,0.9974,2b5e91c3,0.0,True
+908,unseen_09_text_blocks.png,Resize 75%,2b5e91c3,19.4,0.9444,2b5e91c3,0.0,True,19.4,0.9444,2b5e91c3,0.0,True
+909,unseen_09_text_blocks.png,Resize 50%,2b5e91c3,15.1,0.828,2b5e91c3,0.0,True,15.1,0.8279,2b5e91c3,0.0,True
+910,unseen_09_text_blocks.png,Gaussian Blur (r=0.5),2b5e91c3,25.34,0.9871,2b5e91c3,0.0,True,25.33,0.9871,2b5e91c3,0.0,True
+911,unseen_09_text_blocks.png,Brightness (+10%),2b5e91c3,28.86,0.9982,2b1f91c3,0.0625,False,28.86,0.9982,2b1f91c3,0.0625,False
+912,unseen_09_text_blocks.png,Contrast (-10%),2b5e91c3,28.2,0.9933,2b5e91c3,0.0,True,28.19,0.9933,2b5e91c3,0.0,True
+913,unseen_09_text_blocks.png,Gaussian Noise (sigma=2),2b5e91c3,34.05,0.9985,2b5e91c3,0.0,True,34.04,0.9985,2b5e91c3,0.0,True
+914,unseen_09_text_blocks.png,Clean,b00b1e55,34.87,0.9987,b00b1e55,0.0,True,34.84,0.9987,b00b1e55,0.0,True
+915,unseen_09_text_blocks.png,JPEG 90,b00b1e55,34.82,0.9987,b00b1e55,0.0,True,34.77,0.9987,b00b1e55,0.0,True
+916,unseen_09_text_blocks.png,JPEG 75,b00b1e55,34.7,0.9987,b00b1e55,0.0,True,34.67,0.9986,b00b1e55,0.0,True
+917,unseen_09_text_blocks.png,JPEG 50,b00b1e55,33.73,0.9983,b00b1e55,0.0,True,33.71,0.9983,b00b1e55,0.0,True
+918,unseen_09_text_blocks.png,JPEG 30,b00b1e55,31.92,0.9974,b00b1e55,0.0,True,31.9,0.9974,b00b1e55,0.0,True
+919,unseen_09_text_blocks.png,Resize 75%,b00b1e55,19.4,0.9444,b00b1e55,0.0,True,19.4,0.9444,b00b1e55,0.0,True
+920,unseen_09_text_blocks.png,Resize 50%,b00b1e55,15.11,0.828,b00b1e55,0.0,True,15.1,0.828,b00b1e55,0.0,True
+921,unseen_09_text_blocks.png,Gaussian Blur (r=0.5),b00b1e55,25.33,0.9871,b00b1e55,0.0,True,25.32,0.9871,b00b1e55,0.0,True
+922,unseen_09_text_blocks.png,Brightness (+10%),b00b1e55,28.86,0.9981,b00b1e45,0.0312,False,28.85,0.9981,b00b1e45,0.0312,False
+923,unseen_09_text_blocks.png,Contrast (-10%),b00b1e55,28.2,0.9933,b00b1e55,0.0,True,28.18,0.9933,b00b1e55,0.0,True
+924,unseen_09_text_blocks.png,Gaussian Noise (sigma=2),b00b1e55,34.02,0.9985,b00b1e55,0.0,True,33.98,0.9984,b00b1e55,0.0,True
+925,unseen_09_text_blocks.png,Clean,6d8f2a41,34.88,0.9987,6d8f2a41,0.0,True,34.88,0.9987,6d8f2a41,0.0,True
+926,unseen_09_text_blocks.png,JPEG 90,6d8f2a41,34.83,0.9987,6d8f2a41,0.0,True,34.84,0.9987,6d8f2a41,0.0,True
+927,unseen_09_text_blocks.png,JPEG 75,6d8f2a41,34.71,0.9987,6d8f2a41,0.0,True,34.71,0.9987,6d8f2a41,0.0,True
+928,unseen_09_text_blocks.png,JPEG 50,6d8f2a41,33.73,0.9983,6d8f2a41,0.0,True,33.73,0.9983,6d8f2a41,0.0,True
+929,unseen_09_text_blocks.png,JPEG 30,6d8f2a41,31.94,0.9974,6d8f2a41,0.0,True,31.95,0.9974,6d8f2a41,0.0,True
+930,unseen_09_text_blocks.png,Resize 75%,6d8f2a41,19.4,0.9445,6d8f2a41,0.0,True,19.4,0.9444,6d8f2a41,0.0,True
+931,unseen_09_text_blocks.png,Resize 50%,6d8f2a41,15.11,0.8281,6d8f2a41,0.0,True,15.11,0.828,6d8f2a41,0.0,True
+932,unseen_09_text_blocks.png,Gaussian Blur (r=0.5),6d8f2a41,25.33,0.9871,6d8f2a41,0.0,True,25.32,0.9871,6d8f2a41,0.0,True
+933,unseen_09_text_blocks.png,Brightness (+10%),6d8f2a41,28.89,0.9982,6d8f2a41,0.0,True,28.89,0.9982,6d8f2a41,0.0,True
+934,unseen_09_text_blocks.png,Contrast (-10%),6d8f2a41,28.21,0.9934,6d8f2a41,0.0,True,28.2,0.9933,6d8f2a41,0.0,True
+935,unseen_09_text_blocks.png,Gaussian Noise (sigma=2),6d8f2a41,34.04,0.9985,6d8f2a41,0.0,True,34.02,0.9985,6d8f2a41,0.0,True
+936,unseen_09_text_blocks.png,Clean,c4a19e37,34.86,0.9987,c4a19e37,0.0,True,34.85,0.9987,c4a19e37,0.0,True
+937,unseen_09_text_blocks.png,JPEG 90,c4a19e37,34.79,0.9987,c4a19e37,0.0,True,34.76,0.9987,c4a19e37,0.0,True
+938,unseen_09_text_blocks.png,JPEG 75,c4a19e37,34.73,0.9987,c4a19e37,0.0,True,34.72,0.9987,c4a19e37,0.0,True
+939,unseen_09_text_blocks.png,JPEG 50,c4a19e37,33.73,0.9983,c4a19e37,0.0,True,33.68,0.9983,c4a19e37,0.0,True
+940,unseen_09_text_blocks.png,JPEG 30,c4a19e37,31.95,0.9974,c4a19e37,0.0,True,31.92,0.9974,c4a19e37,0.0,True
+941,unseen_09_text_blocks.png,Resize 75%,c4a19e37,19.4,0.9444,c4a19e37,0.0,True,19.4,0.9444,c4a19e37,0.0,True
+942,unseen_09_text_blocks.png,Resize 50%,c4a19e37,15.1,0.828,c4a19e37,0.0,True,15.1,0.8279,c4a19e37,0.0,True
+943,unseen_09_text_blocks.png,Gaussian Blur (r=0.5),c4a19e37,25.33,0.9871,c4a19e37,0.0,True,25.33,0.9871,c4a19e37,0.0,True
+944,unseen_09_text_blocks.png,Brightness (+10%),c4a19e37,28.85,0.9981,c4a19e27,0.0312,False,28.85,0.9981,c4a19e27,0.0312,False
+945,unseen_09_text_blocks.png,Contrast (-10%),c4a19e37,28.2,0.9933,c4a19e37,0.0,True,28.18,0.9933,c4a19e37,0.0,True
+946,unseen_09_text_blocks.png,Gaussian Noise (sigma=2),c4a19e37,34.0,0.9985,c4a19e37,0.0,True,34.01,0.9985,c4a19e37,0.0,True
+947,unseen_09_text_blocks.png,Clean,1f8b4c2e,34.89,0.9987,1f8b4c2e,0.0,True,34.88,0.9987,1f8b4c2e,0.0,True
+948,unseen_09_text_blocks.png,JPEG 90,1f8b4c2e,34.81,0.9987,1f8b4c2e,0.0,True,34.81,0.9987,1f8b4c2e,0.0,True
+949,unseen_09_text_blocks.png,JPEG 75,1f8b4c2e,34.67,0.9986,1f8b4c2e,0.0,True,34.67,0.9986,1f8b4c2e,0.0,True
+950,unseen_09_text_blocks.png,JPEG 50,1f8b4c2e,33.71,0.9983,1f8b4c2e,0.0,True,33.71,0.9983,1f8b4c2e,0.0,True
+951,unseen_09_text_blocks.png,JPEG 30,1f8b4c2e,31.97,0.9975,1f8b4c2e,0.0,True,31.95,0.9974,1f8b4c2e,0.0,True
+952,unseen_09_text_blocks.png,Resize 75%,1f8b4c2e,19.4,0.9444,1f8b4c2e,0.0,True,19.4,0.9444,1f8b4c2e,0.0,True
+953,unseen_09_text_blocks.png,Resize 50%,1f8b4c2e,15.11,0.828,1f8b4c2e,0.0,True,15.11,0.828,1f8b4c2e,0.0,True
+954,unseen_09_text_blocks.png,Gaussian Blur (r=0.5),1f8b4c2e,25.33,0.9871,1f8b4c2e,0.0,True,25.32,0.9871,1f8b4c2e,0.0,True
+955,unseen_09_text_blocks.png,Brightness (+10%),1f8b4c2e,28.87,0.9982,1f8b4c2e,0.0,True,28.87,0.9982,1f8b4c2e,0.0,True
+956,unseen_09_text_blocks.png,Contrast (-10%),1f8b4c2e,28.21,0.9933,1f8b4c2e,0.0,True,28.19,0.9933,1f8b4c2e,0.0,True
+957,unseen_09_text_blocks.png,Gaussian Noise (sigma=2),1f8b4c2e,34.04,0.9985,1f8b4c2e,0.0,True,34.04,0.9985,1f8b4c2e,0.0,True
+958,unseen_09_text_blocks.png,Clean,5d2a7f9c,34.85,0.9987,5d2a7f9c,0.0,True,34.78,0.9987,5d2a7f9c,0.0,True
+959,unseen_09_text_blocks.png,JPEG 90,5d2a7f9c,34.8,0.9987,5d2a7f9c,0.0,True,34.71,0.9987,5d2a7f9c,0.0,True
+960,unseen_09_text_blocks.png,JPEG 75,5d2a7f9c,34.64,0.9986,5d2a7f9c,0.0,True,34.57,0.9986,5d2a7f9c,0.0,True
+961,unseen_09_text_blocks.png,JPEG 50,5d2a7f9c,33.71,0.9983,5d2a7f9c,0.0,True,33.68,0.9983,5d2a7f9c,0.0,True
+962,unseen_09_text_blocks.png,JPEG 30,5d2a7f9c,31.9,0.9974,5d2a7f9c,0.0,True,31.86,0.9974,5d2a7f9c,0.0,True
+963,unseen_09_text_blocks.png,Resize 75%,5d2a7f9c,19.4,0.9445,5d2a7f9c,0.0,True,19.4,0.9444,5d2a7f9c,0.0,True
+964,unseen_09_text_blocks.png,Resize 50%,5d2a7f9c,15.1,0.8279,5d2a7f9c,0.0,True,15.1,0.8278,5d2a7f9c,0.0,True
+965,unseen_09_text_blocks.png,Gaussian Blur (r=0.5),5d2a7f9c,25.33,0.9871,5d2a7f9c,0.0,True,25.32,0.9871,5d2a7f9c,0.0,True
+966,unseen_09_text_blocks.png,Brightness (+10%),5d2a7f9c,28.89,0.9982,5d2b7f0c,0.0938,False,28.88,0.9982,5d2b7f0c,0.0938,False
+967,unseen_09_text_blocks.png,Contrast (-10%),5d2a7f9c,28.19,0.9933,5d2a7f9c,0.0,True,28.16,0.9933,5d2a7f9c,0.0,True
+968,unseen_09_text_blocks.png,Gaussian Noise (sigma=2),5d2a7f9c,34.02,0.9985,5d2a7f9c,0.0,True,33.94,0.9984,5d2a7f9c,0.0,True
+969,unseen_09_text_blocks.png,Clean,83e16b4d,34.84,0.9987,83e16b4d,0.0,True,34.83,0.9987,83e16b4d,0.0,True
+970,unseen_09_text_blocks.png,JPEG 90,83e16b4d,34.78,0.9987,83e16b4d,0.0,True,34.78,0.9987,83e16b4d,0.0,True
+971,unseen_09_text_blocks.png,JPEG 75,83e16b4d,34.63,0.9986,83e16b4d,0.0,True,34.64,0.9986,83e16b4d,0.0,True
+972,unseen_09_text_blocks.png,JPEG 50,83e16b4d,33.67,0.9983,83e16b4d,0.0,True,33.66,0.9983,83e16b4d,0.0,True
+973,unseen_09_text_blocks.png,JPEG 30,83e16b4d,31.78,0.9973,83e16b4d,0.0,True,31.77,0.9973,83e16b4d,0.0,True
+974,unseen_09_text_blocks.png,Resize 75%,83e16b4d,19.4,0.9445,83e16b4d,0.0,True,19.4,0.9444,83e16b4d,0.0,True
+975,unseen_09_text_blocks.png,Resize 50%,83e16b4d,15.11,0.8281,83e16b4d,0.0,True,15.11,0.828,83e16b4d,0.0,True
+976,unseen_09_text_blocks.png,Gaussian Blur (r=0.5),83e16b4d,25.33,0.9871,83e16b4d,0.0,True,25.32,0.9871,83e16b4d,0.0,True
+977,unseen_09_text_blocks.png,Brightness (+10%),83e16b4d,28.88,0.9982,83a16b4d,0.0312,False,28.88,0.9982,83a16b4d,0.0312,False
+978,unseen_09_text_blocks.png,Contrast (-10%),83e16b4d,28.2,0.9933,83e16b4d,0.0,True,28.19,0.9933,83e16b4d,0.0,True
+979,unseen_09_text_blocks.png,Gaussian Noise (sigma=2),83e16b4d,33.99,0.9984,83e16b4d,0.0,True,33.99,0.9984,83e16b4d,0.0,True
+980,unseen_09_text_blocks.png,Clean,3c7a9f24,34.82,0.9987,3c7a9f24,0.0,True,34.82,0.9987,3c7a9f24,0.0,True
+981,unseen_09_text_blocks.png,JPEG 90,3c7a9f24,34.77,0.9987,3c7a9f24,0.0,True,34.76,0.9987,3c7a9f24,0.0,True
+982,unseen_09_text_blocks.png,JPEG 75,3c7a9f24,34.63,0.9986,3c7a9f24,0.0,True,34.61,0.9986,3c7a9f24,0.0,True
+983,unseen_09_text_blocks.png,JPEG 50,3c7a9f24,33.68,0.9983,3c7a9f24,0.0,True,33.68,0.9983,3c7a9f24,0.0,True
+984,unseen_09_text_blocks.png,JPEG 30,3c7a9f24,31.9,0.9974,3c7a9f24,0.0,True,31.87,0.9974,3c7a9f24,0.0,True
+985,unseen_09_text_blocks.png,Resize 75%,3c7a9f24,19.4,0.9444,3c7a9f24,0.0,True,19.4,0.9444,3c7a9f24,0.0,True
+986,unseen_09_text_blocks.png,Resize 50%,3c7a9f24,15.1,0.828,3c7a9f24,0.0,True,15.1,0.828,3c7a9f24,0.0,True
+987,unseen_09_text_blocks.png,Gaussian Blur (r=0.5),3c7a9f24,25.33,0.9871,3c7a9f24,0.0,True,25.32,0.9871,3c7a9f24,0.0,True
+988,unseen_09_text_blocks.png,Brightness (+10%),3c7a9f24,28.87,0.9982,3e3b9f24,0.0938,False,28.87,0.9982,3e3b9f24,0.0938,False
+989,unseen_09_text_blocks.png,Contrast (-10%),3c7a9f24,28.19,0.9933,3c7a9f24,0.0,True,28.18,0.9933,3c7a9f24,0.0,True
+990,unseen_09_text_blocks.png,Gaussian Noise (sigma=2),3c7a9f24,33.98,0.9984,3c7a9f24,0.0,True,33.98,0.9984,3c7a9f24,0.0,True
+991,unseen_10_woodgrain.png,Clean,9e3779b9,34.8,0.9899,9eb779b9,0.0312,False,31.33,0.9773,9e3779b9,0.0,True
+992,unseen_10_woodgrain.png,JPEG 90,9e3779b9,33.44,0.9861,9eb779b9,0.0312,False,30.72,0.9746,9e3779b9,0.0,True
+993,unseen_10_woodgrain.png,JPEG 75,9e3779b9,32.11,0.9812,9eb779b9,0.0312,False,30.05,0.9711,9e3779b9,0.0,True
+994,unseen_10_woodgrain.png,JPEG 50,9e3779b9,30.45,0.9731,9eb779b9,0.0312,False,29.03,0.9638,9e3779b9,0.0,True
+995,unseen_10_woodgrain.png,JPEG 30,9e3779b9,29.42,0.9668,9eb779b9,0.0312,False,28.22,0.957,9e3779b9,0.0,True
+996,unseen_10_woodgrain.png,Resize 75%,9e3779b9,34.31,0.9885,9eb779b9,0.0312,False,31.62,0.9778,9e3779b9,0.0,True
+997,unseen_10_woodgrain.png,Resize 50%,9e3779b9,29.9,0.967,9eb779b9,0.0312,False,28.92,0.9575,9eb779b9,0.0312,False
+998,unseen_10_woodgrain.png,Gaussian Blur (r=0.5),9e3779b9,34.93,0.9901,9eb779b9,0.0312,False,31.63,0.9785,9e3779b9,0.0,True
+999,unseen_10_woodgrain.png,Brightness (+10%),9e3779b9,25.97,0.9809,9eb779b9,0.0312,False,25.31,0.9689,9e3779b9,0.0,True
+1000,unseen_10_woodgrain.png,Contrast (-10%),9e3779b9,32.14,0.9851,9eb779b9,0.0312,False,30.03,0.9721,9e3779b9,0.0,True
+1001,unseen_10_woodgrain.png,Gaussian Noise (sigma=2),9e3779b9,33.91,0.9879,9eb779b9,0.0312,False,30.93,0.9754,9e3779b9,0.0,True
+1002,unseen_10_woodgrain.png,Clean,7f4c1a8d,34.8,0.9898,7fcc5a8d,0.0625,False,31.13,0.9761,7f4c1a8d,0.0,True
+1003,unseen_10_woodgrain.png,JPEG 90,7f4c1a8d,33.5,0.9865,7fcc5a8d,0.0625,False,30.56,0.9739,7f4c1a8d,0.0,True
+1004,unseen_10_woodgrain.png,JPEG 75,7f4c1a8d,32.17,0.9815,7fcc5a8d,0.0625,False,29.93,0.9704,7f4c1a8d,0.0,True
+1005,unseen_10_woodgrain.png,JPEG 50,7f4c1a8d,30.5,0.9735,7fcc5a8d,0.0625,False,28.88,0.9628,7f4c1a8d,0.0,True
+1006,unseen_10_woodgrain.png,JPEG 30,7f4c1a8d,29.43,0.9668,7fcc5a8d,0.0625,False,28.09,0.9559,7f4c1a8d,0.0,True
+1007,unseen_10_woodgrain.png,Resize 75%,7f4c1a8d,34.18,0.9881,7fcc5a8d,0.0625,False,31.42,0.9768,7fcc1a8d,0.0312,False
+1008,unseen_10_woodgrain.png,Resize 50%,7f4c1a8d,29.82,0.9663,7fcc5a8d,0.0625,False,28.82,0.9564,7fcc1a8d,0.0312,False
+1009,unseen_10_woodgrain.png,Gaussian Blur (r=0.5),7f4c1a8d,34.91,0.99,7fcc5a8d,0.0625,False,31.42,0.9773,7f4c1a8d,0.0,True
+1010,unseen_10_woodgrain.png,Brightness (+10%),7f4c1a8d,25.98,0.9811,7fcc5a8d,0.0625,False,25.26,0.9679,7f4c1a8d,0.0,True
+1011,unseen_10_woodgrain.png,Contrast (-10%),7f4c1a8d,32.09,0.9848,7fcc5a8d,0.0625,False,29.86,0.9708,7f4c1a8d,0.0,True
+1012,unseen_10_woodgrain.png,Gaussian Noise (sigma=2),7f4c1a8d,33.93,0.9879,7fcc5a8d,0.0625,False,30.74,0.9743,7f4c1a8d,0.0,True
+1013,unseen_10_woodgrain.png,Clean,2b5e91c3,34.82,0.9899,2bded1c3,0.0625,False,31.17,0.9764,2b5e91c3,0.0,True
+1014,unseen_10_woodgrain.png,JPEG 90,2b5e91c3,33.48,0.9863,2bded1c3,0.0625,False,30.58,0.9739,2b5e91c3,0.0,True
+1015,unseen_10_woodgrain.png,JPEG 75,2b5e91c3,32.1,0.9811,2bded1c3,0.0625,False,29.92,0.9702,2b5e91c3,0.0,True
+1016,unseen_10_woodgrain.png,JPEG 50,2b5e91c3,30.5,0.9734,2bded1c3,0.0625,False,28.92,0.9631,2b5e91c3,0.0,True
+1017,unseen_10_woodgrain.png,JPEG 30,2b5e91c3,29.43,0.9668,2bded1c3,0.0625,False,28.12,0.956,2b5e91c3,0.0,True
+1018,unseen_10_woodgrain.png,Resize 75%,2b5e91c3,34.26,0.9884,2bded1c3,0.0625,False,31.47,0.9771,2b5e91c3,0.0,True
+1019,unseen_10_woodgrain.png,Resize 50%,2b5e91c3,29.86,0.9667,2bded1c3,0.0625,False,28.86,0.9568,2bde91c3,0.0312,False
+1020,unseen_10_woodgrain.png,Gaussian Blur (r=0.5),2b5e91c3,34.93,0.9901,2bded1c3,0.0625,False,31.48,0.9777,2b5e91c3,0.0,True
+1021,unseen_10_woodgrain.png,Brightness (+10%),2b5e91c3,25.98,0.9811,2bded1c3,0.0625,False,25.27,0.968,2b5e91c3,0.0,True
+1022,unseen_10_woodgrain.png,Contrast (-10%),2b5e91c3,32.12,0.985,2bded1c3,0.0625,False,29.91,0.9711,2b5e91c3,0.0,True
+1023,unseen_10_woodgrain.png,Gaussian Noise (sigma=2),2b5e91c3,33.95,0.988,2bded1c3,0.0625,False,30.76,0.9744,2b5e91c3,0.0,True
+1024,unseen_10_woodgrain.png,Clean,b00b1e55,34.8,0.9898,b08b5e55,0.0625,False,30.96,0.9752,b00b1e55,0.0,True
+1025,unseen_10_woodgrain.png,JPEG 90,b00b1e55,33.51,0.9865,b08b5e55,0.0625,False,30.41,0.9729,b00b1e55,0.0,True
+1026,unseen_10_woodgrain.png,JPEG 75,b00b1e55,32.14,0.9814,b08b5e55,0.0625,False,29.78,0.9693,b00b1e55,0.0,True
+1027,unseen_10_woodgrain.png,JPEG 50,b00b1e55,30.53,0.9737,b08b5e55,0.0625,False,28.78,0.9619,b00b1e55,0.0,True
+1028,unseen_10_woodgrain.png,JPEG 30,b00b1e55,29.38,0.9665,b08b5e55,0.0625,False,27.95,0.9545,b00b1e55,0.0,True
+1029,unseen_10_woodgrain.png,Resize 75%,b00b1e55,34.13,0.988,b08b5e55,0.0625,False,31.28,0.9759,b00b1e55,0.0,True
+1030,unseen_10_woodgrain.png,Resize 50%,b00b1e55,29.79,0.966,b08b5ed5,0.0938,False,28.76,0.9556,b08b1e55,0.0312,False
+1031,unseen_10_woodgrain.png,Gaussian Blur (r=0.5),b00b1e55,34.89,0.99,b08b5e55,0.0625,False,31.25,0.9764,b00b1e55,0.0,True
+1032,unseen_10_woodgrain.png,Brightness (+10%),b00b1e55,25.99,0.9812,b08b5e55,0.0625,False,25.22,0.967,b00b1e55,0.0,True
+1033,unseen_10_woodgrain.png,Contrast (-10%),b00b1e55,32.05,0.9847,b08b5e55,0.0625,False,29.74,0.9697,b00b1e55,0.0,True
+1034,unseen_10_woodgrain.png,Gaussian Noise (sigma=2),b00b1e55,33.94,0.9879,b08b5e55,0.0625,False,30.56,0.9731,b00b1e55,0.0,True
+1035,unseen_10_woodgrain.png,Clean,6d8f2a41,34.81,0.9899,6d8f6a41,0.0312,False,34.19,0.9884,6d8f2a41,0.0,True
+1036,unseen_10_woodgrain.png,JPEG 90,6d8f2a41,33.47,0.9863,6d8f6a41,0.0312,False,33.04,0.985,6d8f2a41,0.0,True
+1037,unseen_10_woodgrain.png,JPEG 75,6d8f2a41,32.05,0.9807,6d8f6a41,0.0312,False,31.75,0.9795,6d8f2a41,0.0,True
+1038,unseen_10_woodgrain.png,JPEG 50,6d8f2a41,30.52,0.9735,6d8f6a41,0.0312,False,30.22,0.9718,6d8f2a41,0.0,True
+1039,unseen_10_woodgrain.png,JPEG 30,6d8f2a41,29.38,0.9664,6d8f6a41,0.0312,False,29.23,0.9653,6d8f2a41,0.0,True
+1040,unseen_10_woodgrain.png,Resize 75%,6d8f2a41,34.56,0.9891,6d8f6a41,0.0312,False,34.17,0.9881,6d8f2a41,0.0,True
+1041,unseen_10_woodgrain.png,Resize 50%,6d8f2a41,30.04,0.9682,6d8f6ac1,0.0625,False,29.95,0.9674,6d8f2a41,0.0,True
+1042,unseen_10_woodgrain.png,Gaussian Blur (r=0.5),6d8f2a41,35.08,0.9904,6d8f6a41,0.0312,False,34.5,0.989,6d8f2a41,0.0,True
+1043,unseen_10_woodgrain.png,Brightness (+10%),6d8f2a41,25.95,0.9807,6d8f6a41,0.0312,False,25.86,0.9791,6d8f2a41,0.0,True
+1044,unseen_10_woodgrain.png,Contrast (-10%),6d8f2a41,32.22,0.9855,6d8f6a41,0.0312,False,31.91,0.984,6d8f2a41,0.0,True
+1045,unseen_10_woodgrain.png,Gaussian Noise (sigma=2),6d8f2a41,33.92,0.9879,6d8f6a41,0.0312,False,33.42,0.9865,6d8f2a41,0.0,True
+1046,unseen_10_woodgrain.png,Clean,c4a19e37,34.78,0.9899,c4a1de37,0.0312,False,34.09,0.9881,c4a19e37,0.0,True
+1047,unseen_10_woodgrain.png,JPEG 90,c4a19e37,33.48,0.9863,c4a1de37,0.0312,False,32.96,0.9847,c4a19e37,0.0,True
+1048,unseen_10_woodgrain.png,JPEG 75,c4a19e37,32.07,0.9809,c4a1de37,0.0312,False,31.67,0.9792,c4a19e37,0.0,True
+1049,unseen_10_woodgrain.png,JPEG 50,c4a19e37,30.51,0.9734,c4a1de37,0.0312,False,30.19,0.9715,c4a19e37,0.0,True
+1050,unseen_10_woodgrain.png,JPEG 30,c4a19e37,29.36,0.9663,c4a1de37,0.0312,False,29.16,0.9649,c4a19e37,0.0,True
+1051,unseen_10_woodgrain.png,Resize 75%,c4a19e37,34.51,0.989,c4a1de37,0.0312,False,34.1,0.9879,c4a19e37,0.0,True
+1052,unseen_10_woodgrain.png,Resize 50%,c4a19e37,30.02,0.968,c4a1deb7,0.0625,False,29.93,0.9672,c4a19e37,0.0,True
+1053,unseen_10_woodgrain.png,Gaussian Blur (r=0.5),c4a19e37,35.06,0.9904,c4a1de37,0.0312,False,34.43,0.9889,c4a19e37,0.0,True
+1054,unseen_10_woodgrain.png,Brightness (+10%),c4a19e37,25.94,0.9806,c4a1de37,0.0312,False,25.84,0.9788,c4a19e37,0.0,True
+1055,unseen_10_woodgrain.png,Contrast (-10%),c4a19e37,32.2,0.9854,c4a1de37,0.0312,False,31.85,0.9837,c4a19e37,0.0,True
+1056,unseen_10_woodgrain.png,Gaussian Noise (sigma=2),c4a19e37,33.91,0.9879,c4a1de37,0.0312,False,33.31,0.9861,c4a19e37,0.0,True
+1057,unseen_10_woodgrain.png,Clean,1f8b4c2e,34.8,0.9899,1f8b4c2e,0.0,True,34.45,0.9891,1f8b4c2e,0.0,True
+1058,unseen_10_woodgrain.png,JPEG 90,1f8b4c2e,33.48,0.9862,1f8b4c2e,0.0,True,33.21,0.9854,1f8b4c2e,0.0,True
+1059,unseen_10_woodgrain.png,JPEG 75,1f8b4c2e,32.09,0.9809,1f8b4c2e,0.0,True,31.91,0.9802,1f8b4c2e,0.0,True
+1060,unseen_10_woodgrain.png,JPEG 50,1f8b4c2e,30.42,0.9729,1f8b4c2e,0.0,True,30.31,0.9722,1f8b4c2e,0.0,True
+1061,unseen_10_woodgrain.png,JPEG 30,1f8b4c2e,29.36,0.9663,1f8b4cae,0.0312,False,29.26,0.9656,1f8b4c2e,0.0,True
+1062,unseen_10_woodgrain.png,Resize 75%,1f8b4c2e,34.61,0.9893,1f8b4c2e,0.0,True,34.42,0.9888,1f8b4c2e,0.0,True
+1063,unseen_10_woodgrain.png,Resize 50%,1f8b4c2e,30.09,0.9686,1f8b4cae,0.0312,False,30.04,0.9682,1f8b4c2e,0.0,True
+1064,unseen_10_woodgrain.png,Gaussian Blur (r=0.5),1f8b4c2e,35.09,0.9905,1f8b4c2e,0.0,True,34.77,0.9897,1f8b4c2e,0.0,True
+1065,unseen_10_woodgrain.png,Brightness (+10%),1f8b4c2e,25.93,0.9805,1f8b4c2e,0.0,True,25.89,0.9797,1f8b4c2e,0.0,True
+1066,unseen_10_woodgrain.png,Contrast (-10%),1f8b4c2e,32.26,0.9857,1f8b4c2e,0.0,True,32.08,0.9848,1f8b4c2e,0.0,True
+1067,unseen_10_woodgrain.png,Gaussian Noise (sigma=2),1f8b4c2e,33.94,0.988,1f8b4c2e,0.0,True,33.63,0.9871,1f8b4c2e,0.0,True
+1068,unseen_10_woodgrain.png,Clean,5d2a7f9c,34.79,0.9898,5daa7f9c,0.0312,False,31.17,0.9764,5d2a7f9c,0.0,True
+1069,unseen_10_woodgrain.png,JPEG 90,5d2a7f9c,33.45,0.9862,5daa7f9c,0.0312,False,30.57,0.9738,5d2a7f9c,0.0,True
+1070,unseen_10_woodgrain.png,JPEG 75,5d2a7f9c,32.12,0.9813,5daa7f9c,0.0312,False,29.97,0.9706,5d2a7f9c,0.0,True
+1071,unseen_10_woodgrain.png,JPEG 50,5d2a7f9c,30.48,0.9733,5daa7f9c,0.0312,False,28.9,0.9629,5d2a7f9c,0.0,True
+1072,unseen_10_woodgrain.png,JPEG 30,5d2a7f9c,29.42,0.9667,5daa7f9c,0.0312,False,28.07,0.9556,5d2a7f9c,0.0,True
+1073,unseen_10_woodgrain.png,Resize 75%,5d2a7f9c,34.23,0.9883,5daa7f9c,0.0312,False,31.46,0.977,5d2a7f9c,0.0,True
+1074,unseen_10_woodgrain.png,Resize 50%,5d2a7f9c,29.86,0.9667,5daa7f9c,0.0312,False,28.86,0.9569,5daa7f9c,0.0312,False
+1075,unseen_10_woodgrain.png,Gaussian Blur (r=0.5),5d2a7f9c,34.9,0.99,5daa7f9c,0.0312,False,31.47,0.9777,5d2a7f9c,0.0,True
+1076,unseen_10_woodgrain.png,Brightness (+10%),5d2a7f9c,25.97,0.9809,5daa7f9c,0.0312,False,25.27,0.968,5d2a7f9c,0.0,True
+1077,unseen_10_woodgrain.png,Contrast (-10%),5d2a7f9c,32.12,0.985,5daa7f9c,0.0312,False,29.92,0.9713,5d2a7f9c,0.0,True
+1078,unseen_10_woodgrain.png,Gaussian Noise (sigma=2),5d2a7f9c,33.93,0.9879,5daa7f9c,0.0312,False,30.77,0.9745,5d2a7f9c,0.0,True
+1079,unseen_10_woodgrain.png,Clean,83e16b4d,34.77,0.9898,83e16b4d,0.0,True,34.44,0.989,83e16b4d,0.0,True
+1080,unseen_10_woodgrain.png,JPEG 90,83e16b4d,33.4,0.9859,83e16b4d,0.0,True,33.18,0.9852,83e16b4d,0.0,True
+1081,unseen_10_woodgrain.png,JPEG 75,83e16b4d,32.04,0.9807,83e16b4d,0.0,True,31.87,0.98,83e16b4d,0.0,True
+1082,unseen_10_woodgrain.png,JPEG 50,83e16b4d,30.47,0.9731,83e16b4d,0.0,True,30.34,0.9724,83e16b4d,0.0,True
+1083,unseen_10_woodgrain.png,JPEG 30,83e16b4d,29.33,0.9661,83e16b4d,0.0,True,29.23,0.9653,83e16b4d,0.0,True
+1084,unseen_10_woodgrain.png,Resize 75%,83e16b4d,34.6,0.9893,83e16b4d,0.0,True,34.41,0.9888,83e16b4d,0.0,True
+1085,unseen_10_woodgrain.png,Resize 50%,83e16b4d,30.08,0.9685,83e16bcd,0.0312,False,30.05,0.9682,83e16b4d,0.0,True
+1086,unseen_10_woodgrain.png,Gaussian Blur (r=0.5),83e16b4d,35.06,0.9904,83e16b4d,0.0,True,34.76,0.9897,83e16b4d,0.0,True
+1087,unseen_10_woodgrain.png,Brightness (+10%),83e16b4d,25.93,0.9804,83e16b4d,0.0,True,25.89,0.9796,83e16b4d,0.0,True
+1088,unseen_10_woodgrain.png,Contrast (-10%),83e16b4d,32.24,0.9856,83e16b4d,0.0,True,32.07,0.9848,83e16b4d,0.0,True
+1089,unseen_10_woodgrain.png,Gaussian Noise (sigma=2),83e16b4d,33.9,0.9879,83e16b4d,0.0,True,33.61,0.987,83e16b4d,0.0,True
+1090,unseen_10_woodgrain.png,Clean,3c7a9f24,34.75,0.9897,3cfadf24,0.0625,False,30.99,0.9753,3c7a9f24,0.0,True
+1091,unseen_10_woodgrain.png,JPEG 90,3c7a9f24,33.42,0.9861,3cfadf24,0.0625,False,30.43,0.9729,3c7a9f24,0.0,True
+1092,unseen_10_woodgrain.png,JPEG 75,3c7a9f24,32.07,0.981,3cfadf24,0.0625,False,29.81,0.9694,3c7a9f24,0.0,True
+1093,unseen_10_woodgrain.png,JPEG 50,3c7a9f24,30.49,0.9734,3cfadf24,0.0625,False,28.82,0.9622,3c7a9f24,0.0,True
+1094,unseen_10_woodgrain.png,JPEG 30,3c7a9f24,29.35,0.9663,3cfadf24,0.0625,False,28.01,0.955,3c7a9f24,0.0,True
+1095,unseen_10_woodgrain.png,Resize 75%,3c7a9f24,34.17,0.9881,3cfadf24,0.0625,False,31.32,0.9762,3c7a9f24,0.0,True
+1096,unseen_10_woodgrain.png,Resize 50%,3c7a9f24,29.83,0.9664,3cfadfa4,0.0938,False,28.8,0.9561,3cfa9f24,0.0312,False
+1097,unseen_10_woodgrain.png,Gaussian Blur (r=0.5),3c7a9f24,34.85,0.9899,3cfadf24,0.0625,False,31.28,0.9766,3c7a9f24,0.0,True
+1098,unseen_10_woodgrain.png,Brightness (+10%),3c7a9f24,25.98,0.981,3cfadf24,0.0625,False,25.22,0.9671,3c7a9f24,0.0,True
+1099,unseen_10_woodgrain.png,Contrast (-10%),3c7a9f24,32.07,0.9847,3cfadf24,0.0625,False,29.78,0.9701,3c7a9f24,0.0,True
+1100,unseen_10_woodgrain.png,Gaussian Noise (sigma=2),3c7a9f24,33.89,0.9878,3cfadf24,0.0625,False,30.6,0.9734,3c7a9f24,0.0,True

@@ -1,0 +1,327 @@
+{
+  "timestamp": 1792493235.5352435,
+  "baseline": {
+    "checkpoint": "Baseline (hidden_32bit.pt)",
+    "total_positive_trials": 52,
+    "total_negative_trials": 4,
+    "mean_psnr_clean_db": 42.96,
+    "mean_ssim_clean": 0.9997,
+    "overall_mean_ber": 0.381,
+    "overall_exact_recovery_rate": 0.0,
+    "clean_exact_recovery_rate": 0.0,
+    "clean_mean_ber": 0.3828,
+    "false_positive_rate": 0.0,
+    "false_negative_rate_clean": 0.75,
+    "mean_enc_latency_ms": 79.53,
+    "mean_dec_latency_ms": 64.69,
+    "by_attack": {
+      "clean": {
+        "name": "Clean (None)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.3828,
+        "decodable_rate": 0.25,
+        "mean_psnr_distortion": 99.0
+      },
+      "jpeg_q90": {
+        "name": "JPEG (Q=90)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.3828,
+        "decodable_rate": 0.25,
+        "mean_psnr_distortion": 34.66
+      },
+      "jpeg_q75": {
+        "name": "JPEG (Q=75)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.3828,
+        "decodable_rate": 0.25,
+        "mean_psnr_distortion": 31.48
+      },
+      "jpeg_q50": {
+        "name": "JPEG (Q=50)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.3828,
+        "decodable_rate": 0.25,
+        "mean_psnr_distortion": 29.48
+      },
+      "jpeg_q30": {
+        "name": "JPEG (Q=30)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.3906,
+        "decodable_rate": 0.25,
+        "mean_psnr_distortion": 28.03
+      },
+      "resize_075": {
+        "name": "Resize (75%)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.3828,
+        "decodable_rate": 0.25,
+        "mean_psnr_distortion": 31.72
+      },
+      "resize_050": {
+        "name": "Resize (50%)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.3906,
+        "decodable_rate": 0.25,
+        "mean_psnr_distortion": 29.27
+      },
+      "blur_r05": {
+        "name": "Gaussian Blur (r=0.5)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.3828,
+        "decodable_rate": 0.25,
+        "mean_psnr_distortion": 46.96
+      },
+      "blur_r10": {
+        "name": "Gaussian Blur (r=1.0)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.3828,
+        "decodable_rate": 0.25,
+        "mean_psnr_distortion": 35.34
+      },
+      "noise_s05": {
+        "name": "Gaussian Noise (sigma=5)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.3828,
+        "decodable_rate": 0.25,
+        "mean_psnr_distortion": 34.23
+      },
+      "noise_s10": {
+        "name": "Gaussian Noise (sigma=10)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.3828,
+        "decodable_rate": 0.25,
+        "mean_psnr_distortion": 28.36
+      },
+      "crop_90": {
+        "name": "Center Crop (90%)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.3672,
+        "decodable_rate": 0.25,
+        "mean_psnr_distortion": 17.23
+      },
+      "crop_80": {
+        "name": "Center Crop (80%)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.3594,
+        "decodable_rate": 0.25,
+        "mean_psnr_distortion": 14.83
+      }
+    }
+  },
+  "distortion_aware_v1": {
+    "checkpoint": "Distortion-Aware v1 (hidden_32bit_distortion_aware.pt)",
+    "total_positive_trials": 52,
+    "total_negative_trials": 4,
+    "mean_psnr_clean_db": 51.96,
+    "mean_ssim_clean": 0.9999,
+    "overall_mean_ber": 0.4988,
+    "overall_exact_recovery_rate": 0.0,
+    "clean_exact_recovery_rate": 0.0,
+    "clean_mean_ber": 0.5,
+    "false_positive_rate": 0.0,
+    "false_negative_rate_clean": 1.0,
+    "mean_enc_latency_ms": 83.49,
+    "mean_dec_latency_ms": 68.35,
+    "by_attack": {
+      "clean": {
+        "name": "Clean (None)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.5,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 99.0
+      },
+      "jpeg_q90": {
+        "name": "JPEG (Q=90)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.5,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 34.66
+      },
+      "jpeg_q75": {
+        "name": "JPEG (Q=75)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.5,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 31.49
+      },
+      "jpeg_q50": {
+        "name": "JPEG (Q=50)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.5,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 29.49
+      },
+      "jpeg_q30": {
+        "name": "JPEG (Q=30)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.5,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 28.02
+      },
+      "resize_075": {
+        "name": "Resize (75%)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.5,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 31.69
+      },
+      "resize_050": {
+        "name": "Resize (50%)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.5,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 29.24
+      },
+      "blur_r05": {
+        "name": "Gaussian Blur (r=0.5)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.5,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 46.94
+      },
+      "blur_r10": {
+        "name": "Gaussian Blur (r=1.0)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.5,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 35.85
+      },
+      "noise_s05": {
+        "name": "Gaussian Noise (sigma=5)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.5,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 34.25
+      },
+      "noise_s10": {
+        "name": "Gaussian Noise (sigma=10)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.5,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 28.36
+      },
+      "crop_90": {
+        "name": "Center Crop (90%)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.4922,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 17.22
+      },
+      "crop_80": {
+        "name": "Center Crop (80%)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.4922,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 14.82
+      }
+    }
+  },
+  "distortion_aware_v2": {
+    "checkpoint": "Robust v2 (hidden_32bit_robust_v2.pt)",
+    "total_positive_trials": 52,
+    "total_negative_trials": 4,
+    "mean_psnr_clean_db": 27.06,
+    "mean_ssim_clean": 0.9439,
+    "overall_mean_ber": 0.4333,
+    "overall_exact_recovery_rate": 0.0,
+    "clean_exact_recovery_rate": 0.0,
+    "clean_mean_ber": 0.4297,
+    "false_positive_rate": 0.25,
+    "false_negative_rate_clean": 1.0,
+    "mean_enc_latency_ms": 88.05,
+    "mean_dec_latency_ms": 71.33,
+    "by_attack": {
+      "clean": {
+        "name": "Clean (None)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.4297,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 99.0
+      },
+      "jpeg_q90": {
+        "name": "JPEG (Q=90)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.4297,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 34.52
+      },
+      "jpeg_q75": {
+        "name": "JPEG (Q=75)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.4297,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 31.43
+      },
+      "jpeg_q50": {
+        "name": "JPEG (Q=50)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.4297,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 29.47
+      },
+      "jpeg_q30": {
+        "name": "JPEG (Q=30)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.4297,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 28.01
+      },
+      "resize_075": {
+        "name": "Resize (75%)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.4297,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 31.58
+      },
+      "resize_050": {
+        "name": "Resize (50%)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.4297,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 29.21
+      },
+      "blur_r05": {
+        "name": "Gaussian Blur (r=0.5)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.4297,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 46.99
+      },
+      "blur_r10": {
+        "name": "Gaussian Blur (r=1.0)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.4297,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 33.37
+      },
+      "noise_s05": {
+        "name": "Gaussian Noise (sigma=5)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.4375,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 34.3
+      },
+      "noise_s10": {
+        "name": "Gaussian Noise (sigma=10)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.4375,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 28.42
+      },
+      "crop_90": {
+        "name": "Center Crop (90%)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.4453,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 17.34
+      },
+      "crop_80": {
+        "name": "Center Crop (80%)",
+        "exact_recovery_rate": 0.0,
+        "mean_ber": 0.4453,
+        "decodable_rate": 0.0,
+        "mean_psnr_distortion": 14.93
+      }
+    }
+  }
+}

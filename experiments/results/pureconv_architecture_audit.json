@@ -1,0 +1,39 @@
+{
+  "carrier_audit": {
+    "shape": [
+      32,
+      64,
+      64
+    ],
+    "max_energy_deviation": 0.0,
+    "max_dc_component": 0.0,
+    "max_gram_error": 0.0,
+    "max_off_diagonal_crosstalk": 0.0
+  },
+  "host_interference_audit": {
+    "worst_case_host_interference": 0.0014411099255084991,
+    "watermark_signal_level": 0.01,
+    "safety_margin_ratio": 6.939095916969329
+  },
+  "resolution_handling_audit": {
+    "64x64": {
+      "status": "SUCCESS",
+      "output_shape": [
+        1,
+        32
+      ]
+    },
+    "128x128": {
+      "status": "ERROR",
+      "error": "mat1 and mat2 shapes cannot be multiplied (1x135200 and 32x32)"
+    },
+    "256x256": {
+      "status": "ERROR",
+      "error": "mat1 and mat2 shapes cannot be multiplied (1x1191968 and 32x32)"
+    },
+    "48x48": {
+      "status": "ERROR",
+      "error": "Calculated padded input size per channel: (48 x 48). Kernel size: (64 x 64). Kernel size can't be greater than actual input size"
+    }
+  }
+}

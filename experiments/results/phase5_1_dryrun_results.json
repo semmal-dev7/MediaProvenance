@@ -1,0 +1,45 @@
+{
+  "test_A": {
+    "status_code": 200,
+    "success": true,
+    "psnr_db": 34.55720547142879,
+    "payload_hex": "deadbeef",
+    "image_sha256": "8c2d15369061cbdabd04ee09704a39d58cda3e704c2c39d8f1b08c2bbddeb87d"
+  },
+  "test_B": {
+    "status_code": 200,
+    "success": true,
+    "recovered_hex": "deadbeef",
+    "expected_hex": "deadbeef",
+    "match": true,
+    "confidence": 0.6057570576667786
+  },
+  "test_C": {
+    "status_code": 200,
+    "payload_hex": "e643ec9e",
+    "confidence": 0.5147303938865662,
+    "watermark_present": null
+  },
+  "test_D": {
+    "jpeg_75": {
+      "recovered": "deadbeef",
+      "match": true
+    },
+    "resize_50": {
+      "recovered": "deadbeef",
+      "match": true
+    }
+  },
+  "test_E": {
+    "proof_generated": true,
+    "proving_time": 6.1875,
+    "genuine_verified": true,
+    "tampered_payload_rejected": false,
+    "tamper_rejection_error": null
+  },
+  "test_F": {
+    "substituted_image_rejected": false,
+    "error": null,
+    "image_bound": null
+  }
+}

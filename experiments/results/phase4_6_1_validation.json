@@ -1,0 +1,341 @@
+{
+  "timestamp": 1792515805.1136868,
+  "phase": "4.6.1",
+  "feature_binding_trials": [
+    {
+      "test_key": "genuine_photo_004_deadbeef",
+      "category": "Genuine Image",
+      "image_name": "photo_004",
+      "payload": "deadbeef",
+      "valid": true,
+      "image_binding_verified": true,
+      "error": null,
+      "expected": "PASS",
+      "actual": "PASS"
+    },
+    {
+      "test_key": "genuine_photo_004_a41bd359",
+      "category": "Genuine Image",
+      "image_name": "photo_004",
+      "payload": "a41bd359",
+      "valid": true,
+      "image_binding_verified": true,
+      "error": null,
+      "expected": "PASS",
+      "actual": "PASS"
+    },
+    {
+      "test_key": "genuine_woodgrain_06_deadbeef",
+      "category": "Genuine Image",
+      "image_name": "woodgrain_06",
+      "payload": "deadbeef",
+      "valid": true,
+      "image_binding_verified": true,
+      "error": null,
+      "expected": "PASS",
+      "actual": "PASS"
+    },
+    {
+      "test_key": "genuine_woodgrain_06_a41bd359",
+      "category": "Genuine Image",
+      "image_name": "woodgrain_06",
+      "payload": "a41bd359",
+      "valid": true,
+      "image_binding_verified": true,
+      "error": null,
+      "expected": "PASS",
+      "actual": "PASS"
+    },
+    {
+      "test_key": "genuine_document_04_deadbeef",
+      "category": "Genuine Image",
+      "image_name": "document_04",
+      "payload": "deadbeef",
+      "valid": true,
+      "image_binding_verified": true,
+      "error": null,
+      "expected": "PASS",
+      "actual": "PASS"
+    },
+    {
+      "test_key": "genuine_document_04_a41bd359",
+      "category": "Genuine Image",
+      "image_name": "document_04",
+      "payload": "a41bd359",
+      "valid": true,
+      "image_binding_verified": true,
+      "error": null,
+      "expected": "PASS",
+      "actual": "PASS"
+    },
+    {
+      "test_key": "genuine_checker_05_deadbeef",
+      "category": "Genuine Image",
+      "image_name": "checker_05",
+      "payload": "deadbeef",
+      "valid": true,
+      "image_binding_verified": true,
+      "error": null,
+      "expected": "PASS",
+      "actual": "PASS"
+    },
+    {
+      "test_key": "genuine_checker_05_a41bd359",
+      "category": "Genuine Image",
+      "image_name": "checker_05",
+      "payload": "a41bd359",
+      "valid": true,
+      "image_binding_verified": true,
+      "error": null,
+      "expected": "PASS",
+      "actual": "PASS"
+    },
+    {
+      "test_key": "swap_photo_004_deadbeef_to_photo_004_a41bd359",
+      "category": "Substituted Image",
+      "source_image": "photo_004_deadbeef",
+      "target_image": "photo_004_a41bd359",
+      "valid": false,
+      "image_binding_verified": false,
+      "error": "Feature provenance mismatch: proof input features do not match features extracted from candidate image (19/32 features mismatch, max_diff=0.01562). Cross-image feature substitution rejected.",
+      "expected": "REJECTED",
+      "actual": "REJECTED",
+      "security_status": "SECURE"
+    },
+    {
+      "test_key": "swap_photo_004_deadbeef_to_woodgrain_06_deadbeef",
+      "category": "Substituted Image",
+      "source_image": "photo_004_deadbeef",
+      "target_image": "woodgrain_06_deadbeef",
+      "valid": false,
+      "image_binding_verified": false,
+      "error": "Feature provenance mismatch: proof input features do not match features extracted from candidate image (10/32 features mismatch, max_diff=0.00781). Cross-image feature substitution rejected.",
+      "expected": "REJECTED",
+      "actual": "REJECTED",
+      "security_status": "SECURE"
+    },
+    {
+      "test_key": "swap_photo_004_a41bd359_to_woodgrain_06_deadbeef",
+      "category": "Substituted Image",
+      "source_image": "photo_004_a41bd359",
+      "target_image": "woodgrain_06_deadbeef",
+      "valid": false,
+      "image_binding_verified": false,
+      "error": "Feature provenance mismatch: proof input features do not match features extracted from candidate image (21/32 features mismatch, max_diff=0.01562). Cross-image feature substitution rejected.",
+      "expected": "REJECTED",
+      "actual": "REJECTED",
+      "security_status": "SECURE"
+    },
+    {
+      "test_key": "swap_photo_004_a41bd359_to_woodgrain_06_a41bd359",
+      "category": "Substituted Image",
+      "source_image": "photo_004_a41bd359",
+      "target_image": "woodgrain_06_a41bd359",
+      "valid": false,
+      "image_binding_verified": false,
+      "error": "Feature provenance mismatch: proof input features do not match features extracted from candidate image (10/32 features mismatch, max_diff=0.00781). Cross-image feature substitution rejected.",
+      "expected": "REJECTED",
+      "actual": "REJECTED",
+      "security_status": "SECURE"
+    },
+    {
+      "test_key": "swap_woodgrain_06_deadbeef_to_woodgrain_06_a41bd359",
+      "category": "Substituted Image",
+      "source_image": "woodgrain_06_deadbeef",
+      "target_image": "woodgrain_06_a41bd359",
+      "valid": false,
+      "image_binding_verified": false,
+      "error": "Feature provenance mismatch: proof input features do not match features extracted from candidate image (15/32 features mismatch, max_diff=0.01562). Cross-image feature substitution rejected.",
+      "expected": "REJECTED",
+      "actual": "REJECTED",
+      "security_status": "SECURE"
+    },
+    {
+      "test_key": "swap_woodgrain_06_deadbeef_to_document_04_deadbeef",
+      "category": "Substituted Image",
+      "source_image": "woodgrain_06_deadbeef",
+      "target_image": "document_04_deadbeef",
+      "valid": false,
+      "image_binding_verified": false,
+      "error": "Feature provenance mismatch: proof input features do not match features extracted from candidate image (7/32 features mismatch, max_diff=0.01562). Cross-image feature substitution rejected.",
+      "expected": "REJECTED",
+      "actual": "REJECTED",
+      "security_status": "SECURE"
+    },
+    {
+      "test_key": "swap_woodgrain_06_a41bd359_to_document_04_deadbeef",
+      "category": "Substituted Image",
+      "source_image": "woodgrain_06_a41bd359",
+      "target_image": "document_04_deadbeef",
+      "valid": false,
+      "image_binding_verified": false,
+      "error": "Feature provenance mismatch: proof input features do not match features extracted from candidate image (16/32 features mismatch, max_diff=0.02344). Cross-image feature substitution rejected.",
+      "expected": "REJECTED",
+      "actual": "REJECTED",
+      "security_status": "SECURE"
+    },
+    {
+      "test_key": "swap_woodgrain_06_a41bd359_to_document_04_a41bd359",
+      "category": "Substituted Image",
+      "source_image": "woodgrain_06_a41bd359",
+      "target_image": "document_04_a41bd359",
+      "valid": false,
+      "image_binding_verified": false,
+      "error": "Feature provenance mismatch: proof input features do not match features extracted from candidate image (9/32 features mismatch, max_diff=0.01562). Cross-image feature substitution rejected.",
+      "expected": "REJECTED",
+      "actual": "REJECTED",
+      "security_status": "SECURE"
+    },
+    {
+      "test_key": "swap_document_04_deadbeef_to_document_04_a41bd359",
+      "category": "Substituted Image",
+      "source_image": "document_04_deadbeef",
+      "target_image": "document_04_a41bd359",
+      "valid": false,
+      "image_binding_verified": false,
+      "error": "Feature provenance mismatch: proof input features do not match features extracted from candidate image (12/32 features mismatch, max_diff=0.01562). Cross-image feature substitution rejected.",
+      "expected": "REJECTED",
+      "actual": "REJECTED",
+      "security_status": "SECURE"
+    },
+    {
+      "test_key": "swap_document_04_deadbeef_to_checker_05_deadbeef",
+      "category": "Substituted Image",
+      "source_image": "document_04_deadbeef",
+      "target_image": "checker_05_deadbeef",
+      "valid": false,
+      "image_binding_verified": false,
+      "error": "Feature provenance mismatch: proof input features do not match features extracted from candidate image (16/32 features mismatch, max_diff=0.02344). Cross-image feature substitution rejected.",
+      "expected": "REJECTED",
+      "actual": "REJECTED",
+      "security_status": "SECURE"
+    },
+    {
+      "test_key": "swap_document_04_a41bd359_to_checker_05_deadbeef",
+      "category": "Substituted Image",
+      "source_image": "document_04_a41bd359",
+      "target_image": "checker_05_deadbeef",
+      "valid": false,
+      "image_binding_verified": false,
+      "error": "Feature provenance mismatch: proof input features do not match features extracted from candidate image (18/32 features mismatch, max_diff=0.02344). Cross-image feature substitution rejected.",
+      "expected": "REJECTED",
+      "actual": "REJECTED",
+      "security_status": "SECURE"
+    },
+    {
+      "test_key": "swap_document_04_a41bd359_to_checker_05_a41bd359",
+      "category": "Substituted Image",
+      "source_image": "document_04_a41bd359",
+      "target_image": "checker_05_a41bd359",
+      "valid": false,
+      "image_binding_verified": false,
+      "error": "Feature provenance mismatch: proof input features do not match features extracted from candidate image (14/32 features mismatch, max_diff=0.01562). Cross-image feature substitution rejected.",
+      "expected": "REJECTED",
+      "actual": "REJECTED",
+      "security_status": "SECURE"
+    },
+    {
+      "test_key": "swap_checker_05_deadbeef_to_checker_05_a41bd359",
+      "category": "Substituted Image",
+      "source_image": "checker_05_deadbeef",
+      "target_image": "checker_05_a41bd359",
+      "valid": false,
+      "image_binding_verified": false,
+      "error": "Feature provenance mismatch: proof input features do not match features extracted from candidate image (19/32 features mismatch, max_diff=0.00781). Cross-image feature substitution rejected.",
+      "expected": "REJECTED",
+      "actual": "REJECTED",
+      "security_status": "SECURE"
+    }
+  ],
+  "quantization_parity_trials": [
+    {
+      "exact_parity": true,
+      "circuit_features_count": 32,
+      "pretty_inputs_count": 32,
+      "quantized_actual_count": 32,
+      "max_quantization_error": 0.003878591116517782,
+      "bound_theoretical_delta_half": 0.00390625
+    }
+  ],
+  "claim_commitment_trials": [
+    {
+      "test": "alter_image_sha256",
+      "altered_field": "image_sha256",
+      "distinct_commitment": true,
+      "status": "PASS"
+    },
+    {
+      "test": "alter_payload_commitment",
+      "altered_field": "payload_commitment",
+      "distinct_commitment": true,
+      "status": "PASS"
+    },
+    {
+      "test": "alter_model_digest",
+      "altered_field": "model_digest",
+      "distinct_commitment": true,
+      "status": "PASS"
+    },
+    {
+      "test": "alter_prover_address",
+      "altered_field": "prover_address",
+      "distinct_commitment": true,
+      "status": "PASS"
+    },
+    {
+      "test": "alter_proof_digest",
+      "altered_field": "proof_digest",
+      "distinct_commitment": true,
+      "status": "PASS"
+    },
+    {
+      "test": "delimiter_collision_resistance",
+      "legacy_v1_has_delimiter_collision_risk": true,
+      "v2_length_prefixed_collision_resistant": true,
+      "status": "SECURE"
+    },
+    {
+      "test": "publisher_replay_with_recomputed_hash",
+      "valid": true,
+      "risk_characterization": "A public hash commitment does NOT constitute a digital signature. Any party can recompute C_claim with a new prover_address.",
+      "requires_eip712_signature": true
+    }
+  ],
+  "caller_bypass_trials": [
+    {
+      "scenario": "Missing candidate image (image_input=None)",
+      "valid": true,
+      "image_binding_verified": false,
+      "warning_present": true,
+      "detail": "Verifier validates neural inference, but explicitly flags image_binding_verified=False."
+    },
+    {
+      "scenario": "Altering public instance vector inside proof",
+      "valid": false,
+      "error": "Claim commitment mismatch: claim commitment does not bind image, payload commitment, model, prover, and proof.",
+      "decision_layer": "Cryptographic Halo2 Pairing",
+      "detail": "Halo2 cryptographic verifier rejects proof due to KZG polynomial opening mismatch."
+    }
+  ],
+  "contract_risk_trials": [
+    {
+      "test": "unauthorized_registration_without_zk_proof",
+      "vulnerability_confirmed": true,
+      "detail": "ProvenanceAnchor.sol anchor() function contains no EVM proof verification or proof digest checks."
+    },
+    {
+      "test": "asset_id_squatting_frontrunning",
+      "vulnerability_confirmed": true,
+      "detail": "Because require(!records[assetId].exists) blocks subsequent registrations, a malicious actor can front-run any creator."
+    }
+  ],
+  "summary": {
+    "feature_binding_trials_count": 21,
+    "all_genuine_images_passed": true,
+    "all_substituted_images_rejected": true,
+    "quantization_parity_exact": true,
+    "hash_is_not_signature_confirmed": true,
+    "smart_contract_zk_verifier_missing": true,
+    "go_no_go_recommendation": "CONDITIONAL GO"
+  }
+}
