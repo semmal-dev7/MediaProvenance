@@ -9,8 +9,10 @@ Circom Groth16 neural inference zero-knowledge circuit.
 from __future__ import annotations
 
 import io
+import json
+import tempfile
 from pathlib import Path
-from typing import List, Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 import numpy as np
 from PIL import Image
@@ -68,6 +70,25 @@ def extract_hidden_features(image_input: Union[Image.Image, bytes, str, Path]) -
 
 
 _FEATURE_CACHE: Dict[str, List[float]] = {}
+_CACHE_FILE = Path(tempfile.gettempdir()) / "provenance_features_cache.json"
+
+
+def _load_disk_cache() -> Dict[str, List[float]]:
+    if _CACHE_FILE.exists():
+        try:
+            with open(_CACHE_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            return {}
+    return {}
+
+
+def _save_disk_cache(data: Dict[str, List[float]]) -> None:
+    try:
+        with open(_CACHE_FILE, "w", encoding="utf-8") as f:
+            json.dump(data, f)
+    except Exception:
+        pass
 
 
 def cache_image_features(image_sha256: str, image_input: Union[Image.Image, bytes, str, Path]) -> List[float]:
@@ -75,13 +96,27 @@ def cache_image_features(image_sha256: str, image_input: Union[Image.Image, byte
     clean_key = image_sha256.lower().replace("0x", "").strip()
     feats = extract_hidden_features(image_input)
     _FEATURE_CACHE[clean_key] = feats
+    
+    # Also persist to disk cache
+    disk_data = _load_disk_cache()
+    disk_data[clean_key] = feats
+    _save_disk_cache(disk_data)
+    
     return feats
 
 
 def get_cached_features(image_sha256: str) -> Optional[List[float]]:
     """Retrieves cached genuine HiDDeN features by image SHA256."""
     clean_key = image_sha256.lower().replace("0x", "").strip()
-    return _FEATURE_CACHE.get(clean_key)
+    if clean_key in _FEATURE_CACHE:
+        return _FEATURE_CACHE[clean_key]
+    
+    disk_data = _load_disk_cache()
+    if clean_key in disk_data:
+        _FEATURE_CACHE[clean_key] = disk_data[clean_key]
+        return disk_data[clean_key]
+        
+    return None
 
 
 def extract_latent_features_from_image(image_input: Union[Image.Image, bytes, str, Path], num_features: int = 64) -> List[float]:

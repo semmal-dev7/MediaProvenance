@@ -5,7 +5,7 @@ ProvenanceLab — Zero-Knowledge Proofs & Job Queue API Routes
 
 from __future__ import annotations
 
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
 from fastapi import APIRouter, HTTPException
 

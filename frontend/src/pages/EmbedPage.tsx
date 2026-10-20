@@ -105,9 +105,22 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
         body: JSON.stringify({
           payload_hex: embedResult.payload_hex,
           image_sha256: embedResult.image_sha256,
+          image_features: embedResult.image_features,
           prover_address: publisherAccount || '0x0000000000000000000000000000000000000000',
         }),
       });
+
+      if (!genRes.ok) {
+        const errText = await genRes.text();
+        let errMsg = `Proof generation failed (${genRes.status})`;
+        try {
+          const errObj = JSON.parse(errText);
+          errMsg = errObj.detail || errObj.error || errMsg;
+        } catch {
+          if (errText) errMsg = errText;
+        }
+        throw new Error(errMsg);
+      }
 
       const genData = await genRes.json();
       if (!genData.success) {

@@ -22,6 +22,7 @@ class EncodeResponse(BaseModel):
     psnr_db: Optional[float] = None
     elapsed_seconds: float
     image_sha256: str
+    image_features: Optional[List[float]] = None
     watermarked_image_base64: Optional[str] = None
     error: Optional[str] = None
 

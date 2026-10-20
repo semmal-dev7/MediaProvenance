@@ -69,9 +69,10 @@ async def encode_watermark(
     sha256 = c.image_sha256(enc_res.watermarked_image)
 
     # Cache genuine HiDDeN features for subsequent ZK proof generation
+    feats = None
     try:
         from backend.zk.features import cache_image_features
-        cache_image_features(sha256, enc_res.watermarked_image)
+        feats = cache_image_features(sha256, enc_res.watermarked_image)
     except Exception as e:
         logger.warning("Could not cache HiDDeN features for ZK: %s", e)
 
@@ -84,6 +85,7 @@ async def encode_watermark(
         psnr_db=enc_res.psnr_db,
         elapsed_seconds=enc_res.elapsed_seconds,
         image_sha256=sha256,
+        image_features=feats,
         watermarked_image_base64=f"data:image/png;base64,{b64_img}",
     )
 
