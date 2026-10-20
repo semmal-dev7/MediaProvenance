@@ -81,13 +81,15 @@ async def generate_proof_direct(req: CreateProofRequest):
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-    commitment = proof_result["public_inputs"]["payload_commitment"]
+    commitment = proof_result.get("proof_digest") or proof_result["public_inputs"]["payload_commitment"]
     asset_id = clean_sha
 
     return {
         "success": True,
         "asset_id": asset_id,
         "commitment": commitment,
+        "proof_digest": proof_result.get("proof_digest"),
+        "payload_commitment": proof_result["public_inputs"]["payload_commitment"],
         "proof_result": proof_result,
     }
 

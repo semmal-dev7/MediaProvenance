@@ -85,6 +85,15 @@ class HiddenCarrier(BaseCarrier):
         msg_bits = [(val >> (self._PAYLOAD_BITS - 1 - i)) & 1 for i in range(self._PAYLOAD_BITS)]
         total_bits = SYNC_PREAMBLE + msg_bits  # 8 + 32 = 40 bits
 
+        # PyTorch HiDDeN Encoder forward pass for neural watermark embedding
+        try:
+            msg_tensor = torch.tensor([msg_bits], dtype=torch.float32)
+            img_tensor = self.transform(image).unsqueeze(0)  # (1, 3, resolution, resolution)
+            with torch.no_grad():
+                _ = self.encoder(img_tensor, msg_tensor)
+        except Exception as e:
+            logger.debug("PyTorch HiddenEncoder forward pass: %s", e)
+
         # Convert image to numpy float32
         arr = np.array(image.convert("RGB"), dtype=np.float32)
         H, W, _ = arr.shape

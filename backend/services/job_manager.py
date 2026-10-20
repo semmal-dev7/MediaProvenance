@@ -210,7 +210,7 @@ class JobManager:
             # Format 32-byte hex for asset_id and commitment
             clean_sha = job.image_sha256.lower().replace("0x", "")
             asset_id_bytes32 = f"0x{clean_sha.rjust(64, '0')[:64]}"
-            commit_hex = proof_data["public_inputs"]["payload_commitment"].lower().replace("0x", "")
+            commit_hex = (proof_data.get("proof_digest") or proof_data["public_inputs"]["payload_commitment"]).lower().replace("0x", "")
             commitment_bytes32 = f"0x{commit_hex.rjust(64, '0')[:64]}"
 
             # Anchor record (run in background thread to keep event loop responsive)

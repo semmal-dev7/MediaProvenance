@@ -25,7 +25,7 @@ watermarks_router = APIRouter(prefix="/watermarks", tags=["watermarks"])
 @watermarks_router.post("/embed", response_model=EncodeResponse)
 async def encode_watermark(
     file: UploadFile = File(...),
-    carrier: str = Form("trustmark"),
+    carrier: str = Form("hidden"),
     payload_hex: Optional[str] = Form(None),
 ):
     """Embed watermark into the uploaded image."""
@@ -92,7 +92,7 @@ async def encode_watermark(
 @watermarks_router.post("/decode", response_model=DecodeResponse)
 async def decode_watermark(
     file: UploadFile = File(...),
-    carrier: str = Form("trustmark"),
+    carrier: str = Form("hidden"),
     reference_payload_hex: Optional[str] = Form(None),
 ):
     """Decode suspect image and compute Bayesian Likelihood Ratio."""
