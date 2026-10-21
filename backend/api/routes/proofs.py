@@ -21,6 +21,7 @@ class CreateProofRequest(BaseModel):
     prover_address: Optional[str] = Field("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
     image_features: Optional[List[float]] = Field(None, description="64-dimensional latent features from HiDDeN decoder")
     allow_synthetic: Optional[bool] = Field(False, description="Test-only option to allow synthetic test features")
+    carrier: Optional[str] = Field(None, description="Carrier name ('pureconv' or 'hidden')")
 
 
 class VerifyProofRequest(BaseModel):
@@ -38,14 +39,24 @@ async def submit_proof_job(req: CreateProofRequest):
     features = None
     if req.allow_synthetic and req.image_features is not None:
         features = req.image_features
-    elif req.image_features is not None:
-        raise HTTPException(
-            status_code=400,
-            detail="Untrusted client-supplied image features rejected. Features must be extracted server-side from uploaded media.",
-        )
     else:
         from backend.zk.features import get_cached_features
-        features = get_cached_features(clean_sha)
+        cached = get_cached_features(clean_sha)
+        if req.image_features is not None:
+            if cached is None:
+                raise HTTPException(
+                    status_code=400,
+                    detail="Untrusted client-supplied image features rejected. Features must be extracted server-side from uploaded media.",
+                )
+            import numpy as np
+            if len(req.image_features) != len(cached) or not np.allclose(req.image_features, cached, atol=1e-4):
+                raise HTTPException(
+                    status_code=400,
+                    detail="Untrusted client-supplied image features rejected. Features must be extracted server-side from uploaded media.",
+                )
+            features = cached
+        else:
+            features = cached
 
     job = job_manager.create_job(
         payload_hex=req.payload_hex,
@@ -75,14 +86,24 @@ async def generate_proof_direct(req: CreateProofRequest):
     features = None
     if req.allow_synthetic and req.image_features is not None:
         features = req.image_features
-    elif req.image_features is not None:
-        raise HTTPException(
-            status_code=400,
-            detail="Untrusted client-supplied image features rejected. Features must be extracted server-side from uploaded media.",
-        )
     else:
         from backend.zk.features import get_cached_features
-        features = get_cached_features(clean_sha)
+        cached = get_cached_features(clean_sha)
+        if req.image_features is not None:
+            if cached is None:
+                raise HTTPException(
+                    status_code=400,
+                    detail="Untrusted client-supplied image features rejected. Features must be extracted server-side from uploaded media.",
+                )
+            import numpy as np
+            if len(req.image_features) != len(cached) or not np.allclose(req.image_features, cached, atol=1e-4):
+                raise HTTPException(
+                    status_code=400,
+                    detail="Untrusted client-supplied image features rejected. Features must be extracted server-side from uploaded media.",
+                )
+            features = cached
+        else:
+            features = cached
 
     try:
         proof_result = zk_engine.generate_proof(
@@ -91,6 +112,7 @@ async def generate_proof_direct(req: CreateProofRequest):
             prover_address=req.prover_address or "0x0000000000000000000000000000000000000000",
             image_features=features,
             allow_synthetic=bool(req.allow_synthetic),
+            carrier=req.carrier,
         )
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))

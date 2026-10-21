@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Cpu, Activity, Blocks, CheckCircle2, Clock, ArrowRight, Database, ExternalLink } from 'lucide-react';
+import { Cpu, Blocks, CheckCircle2, Clock, ArrowRight } from 'lucide-react';
 
 interface DashboardProps {
   onNavigate: (tab: string) => void;
@@ -36,10 +36,6 @@ export const DashboardPage: React.FC<DashboardProps> = ({ onNavigate }) => {
       {/* Hero Banner */}
       <div className="bg-gradient-to-r from-slate-900 via-blue-950/40 to-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
         <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold mb-3">
-            <Shield className="w-3.5 h-3.5" />
-            Research-Grade Media Provenance Verification
-          </div>
           <h2 className="text-2xl font-bold text-white tracking-tight">
             ProvenanceLab Research Dashboard
           </h2>
@@ -72,18 +68,11 @@ export const DashboardPage: React.FC<DashboardProps> = ({ onNavigate }) => {
             <Blocks className="w-4 h-4" />
             Inspect Blockchain
           </button>
-          <button
-            onClick={() => onNavigate('experiments')}
-            className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold shadow transition"
-          >
-            <Activity className="w-4 h-4" />
-            Ablation &amp; Experiments
-          </button>
         </div>
       </div>
 
       {/* Metric Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl shadow">
           <div className="flex items-center justify-between text-slate-400">
             <span className="text-xs font-semibold uppercase">Anchored Assets</span>
@@ -101,121 +90,47 @@ export const DashboardPage: React.FC<DashboardProps> = ({ onNavigate }) => {
           <span className="text-2xl font-bold text-white block mt-2">{jobs.length}</span>
           <span className="text-xs text-blue-400 mt-1 block">Asynchronous ZK lifecycle jobs</span>
         </div>
-
-        <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl shadow">
-          <div className="flex items-center justify-between text-slate-400">
-            <span className="text-xs font-semibold uppercase">Average Proving Time</span>
-            <Activity className="w-4 h-4 text-indigo-400" />
-          </div>
-          <span className="text-2xl font-bold text-white block mt-2">6,496 rows</span>
-          <span className="text-xs text-indigo-400 mt-1 block">EZKL Halo2/PLONKish + KZG</span>
-        </div>
-
-        <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl shadow">
-          <div className="flex items-center justify-between text-slate-400">
-            <span className="text-xs font-semibold uppercase">Backend Engine</span>
-            <Database className="w-4 h-4 text-emerald-400" />
-          </div>
-          <span className="text-2xl font-bold text-emerald-400 block mt-2">
-            {health?.status === 'healthy' ? 'Online' : 'Connecting...'}
-          </span>
-          <span className="text-xs text-slate-400 mt-1 block">
-            PyTorch {health?.pytorch_version || '2.14'} | Port 8080
-          </span>
-        </div>
       </div>
 
-      {/* Two Column Grid: System Status & Recent Anchors */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Architecture Status */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow">
-          <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
-            <Shield className="w-4 h-4 text-blue-400" />
-            Architecture Layer Verification Status
+      {/* Recent Anchored Commitments */}
+      <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <Blocks className="w-4 h-4 text-amber-400" />
+            Recent On-Chain Commitments
           </h3>
-          <div className="space-y-3">
-            <div className="flex items-center justify-between p-3 rounded-lg bg-slate-950/60 border border-slate-800">
-              <div>
-                <span className="text-xs font-semibold text-slate-200 block">Neural Watermark Carriers</span>
-                <span className="text-xs text-slate-400">HiDDeN-32 (32-bit Conv2D) &amp; TrustMark-Q (100-bit)</span>
-              </div>
-              <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20">
-                ACTIVE
-              </span>
-            </div>
-
-            <div className="flex items-center justify-between p-3 rounded-lg bg-slate-950/60 border border-slate-800">
-              <div>
-                <span className="text-xs font-semibold text-slate-200 block">ONNX Model Compilation</span>
-                <span className="text-xs text-slate-400">models/onnx/hidden_decoder_32bit.onnx (HiDDeN Halo2 Compiled)</span>
-              </div>
-              <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20">
-                VALIDATED
-              </span>
-            </div>
-
-            <div className="flex items-center justify-between p-3 rounded-lg bg-slate-950/60 border border-slate-800">
-              <div>
-                <span className="text-xs font-semibold text-slate-200 block">Zero-Knowledge Circuit Engine</span>
-                <span className="text-xs text-slate-400">EZKL + Halo2/PLONKish + KZG Neural Circuit</span>
-              </div>
-              <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20">
-                ENABLED
-              </span>
-            </div>
-
-            <div className="flex items-center justify-between p-3 rounded-lg bg-slate-950/60 border border-slate-800">
-              <div>
-                <span className="text-xs font-semibold text-slate-200 block">Smart Contract Registries</span>
-                <span className="text-xs text-slate-400">ProvenanceAnchor.sol &amp; ProvenanceAudit.sol (14/14 tests)</span>
-              </div>
-              <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20">
-                CONFIRMED
-              </span>
-            </div>
-          </div>
+          <button
+            onClick={() => onNavigate('audit')}
+            className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1"
+          >
+            View all <ArrowRight className="w-3 h-3" />
+          </button>
         </div>
 
-        {/* Recent Anchored Commitments */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
-              <Blocks className="w-4 h-4 text-amber-400" />
-              Recent On-Chain Commitments
-            </h3>
-            <button
-              onClick={() => onNavigate('audit')}
-              className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1"
-            >
-              View all <ArrowRight className="w-3 h-3" />
-            </button>
-          </div>
-
-          <div className="space-y-3">
-            {anchors.slice(0, 4).map((a, i) => (
-              <div key={i} className="p-3 rounded-lg bg-slate-950/60 border border-slate-800 text-xs space-y-1">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-slate-300 font-semibold">
-                    {a.asset_id.slice(0, 18)}...
-                  </span>
-                  <span className="text-slate-500 text-[10px]">
-                    Block #{a.block_number}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between text-slate-400">
-                  <span className="text-[11px] font-mono text-amber-400/90 truncate max-w-[200px]">
-                    C: {a.commitment.slice(0, 20)}...
-                  </span>
-                  <span className="text-slate-500 text-[10px]">
-                    {new Date(a.timestamp * 1000).toLocaleTimeString()}
-                  </span>
-                </div>
+        <div className="space-y-3">
+          {anchors.slice(0, 4).map((a, i) => (
+            <div key={i} className="p-3 rounded-lg bg-slate-950/60 border border-slate-800 text-xs space-y-1">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-slate-300 font-semibold">
+                  {a.asset_id.slice(0, 18)}...
+                </span>
+                <span className="text-slate-500 text-[10px]">
+                  Block #{a.block_number}
+                </span>
               </div>
-            ))}
-            {anchors.length === 0 && (
-              <p className="text-xs text-slate-500 text-center py-6">No commitments anchored yet.</p>
-            )}
-          </div>
+              <div className="flex items-center justify-between text-slate-400">
+                <span className="text-[11px] font-mono text-amber-400/90 truncate max-w-[200px]">
+                  C: {a.commitment.slice(0, 20)}...
+                </span>
+                <span className="text-slate-500 text-[10px]">
+                  {new Date(a.timestamp * 1000).toLocaleTimeString()}
+                </span>
+              </div>
+            </div>
+          ))}
+          {anchors.length === 0 && (
+            <p className="text-xs text-slate-500 text-center py-6">No commitments anchored yet.</p>
+          )}
         </div>
       </div>
     </div>

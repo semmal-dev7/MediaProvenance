@@ -106,6 +106,7 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
           payload_hex: embedResult.payload_hex,
           image_sha256: embedResult.image_sha256,
           image_features: embedResult.image_features,
+          carrier: carrier,
           prover_address: publisherAccount || '0x0000000000000000000000000000000000000000',
         }),
       });
