@@ -1,0 +1,286 @@
+{
+  "hidden": {
+    "Test_A_unwatermarked": {
+      "description": "Original unwatermarked image",
+      "request": {
+        "carrier": "hidden",
+        "file": "experiments/data/images/img_test_004_phot.png"
+      },
+      "response": {
+        "success": true,
+        "decodable": false,
+        "payload_hex": null,
+        "payload_bits": 32,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.06407347321510315,
+        "carrier_name": "HiDDeN-32",
+        "carrier_version": "2.2.0-neural32",
+        "elapsed_seconds": 0.2983940999256447,
+        "watermark_detected": false,
+        "payload_recovered": false,
+        "payload_matches": null,
+        "failure_reason": "No authentic watermark detected in candidate image (neural activation threshold not met)",
+        "log10_likelihood_ratio": null,
+        "posterior_probability_h1": null,
+        "inferred_hypothesis": "H2",
+        "image_sha256": "e0c17ae7eb7890a2c70e01194e3b4bac6337fdce5c2147f79e2a7b42642136f2",
+        "error": "No authentic watermark detected in candidate image (neural activation threshold not met)"
+      }
+    },
+    "Test_B_watermarked": {
+      "description": "Original watermarked image",
+      "request": {
+        "carrier": "hidden",
+        "file": "experiments\\results\\phase5_4_controlled_tests\\watermarked_hidden.png"
+      },
+      "response": {
+        "success": true,
+        "decodable": true,
+        "payload_hex": "2886495a",
+        "payload_bits": 32,
+        "hamming_distance": null,
+        "bit_error_rate": 0.0,
+        "confidence": 1.0,
+        "carrier_name": "HiDDeN-32",
+        "carrier_version": "2.2.0-neural32",
+        "elapsed_seconds": 0.0011909001041203737,
+        "watermark_detected": true,
+        "payload_recovered": true,
+        "payload_matches": null,
+        "failure_reason": null,
+        "log10_likelihood_ratio": null,
+        "posterior_probability_h1": null,
+        "inferred_hypothesis": "H1",
+        "image_sha256": "0189b5808719ab1186747dc5d777a5e5dc691a9e74fb2137e5afb1984642d50c",
+        "error": null
+      }
+    },
+    "Test_C_jpeg_q70": {
+      "description": "JPEG Q70 version of watermarked image",
+      "request": {
+        "carrier": "hidden",
+        "file": "experiments\\results\\phase5_4_controlled_tests\\watermarked_hidden_q70.jpg"
+      },
+      "response": {
+        "success": true,
+        "decodable": false,
+        "payload_hex": null,
+        "payload_bits": 32,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.06406240910291672,
+        "carrier_name": "HiDDeN-32",
+        "carrier_version": "2.2.0-neural32",
+        "elapsed_seconds": 0.2750687999650836,
+        "watermark_detected": false,
+        "payload_recovered": false,
+        "payload_matches": null,
+        "failure_reason": "No authentic watermark detected in candidate image (neural activation threshold not met)",
+        "log10_likelihood_ratio": null,
+        "posterior_probability_h1": null,
+        "inferred_hypothesis": "H2",
+        "image_sha256": "bfaff732e51e3424e8269a251c42ab813ded0c249445f87972f498b8fbbec46f",
+        "error": "No authentic watermark detected in candidate image (neural activation threshold not met)"
+      }
+    },
+    "Test_D_cropped": {
+      "description": "Cropped watermarked image (32x32 center crop)",
+      "request": {
+        "carrier": "hidden",
+        "file": "experiments\\results\\phase5_4_controlled_tests\\watermarked_hidden_crop32.png"
+      },
+      "response": {
+        "success": true,
+        "decodable": false,
+        "payload_hex": null,
+        "payload_bits": 32,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.06489580869674683,
+        "carrier_name": "HiDDeN-32",
+        "carrier_version": "2.2.0-neural32",
+        "elapsed_seconds": 0.017337099998258054,
+        "watermark_detected": false,
+        "payload_recovered": false,
+        "payload_matches": null,
+        "failure_reason": "No authentic watermark detected in candidate image (neural activation threshold not met)",
+        "log10_likelihood_ratio": null,
+        "posterior_probability_h1": null,
+        "inferred_hypothesis": "H2",
+        "image_sha256": "69a346dd6338b3843a4a4e9bba1a7a22b55de549396020839d3e976af35a796e",
+        "error": "No authentic watermark detected in candidate image (neural activation threshold not met)"
+      }
+    },
+    "Test_E_different_unwatermarked": {
+      "description": "Different unwatermarked image (img_calibration_001_geom.png)",
+      "request": {
+        "carrier": "hidden",
+        "file": "experiments/data/images/img_calibration_001_geom.png"
+      },
+      "response": {
+        "success": true,
+        "decodable": false,
+        "payload_hex": null,
+        "payload_bits": 32,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.1258474737405777,
+        "carrier_name": "HiDDeN-32",
+        "carrier_version": "2.2.0-neural32",
+        "elapsed_seconds": 0.25918759999331087,
+        "watermark_detected": false,
+        "payload_recovered": false,
+        "payload_matches": null,
+        "failure_reason": "No authentic watermark detected in candidate image (neural activation threshold not met)",
+        "log10_likelihood_ratio": null,
+        "posterior_probability_h1": null,
+        "inferred_hypothesis": "H2",
+        "image_sha256": "bcb3686334873d01a7f4dd7c8febfd5756beb78c87a3430abc2b36cf64980797",
+        "error": "No authentic watermark detected in candidate image (neural activation threshold not met)"
+      }
+    }
+  },
+  "pureconv": {
+    "Test_A_unwatermarked": {
+      "description": "Original unwatermarked image",
+      "request": {
+        "carrier": "pureconv",
+        "file": "experiments/data/images/img_test_004_phot.png"
+      },
+      "response": {
+        "success": true,
+        "decodable": false,
+        "payload_hex": null,
+        "payload_bits": 32,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.5147303938865662,
+        "carrier_name": "PureConv-32",
+        "carrier_version": "1.0.0-pureconv32",
+        "elapsed_seconds": 0.0038249000208452344,
+        "watermark_detected": false,
+        "payload_recovered": false,
+        "payload_matches": null,
+        "failure_reason": "No authentic watermark signal detected (carrier energy below detection threshold)",
+        "log10_likelihood_ratio": null,
+        "posterior_probability_h1": null,
+        "inferred_hypothesis": "H2",
+        "image_sha256": "e0c17ae7eb7890a2c70e01194e3b4bac6337fdce5c2147f79e2a7b42642136f2",
+        "error": "No authentic watermark signal detected (carrier energy below detection threshold)"
+      }
+    },
+    "Test_B_watermarked": {
+      "description": "Original watermarked image",
+      "request": {
+        "carrier": "pureconv",
+        "file": "experiments\\results\\phase5_4_controlled_tests\\watermarked_pureconv.png"
+      },
+      "response": {
+        "success": true,
+        "decodable": true,
+        "payload_hex": "deadbeef",
+        "payload_bits": 32,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.6057570576667786,
+        "carrier_name": "PureConv-32",
+        "carrier_version": "1.0.0-pureconv32",
+        "elapsed_seconds": 0.002745300065726042,
+        "watermark_detected": true,
+        "payload_recovered": true,
+        "payload_matches": null,
+        "failure_reason": null,
+        "log10_likelihood_ratio": null,
+        "posterior_probability_h1": null,
+        "inferred_hypothesis": "H1",
+        "image_sha256": "8c2d15369061cbdabd04ee09704a39d58cda3e704c2c39d8f1b08c2bbddeb87d",
+        "error": null
+      }
+    },
+    "Test_C_jpeg_q70": {
+      "description": "JPEG Q70 version of watermarked image",
+      "request": {
+        "carrier": "pureconv",
+        "file": "experiments\\results\\phase5_4_controlled_tests\\watermarked_pureconv_q70.jpg"
+      },
+      "response": {
+        "success": true,
+        "decodable": true,
+        "payload_hex": "deadbeef",
+        "payload_bits": 32,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.6042384505271912,
+        "carrier_name": "PureConv-32",
+        "carrier_version": "1.0.0-pureconv32",
+        "elapsed_seconds": 0.003595300018787384,
+        "watermark_detected": true,
+        "payload_recovered": true,
+        "payload_matches": null,
+        "failure_reason": null,
+        "log10_likelihood_ratio": null,
+        "posterior_probability_h1": null,
+        "inferred_hypothesis": "H1",
+        "image_sha256": "b2a97ac8599244c60af7852e51a5ea5acc1ea071853c9b337fd7cc37d10d3c44",
+        "error": null
+      }
+    },
+    "Test_D_cropped": {
+      "description": "Cropped watermarked image (32x32 center crop)",
+      "request": {
+        "carrier": "pureconv",
+        "file": "experiments\\results\\phase5_4_controlled_tests\\watermarked_pureconv_crop32.png"
+      },
+      "response": {
+        "success": true,
+        "decodable": false,
+        "payload_hex": null,
+        "payload_bits": 32,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.5168371200561523,
+        "carrier_name": "PureConv-32",
+        "carrier_version": "1.0.0-pureconv32",
+        "elapsed_seconds": 0.002498400048352778,
+        "watermark_detected": false,
+        "payload_recovered": false,
+        "payload_matches": null,
+        "failure_reason": "No authentic watermark signal detected (carrier energy below detection threshold)",
+        "log10_likelihood_ratio": null,
+        "posterior_probability_h1": null,
+        "inferred_hypothesis": "H2",
+        "image_sha256": "02c2917fd5244f4b1667bbf6b0384ea958f417c1f17429164eeb7f2e75eeef8c",
+        "error": "No authentic watermark signal detected (carrier energy below detection threshold)"
+      }
+    },
+    "Test_E_different_unwatermarked": {
+      "description": "Different unwatermarked image (img_calibration_001_geom.png)",
+      "request": {
+        "carrier": "pureconv",
+        "file": "experiments/data/images/img_calibration_001_geom.png"
+      },
+      "response": {
+        "success": true,
+        "decodable": false,
+        "payload_hex": null,
+        "payload_bits": 32,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.5157483816146851,
+        "carrier_name": "PureConv-32",
+        "carrier_version": "1.0.0-pureconv32",
+        "elapsed_seconds": 0.0027856999076902866,
+        "watermark_detected": false,
+        "payload_recovered": false,
+        "payload_matches": null,
+        "failure_reason": "No authentic watermark signal detected (carrier energy below detection threshold)",
+        "log10_likelihood_ratio": null,
+        "posterior_probability_h1": null,
+        "inferred_hypothesis": "H2",
+        "image_sha256": "bcb3686334873d01a7f4dd7c8febfd5756beb78c87a3430abc2b36cf64980797",
+        "error": "No authentic watermark signal detected (carrier energy below detection threshold)"
+      }
+    }
+  }
+}

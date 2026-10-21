@@ -38,14 +38,14 @@ async def submit_proof_job(req: CreateProofRequest):
     features = None
     if req.allow_synthetic and req.image_features is not None:
         features = req.image_features
+    elif req.image_features is not None:
+        raise HTTPException(
+            status_code=400,
+            detail="Untrusted client-supplied image features rejected. Features must be extracted server-side from uploaded media.",
+        )
     else:
         from backend.zk.features import get_cached_features
         features = get_cached_features(clean_sha)
-        if features is None and req.image_features is not None:
-            raise HTTPException(
-                status_code=400,
-                detail="Untrusted client-supplied image features rejected. Features must be extracted server-side from uploaded media.",
-            )
 
     job = job_manager.create_job(
         payload_hex=req.payload_hex,
@@ -75,14 +75,14 @@ async def generate_proof_direct(req: CreateProofRequest):
     features = None
     if req.allow_synthetic and req.image_features is not None:
         features = req.image_features
+    elif req.image_features is not None:
+        raise HTTPException(
+            status_code=400,
+            detail="Untrusted client-supplied image features rejected. Features must be extracted server-side from uploaded media.",
+        )
     else:
         from backend.zk.features import get_cached_features
         features = get_cached_features(clean_sha)
-        if features is None and req.image_features is not None:
-            raise HTTPException(
-                status_code=400,
-                detail="Untrusted client-supplied image features rejected. Features must be extracted server-side from uploaded media.",
-            )
 
     try:
         proof_result = zk_engine.generate_proof(

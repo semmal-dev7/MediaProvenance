@@ -114,32 +114,51 @@ async def decode_watermark(
     log10_lr = None
     posterior_h1 = None
     inferred = "H2"
+    payload_matches = None
+    failure_reason = None
 
-    if not dec_res.decodable:
-        inferred = "H0"
-        posterior_h1 = 0.0
-        log10_lr = -30.0
-    elif reference_payload_hex and dec_res.hamming_distance is not None:
-        # Standard noisy channel baseline (p_H1=0.15, p_H0=0.50)
-        params = ModelParameters(payload_bits=c.info.payload_bits, p_H1=0.15, p_H0=0.50)
-        model = BinomialModel(params)
-        lr_result = model.likelihood_ratio(dec_res.hamming_distance)
-        log10_lr = lr_result.log10_lr
-        # Flat prior posterior P(H1 | LR)
-        posterior_h1 = 1.0 / (1.0 + 10.0 ** (-log10_lr))
-        inferred = "H1" if posterior_h1 >= 0.50 else "H0"
+    is_detected = getattr(dec_res, "watermark_detected", dec_res.decodable)
+    has_payload = (dec_res.payload_hex is not None) and is_detected
+    clean_ref = None
+
+    if reference_payload_hex:
+        clean_ref = reference_payload_hex.lower().replace("0x", "").strip()
+        if dec_res.payload_hex:
+            payload_matches = (dec_res.payload_hex.lower() == clean_ref)
+
+        if dec_res.hamming_distance is not None:
+            # Genuine Bayesian Likelihood Ratio on measured Hamming distance
+            params = ModelParameters(payload_bits=c.info.payload_bits, p_H1=0.15, p_H0=0.50)
+            model = BinomialModel(params)
+            lr_result = model.likelihood_ratio(dec_res.hamming_distance)
+            log10_lr = lr_result.log10_lr
+            # Flat prior posterior P(H1 | LR)
+            posterior_h1 = 1.0 / (1.0 + 10.0 ** (-log10_lr))
+            inferred = "H1" if posterior_h1 >= 0.50 else "H0"
+        else:
+            inferred = "H2"
+            failure_reason = "HAMMING_DISTANCE_UNAVAILABLE"
     else:
-        # Watermark detected with valid preamble
-        inferred = "H1"
-        posterior_h1 = 1.0
-        log10_lr = 25.0
+        # Blind / Unconstrained recovery: no reference payload provided
+        # Do not fabricate log10_lr or posterior_h1 when no reference hypothesis was tested
+        log10_lr = None
+        posterior_h1 = None
+        if is_detected and has_payload:
+            inferred = "H1"
+        else:
+            inferred = "H2"
+
+    if not is_detected:
+        failure_reason = dec_res.error or "NO_WATERMARK_SIGNAL_DETECTED"
+    elif reference_payload_hex and payload_matches is False:
+        failure_reason = "PAYLOAD_MISMATCH"
 
     sha256 = c.image_sha256(image)
 
     return DecodeResponse(
         success=True,
         decodable=dec_res.decodable,
-        payload_hex=dec_res.payload_hex,
+        payload_hex=dec_res.payload_hex if (is_detected or reference_payload_hex is not None) else None,
         payload_bits=c.info.payload_bits,
         hamming_distance=dec_res.hamming_distance,
         bit_error_rate=dec_res.bit_error_rate,
@@ -147,6 +166,10 @@ async def decode_watermark(
         carrier_name=c.info.name,
         carrier_version=c.info.version,
         elapsed_seconds=dec_res.elapsed_seconds,
+        watermark_detected=is_detected,
+        payload_recovered=has_payload,
+        payload_matches=payload_matches,
+        failure_reason=failure_reason,
         log10_likelihood_ratio=log10_lr,
         posterior_probability_h1=posterior_h1,
         inferred_hypothesis=inferred,

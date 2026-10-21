@@ -242,15 +242,16 @@ class HiddenCarrier(BaseCarrier):
 
         if not has_watermark:
             return DecodeResult(
-                payload_hex=None,
+                payload_hex=decoded_hex if reference_payload_hex is not None else None,
                 payload_bits=self._PAYLOAD_BITS,
-                hamming_distance=hamming if hamming is not None else 16,
-                bit_error_rate=ber if ber is not None else 0.50,
-                confidence=0.0,
+                hamming_distance=hamming,
+                bit_error_rate=ber,
+                confidence=confidence,
                 carrier_name=self.info.name,
                 carrier_version=self._VERSION,
                 elapsed_seconds=elapsed,
-                error="No watermark detected in candidate image (neural activation threshold not met)",
+                error="No authentic watermark detected in candidate image (neural activation threshold not met)",
+                watermark_detected=False,
             )
 
         return DecodeResult(
@@ -262,6 +263,7 @@ class HiddenCarrier(BaseCarrier):
             carrier_name=self.info.name,
             carrier_version=self._VERSION,
             elapsed_seconds=elapsed,
+            watermark_detected=True,
         )
 
     def export_onnx(self, output_path: str = "models/onnx/hidden_decoder_32bit.onnx") -> str:

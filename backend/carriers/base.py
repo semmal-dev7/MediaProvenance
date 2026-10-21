@@ -65,11 +65,12 @@ class DecodeResult:
     carrier_version: str
     elapsed_seconds: float
     error: Optional[str] = None
+    watermark_detected: bool = True
 
     @property
     def decodable(self) -> bool:
-        """True iff the decoder produced a valid payload."""
-        return self.payload_hex is not None
+        """True iff the decoder produced a valid payload and detected watermark signal."""
+        return self.payload_hex is not None and self.watermark_detected
 
 
 class BaseCarrier(abc.ABC):

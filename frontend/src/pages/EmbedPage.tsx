@@ -7,7 +7,7 @@ interface EmbedPageProps {
 }
 
 export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
-  const [carrier, setCarrier] = useState<'hidden' | 'trustmark'>('hidden');
+  const [carrier, setCarrier] = useState<'pureconv' | 'hidden' | 'trustmark'>('pureconv');
   const [payloadHex, setPayloadHex] = useState<string>('a1b2c3d4');
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
@@ -141,7 +141,7 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
   const handleGeneratePayload = () => {
     setPublisherTxResult(null);
     setPublisherTxError(null);
-    if (carrier === 'hidden') {
+    if (carrier === 'pureconv' || carrier === 'hidden') {
       // 32-bit: 8 hex chars
       const val = Math.floor(Math.random() * 0xffffffff);
       setPayloadHex(val.toString(16).padStart(8, '0'));
@@ -156,14 +156,14 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
     }
   };
 
-  const handleCarrierChange = (newCarrier: 'hidden' | 'trustmark') => {
+  const handleCarrierChange = (newCarrier: 'pureconv' | 'hidden' | 'trustmark') => {
     setCarrier(newCarrier);
     setPublisherTxResult(null);
     setPublisherTxError(null);
-    if (newCarrier === 'hidden') {
-      setPayloadHex('a1b2c3d4');
-    } else {
+    if (newCarrier === 'trustmark') {
       setPayloadHex('a5123456789abcdef01234567');
+    } else {
+      setPayloadHex('deadbeef');
     }
   };
 
@@ -333,7 +333,19 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
             <label className="block text-xs font-semibold text-slate-400 mb-2">
               Neural Watermark Carrier:
             </label>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-3 gap-2">
+              <button
+                type="button"
+                onClick={() => handleCarrierChange('pureconv')}
+                className={`px-3 py-2.5 rounded-lg text-xs font-semibold border transition text-left ${
+                  carrier === 'pureconv'
+                    ? 'bg-blue-600/20 border-blue-500 text-blue-300'
+                    : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700'
+                }`}
+              >
+                <span className="block font-bold">PureConv-32</span>
+                <span className="text-[10px] text-slate-500">Pure Neural · ZK</span>
+              </button>
               <button
                 type="button"
                 onClick={() => handleCarrierChange('hidden')}
@@ -344,7 +356,7 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
                 }`}
               >
                 <span className="block font-bold">HiDDeN-32</span>
-                <span className="text-[10px] text-slate-500">32-bit · EZKL/ONNX</span>
+                <span className="text-[10px] text-slate-500">32-bit · Legacy</span>
               </button>
               <button
                 type="button"
@@ -365,7 +377,7 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
           <div>
             <div className="flex items-center justify-between mb-1.5">
               <label className="text-xs font-semibold text-slate-400">
-                Payload Hex ({carrier === 'hidden' ? '32 bits / 8 chars' : '100 bits / 25 chars'}):
+                Payload Hex ({carrier === 'trustmark' ? '100 bits / 25 chars' : '32 bits / 8 chars'}):
               </label>
               <button
                 type="button"
@@ -380,7 +392,7 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
               value={payloadHex}
               onChange={(e) => setPayloadHex(e.target.value.toLowerCase().replace(/[^0-9a-f]/g, ''))}
               className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs font-mono text-slate-200 focus:outline-none focus:border-blue-500"
-              maxLength={carrier === 'hidden' ? 8 : 25}
+              maxLength={carrier === 'trustmark' ? 25 : 8}
             />
           </div>
 

@@ -43,6 +43,11 @@ class DecodeResponse(BaseModel):
     carrier_name: str
     carrier_version: str
     elapsed_seconds: float
+    # Distinct verification semantics
+    watermark_detected: bool = False
+    payload_recovered: bool = False
+    payload_matches: Optional[bool] = None
+    failure_reason: Optional[str] = None
     # Bayesian Likelihood Ratio & Provenance inference
     log10_likelihood_ratio: Optional[float] = None
     posterior_probability_h1: Optional[float] = None

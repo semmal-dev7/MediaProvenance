@@ -3,7 +3,7 @@ import { Upload, CheckCircle2, XCircle, ShieldAlert, Cpu, Blocks, Clock, ArrowRi
 import { readRecordFromSepoliaFree, OnChainRecord } from '../services/web3';
 
 export const VerifyPage: React.FC = () => {
-  const [carrier, setCarrier] = useState<'hidden' | 'trustmark'>('hidden');
+  const [carrier, setCarrier] = useState<'pureconv' | 'hidden' | 'trustmark'>('pureconv');
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [refPayload, setRefPayload] = useState<string>('');
@@ -198,28 +198,42 @@ export const VerifyPage: React.FC = () => {
 
           <div>
             <label className="block text-xs font-semibold text-slate-400 mb-2">Carrier Model:</label>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-3 gap-2">
+              <button
+                type="button"
+                onClick={() => setCarrier('pureconv')}
+                className={`px-2.5 py-2 rounded-lg text-xs font-semibold border text-left transition ${
+                  carrier === 'pureconv'
+                    ? 'bg-blue-600/20 border-blue-500 text-blue-300'
+                    : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700'
+                }`}
+              >
+                <span className="block font-bold">PureConv-32</span>
+                <span className="text-[10px] text-slate-500">Pure Neural · ZK</span>
+              </button>
               <button
                 type="button"
                 onClick={() => setCarrier('hidden')}
-                className={`px-3 py-2 rounded-lg text-xs font-semibold border text-left ${
+                className={`px-2.5 py-2 rounded-lg text-xs font-semibold border text-left transition ${
                   carrier === 'hidden'
                     ? 'bg-blue-600/20 border-blue-500 text-blue-300'
-                    : 'bg-slate-950 border-slate-800 text-slate-400'
+                    : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700'
                 }`}
               >
-                HiDDeN-32 (32-bit)
+                <span className="block font-bold">HiDDeN-32</span>
+                <span className="text-[10px] text-slate-500">32-bit · Legacy</span>
               </button>
               <button
                 type="button"
                 onClick={() => setCarrier('trustmark')}
-                className={`px-3 py-2 rounded-lg text-xs font-semibold border text-left ${
+                className={`px-2.5 py-2 rounded-lg text-xs font-semibold border text-left transition ${
                   carrier === 'trustmark'
                     ? 'bg-blue-600/20 border-blue-500 text-blue-300'
-                    : 'bg-slate-950 border-slate-800 text-slate-400'
+                    : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700'
                 }`}
               >
-                TrustMark-Q (100-bit)
+                <span className="block font-bold">TrustMark-Q</span>
+                <span className="text-[10px] text-slate-500">100-bit · High-Res</span>
               </button>
             </div>
           </div>
@@ -292,62 +306,136 @@ export const VerifyPage: React.FC = () => {
                 </h3>
                 <span
                   className={`text-xs font-mono px-2.5 py-1 rounded-md font-bold border ${
-                    decodeResult.decodable
+                    decodeResult.watermark_detected && decodeResult.payload_matches !== false
                       ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
+                      : decodeResult.watermark_detected && decodeResult.payload_matches === false
+                      ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
                       : 'bg-rose-500/10 border-rose-500/30 text-rose-400'
                   }`}
                 >
-                  {decodeResult.decodable ? '✓ AUTHENTIC WATERMARK DETECTED' : '✗ NO WATERMARK FOUND (TAMPERED / CLEAN)'}
+                  {decodeResult.watermark_detected && decodeResult.payload_matches !== false
+                    ? '✓ AUTHENTIC WATERMARK DETECTED'
+                    : decodeResult.watermark_detected && decodeResult.payload_matches === false
+                    ? '⚠ WATERMARK DETECTED (PAYLOAD MISMATCH)'
+                    : '✗ NO WATERMARK SIGNAL DETECTED'}
                 </span>
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <div className="p-3 bg-slate-950 rounded-lg border border-slate-800">
                   <span className="text-[10px] text-slate-500 uppercase font-semibold block">Recovered Payload</span>
-                  <span className={`text-sm font-mono font-bold block mt-1 truncate ${decodeResult.decodable ? 'text-blue-400' : 'text-slate-500'}`}>
-                    {decodeResult.decodable ? `0x${decodeResult.payload_hex}` : 'None (Noise)'}
+                  <span className={`text-sm font-mono font-bold block mt-1 truncate ${decodeResult.payload_hex ? 'text-blue-400' : 'text-slate-500'}`}>
+                    {decodeResult.payload_hex ? `0x${decodeResult.payload_hex}` : 'None Detected'}
                   </span>
-                  <span className="text-[10px] text-slate-500">{decodeResult.payload_bits} bits</span>
+                  <span className="text-[10px] text-slate-500">
+                    {decodeResult.payload_hex ? `${decodeResult.payload_bits} bits extracted` : (decodeResult.error ? 'No Signal' : 'Failed')}
+                  </span>
                 </div>
 
                 <div className="p-3 bg-slate-950 rounded-lg border border-slate-800">
                   <span className="text-[10px] text-slate-500 uppercase font-semibold block">Bit Error Rate (BER)</span>
-                  <span className={`text-sm font-bold block mt-1 ${decodeResult.decodable ? 'text-emerald-400' : 'text-rose-400'}`}>
-                    {decodeResult.bit_error_rate !== null ? `${(decodeResult.bit_error_rate * 100).toFixed(1)}%` : (decodeResult.decodable ? '0.0%' : '50.0% (Noise)')}
+                  <span className={`text-sm font-bold block mt-1 ${
+                    decodeResult.bit_error_rate !== null && decodeResult.bit_error_rate !== undefined
+                      ? (decodeResult.bit_error_rate <= 0.25 ? 'text-emerald-400' : 'text-rose-400')
+                      : 'text-slate-500'
+                  }`}>
+                    {decodeResult.bit_error_rate !== null && decodeResult.bit_error_rate !== undefined
+                      ? `${(decodeResult.bit_error_rate * 100).toFixed(1)}%`
+                      : (refPayload ? 'Undecodable' : 'N/A (Blind Recovery)')}
                   </span>
                   <span className="text-[10px] text-slate-500">
-                    {decodeResult.hamming_distance !== null ? `HD: ${decodeResult.hamming_distance} bits` : (decodeResult.decodable ? 'Sync: OK' : 'Sync: Failed')}
+                    {decodeResult.hamming_distance !== null && decodeResult.hamming_distance !== undefined
+                      ? `HD: ${decodeResult.hamming_distance} / ${decodeResult.payload_bits} bits`
+                      : (refPayload ? 'No Bit Alignment' : 'Unconstrained')}
                   </span>
                 </div>
 
                 <div className="p-3 bg-slate-950 rounded-lg border border-slate-800">
                   <span className="text-[10px] text-slate-500 uppercase font-semibold block">Evidence (Log10 LR)</span>
-                  <span className={`text-sm font-bold block mt-1 ${decodeResult.decodable ? 'text-indigo-400' : 'text-rose-400'}`}>
-                    {decodeResult.log10_likelihood_ratio !== null ? (decodeResult.log10_likelihood_ratio >= 0 ? `+${decodeResult.log10_likelihood_ratio.toFixed(1)}` : decodeResult.log10_likelihood_ratio.toFixed(1)) : (decodeResult.decodable ? '+25.0' : '-30.0')}
+                  <span className={`text-sm font-bold block mt-1 ${
+                    decodeResult.log10_likelihood_ratio !== null && decodeResult.log10_likelihood_ratio !== undefined
+                      ? (decodeResult.log10_likelihood_ratio >= 0 ? 'text-indigo-400' : 'text-rose-400')
+                      : 'text-slate-500'
+                  }`}>
+                    {decodeResult.log10_likelihood_ratio !== null && decodeResult.log10_likelihood_ratio !== undefined
+                      ? (decodeResult.log10_likelihood_ratio >= 0 ? `+${decodeResult.log10_likelihood_ratio.toFixed(2)}` : decodeResult.log10_likelihood_ratio.toFixed(2))
+                      : 'N/A (No Reference)'}
                   </span>
-                  <span className="text-[10px] text-slate-500">Noisy-Channel Model</span>
+                  <span className="text-[10px] text-slate-500">
+                    {decodeResult.log10_likelihood_ratio !== null ? 'Bayesian Likelihood Ratio' : 'Requires reference'}
+                  </span>
                 </div>
 
                 <div className="p-3 bg-slate-950 rounded-lg border border-slate-800">
                   <span className="text-[10px] text-slate-500 uppercase font-semibold block">Inferred Hypothesis</span>
-                  <span className={`text-sm font-bold block mt-1 ${decodeResult.decodable ? 'text-emerald-400' : 'text-rose-400'}`}>
-                    {decodeResult.decodable ? 'H1 (Authentic)' : 'H0 (Tampered / Clean)'}
+                  <span className={`text-sm font-bold block mt-1 ${
+                    decodeResult.inferred_hypothesis === 'H1'
+                      ? 'text-emerald-400'
+                      : decodeResult.inferred_hypothesis === 'H0'
+                      ? 'text-rose-400'
+                      : 'text-amber-400'
+                  }`}>
+                    {decodeResult.inferred_hypothesis === 'H1'
+                      ? 'H1 (Derivative)'
+                      : decodeResult.inferred_hypothesis === 'H0'
+                      ? 'H0 (Unrelated)'
+                      : 'H2 (Undecodable)'}
                   </span>
                   <span className="text-[10px] text-slate-500">
-                    P({decodeResult.decodable ? 'H1' : 'H0'}) = 1.000
+                    {decodeResult.posterior_probability_h1 !== null && decodeResult.posterior_probability_h1 !== undefined
+                      ? `P(H1) = ${decodeResult.posterior_probability_h1.toFixed(3)}`
+                      : 'Unconditioned'}
                   </span>
                 </div>
               </div>
 
-              {!decodeResult.decodable && (
+              {/* Status Diagnostic Bar */}
+              <div className="p-3 bg-slate-950/70 rounded-lg border border-slate-800/80 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                <div>
+                  <span className="text-slate-500 block text-[10px] uppercase font-semibold">Signal Detected:</span>
+                  <span className={`font-mono font-bold ${decodeResult.watermark_detected ? 'text-emerald-400' : 'text-rose-400'}`}>
+                    {decodeResult.watermark_detected ? 'YES' : 'NO'}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-slate-500 block text-[10px] uppercase font-semibold">Payload Recovered:</span>
+                  <span className={`font-mono font-bold ${decodeResult.payload_recovered ? 'text-emerald-400' : 'text-slate-400'}`}>
+                    {decodeResult.payload_recovered ? 'YES' : 'NO'}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-slate-500 block text-[10px] uppercase font-semibold">Matches Reference:</span>
+                  <span className={`font-mono font-bold ${
+                    decodeResult.payload_matches === true
+                      ? 'text-emerald-400'
+                      : decodeResult.payload_matches === false
+                      ? 'text-rose-400'
+                      : 'text-slate-500'
+                  }`}>
+                    {decodeResult.payload_matches === true
+                      ? 'MATCH'
+                      : decodeResult.payload_matches === false
+                      ? 'MISMATCH'
+                      : 'N/A (No Reference)'}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-slate-500 block text-[10px] uppercase font-semibold">Diagnostic:</span>
+                  <span className="text-slate-400 font-mono text-[11px] truncate block" title={decodeResult.failure_reason || decodeResult.error || 'Normal'}>
+                    {decodeResult.failure_reason || (decodeResult.watermark_detected ? 'Authentic' : 'No Signal')}
+                  </span>
+                </div>
+              </div>
+
+              {!decodeResult.watermark_detected && (
                 <div className="p-3.5 bg-rose-500/10 border border-rose-500/30 rounded-lg text-rose-300 text-xs space-y-1">
                   <div className="flex items-center gap-2 font-bold text-rose-400">
                     <ShieldAlert className="w-4 h-4" />
                     Negative Watermark Verification
                   </div>
                   <p className="text-[11px] text-rose-300/90 leading-relaxed">
-                    This candidate image does not contain an authentic watermark signal (synchronization preamble failed / random noise floor).
-                    In accordance with cryptographic provenance rules, zero-knowledge proofs and blockchain anchoring are restricted to authentic derivatives.
+                    {decodeResult.error || 'This candidate image does not contain an authentic watermark signal above the detection threshold.'}
+                    {' In accordance with cryptographic provenance rules, zero-knowledge proofs and blockchain anchoring are restricted to authentic derivatives.'}
                   </p>
                 </div>
               )}
