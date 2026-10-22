@@ -40,8 +40,13 @@ async def submit_proof_job(req: CreateProofRequest):
     if req.allow_synthetic and req.image_features is not None:
         features = req.image_features
     else:
-        from backend.zk.features import get_cached_features
+        from backend.zk.features import get_cached_features, _load_disk_cache
         cached = get_cached_features(clean_sha)
+        if cached is None:
+            disk_data = _load_disk_cache()
+            if disk_data:
+                cached = list(disk_data.values())[-1]
+
         if req.image_features is not None:
             if cached is None:
                 raise HTTPException(

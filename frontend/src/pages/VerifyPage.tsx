@@ -36,7 +36,9 @@ export const VerifyPage: React.FC = () => {
     setOnChainRecord(null);
 
     try {
-      const assetId = decodeResult.image_sha256 || ('0x' + decodeResult.payload_hex.padEnd(64, '0'));
+      const assetId = decodeResult.registered_anchor?.asset_id
+        || decodeResult.image_sha256
+        || ('0x' + decodeResult.payload_hex.padEnd(64, '0'));
       const rec = await readRecordFromSepoliaFree(assetId);
       setOnChainRecord(rec);
     } catch (err: any) {
@@ -119,6 +121,7 @@ export const VerifyPage: React.FC = () => {
           payload_hex: decodeResult.payload_hex,
           image_sha256: decodeResult.image_sha256 || ('0x' + decodeResult.payload_hex.padEnd(64, '0')),
           prover_address: '0xc3105176265bd16F86d0A3ff61f3aC0fE00e6007',
+          carrier: carrier,
         }),
       });
 
@@ -661,6 +664,19 @@ export const VerifyPage: React.FC = () => {
                   );
                 })}
               </div>
+
+              {/* Proving Failure Alert */}
+              {jobData && jobData.status === 'failed' && (
+                <div className="p-3.5 bg-rose-500/10 border border-rose-500/30 rounded-lg text-rose-900 text-xs space-y-1">
+                  <div className="flex items-center gap-2 font-bold text-rose-700">
+                    <XCircle className="w-4 h-4" />
+                    Proving Job Failed
+                  </div>
+                  <p className="text-[11px] text-rose-950 font-mono leading-relaxed">
+                    {jobData.error || 'The zero-knowledge proving pipeline encountered an error.'}
+                  </p>
+                </div>
+              )}
 
               {/* Confirmation Artifacts */}
               {jobData && jobData.status === 'confirmed' && (

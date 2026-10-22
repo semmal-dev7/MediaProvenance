@@ -543,6 +543,38 @@ class JobManager:
         clean_id = asset_id.lower().replace("0x", "").strip()
         return self._embedded_assets.get(clean_id)
 
+    def get_anchor_by_payload(self, payload_hex: str) -> Optional[AnchorRecord]:
+        """Reverse lookup an on-chain or registered anchor record by watermark payload."""
+        clean = payload_hex.lower().replace("0x", "").strip()
+        # 1. Match against registered embedded assets
+        for aid, p in self._embedded_assets.items():
+            if p == clean or p.startswith(clean) or clean.startswith(p):
+                rec = self.get_anchor("0x" + aid) or self.get_anchor(aid)
+                if rec:
+                    return rec
+
+        # 2. Match against commitments in anchors ledger
+        try:
+            from backend.zk.engine import zk_engine
+            for rec in self._anchors.values():
+                for digest in [zk_engine.model_digest, zk_engine.pureconv_model_digest]:
+                    h = hashlib.sha256()
+                    h.update(clean.encode("utf-8"))
+                    h.update(digest.encode("utf-8"))
+                    c_hex = "0x" + h.hexdigest()
+                    if rec.commitment.lower() == c_hex.lower():
+                        return rec
+        except Exception:
+            pass
+
+        # 3. Match against known jobs
+        for job in self._jobs.values():
+            if job.payload_hex.lower().replace("0x", "").strip() == clean:
+                rec = self.get_anchor(job.image_sha256)
+                if rec:
+                    return rec
+        return None
+
     def get_anchor(self, query: str) -> Optional[AnchorRecord]:
         clean = query.lower().strip()
         if not clean.startswith("0x"):
