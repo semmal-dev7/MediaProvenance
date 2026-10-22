@@ -132,6 +132,18 @@ def _save_disk_cache(data: Dict[str, List[float]]) -> None:
         pass
 
 
+def clear_feature_cache() -> None:
+    """Clears both in-memory and on-disk feature caches."""
+    global _FEATURE_CACHE
+    _FEATURE_CACHE.clear()
+    if _CACHE_FILE.exists():
+        try:
+            _CACHE_FILE.unlink()
+        except Exception:
+            pass
+
+
+
 def cache_image_features(
     image_sha256: str,
     image_input: Union[Image.Image, bytes, str, Path, List[float]],

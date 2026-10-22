@@ -40,6 +40,10 @@ class DecodeResponse(BaseModel):
     hamming_distance: Optional[int] = None
     bit_error_rate: Optional[float] = None
     confidence: Optional[float] = None
+    mean_logit_magnitude: Optional[float] = None
+    rms_energy: Optional[float] = None
+    neural_certainty: Optional[float] = None
+    expected_ber: Optional[float] = None
     carrier_name: str
     carrier_version: str
     elapsed_seconds: float
@@ -53,6 +57,12 @@ class DecodeResponse(BaseModel):
     posterior_probability_h1: Optional[float] = None
     inferred_hypothesis: str = "H2"  # H1 (derivative), H0 (unrelated), H2 (indeterminate/undecodable)
     image_sha256: Optional[str] = None
+    # Phase 5.7 Distinct Provenance & Authentication Semantics
+    proof_valid: Optional[bool] = None
+    image_binding_verified: Optional[bool] = None
+    publisher_authenticated: Optional[bool] = None
+    anchor_found: Optional[bool] = None
+    registered_anchor: Optional[Dict[str, Any]] = None
     error: Optional[str] = None
 
 

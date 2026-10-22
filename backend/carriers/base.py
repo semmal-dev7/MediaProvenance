@@ -66,6 +66,10 @@ class DecodeResult:
     elapsed_seconds: float
     error: Optional[str] = None
     watermark_detected: bool = True
+    mean_logit_magnitude: Optional[float] = None
+    rms_energy: Optional[float] = None
+    neural_certainty: Optional[float] = None
+    expected_ber: Optional[float] = None
 
     @property
     def decodable(self) -> bool:

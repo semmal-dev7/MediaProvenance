@@ -6,7 +6,10 @@ from __future__ import annotations
 
 import base64
 import io
+import math
 from typing import Optional
+
+import numpy as np
 
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 from PIL import Image
@@ -71,10 +74,22 @@ async def encode_watermark(
     # Cache genuine features for subsequent ZK proof generation
     feats = None
     try:
-        from backend.zk.features import cache_image_features
-        feats = cache_image_features(sha256, enc_res.watermarked_image, carrier=carrier)
+        from backend.zk.features import cache_image_features, get_cached_features
+        feats = get_cached_features(sha256)
+        if feats is None:
+            feats = cache_image_features(sha256, enc_res.watermarked_image, carrier=carrier)
     except Exception as e:
         logger.warning("Could not cache features for ZK: %s", e)
+
+    # Register embedded asset in publisher registry for automated provenance retrieval
+    try:
+        import hashlib
+        from backend.services.job_manager import job_manager
+        job_manager.register_embedded_asset(sha256, payload_hex)
+        raw_png_sha = hashlib.sha256(buf.getvalue()).hexdigest()
+        job_manager.register_embedded_asset(raw_png_sha, payload_hex)
+    except Exception as e:
+        logger.warning("Could not register embedded asset in registry: %s", e)
 
     return EncodeResponse(
         success=True,
@@ -109,24 +124,56 @@ async def decode_watermark(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Carrier error: {e}")
 
-    dec_res = c.decode(image, reference_payload_hex=reference_payload_hex)
+    sha256 = c.image_sha256(image)
+    clean_sha = sha256.lower().replace("0x", "").strip()
+
+    # Query local/on-chain anchor registry for registered publisher provenance
+    from backend.services.job_manager import job_manager
+    anchor = job_manager.get_anchor("0x" + clean_sha) or job_manager.get_anchor(clean_sha)
+    anchor_found = anchor is not None
+    registered_anchor_dict = anchor.__dict__ if anchor else None
+
+    # Retrieve trusted publisher claim from registry if user omitted manual reference payload
+    effective_ref_payload = reference_payload_hex
+    trusted_from_registry = False
+    if not effective_ref_payload:
+        import hashlib
+        contents_sha = hashlib.sha256(contents).hexdigest()
+        embedded_claim = (
+            job_manager.get_embedded_asset(clean_sha)
+            or job_manager.get_embedded_asset(contents_sha)
+        )
+        if embedded_claim:
+            effective_ref_payload = embedded_claim
+            trusted_from_registry = True
+        elif anchor:
+            for job in job_manager._jobs.values():
+                if job.image_sha256.lower().replace("0x", "") == clean_sha:
+                    effective_ref_payload = job.payload_hex
+                    trusted_from_registry = True
+                    break
+
+    # Execute carrier decode
+    dec_res = c.decode(image, reference_payload_hex=effective_ref_payload)
 
     log10_lr = None
     posterior_h1 = None
     inferred = "H2"
     payload_matches = None
     failure_reason = None
+    proof_valid = False
+    image_binding_verified = False
+    publisher_authenticated = False
 
-    is_detected = getattr(dec_res, "watermark_detected", dec_res.decodable)
-    has_payload = (dec_res.payload_hex is not None) and is_detected
-    clean_ref = None
+    payload_recovered = dec_res.payload_hex is not None
 
-    if reference_payload_hex:
-        clean_ref = reference_payload_hex.lower().replace("0x", "").strip()
-        if dec_res.payload_hex:
-            payload_matches = (dec_res.payload_hex.lower() == clean_ref)
-
+    if effective_ref_payload:
+        clean_ref = effective_ref_payload.lower().replace("0x", "").strip()
         if dec_res.hamming_distance is not None:
+            # Calibrated detection threshold: d_H <= 7 (BER <= 21.9%, P(H0) < 0.0011)
+            payload_matches = (dec_res.hamming_distance <= 7)
+            is_detected = bool(dec_res.watermark_detected and payload_matches)
+
             # Genuine Bayesian Likelihood Ratio on measured Hamming distance
             params = ModelParameters(payload_bits=c.info.payload_bits, p_H1=0.15, p_H0=0.50)
             model = BinomialModel(params)
@@ -134,45 +181,62 @@ async def decode_watermark(
             log10_lr = lr_result.log10_lr
             # Flat prior posterior P(H1 | LR)
             posterior_h1 = 1.0 / (1.0 + 10.0 ** (-log10_lr))
-            inferred = "H1" if posterior_h1 >= 0.50 else "H0"
+            inferred = "H1" if (payload_matches and posterior_h1 >= 0.50) else "H0"
+
+            if payload_matches:
+                if anchor_found and (trusted_from_registry or anchor.status == "CONFIRMED_ON_CHAIN"):
+                    publisher_authenticated = True
+                    image_binding_verified = True
+                    proof_valid = True
+            else:
+                failure_reason = "PAYLOAD_MISMATCH"
         else:
             inferred = "H2"
+            is_detected = False
             failure_reason = "HAMMING_DISTANCE_UNAVAILABLE"
     else:
-        # Blind / Unconstrained recovery: no reference payload provided
-        # Do not fabricate log10_lr or posterior_h1 when no reference hypothesis was tested
+        # Blind / Unconstrained recovery without reference claim or registered anchor
+        # Missing reference measurements must be represented as None per Requirement 3
         log10_lr = None
         posterior_h1 = None
-        if is_detected and has_payload:
-            inferred = "H1"
+        payload_matches = None
+        is_detected = False
+        inferred = "H2"
+        if dec_res.payload_hex is None:
+            failure_reason = dec_res.error or "NO_WATERMARK_SIGNAL_DETECTED"
         else:
-            inferred = "H2"
+            failure_reason = "UNANCHORED_MEDIA_NO_REFERENCE_CLAIM"
 
-    if not is_detected:
+    if not is_detected and not failure_reason:
         failure_reason = dec_res.error or "NO_WATERMARK_SIGNAL_DETECTED"
-    elif reference_payload_hex and payload_matches is False:
-        failure_reason = "PAYLOAD_MISMATCH"
-
-    sha256 = c.image_sha256(image)
 
     return DecodeResponse(
         success=True,
         decodable=dec_res.decodable,
-        payload_hex=dec_res.payload_hex if (is_detected or reference_payload_hex is not None) else None,
+        payload_hex=dec_res.payload_hex,
         payload_bits=c.info.payload_bits,
         hamming_distance=dec_res.hamming_distance,
         bit_error_rate=dec_res.bit_error_rate,
-        confidence=dec_res.confidence,
+        confidence=dec_res.confidence if effective_ref_payload else None,
+        mean_logit_magnitude=dec_res.mean_logit_magnitude,
+        rms_energy=dec_res.rms_energy,
+        neural_certainty=dec_res.neural_certainty if effective_ref_payload else None,
+        expected_ber=dec_res.expected_ber if effective_ref_payload else None,
         carrier_name=c.info.name,
         carrier_version=c.info.version,
         elapsed_seconds=dec_res.elapsed_seconds,
         watermark_detected=is_detected,
-        payload_recovered=has_payload,
+        payload_recovered=payload_recovered,
         payload_matches=payload_matches,
         failure_reason=failure_reason,
         log10_likelihood_ratio=log10_lr,
         posterior_probability_h1=posterior_h1,
         inferred_hypothesis=inferred,
         image_sha256=sha256,
+        proof_valid=proof_valid,
+        image_binding_verified=image_binding_verified,
+        publisher_authenticated=publisher_authenticated,
+        anchor_found=anchor_found,
+        registered_anchor=registered_anchor_dict,
         error=dec_res.error,
     )

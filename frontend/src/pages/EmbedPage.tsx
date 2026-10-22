@@ -235,9 +235,6 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
           </div>
           <div>
             <h2 className="text-xl font-bold text-white">Embed Neural Watermark</h2>
-            <p className="text-xs text-slate-400">
-              Embed a 32-bit (HiDDeN) or 100-bit (TrustMark) cryptographic publisher identifier into pixel space
-            </p>
           </div>
         </div>
       </div>

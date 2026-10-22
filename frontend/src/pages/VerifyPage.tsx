@@ -78,6 +78,19 @@ export const VerifyPage: React.FC = () => {
         body: formData,
       });
 
+      if (!res.ok) {
+        let errMsg = `Server returned status ${res.status}`;
+        try {
+          const errData = await res.json();
+          if (errData.detail) errMsg = typeof errData.detail === 'string' ? errData.detail : JSON.stringify(errData.detail);
+          else if (errData.error) errMsg = errData.error;
+        } catch {
+          // If body is not JSON (e.g. plain text 500 error), ignore parse error
+        }
+        setDecodeError(errMsg);
+        return;
+      }
+
       const data = await res.json();
       if (data.success) {
         setDecodeResult(data);
@@ -182,9 +195,6 @@ export const VerifyPage: React.FC = () => {
           </div>
           <div>
             <h2 className="text-xl font-bold text-white">Neural Watermark &amp; Zero-Knowledge Verification</h2>
-            <p className="text-xs text-slate-400">
-              Recover hidden payload, compute Bayesian likelihood ratios, generate EZKL/Halo2 proofs, and verify commitments
-            </p>
           </div>
         </div>
       </div>
@@ -306,17 +316,21 @@ export const VerifyPage: React.FC = () => {
                 </h3>
                 <span
                   className={`text-xs font-mono px-2.5 py-1 rounded-md font-bold border ${
-                    decodeResult.watermark_detected && decodeResult.payload_matches !== false
+                    decodeResult.watermark_detected && decodeResult.payload_matches === true
                       ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
-                      : decodeResult.watermark_detected && decodeResult.payload_matches === false
+                      : decodeResult.payload_matches === false
                       ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
+                      : decodeResult.payload_hex && (decodeResult.payload_matches === null || decodeResult.payload_matches === undefined)
+                      ? 'bg-slate-800 border-slate-700 text-slate-300'
                       : 'bg-rose-500/10 border-rose-500/30 text-rose-400'
                   }`}
                 >
-                  {decodeResult.watermark_detected && decodeResult.payload_matches !== false
-                    ? '✓ AUTHENTIC WATERMARK DETECTED'
-                    : decodeResult.watermark_detected && decodeResult.payload_matches === false
-                    ? '⚠ WATERMARK DETECTED (PAYLOAD MISMATCH)'
+                  {decodeResult.watermark_detected && decodeResult.payload_matches === true
+                    ? '✓ AUTHENTIC WATERMARK VERIFIED'
+                    : decodeResult.payload_matches === false
+                    ? '⚠ PAYLOAD MISMATCH (H0 UNRELATED)'
+                    : decodeResult.payload_hex && (decodeResult.payload_matches === null || decodeResult.payload_matches === undefined)
+                    ? 'ℹ UNVERIFIED CANDIDATE (NO REFERENCE CLAIM)'
                     : '✗ NO WATERMARK SIGNAL DETECTED'}
                 </span>
               </div>
@@ -341,12 +355,12 @@ export const VerifyPage: React.FC = () => {
                   }`}>
                     {decodeResult.bit_error_rate !== null && decodeResult.bit_error_rate !== undefined
                       ? `${(decodeResult.bit_error_rate * 100).toFixed(1)}%`
-                      : (refPayload ? 'Undecodable' : 'N/A (Blind Recovery)')}
+                      : 'N/A (Reference Required)'}
                   </span>
                   <span className="text-[10px] text-slate-500">
                     {decodeResult.hamming_distance !== null && decodeResult.hamming_distance !== undefined
-                      ? `HD: ${decodeResult.hamming_distance} / ${decodeResult.payload_bits} bits`
-                      : (refPayload ? 'No Bit Alignment' : 'Unconstrained')}
+                      ? `HD: ${decodeResult.hamming_distance} / ${decodeResult.payload_bits} bits (Measured)`
+                      : 'Requires Reference Claim'}
                   </span>
                 </div>
 
@@ -359,10 +373,12 @@ export const VerifyPage: React.FC = () => {
                   }`}>
                     {decodeResult.log10_likelihood_ratio !== null && decodeResult.log10_likelihood_ratio !== undefined
                       ? (decodeResult.log10_likelihood_ratio >= 0 ? `+${decodeResult.log10_likelihood_ratio.toFixed(2)}` : decodeResult.log10_likelihood_ratio.toFixed(2))
-                      : 'N/A (No Reference)'}
+                      : 'N/A'}
                   </span>
                   <span className="text-[10px] text-slate-500">
-                    {decodeResult.log10_likelihood_ratio !== null ? 'Bayesian Likelihood Ratio' : 'Requires reference'}
+                    {decodeResult.posterior_probability_h1 !== null && decodeResult.posterior_probability_h1 !== undefined
+                      ? `P(H1) = ${decodeResult.posterior_probability_h1.toFixed(3)}`
+                      : 'Bayesian Evidence'}
                   </span>
                 </div>
 
@@ -379,6 +395,8 @@ export const VerifyPage: React.FC = () => {
                       ? 'H1 (Derivative)'
                       : decodeResult.inferred_hypothesis === 'H0'
                       ? 'H0 (Unrelated)'
+                      : decodeResult.payload_hex
+                      ? 'H2 (Unanchored Candidate)'
                       : 'H2 (Undecodable)'}
                   </span>
                   <span className="text-[10px] text-slate-500">
@@ -393,8 +411,18 @@ export const VerifyPage: React.FC = () => {
               <div className="p-3 bg-slate-950/70 rounded-lg border border-slate-800/80 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
                 <div>
                   <span className="text-slate-500 block text-[10px] uppercase font-semibold">Signal Detected:</span>
-                  <span className={`font-mono font-bold ${decodeResult.watermark_detected ? 'text-emerald-400' : 'text-rose-400'}`}>
-                    {decodeResult.watermark_detected ? 'YES' : 'NO'}
+                  <span className={`font-mono font-bold ${
+                    decodeResult.watermark_detected && decodeResult.payload_matches === true
+                      ? 'text-emerald-400'
+                      : decodeResult.payload_matches === false
+                      ? 'text-rose-400'
+                      : 'text-slate-400'
+                  }`}>
+                    {decodeResult.watermark_detected && decodeResult.payload_matches === true
+                      ? 'YES (VERIFIED)'
+                      : decodeResult.payload_matches === false
+                      ? 'MISMATCH (H0)'
+                      : 'UNVERIFIED (NO CLAIM)'}
                   </span>
                 </div>
                 <div>
@@ -413,29 +441,66 @@ export const VerifyPage: React.FC = () => {
                       : 'text-slate-500'
                   }`}>
                     {decodeResult.payload_matches === true
-                      ? 'MATCH'
+                      ? 'MATCH (VERIFIED)'
                       : decodeResult.payload_matches === false
-                      ? 'MISMATCH'
-                      : 'N/A (No Reference)'}
+                      ? 'MISMATCH (H0)'
+                      : 'UNANCHORED (H2)'}
                   </span>
                 </div>
                 <div>
                   <span className="text-slate-500 block text-[10px] uppercase font-semibold">Diagnostic:</span>
                   <span className="text-slate-400 font-mono text-[11px] truncate block" title={decodeResult.failure_reason || decodeResult.error || 'Normal'}>
-                    {decodeResult.failure_reason || (decodeResult.watermark_detected ? 'Authentic' : 'No Signal')}
+                    {decodeResult.mean_logit_magnitude
+                      ? `RMS: ${decodeResult.rms_energy?.toFixed(2) || '0.00'} | CNN Act: ±${decodeResult.mean_logit_magnitude.toFixed(2)}`
+                      : (decodeResult.failure_reason || (decodeResult.watermark_detected ? 'Authentic' : 'No Signal'))}
                   </span>
                 </div>
               </div>
 
-              {!decodeResult.watermark_detected && (
+              {decodeResult.watermark_detected && decodeResult.payload_matches === true && (
+                <div className="p-3.5 bg-emerald-500/10 border border-emerald-500/30 rounded-lg text-emerald-300 text-xs space-y-1">
+                  <div className="flex items-center gap-2 font-bold text-emerald-400">
+                    <CheckCircle2 className="w-4 h-4" />
+                    Watermark Signal Detected &amp; Verified (Hypothesis H1)
+                  </div>
+                  <p className="text-[11px] text-emerald-200/90 leading-relaxed">
+                    Extracted 32-bit payload <code className="font-mono text-white bg-emerald-950 px-1 py-0.5 rounded">0x{decodeResult.payload_hex}</code> with Bayesian log-likelihood ratio {decodeResult.log10_likelihood_ratio !== null ? (decodeResult.log10_likelihood_ratio >= 0 ? `+${decodeResult.log10_likelihood_ratio.toFixed(2)}` : decodeResult.log10_likelihood_ratio.toFixed(2)) : 'high'} and bit error rate {decodeResult.bit_error_rate !== null ? `${(decodeResult.bit_error_rate * 100).toFixed(1)}%` : '0.0%'}. Signal meets mathematical detection tolerance under hypothesis H1.
+                  </p>
+                </div>
+              )}
+
+              {!decodeResult.watermark_detected && decodeResult.payload_matches === false && (
                 <div className="p-3.5 bg-rose-500/10 border border-rose-500/30 rounded-lg text-rose-300 text-xs space-y-1">
                   <div className="flex items-center gap-2 font-bold text-rose-400">
                     <ShieldAlert className="w-4 h-4" />
-                    Negative Watermark Verification
+                    Watermark Rejection (Payload Mismatch)
                   </div>
                   <p className="text-[11px] text-rose-300/90 leading-relaxed">
-                    {decodeResult.error || 'This candidate image does not contain an authentic watermark signal above the detection threshold.'}
-                    {' In accordance with cryptographic provenance rules, zero-knowledge proofs and blockchain anchoring are restricted to authentic derivatives.'}
+                    {decodeResult.error || 'This candidate image does not match the claimed publisher reference payload.'}
+                  </p>
+                </div>
+              )}
+
+              {decodeResult.payload_hex && (decodeResult.payload_matches === null || decodeResult.payload_matches === undefined) && (
+                <div className="p-3.5 bg-blue-500/10 border border-blue-500/30 rounded-lg text-blue-300 text-xs space-y-1">
+                  <div className="flex items-center gap-2 font-bold text-blue-400">
+                    <ShieldCheck className="w-4 h-4" />
+                    Candidate Payload Extracted (Unanchored Claim)
+                  </div>
+                  <p className="text-[11px] text-blue-200/90 leading-relaxed">
+                    Extracted candidate payload <code className="font-mono text-white bg-blue-950 px-1 py-0.5 rounded">0x{decodeResult.payload_hex}</code> from neural decoder. Provenance is currently unanchored (state H2). To authenticate, enter your expected Reference Payload above, or run an on-chain audit below.
+                  </p>
+                </div>
+              )}
+
+              {!decodeResult.payload_hex && (
+                <div className="p-3.5 bg-rose-500/10 border border-rose-500/30 rounded-lg text-rose-300 text-xs space-y-1">
+                  <div className="flex items-center gap-2 font-bold text-rose-400">
+                    <ShieldAlert className="w-4 h-4" />
+                    No Watermark Recovered
+                  </div>
+                  <p className="text-[11px] text-rose-300/90 leading-relaxed">
+                    {decodeResult.error || 'No decodable watermark signal was recovered from this candidate image.'}
                   </p>
                 </div>
               )}
@@ -458,9 +523,9 @@ export const VerifyPage: React.FC = () => {
 
                   <button
                     onClick={handleVerifyFreeOnChain}
-                    disabled={isVerifyingFree || !decodeResult.decodable}
+                    disabled={isVerifyingFree || !decodeResult.payload_hex}
                     className={`w-full py-2 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition ${
-                      isVerifyingFree || !decodeResult.decodable
+                      isVerifyingFree || !decodeResult.payload_hex
                         ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
                         : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm'
                     }`}
@@ -532,9 +597,9 @@ export const VerifyPage: React.FC = () => {
                 {/* Alternative Automated Pipeline */}
                 <button
                   onClick={handleStartProvingAndAnchor}
-                  disabled={isProving || !decodeResult.decodable}
+                  disabled={isProving || !decodeResult.payload_hex}
                   className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow transition ${
-                    isProving || !decodeResult.decodable
+                    isProving || !decodeResult.payload_hex
                       ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
                       : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700'
                   }`}

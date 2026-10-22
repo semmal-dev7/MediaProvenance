@@ -228,11 +228,11 @@ class PureConvCarrier(BaseCarrier):
         err_msg = None if watermark_detected else "No authentic watermark signal detected (carrier energy below detection threshold)"
 
         return DecodeResult(
-            payload_hex=recovered_hex,
+            payload_hex=recovered_hex if watermark_detected else None,
             payload_bits=self._PAYLOAD_BITS,
-            hamming_distance=hamming_dist,
-            bit_error_rate=ber,
-            confidence=confidence,
+            hamming_distance=hamming_dist if watermark_detected else None,
+            bit_error_rate=ber if watermark_detected else None,
+            confidence=confidence if watermark_detected else 0.0,
             carrier_name=self.info.name,
             carrier_version=self._VERSION,
             elapsed_seconds=elapsed,

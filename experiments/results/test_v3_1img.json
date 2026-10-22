@@ -1,0 +1,855 @@
+{
+  "checkpoint": "models/checkpoints/hidden_32bit_robust_v3.pt",
+  "num_images": 1,
+  "num_attacks": 38,
+  "total_trials": 38,
+  "eval_time_sec": 1.6352043151855469,
+  "overall": {
+    "mean_ber": 0.047697368421052634,
+    "mean_ber_percent": 4.77,
+    "exact_recovery_rate_percent": 60.53,
+    "detection_rate_percent": 100.0,
+    "mean_psnr_db": 27.78,
+    "mean_ssim": 0.9996
+  },
+  "summary_by_category": {
+    "baseline": {
+      "num_trials": 1,
+      "mean_ber": 0.0,
+      "mean_ber_percent": 0.0,
+      "exact_recovery_rate_percent": 100.0,
+      "watermark_detection_rate_percent": 100.0
+    },
+    "blur": {
+      "num_trials": 4,
+      "mean_ber": 0.0,
+      "mean_ber_percent": 0.0,
+      "exact_recovery_rate_percent": 100.0,
+      "watermark_detection_rate_percent": 100.0
+    },
+    "color": {
+      "num_trials": 5,
+      "mean_ber": 0.15625,
+      "mean_ber_percent": 15.62,
+      "exact_recovery_rate_percent": 0.0,
+      "watermark_detection_rate_percent": 100.0
+    },
+    "combined": {
+      "num_trials": 4,
+      "mean_ber": 0.0,
+      "mean_ber_percent": 0.0,
+      "exact_recovery_rate_percent": 100.0,
+      "watermark_detection_rate_percent": 100.0
+    },
+    "crop": {
+      "num_trials": 5,
+      "mean_ber": 0.14375,
+      "mean_ber_percent": 14.37,
+      "exact_recovery_rate_percent": 20.0,
+      "watermark_detection_rate_percent": 100.0
+    },
+    "geometry": {
+      "num_trials": 5,
+      "mean_ber": 0.0,
+      "mean_ber_percent": 0.0,
+      "exact_recovery_rate_percent": 100.0,
+      "watermark_detection_rate_percent": 100.0
+    },
+    "jpeg": {
+      "num_trials": 5,
+      "mean_ber": 0.0,
+      "mean_ber_percent": 0.0,
+      "exact_recovery_rate_percent": 100.0,
+      "watermark_detection_rate_percent": 100.0
+    },
+    "noise": {
+      "num_trials": 4,
+      "mean_ber": 0.0390625,
+      "mean_ber_percent": 3.91,
+      "exact_recovery_rate_percent": 50.0,
+      "watermark_detection_rate_percent": 100.0
+    },
+    "resize": {
+      "num_trials": 5,
+      "mean_ber": 0.03125,
+      "mean_ber_percent": 3.12,
+      "exact_recovery_rate_percent": 20.0,
+      "watermark_detection_rate_percent": 100.0
+    }
+  },
+  "trials": [
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbeef",
+      "attack_name": "identity",
+      "attack_category": "baseline",
+      "attack_severity": 0.0,
+      "attack_params": {},
+      "bit_errors": 0,
+      "ber": 0.0,
+      "exact_match": true,
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.03977929998654872
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbeef",
+      "attack_name": "jpeg_q90",
+      "attack_category": "jpeg",
+      "attack_severity": 0.1,
+      "attack_params": {
+        "quality": 90
+      },
+      "bit_errors": 0,
+      "ber": 0.0,
+      "exact_match": true,
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.031418200000189245
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbeef",
+      "attack_name": "jpeg_q70",
+      "attack_category": "jpeg",
+      "attack_severity": 0.3,
+      "attack_params": {
+        "quality": 70
+      },
+      "bit_errors": 0,
+      "ber": 0.0,
+      "exact_match": true,
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.017067900043912232
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbeef",
+      "attack_name": "jpeg_q50",
+      "attack_category": "jpeg",
+      "attack_severity": 0.5,
+      "attack_params": {
+        "quality": 50
+      },
+      "bit_errors": 0,
+      "ber": 0.0,
+      "exact_match": true,
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.017525500035844743
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbeef",
+      "attack_name": "jpeg_q40",
+      "attack_category": "jpeg",
+      "attack_severity": 0.6,
+      "attack_params": {
+        "quality": 40
+      },
+      "bit_errors": 0,
+      "ber": 0.0,
+      "exact_match": true,
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.01750499999616295
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbeef",
+      "attack_name": "jpeg_q20",
+      "attack_category": "jpeg",
+      "attack_severity": 0.8,
+      "attack_params": {
+        "quality": 20
+      },
+      "bit_errors": 0,
+      "ber": 0.0,
+      "exact_match": true,
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.01811300008557737
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbeef",
+      "attack_name": "crop_resize_90",
+      "attack_category": "crop",
+      "attack_severity": 0.2,
+      "attack_params": {
+        "crop_ratio": 0.9
+      },
+      "bit_errors": 0,
+      "ber": 0.0,
+      "exact_match": true,
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.01708140003029257
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadace7",
+      "attack_name": "crop_resize_75",
+      "attack_category": "crop",
+      "attack_severity": 0.4,
+      "attack_params": {
+        "crop_ratio": 0.75
+      },
+      "bit_errors": 3,
+      "ber": 0.09375,
+      "exact_match": false,
+      "watermark_detected": true,
+      "confidence": 0.90625,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.014497000025585294
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "dfbca8e7",
+      "attack_name": "crop_resize_50",
+      "attack_category": "crop",
+      "attack_severity": 0.7,
+      "attack_params": {
+        "crop_ratio": 0.5
+      },
+      "bit_errors": 7,
+      "ber": 0.21875,
+      "exact_match": false,
+      "watermark_detected": true,
+      "confidence": 0.78125,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.01761480001732707
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "dfada8e7",
+      "attack_name": "crop_native_75",
+      "attack_category": "crop",
+      "attack_severity": 0.5,
+      "attack_params": {
+        "crop_ratio": 0.75,
+        "native": true,
+        "location": "center"
+      },
+      "bit_errors": 5,
+      "ber": 0.15625,
+      "exact_match": false,
+      "watermark_detected": true,
+      "confidence": 0.84375,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.06976290000602603
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "d22d766b",
+      "attack_name": "crop_native_50",
+      "attack_category": "crop",
+      "attack_severity": 0.8,
+      "attack_params": {
+        "crop_ratio": 0.5,
+        "native": true,
+        "location": "top_left"
+      },
+      "bit_errors": 8,
+      "ber": 0.25,
+      "exact_match": false,
+      "watermark_detected": true,
+      "confidence": 0.75,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.06042540003545582
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbee7",
+      "attack_name": "resize_0.75_bilinear",
+      "attack_category": "resize",
+      "attack_severity": 0.25,
+      "attack_params": {
+        "scale": 0.75,
+        "interpolation": "bilinear"
+      },
+      "bit_errors": 1,
+      "ber": 0.03125,
+      "exact_match": false,
+      "watermark_detected": true,
+      "confidence": 0.96875,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.06270360003691167
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbee7",
+      "attack_name": "resize_0.50_bilinear",
+      "attack_category": "resize",
+      "attack_severity": 0.5,
+      "attack_params": {
+        "scale": 0.5,
+        "interpolation": "bilinear"
+      },
+      "bit_errors": 1,
+      "ber": 0.03125,
+      "exact_match": false,
+      "watermark_detected": true,
+      "confidence": 0.96875,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.05656880000606179
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbee7",
+      "attack_name": "resize_0.50_bicubic",
+      "attack_category": "resize",
+      "attack_severity": 0.5,
+      "attack_params": {
+        "scale": 0.5,
+        "interpolation": "bicubic"
+      },
+      "bit_errors": 1,
+      "ber": 0.03125,
+      "exact_match": false,
+      "watermark_detected": true,
+      "confidence": 0.96875,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.05759580002631992
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbeef",
+      "attack_name": "resize_1.25_bilinear",
+      "attack_category": "resize",
+      "attack_severity": 0.25,
+      "attack_params": {
+        "scale": 1.25,
+        "interpolation": "bilinear"
+      },
+      "bit_errors": 0,
+      "ber": 0.0,
+      "exact_match": true,
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.09625199995934963
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbe6b",
+      "attack_name": "resize_1.50_bicubic",
+      "attack_category": "resize",
+      "attack_severity": 0.4,
+      "attack_params": {
+        "scale": 1.5,
+        "interpolation": "bicubic"
+      },
+      "bit_errors": 2,
+      "ber": 0.0625,
+      "exact_match": false,
+      "watermark_detected": true,
+      "confidence": 0.9375,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.11378619994502515
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbeef",
+      "attack_name": "blur_r0.5",
+      "attack_category": "blur",
+      "attack_severity": 0.15,
+      "attack_params": {
+        "radius": 0.5
+      },
+      "bit_errors": 0,
+      "ber": 0.0,
+      "exact_match": true,
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.020262900041416287
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbeef",
+      "attack_name": "blur_r1.0",
+      "attack_category": "blur",
+      "attack_severity": 0.3,
+      "attack_params": {
+        "radius": 1.0
+      },
+      "bit_errors": 0,
+      "ber": 0.0,
+      "exact_match": true,
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.022563000093214214
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbeef",
+      "attack_name": "blur_r2.0",
+      "attack_category": "blur",
+      "attack_severity": 0.55,
+      "attack_params": {
+        "radius": 2.0
+      },
+      "bit_errors": 0,
+      "ber": 0.0,
+      "exact_match": true,
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.023270400008186698
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbeef",
+      "attack_name": "blur_r3.0",
+      "attack_category": "blur",
+      "attack_severity": 0.8,
+      "attack_params": {
+        "radius": 3.0
+      },
+      "bit_errors": 0,
+      "ber": 0.0,
+      "exact_match": true,
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.023445299942977726
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbeef",
+      "attack_name": "noise_s5",
+      "attack_category": "noise",
+      "attack_severity": 0.15,
+      "attack_params": {
+        "sigma": 5.0
+      },
+      "bit_errors": 0,
+      "ber": 0.0,
+      "exact_match": true,
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.02392049995251
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbeef",
+      "attack_name": "noise_s15",
+      "attack_category": "noise",
+      "attack_severity": 0.4,
+      "attack_params": {
+        "sigma": 15.0
+      },
+      "bit_errors": 0,
+      "ber": 0.0,
+      "exact_match": true,
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.025961200008168817
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbe6f",
+      "attack_name": "noise_s25",
+      "attack_category": "noise",
+      "attack_severity": 0.65,
+      "attack_params": {
+        "sigma": 25.0
+      },
+      "bit_errors": 1,
+      "ber": 0.03125,
+      "exact_match": false,
+      "watermark_detected": true,
+      "confidence": 0.96875,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.025390899972990155
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "5e8d3e6f",
+      "attack_name": "noise_s35",
+      "attack_category": "noise",
+      "attack_severity": 0.85,
+      "attack_params": {
+        "sigma": 35.0
+      },
+      "bit_errors": 4,
+      "ber": 0.125,
+      "exact_match": false,
+      "watermark_detected": true,
+      "confidence": 0.875,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.026691600098274648
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "5a0d366b",
+      "attack_name": "bright_1.25",
+      "attack_category": "color",
+      "attack_severity": 0.25,
+      "attack_params": {
+        "brightness": 1.25,
+        "contrast": 1.0
+      },
+      "bit_errors": 8,
+      "ber": 0.25,
+      "exact_match": false,
+      "watermark_detected": true,
+      "confidence": 0.75,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.02426560001913458
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "dffca8e7",
+      "attack_name": "dark_0.80",
+      "attack_category": "color",
+      "attack_severity": 0.25,
+      "attack_params": {
+        "brightness": 0.8,
+        "contrast": 1.0
+      },
+      "bit_errors": 8,
+      "ber": 0.25,
+      "exact_match": false,
+      "watermark_detected": true,
+      "confidence": 0.75,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.020031700027175248
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbe6f",
+      "attack_name": "contrast_1.25",
+      "attack_category": "color",
+      "attack_severity": 0.25,
+      "attack_params": {
+        "brightness": 1.0,
+        "contrast": 1.25
+      },
+      "bit_errors": 1,
+      "ber": 0.03125,
+      "exact_match": false,
+      "watermark_detected": true,
+      "confidence": 0.96875,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.023464000085368752
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbee7",
+      "attack_name": "contrast_0.80",
+      "attack_category": "color",
+      "attack_severity": 0.25,
+      "attack_params": {
+        "brightness": 1.0,
+        "contrast": 0.8
+      },
+      "bit_errors": 1,
+      "ber": 0.03125,
+      "exact_match": false,
+      "watermark_detected": true,
+      "confidence": 0.96875,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.023754500085487962
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "5a0d3e6b",
+      "attack_name": "bright_contrast_high",
+      "attack_category": "color",
+      "attack_severity": 0.4,
+      "attack_params": {
+        "brightness": 1.2,
+        "contrast": 1.2
+      },
+      "bit_errors": 7,
+      "ber": 0.21875,
+      "exact_match": false,
+      "watermark_detected": true,
+      "confidence": 0.78125,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.024296000017784536
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbeef",
+      "attack_name": "rot_1deg",
+      "attack_category": "geometry",
+      "attack_severity": 0.2,
+      "attack_params": {
+        "angle": 1.0
+      },
+      "bit_errors": 0,
+      "ber": 0.0,
+      "exact_match": true,
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.027289099991321564
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbeef",
+      "attack_name": "rot_2deg",
+      "attack_category": "geometry",
+      "attack_severity": 0.4,
+      "attack_params": {
+        "angle": 2.0
+      },
+      "bit_errors": 0,
+      "ber": 0.0,
+      "exact_match": true,
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.027992899995297194
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbeef",
+      "attack_name": "rot_5deg",
+      "attack_category": "geometry",
+      "attack_severity": 0.7,
+      "attack_params": {
+        "angle": 5.0
+      },
+      "bit_errors": 0,
+      "ber": 0.0,
+      "exact_match": true,
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.026958600035868585
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbeef",
+      "attack_name": "trans_dx4_dy4",
+      "attack_category": "geometry",
+      "attack_severity": 0.3,
+      "attack_params": {
+        "dx": 4,
+        "dy": 4
+      },
+      "bit_errors": 0,
+      "ber": 0.0,
+      "exact_match": true,
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.02558880008291453
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbeef",
+      "attack_name": "trans_dx8_dy8",
+      "attack_category": "geometry",
+      "attack_severity": 0.55,
+      "attack_params": {
+        "dx": 8,
+        "dy": 8
+      },
+      "bit_errors": 0,
+      "ber": 0.0,
+      "exact_match": true,
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.025482399971224368
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbeef",
+      "attack_name": "combo_jpeg70_blur1",
+      "attack_category": "combined",
+      "attack_severity": 0.5,
+      "attack_params": {
+        "steps": [
+          {
+            "type": "jpeg",
+            "quality": 70
+          },
+          {
+            "type": "blur",
+            "radius": 1.0
+          }
+        ]
+      },
+      "bit_errors": 0,
+      "ber": 0.0,
+      "exact_match": true,
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.02790740004274994
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbeef",
+      "attack_name": "combo_jpeg70_scale75",
+      "attack_category": "combined",
+      "attack_severity": 0.55,
+      "attack_params": {
+        "steps": [
+          {
+            "type": "jpeg",
+            "quality": 70
+          },
+          {
+            "type": "scale",
+            "scale": 0.75
+          }
+        ]
+      },
+      "bit_errors": 0,
+      "ber": 0.0,
+      "exact_match": true,
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.02782879990991205
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbeef",
+      "attack_name": "combo_noise15_blur1",
+      "attack_category": "combined",
+      "attack_severity": 0.6,
+      "attack_params": {
+        "steps": [
+          {
+            "type": "noise",
+            "sigma": 15.0
+          },
+          {
+            "type": "blur",
+            "radius": 1.0
+          }
+        ]
+      },
+      "bit_errors": 0,
+      "ber": 0.0,
+      "exact_match": true,
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.029051800025627017
+    },
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "expected_payload": "deadbeef",
+      "recovered_payload": "deadbeef",
+      "attack_name": "combo_rot2_trans4",
+      "attack_category": "combined",
+      "attack_severity": 0.65,
+      "attack_params": {
+        "steps": [
+          {
+            "type": "rotation",
+            "angle": 2.0
+          },
+          {
+            "type": "translation",
+            "dx": 4,
+            "dy": 4
+          }
+        ]
+      },
+      "bit_errors": 0,
+      "ber": 0.0,
+      "exact_match": true,
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "wm_psnr_db": 27.781939738670722,
+      "wm_ssim": 0.9996404189729603,
+      "decode_time_sec": 0.02717130002565682
+    }
+  ]
+}

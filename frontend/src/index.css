@@ -2,7 +2,102 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --bg-page: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-panel: #f1f5f9;
+  --border-color: #e2e8f0;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+}
+
+/* Header & Navigation */
+header {
+  background-color: #ffffff !important;
+  border-color: var(--border-color) !important;
+}
+
+nav {
+  background-color: #f1f5f9 !important;
+  border-color: var(--border-color) !important;
+}
+
+nav button[class*="text-slate-400"] {
+  color: #64748b !important;
+}
+
+nav button[class*="text-slate-400"]:hover {
+  color: #0f172a !important;
+  background-color: #e2e8f0 !important;
+}
+
+/* Light UI Theme Mapping */
+.bg-slate-950, [class*="bg-slate-950"] {
+  background-color: var(--bg-page) !important;
+}
+
+.bg-slate-900, [class*="bg-slate-900"] {
+  background-color: var(--bg-card) !important;
+}
+
+.bg-slate-800, [class*="bg-slate-800"] {
+  background-color: var(--bg-panel) !important;
+}
+
+.border-slate-800, [class*="border-slate-800"],
+.border-slate-700, [class*="border-slate-700"] {
+  border-color: var(--border-color) !important;
+}
+
+/* Typography Remap */
+.text-white {
+  color: var(--text-primary) !important;
+}
+
+.text-slate-100,
+.text-slate-200,
+.text-slate-300 {
+  color: var(--text-secondary) !important;
+}
+
+.text-slate-400,
+.text-slate-500 {
+  color: var(--text-muted) !important;
+}
+
+/* Maintain crisp white text on interactive action buttons and badges */
+.bg-blue-600, .bg-blue-500,
+.bg-emerald-600, .bg-emerald-500,
+.bg-amber-600, .bg-amber-500,
+.bg-red-600, .bg-rose-600,
+button.bg-blue-600, button.bg-emerald-600, button.bg-amber-600 {
+  color: #ffffff !important;
+}
+
+.bg-blue-600 *, .bg-emerald-600 *, .bg-amber-600 * {
+  color: #ffffff !important;
+}
+
+/* Soft clean shadows for cards */
+.shadow, .shadow-md, .shadow-xl {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Inputs, textareas and upload areas */
+input, textarea, select {
+  background-color: #ffffff !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+input::placeholder {
+  color: #94a3b8 !important;
 }

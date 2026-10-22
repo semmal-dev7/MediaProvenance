@@ -78,6 +78,7 @@ class JobManager:
     def __init__(self):
         self._jobs: Dict[str, JobRecord] = {}
         self._anchors: Dict[str, AnchorRecord] = {}
+        self._embedded_assets: Dict[str, str] = {}
         self._init_seed_anchors()
 
     def _init_seed_anchors(self):
@@ -401,6 +402,17 @@ class JobManager:
         )
         self._anchors[normalized_asset_id] = rec
         return rec
+
+    def register_embedded_asset(self, asset_id: str, payload_hex: str) -> None:
+        """Register embedded asset payload for registry-based reference claim retrieval."""
+        clean_id = asset_id.lower().replace("0x", "").strip()
+        clean_payload = payload_hex.lower().replace("0x", "").strip()
+        self._embedded_assets[clean_id] = clean_payload
+
+    def get_embedded_asset(self, asset_id: str) -> Optional[str]:
+        """Look up registered publisher payload for an asset ID / SHA-256."""
+        clean_id = asset_id.lower().replace("0x", "").strip()
+        return self._embedded_assets.get(clean_id)
 
     def get_anchor(self, asset_id: str) -> Optional[AnchorRecord]:
         clean_id = asset_id.lower()

@@ -1,0 +1,280 @@
+{
+  "A_unwatermarked": [
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "embedded": false,
+      "reference_payload": null,
+      "recovered_payload": "da3dbeeb",
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "hamming_distance": null,
+      "ber": 0.0,
+      "error": null
+    },
+    {
+      "image": "held_out_02_portrait_face.png",
+      "embedded": false,
+      "reference_payload": null,
+      "recovered_payload": "1337c0de",
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "hamming_distance": null,
+      "ber": 0.0,
+      "error": null
+    },
+    {
+      "image": "held_out_03_urban_architecture.png",
+      "embedded": false,
+      "reference_payload": null,
+      "recovered_payload": "513556a2",
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "hamming_distance": null,
+      "ber": 0.0,
+      "error": null
+    },
+    {
+      "image": "held_out_04_document_text.png",
+      "embedded": false,
+      "reference_payload": null,
+      "recovered_payload": "42424242",
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "hamming_distance": null,
+      "ber": 0.0,
+      "error": null
+    },
+    {
+      "image": "held_out_05_checkerboard.png",
+      "embedded": false,
+      "reference_payload": null,
+      "recovered_payload": "4f07464b",
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "hamming_distance": null,
+      "ber": 0.0,
+      "error": null
+    },
+    {
+      "image": "held_out_06_woodgrain.png",
+      "embedded": false,
+      "reference_payload": null,
+      "recovered_payload": "16e7c4de",
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "hamming_distance": null,
+      "ber": 0.0,
+      "error": null
+    }
+  ],
+  "B_genuine_watermarked": [
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "embedded": true,
+      "reference_payload": "deadbeef",
+      "recovered_payload": "deadbeef",
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "hamming_distance": 0,
+      "ber": 0.0,
+      "error": null
+    },
+    {
+      "image": "held_out_02_portrait_face.png",
+      "embedded": true,
+      "reference_payload": "deadbeef",
+      "recovered_payload": "1057c4da",
+      "watermark_detected": false,
+      "confidence": 0.375,
+      "hamming_distance": 20,
+      "ber": 0.625,
+      "error": "No authentic watermark detected in candidate image (neural activation threshold not met)"
+    },
+    {
+      "image": "held_out_03_urban_architecture.png",
+      "embedded": true,
+      "reference_payload": "deadbeef",
+      "recovered_payload": "5f0d3e4f",
+      "watermark_detected": true,
+      "confidence": 0.78125,
+      "hamming_distance": 7,
+      "ber": 0.21875,
+      "error": null
+    },
+    {
+      "image": "held_out_04_document_text.png",
+      "embedded": true,
+      "reference_payload": "deadbeef",
+      "recovered_payload": "4a034642",
+      "watermark_detected": false,
+      "confidence": 0.4375,
+      "hamming_distance": 18,
+      "ber": 0.5625,
+      "error": "No authentic watermark detected in candidate image (neural activation threshold not met)"
+    },
+    {
+      "image": "held_out_05_checkerboard.png",
+      "embedded": true,
+      "reference_payload": "deadbeef",
+      "recovered_payload": "5b0d364b",
+      "watermark_detected": true,
+      "confidence": 0.6875,
+      "hamming_distance": 10,
+      "ber": 0.3125,
+      "error": null
+    },
+    {
+      "image": "held_out_06_woodgrain.png",
+      "embedded": true,
+      "reference_payload": "deadbeef",
+      "recovered_payload": "12c4c4f2",
+      "watermark_detected": false,
+      "confidence": 0.46875,
+      "hamming_distance": 17,
+      "ber": 0.53125,
+      "error": "No authentic watermark detected in candidate image (neural activation threshold not met)"
+    }
+  ],
+  "C_payload_mismatch": [
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "embedded": true,
+      "true_payload": "deadbeef",
+      "claimed_reference": "ffffffff",
+      "recovered_payload": "deadbeef",
+      "watermark_detected": true,
+      "confidence": 0.75,
+      "hamming_distance": 8,
+      "ber": 0.25,
+      "error": null
+    },
+    {
+      "image": "held_out_02_portrait_face.png",
+      "embedded": true,
+      "true_payload": "deadbeef",
+      "claimed_reference": "ffffffff",
+      "recovered_payload": "1057c4da",
+      "watermark_detected": false,
+      "confidence": 0.4375,
+      "hamming_distance": 18,
+      "ber": 0.5625,
+      "error": "No authentic watermark detected in candidate image (neural activation threshold not met)"
+    },
+    {
+      "image": "held_out_03_urban_architecture.png",
+      "embedded": true,
+      "true_payload": "deadbeef",
+      "claimed_reference": "ffffffff",
+      "recovered_payload": "5f0d3e4f",
+      "watermark_detected": false,
+      "confidence": 0.59375,
+      "hamming_distance": 13,
+      "ber": 0.40625,
+      "error": "No authentic watermark detected in candidate image (neural activation threshold not met)"
+    },
+    {
+      "image": "held_out_04_document_text.png",
+      "embedded": true,
+      "true_payload": "deadbeef",
+      "claimed_reference": "ffffffff",
+      "recovered_payload": "4a034642",
+      "watermark_detected": false,
+      "confidence": 0.3125,
+      "hamming_distance": 22,
+      "ber": 0.6875,
+      "error": "No authentic watermark detected in candidate image (neural activation threshold not met)"
+    },
+    {
+      "image": "held_out_05_checkerboard.png",
+      "embedded": true,
+      "true_payload": "deadbeef",
+      "claimed_reference": "ffffffff",
+      "recovered_payload": "5b0d364b",
+      "watermark_detected": false,
+      "confidence": 0.5,
+      "hamming_distance": 16,
+      "ber": 0.5,
+      "error": "No authentic watermark detected in candidate image (neural activation threshold not met)"
+    },
+    {
+      "image": "held_out_06_woodgrain.png",
+      "embedded": true,
+      "true_payload": "deadbeef",
+      "claimed_reference": "ffffffff",
+      "recovered_payload": "12c4c4f2",
+      "watermark_detected": false,
+      "confidence": 0.40625,
+      "hamming_distance": 19,
+      "ber": 0.59375,
+      "error": "No authentic watermark detected in candidate image (neural activation threshold not met)"
+    }
+  ],
+  "D_distorted_watermarked": [
+    {
+      "image": "held_out_01_natural_landscape.png",
+      "attack": "jpeg_q50",
+      "reference_payload": "deadbeef",
+      "recovered_payload": "deadbeef",
+      "watermark_detected": true,
+      "confidence": 1.0,
+      "hamming_distance": 0,
+      "ber": 0.0,
+      "error": null
+    },
+    {
+      "image": "held_out_02_portrait_face.png",
+      "attack": "jpeg_q50",
+      "reference_payload": "deadbeef",
+      "recovered_payload": "1057c4da",
+      "watermark_detected": false,
+      "confidence": 0.375,
+      "hamming_distance": 20,
+      "ber": 0.625,
+      "error": "No authentic watermark detected in candidate image (neural activation threshold not met)"
+    },
+    {
+      "image": "held_out_03_urban_architecture.png",
+      "attack": "jpeg_q50",
+      "reference_payload": "deadbeef",
+      "recovered_payload": "5b0d366b",
+      "watermark_detected": true,
+      "confidence": 0.71875,
+      "hamming_distance": 9,
+      "ber": 0.28125,
+      "error": null
+    },
+    {
+      "image": "held_out_04_document_text.png",
+      "attack": "jpeg_q50",
+      "reference_payload": "deadbeef",
+      "recovered_payload": "4a034642",
+      "watermark_detected": false,
+      "confidence": 0.4375,
+      "hamming_distance": 18,
+      "ber": 0.5625,
+      "error": "No authentic watermark detected in candidate image (neural activation threshold not met)"
+    },
+    {
+      "image": "held_out_05_checkerboard.png",
+      "attack": "jpeg_q50",
+      "reference_payload": "deadbeef",
+      "recovered_payload": "5f0d364b",
+      "watermark_detected": true,
+      "confidence": 0.71875,
+      "hamming_distance": 9,
+      "ber": 0.28125,
+      "error": null
+    },
+    {
+      "image": "held_out_06_woodgrain.png",
+      "attack": "jpeg_q50",
+      "reference_payload": "deadbeef",
+      "recovered_payload": "12c4c4f2",
+      "watermark_detected": false,
+      "confidence": 0.46875,
+      "hamming_distance": 17,
+      "ber": 0.53125,
+      "error": "No authentic watermark detected in candidate image (neural activation threshold not met)"
+    }
+  ]
+}

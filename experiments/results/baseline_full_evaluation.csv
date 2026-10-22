@@ -1,0 +1,457 @@
+image,expected_payload,recovered_payload,attack_name,attack_category,attack_severity,attack_params,bit_errors,ber,exact_match,watermark_detected,confidence,wm_psnr_db,wm_ssim,decode_time_sec
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,identity,baseline,0.0,{},19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.3013175999512896
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,jpeg_q90,jpeg,0.1,"{""quality"": 90}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.2888639000011608
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,jpeg_q70,jpeg,0.3,"{""quality"": 70}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.3120868999976665
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,jpeg_q50,jpeg,0.5,"{""quality"": 50}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.4579641999443993
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,jpeg_q40,jpeg,0.6,"{""quality"": 40}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.49393150000832975
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,jpeg_q20,jpeg,0.8,"{""quality"": 20}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.48222809995058924
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,crop_resize_90,crop,0.2,"{""crop_ratio"": 0.9}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.4808957000495866
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,crop_resize_75,crop,0.4,"{""crop_ratio"": 0.75}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.4714685999788344
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,crop_resize_50,crop,0.7,"{""crop_ratio"": 0.5}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.4779793999623507
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,crop_native_75,crop,0.5,"{""crop_ratio"": 0.75, ""native"": true, ""location"": ""center""}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.30397919996175915
+held_out_01_natural_landscape.png,deadbeef,4d9c490a,crop_native_50,crop,0.8,"{""crop_ratio"": 0.5, ""native"": true, ""location"": ""top_left""}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.2035116000333801
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,resize_0.75_bilinear,resize,0.25,"{""scale"": 0.75, ""interpolation"": ""bilinear""}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.3168009000364691
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,resize_0.50_bilinear,resize,0.5,"{""scale"": 0.5, ""interpolation"": ""bilinear""}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.1963270999258384
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,resize_0.50_bicubic,resize,0.5,"{""scale"": 0.5, ""interpolation"": ""bicubic""}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.190725399996154
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,resize_1.25_bilinear,resize,0.25,"{""scale"": 1.25, ""interpolation"": ""bilinear""}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.6714107999578118
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,resize_1.50_bicubic,resize,0.4,"{""scale"": 1.5, ""interpolation"": ""bicubic""}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.9565015999833122
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,blur_r0.5,blur,0.15,"{""radius"": 0.5}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.48292619991116226
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,blur_r1.0,blur,0.3,"{""radius"": 1.0}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.5072534000501037
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,blur_r2.0,blur,0.55,"{""radius"": 2.0}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.485466800048016
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,blur_r3.0,blur,0.8,"{""radius"": 3.0}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.4899775000521913
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,noise_s5,noise,0.15,"{""sigma"": 5.0}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.4701230999780819
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,noise_s15,noise,0.4,"{""sigma"": 15.0}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.49004930001683533
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,noise_s25,noise,0.65,"{""sigma"": 25.0}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.47703499998897314
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,noise_s35,noise,0.85,"{""sigma"": 35.0}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.5141457999125123
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,bright_1.25,color,0.25,"{""brightness"": 1.25, ""contrast"": 1.0}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.5227024999912828
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,dark_0.80,color,0.25,"{""brightness"": 0.8, ""contrast"": 1.0}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.5477676999289542
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,contrast_1.25,color,0.25,"{""brightness"": 1.0, ""contrast"": 1.25}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.6116955999750644
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,contrast_0.80,color,0.25,"{""brightness"": 1.0, ""contrast"": 0.8}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.5673246999504045
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,bright_contrast_high,color,0.4,"{""brightness"": 1.2, ""contrast"": 1.2}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.49778820003848523
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,rot_1deg,geometry,0.2,"{""angle"": 1.0}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.49720610002987087
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,rot_2deg,geometry,0.4,"{""angle"": 2.0}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.48133710003457963
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,rot_5deg,geometry,0.7,"{""angle"": 5.0}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.49013469996862113
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,trans_dx4_dy4,geometry,0.3,"{""dx"": 4, ""dy"": 4}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.4791435000952333
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,trans_dx8_dy8,geometry,0.55,"{""dx"": 8, ""dy"": 8}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.5519703000318259
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,combo_jpeg70_blur1,combined,0.5,"{""steps"": [{""type"": ""jpeg"", ""quality"": 70}, {""type"": ""blur"", ""radius"": 1.0}]}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.5830739000812173
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,combo_jpeg70_scale75,combined,0.55,"{""steps"": [{""type"": ""jpeg"", ""quality"": 70}, {""type"": ""scale"", ""scale"": 0.75}]}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.4873444000259042
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,combo_noise15_blur1,combined,0.6,"{""steps"": [{""type"": ""noise"", ""sigma"": 15.0}, {""type"": ""blur"", ""radius"": 1.0}]}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.4857363000046462
+held_out_01_natural_landscape.png,deadbeef,4ddc690a,combo_rot2_trans4,combined,0.65,"{""steps"": [{""type"": ""rotation"", ""angle"": 2.0}, {""type"": ""translation"", ""dx"": 4, ""dy"": 4}]}",19,0.59375,False,False,0.40625,42.72332065034193,0.9997830732684857,0.4754347000271082
+held_out_02_portrait_face.png,1337c0de,2886c95a,identity,baseline,0.0,{},13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.4632521999301389
+held_out_02_portrait_face.png,1337c0de,2886c95a,jpeg_q90,jpeg,0.1,"{""quality"": 90}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.48121989995706826
+held_out_02_portrait_face.png,1337c0de,2886c95a,jpeg_q70,jpeg,0.3,"{""quality"": 70}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.46067659999243915
+held_out_02_portrait_face.png,1337c0de,2886c95a,jpeg_q50,jpeg,0.5,"{""quality"": 50}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.47396510001271963
+held_out_02_portrait_face.png,1337c0de,2886c95a,jpeg_q40,jpeg,0.6,"{""quality"": 40}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.4842648000922054
+held_out_02_portrait_face.png,1337c0de,2886c95a,jpeg_q20,jpeg,0.8,"{""quality"": 20}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.4589632999850437
+held_out_02_portrait_face.png,1337c0de,2886c95a,crop_resize_90,crop,0.2,"{""crop_ratio"": 0.9}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.48694149998482317
+held_out_02_portrait_face.png,1337c0de,2886c95a,crop_resize_75,crop,0.4,"{""crop_ratio"": 0.75}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.48792939994018525
+held_out_02_portrait_face.png,1337c0de,2886c95a,crop_resize_50,crop,0.7,"{""crop_ratio"": 0.5}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.46768310002516955
+held_out_02_portrait_face.png,1337c0de,2886c95a,crop_native_75,crop,0.5,"{""crop_ratio"": 0.75, ""native"": true, ""location"": ""center""}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.2821682000067085
+held_out_02_portrait_face.png,1337c0de,2886c95a,crop_native_50,crop,0.8,"{""crop_ratio"": 0.5, ""native"": true, ""location"": ""top_left""}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.18483679997734725
+held_out_02_portrait_face.png,1337c0de,2886c95a,resize_0.75_bilinear,resize,0.25,"{""scale"": 0.75, ""interpolation"": ""bilinear""}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.29447319998871535
+held_out_02_portrait_face.png,1337c0de,2886c95a,resize_0.50_bilinear,resize,0.5,"{""scale"": 0.5, ""interpolation"": ""bilinear""}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.23180229996796697
+held_out_02_portrait_face.png,1337c0de,2886c95a,resize_0.50_bicubic,resize,0.5,"{""scale"": 0.5, ""interpolation"": ""bicubic""}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.1975574999814853
+held_out_02_portrait_face.png,1337c0de,2886c95a,resize_1.25_bilinear,resize,0.25,"{""scale"": 1.25, ""interpolation"": ""bilinear""}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.7354036000324413
+held_out_02_portrait_face.png,1337c0de,2886c95a,resize_1.50_bicubic,resize,0.4,"{""scale"": 1.5, ""interpolation"": ""bicubic""}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.9298954999540001
+held_out_02_portrait_face.png,1337c0de,2886c95a,blur_r0.5,blur,0.15,"{""radius"": 0.5}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.48686930001713336
+held_out_02_portrait_face.png,1337c0de,2886c95a,blur_r1.0,blur,0.3,"{""radius"": 1.0}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.46579380007460713
+held_out_02_portrait_face.png,1337c0de,2886c95a,blur_r2.0,blur,0.55,"{""radius"": 2.0}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.44568420003633946
+held_out_02_portrait_face.png,1337c0de,2886c95a,blur_r3.0,blur,0.8,"{""radius"": 3.0}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.458345599938184
+held_out_02_portrait_face.png,1337c0de,2886c95a,noise_s5,noise,0.15,"{""sigma"": 5.0}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.4519356000237167
+held_out_02_portrait_face.png,1337c0de,2886c95a,noise_s15,noise,0.4,"{""sigma"": 15.0}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.44824529998004436
+held_out_02_portrait_face.png,1337c0de,2886c95a,noise_s25,noise,0.65,"{""sigma"": 25.0}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.44778549997135997
+held_out_02_portrait_face.png,1337c0de,2886c95a,noise_s35,noise,0.85,"{""sigma"": 35.0}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.4490881999954581
+held_out_02_portrait_face.png,1337c0de,2886c95a,bright_1.25,color,0.25,"{""brightness"": 1.25, ""contrast"": 1.0}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.47665079997386783
+held_out_02_portrait_face.png,1337c0de,2886c95a,dark_0.80,color,0.25,"{""brightness"": 0.8, ""contrast"": 1.0}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.484070900012739
+held_out_02_portrait_face.png,1337c0de,2886c95a,contrast_1.25,color,0.25,"{""brightness"": 1.0, ""contrast"": 1.25}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.46507689997088164
+held_out_02_portrait_face.png,1337c0de,2886c95a,contrast_0.80,color,0.25,"{""brightness"": 1.0, ""contrast"": 0.8}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.48553800000809133
+held_out_02_portrait_face.png,1337c0de,2886c95a,bright_contrast_high,color,0.4,"{""brightness"": 1.2, ""contrast"": 1.2}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.4729956000810489
+held_out_02_portrait_face.png,1337c0de,2886c95a,rot_1deg,geometry,0.2,"{""angle"": 1.0}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.45680010004434735
+held_out_02_portrait_face.png,1337c0de,2886c95a,rot_2deg,geometry,0.4,"{""angle"": 2.0}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.504834899911657
+held_out_02_portrait_face.png,1337c0de,2886c95a,rot_5deg,geometry,0.7,"{""angle"": 5.0}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.46025300002656877
+held_out_02_portrait_face.png,1337c0de,2886c95a,trans_dx4_dy4,geometry,0.3,"{""dx"": 4, ""dy"": 4}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.45204060000833124
+held_out_02_portrait_face.png,1337c0de,2886c95a,trans_dx8_dy8,geometry,0.55,"{""dx"": 8, ""dy"": 8}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.45722969993948936
+held_out_02_portrait_face.png,1337c0de,2886c95a,combo_jpeg70_blur1,combined,0.5,"{""steps"": [{""type"": ""jpeg"", ""quality"": 70}, {""type"": ""blur"", ""radius"": 1.0}]}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.4508708999492228
+held_out_02_portrait_face.png,1337c0de,2886c95a,combo_jpeg70_scale75,combined,0.55,"{""steps"": [{""type"": ""jpeg"", ""quality"": 70}, {""type"": ""scale"", ""scale"": 0.75}]}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.4521415999624878
+held_out_02_portrait_face.png,1337c0de,2886c95a,combo_noise15_blur1,combined,0.6,"{""steps"": [{""type"": ""noise"", ""sigma"": 15.0}, {""type"": ""blur"", ""radius"": 1.0}]}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.45105579996015877
+held_out_02_portrait_face.png,1337c0de,2886c95a,combo_rot2_trans4,combined,0.65,"{""steps"": [{""type"": ""rotation"", ""angle"": 2.0}, {""type"": ""translation"", ""dx"": 4, ""dy"": 4}]}",13,0.40625,False,False,0.59375,43.34811975777191,0.9996467042052035,0.4527184000471607
+held_out_03_urban_architecture.png,a5a5a5a5,2886497a,identity,baseline,0.0,{},19,0.59375,False,False,0.40625,43.7329487047827,0.9999596021982149,0.452681599999778
+held_out_03_urban_architecture.png,a5a5a5a5,2886497a,jpeg_q90,jpeg,0.1,"{""quality"": 90}",19,0.59375,False,False,0.40625,43.7329487047827,0.9999596021982149,0.4463832000037655
+held_out_03_urban_architecture.png,a5a5a5a5,2886497a,jpeg_q70,jpeg,0.3,"{""quality"": 70}",19,0.59375,False,False,0.40625,43.7329487047827,0.9999596021982149,0.45481130003463477
+held_out_03_urban_architecture.png,a5a5a5a5,2886495a,jpeg_q50,jpeg,0.5,"{""quality"": 50}",20,0.625,False,False,0.375,43.7329487047827,0.9999596021982149,0.45346250000875443
+held_out_03_urban_architecture.png,a5a5a5a5,2886495a,jpeg_q40,jpeg,0.6,"{""quality"": 40}",20,0.625,False,False,0.375,43.7329487047827,0.9999596021982149,0.4547494000289589
+held_out_03_urban_architecture.png,a5a5a5a5,2886c95a,jpeg_q20,jpeg,0.8,"{""quality"": 20}",19,0.59375,False,False,0.40625,43.7329487047827,0.9999596021982149,0.4521608999930322
+held_out_03_urban_architecture.png,a5a5a5a5,2886497a,crop_resize_90,crop,0.2,"{""crop_ratio"": 0.9}",19,0.59375,False,False,0.40625,43.7329487047827,0.9999596021982149,0.4511435000458732
+held_out_03_urban_architecture.png,a5a5a5a5,2886497a,crop_resize_75,crop,0.4,"{""crop_ratio"": 0.75}",19,0.59375,False,False,0.40625,43.7329487047827,0.9999596021982149,0.4572236000094563
+held_out_03_urban_architecture.png,a5a5a5a5,2886497a,crop_resize_50,crop,0.7,"{""crop_ratio"": 0.5}",19,0.59375,False,False,0.40625,43.7329487047827,0.9999596021982149,0.4942035999847576
+held_out_03_urban_architecture.png,a5a5a5a5,2896497a,crop_native_75,crop,0.5,"{""crop_ratio"": 0.75, ""native"": true, ""location"": ""center""}",20,0.625,False,False,0.375,43.7329487047827,0.9999596021982149,0.30579849996138364
+held_out_03_urban_architecture.png,a5a5a5a5,2886497a,crop_native_50,crop,0.8,"{""crop_ratio"": 0.5, ""native"": true, ""location"": ""top_left""}",19,0.59375,False,False,0.40625,43.7329487047827,0.9999596021982149,0.20819519995711744
+held_out_03_urban_architecture.png,a5a5a5a5,2886497a,resize_0.75_bilinear,resize,0.25,"{""scale"": 0.75, ""interpolation"": ""bilinear""}",19,0.59375,False,False,0.40625,43.7329487047827,0.9999596021982149,0.346923099947162
+held_out_03_urban_architecture.png,a5a5a5a5,2886497a,resize_0.50_bilinear,resize,0.5,"{""scale"": 0.5, ""interpolation"": ""bilinear""}",19,0.59375,False,False,0.40625,43.7329487047827,0.9999596021982149,0.19215289992280304
+held_out_03_urban_architecture.png,a5a5a5a5,2886497a,resize_0.50_bicubic,resize,0.5,"{""scale"": 0.5, ""interpolation"": ""bicubic""}",19,0.59375,False,False,0.40625,43.7329487047827,0.9999596021982149,0.2115075000328943
+held_out_03_urban_architecture.png,a5a5a5a5,2886497a,resize_1.25_bilinear,resize,0.25,"{""scale"": 1.25, ""interpolation"": ""bilinear""}",19,0.59375,False,False,0.40625,43.7329487047827,0.9999596021982149,0.6331456999760121
+held_out_03_urban_architecture.png,a5a5a5a5,2886497a,resize_1.50_bicubic,resize,0.4,"{""scale"": 1.5, ""interpolation"": ""bicubic""}",19,0.59375,False,False,0.40625,43.7329487047827,0.9999596021982149,0.9102715000044554
+held_out_03_urban_architecture.png,a5a5a5a5,2886497a,blur_r0.5,blur,0.15,"{""radius"": 0.5}",19,0.59375,False,False,0.40625,43.7329487047827,0.9999596021982149,0.5035171000054106
+held_out_03_urban_architecture.png,a5a5a5a5,2886497a,blur_r1.0,blur,0.3,"{""radius"": 1.0}",19,0.59375,False,False,0.40625,43.7329487047827,0.9999596021982149,0.573259099968709
+held_out_03_urban_architecture.png,a5a5a5a5,2886497a,blur_r2.0,blur,0.55,"{""radius"": 2.0}",19,0.59375,False,False,0.40625,43.7329487047827,0.9999596021982149,0.5058627999387681
+held_out_03_urban_architecture.png,a5a5a5a5,2886497a,blur_r3.0,blur,0.8,"{""radius"": 3.0}",19,0.59375,False,False,0.40625,43.7329487047827,0.9999596021982149,0.47324429999571294
+held_out_03_urban_architecture.png,a5a5a5a5,2896497a,noise_s5,noise,0.15,"{""sigma"": 5.0}",20,0.625,False,False,0.375,43.7329487047827,0.9999596021982149,0.479401099961251
+held_out_03_urban_architecture.png,a5a5a5a5,2886495a,noise_s15,noise,0.4,"{""sigma"": 15.0}",20,0.625,False,False,0.375,43.7329487047827,0.9999596021982149,0.4877029999624938
+held_out_03_urban_architecture.png,a5a5a5a5,2896495a,noise_s25,noise,0.65,"{""sigma"": 25.0}",21,0.65625,False,False,0.34375,43.7329487047827,0.9999596021982149,0.48568419995717704
+held_out_03_urban_architecture.png,a5a5a5a5,2896495a,noise_s35,noise,0.85,"{""sigma"": 35.0}",21,0.65625,False,False,0.34375,43.7329487047827,0.9999596021982149,0.45620329992379993
+held_out_03_urban_architecture.png,a5a5a5a5,289ec95a,bright_1.25,color,0.25,"{""brightness"": 1.25, ""contrast"": 1.0}",21,0.65625,False,False,0.34375,43.7329487047827,0.9999596021982149,0.44462900003418326
+held_out_03_urban_architecture.png,a5a5a5a5,2886497a,dark_0.80,color,0.25,"{""brightness"": 0.8, ""contrast"": 1.0}",19,0.59375,False,False,0.40625,43.7329487047827,0.9999596021982149,0.45543619990348816
+held_out_03_urban_architecture.png,a5a5a5a5,2896495a,contrast_1.25,color,0.25,"{""brightness"": 1.0, ""contrast"": 1.25}",21,0.65625,False,False,0.34375,43.7329487047827,0.9999596021982149,0.4536378000630066
+held_out_03_urban_architecture.png,a5a5a5a5,2886497a,contrast_0.80,color,0.25,"{""brightness"": 1.0, ""contrast"": 0.8}",19,0.59375,False,False,0.40625,43.7329487047827,0.9999596021982149,0.4684747999999672
+held_out_03_urban_architecture.png,a5a5a5a5,289ec95a,bright_contrast_high,color,0.4,"{""brightness"": 1.2, ""contrast"": 1.2}",21,0.65625,False,False,0.34375,43.7329487047827,0.9999596021982149,0.5235179999144748
+held_out_03_urban_architecture.png,a5a5a5a5,2896497a,rot_1deg,geometry,0.2,"{""angle"": 1.0}",20,0.625,False,False,0.375,43.7329487047827,0.9999596021982149,0.47548200003802776
+held_out_03_urban_architecture.png,a5a5a5a5,2896497a,rot_2deg,geometry,0.4,"{""angle"": 2.0}",20,0.625,False,False,0.375,43.7329487047827,0.9999596021982149,0.46030579996295273
+held_out_03_urban_architecture.png,a5a5a5a5,2896497a,rot_5deg,geometry,0.7,"{""angle"": 5.0}",20,0.625,False,False,0.375,43.7329487047827,0.9999596021982149,0.46642930002417415
+held_out_03_urban_architecture.png,a5a5a5a5,2896497a,trans_dx4_dy4,geometry,0.3,"{""dx"": 4, ""dy"": 4}",20,0.625,False,False,0.375,43.7329487047827,0.9999596021982149,0.4651019999291748
+held_out_03_urban_architecture.png,a5a5a5a5,2896497a,trans_dx8_dy8,geometry,0.55,"{""dx"": 8, ""dy"": 8}",20,0.625,False,False,0.375,43.7329487047827,0.9999596021982149,0.49454900005366653
+held_out_03_urban_architecture.png,a5a5a5a5,2886497a,combo_jpeg70_blur1,combined,0.5,"{""steps"": [{""type"": ""jpeg"", ""quality"": 70}, {""type"": ""blur"", ""radius"": 1.0}]}",19,0.59375,False,False,0.40625,43.7329487047827,0.9999596021982149,0.5153680000221357
+held_out_03_urban_architecture.png,a5a5a5a5,2886497a,combo_jpeg70_scale75,combined,0.55,"{""steps"": [{""type"": ""jpeg"", ""quality"": 70}, {""type"": ""scale"", ""scale"": 0.75}]}",19,0.59375,False,False,0.40625,43.7329487047827,0.9999596021982149,0.4894079000223428
+held_out_03_urban_architecture.png,a5a5a5a5,2886497a,combo_noise15_blur1,combined,0.6,"{""steps"": [{""type"": ""noise"", ""sigma"": 15.0}, {""type"": ""blur"", ""radius"": 1.0}]}",19,0.59375,False,False,0.40625,43.7329487047827,0.9999596021982149,0.4478307000827044
+held_out_03_urban_architecture.png,a5a5a5a5,2886497a,combo_rot2_trans4,combined,0.65,"{""steps"": [{""type"": ""rotation"", ""angle"": 2.0}, {""type"": ""translation"", ""dx"": 4, ""dy"": 4}]}",19,0.59375,False,False,0.40625,43.7329487047827,0.9999596021982149,0.44824320008046925
+held_out_04_document_text.png,42424242,289ec91a,identity,baseline,0.0,{},16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.4524305999511853
+held_out_04_document_text.png,42424242,289ec91a,jpeg_q90,jpeg,0.1,"{""quality"": 90}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.4521164000034332
+held_out_04_document_text.png,42424242,289ec91a,jpeg_q70,jpeg,0.3,"{""quality"": 70}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.45752479997463524
+held_out_04_document_text.png,42424242,289ec91a,jpeg_q50,jpeg,0.5,"{""quality"": 50}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.45723759999964386
+held_out_04_document_text.png,42424242,289ec91a,jpeg_q40,jpeg,0.6,"{""quality"": 40}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.5261938000330701
+held_out_04_document_text.png,42424242,289ec91a,jpeg_q20,jpeg,0.8,"{""quality"": 20}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.4777098000049591
+held_out_04_document_text.png,42424242,289ec91a,crop_resize_90,crop,0.2,"{""crop_ratio"": 0.9}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.5589630999602377
+held_out_04_document_text.png,42424242,289ec91a,crop_resize_75,crop,0.4,"{""crop_ratio"": 0.75}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.48007849999703467
+held_out_04_document_text.png,42424242,089ec912,crop_resize_50,crop,0.7,"{""crop_ratio"": 0.5}",14,0.4375,False,False,0.5625,43.33638570900054,0.9999456920383026,0.48844450002070516
+held_out_04_document_text.png,42424242,289ec91a,crop_native_75,crop,0.5,"{""crop_ratio"": 0.75, ""native"": true, ""location"": ""center""}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.3031549999723211
+held_out_04_document_text.png,42424242,089ec912,crop_native_50,crop,0.8,"{""crop_ratio"": 0.5, ""native"": true, ""location"": ""top_left""}",14,0.4375,False,False,0.5625,43.33638570900054,0.9999456920383026,0.17477070004679263
+held_out_04_document_text.png,42424242,289ec91a,resize_0.75_bilinear,resize,0.25,"{""scale"": 0.75, ""interpolation"": ""bilinear""}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.2855476000113413
+held_out_04_document_text.png,42424242,289ec91a,resize_0.50_bilinear,resize,0.5,"{""scale"": 0.5, ""interpolation"": ""bilinear""}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.18938280001748353
+held_out_04_document_text.png,42424242,289ec91a,resize_0.50_bicubic,resize,0.5,"{""scale"": 0.5, ""interpolation"": ""bicubic""}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.1861532999901101
+held_out_04_document_text.png,42424242,289ec912,resize_1.25_bilinear,resize,0.25,"{""scale"": 1.25, ""interpolation"": ""bilinear""}",15,0.46875,False,False,0.53125,43.33638570900054,0.9999456920383026,0.6342019999865443
+held_out_04_document_text.png,42424242,089ec912,resize_1.50_bicubic,resize,0.4,"{""scale"": 1.5, ""interpolation"": ""bicubic""}",14,0.4375,False,False,0.5625,43.33638570900054,0.9999456920383026,0.907877300051041
+held_out_04_document_text.png,42424242,289ec91a,blur_r0.5,blur,0.15,"{""radius"": 0.5}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.4757924999576062
+held_out_04_document_text.png,42424242,289ec91a,blur_r1.0,blur,0.3,"{""radius"": 1.0}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.4829174999613315
+held_out_04_document_text.png,42424242,289ec91a,blur_r2.0,blur,0.55,"{""radius"": 2.0}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.5196283999830484
+held_out_04_document_text.png,42424242,289ec91a,blur_r3.0,blur,0.8,"{""radius"": 3.0}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.4571499000303447
+held_out_04_document_text.png,42424242,289ec91a,noise_s5,noise,0.15,"{""sigma"": 5.0}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.43474249995779246
+held_out_04_document_text.png,42424242,289ec91a,noise_s15,noise,0.4,"{""sigma"": 15.0}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.4800468999892473
+held_out_04_document_text.png,42424242,289ec91a,noise_s25,noise,0.65,"{""sigma"": 25.0}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.5348336999304593
+held_out_04_document_text.png,42424242,289ec91a,noise_s35,noise,0.85,"{""sigma"": 35.0}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.4983005999820307
+held_out_04_document_text.png,42424242,089ec912,bright_1.25,color,0.25,"{""brightness"": 1.25, ""contrast"": 1.0}",14,0.4375,False,False,0.5625,43.33638570900054,0.9999456920383026,0.4795512999407947
+held_out_04_document_text.png,42424242,289ec91a,dark_0.80,color,0.25,"{""brightness"": 0.8, ""contrast"": 1.0}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.4572094000177458
+held_out_04_document_text.png,42424242,089ec91a,contrast_1.25,color,0.25,"{""brightness"": 1.0, ""contrast"": 1.25}",15,0.46875,False,False,0.53125,43.33638570900054,0.9999456920383026,0.4588368000695482
+held_out_04_document_text.png,42424242,289ec91a,contrast_0.80,color,0.25,"{""brightness"": 1.0, ""contrast"": 0.8}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.4431512999581173
+held_out_04_document_text.png,42424242,089ec91a,bright_contrast_high,color,0.4,"{""brightness"": 1.2, ""contrast"": 1.2}",15,0.46875,False,False,0.53125,43.33638570900054,0.9999456920383026,0.44864289998076856
+held_out_04_document_text.png,42424242,289ec91a,rot_1deg,geometry,0.2,"{""angle"": 1.0}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.4576229000231251
+held_out_04_document_text.png,42424242,289ec91a,rot_2deg,geometry,0.4,"{""angle"": 2.0}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.45726990001276135
+held_out_04_document_text.png,42424242,289ec91a,rot_5deg,geometry,0.7,"{""angle"": 5.0}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.44863250001799315
+held_out_04_document_text.png,42424242,289ec91a,trans_dx4_dy4,geometry,0.3,"{""dx"": 4, ""dy"": 4}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.4440537999616936
+held_out_04_document_text.png,42424242,289ec91a,trans_dx8_dy8,geometry,0.55,"{""dx"": 8, ""dy"": 8}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.4606305999914184
+held_out_04_document_text.png,42424242,289ec91a,combo_jpeg70_blur1,combined,0.5,"{""steps"": [{""type"": ""jpeg"", ""quality"": 70}, {""type"": ""blur"", ""radius"": 1.0}]}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.4563399999169633
+held_out_04_document_text.png,42424242,289ec91a,combo_jpeg70_scale75,combined,0.55,"{""steps"": [{""type"": ""jpeg"", ""quality"": 70}, {""type"": ""scale"", ""scale"": 0.75}]}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.45290719997137785
+held_out_04_document_text.png,42424242,289ec91a,combo_noise15_blur1,combined,0.6,"{""steps"": [{""type"": ""noise"", ""sigma"": 15.0}, {""type"": ""blur"", ""radius"": 1.0}]}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.4487350999843329
+held_out_04_document_text.png,42424242,289ec91a,combo_rot2_trans4,combined,0.65,"{""steps"": [{""type"": ""rotation"", ""angle"": 2.0}, {""type"": ""translation"", ""dx"": 4, ""dy"": 4}]}",16,0.5,False,False,0.5,43.33638570900054,0.9999456920383026,0.453609999967739
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,identity,baseline,0.0,{},13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.4549882001010701
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,jpeg_q90,jpeg,0.1,"{""quality"": 90}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.5060153000522405
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,jpeg_q70,jpeg,0.3,"{""quality"": 70}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.48788140004035085
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,jpeg_q50,jpeg,0.5,"{""quality"": 50}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.4588600000133738
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,jpeg_q40,jpeg,0.6,"{""quality"": 40}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.45024899998679757
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,jpeg_q20,jpeg,0.8,"{""quality"": 20}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.4580786000005901
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,crop_resize_90,crop,0.2,"{""crop_ratio"": 0.9}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.47131279995664954
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,crop_resize_75,crop,0.4,"{""crop_ratio"": 0.75}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.47458029992412776
+held_out_05_checkerboard.png,0f0f0f0f,289ec91a,crop_resize_50,crop,0.7,"{""crop_ratio"": 0.5}",14,0.4375,False,False,0.5625,43.26061845699296,0.9998805765723905,0.4921352999517694
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,crop_native_75,crop,0.5,"{""crop_ratio"": 0.75, ""native"": true, ""location"": ""center""}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.30706759996246547
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,crop_native_50,crop,0.8,"{""crop_ratio"": 0.5, ""native"": true, ""location"": ""top_left""}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.1920523999724537
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,resize_0.75_bilinear,resize,0.25,"{""scale"": 0.75, ""interpolation"": ""bilinear""}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.28938049997668713
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,resize_0.50_bilinear,resize,0.5,"{""scale"": 0.5, ""interpolation"": ""bilinear""}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.18813409993890673
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,resize_0.50_bicubic,resize,0.5,"{""scale"": 0.5, ""interpolation"": ""bicubic""}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.19478590006474406
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,resize_1.25_bilinear,resize,0.25,"{""scale"": 1.25, ""interpolation"": ""bilinear""}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.6450647000456229
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,resize_1.50_bicubic,resize,0.4,"{""scale"": 1.5, ""interpolation"": ""bicubic""}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.919831300037913
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,blur_r0.5,blur,0.15,"{""radius"": 0.5}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.4675673999590799
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,blur_r1.0,blur,0.3,"{""radius"": 1.0}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.48175849998369813
+held_out_05_checkerboard.png,0f0f0f0f,2896495a,blur_r2.0,blur,0.55,"{""radius"": 2.0}",15,0.46875,False,False,0.53125,43.26061845699296,0.9998805765723905,0.47858439991250634
+held_out_05_checkerboard.png,0f0f0f0f,2886497a,blur_r3.0,blur,0.8,"{""radius"": 3.0}",15,0.46875,False,False,0.53125,43.26061845699296,0.9998805765723905,0.4795973999425769
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,noise_s5,noise,0.15,"{""sigma"": 5.0}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.5011274999706075
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,noise_s15,noise,0.4,"{""sigma"": 15.0}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.4486954999156296
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,noise_s25,noise,0.65,"{""sigma"": 25.0}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.4577164000365883
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,noise_s35,noise,0.85,"{""sigma"": 35.0}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.45467990008182824
+held_out_05_checkerboard.png,0f0f0f0f,289ec91a,bright_1.25,color,0.25,"{""brightness"": 1.25, ""contrast"": 1.0}",14,0.4375,False,False,0.5625,43.26061845699296,0.9998805765723905,0.44581220007967204
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,dark_0.80,color,0.25,"{""brightness"": 0.8, ""contrast"": 1.0}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.4305075000738725
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,contrast_1.25,color,0.25,"{""brightness"": 1.0, ""contrast"": 1.25}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.47531930007971823
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,contrast_0.80,color,0.25,"{""brightness"": 1.0, ""contrast"": 0.8}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.483274900005199
+held_out_05_checkerboard.png,0f0f0f0f,289ec91a,bright_contrast_high,color,0.4,"{""brightness"": 1.2, ""contrast"": 1.2}",14,0.4375,False,False,0.5625,43.26061845699296,0.9998805765723905,0.4783552000299096
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,rot_1deg,geometry,0.2,"{""angle"": 1.0}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.48557060002349317
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,rot_2deg,geometry,0.4,"{""angle"": 2.0}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.481411200016737
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,rot_5deg,geometry,0.7,"{""angle"": 5.0}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.4597135999938473
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,trans_dx4_dy4,geometry,0.3,"{""dx"": 4, ""dy"": 4}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.4591333999997005
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,trans_dx8_dy8,geometry,0.55,"{""dx"": 8, ""dy"": 8}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.46037390001583844
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,combo_jpeg70_blur1,combined,0.5,"{""steps"": [{""type"": ""jpeg"", ""quality"": 70}, {""type"": ""blur"", ""radius"": 1.0}]}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.45229699998162687
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,combo_jpeg70_scale75,combined,0.55,"{""steps"": [{""type"": ""jpeg"", ""quality"": 70}, {""type"": ""scale"", ""scale"": 0.75}]}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.4508746999781579
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,combo_noise15_blur1,combined,0.6,"{""steps"": [{""type"": ""noise"", ""sigma"": 15.0}, {""type"": ""blur"", ""radius"": 1.0}]}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.4891180000267923
+held_out_05_checkerboard.png,0f0f0f0f,289e491a,combo_rot2_trans4,combined,0.65,"{""steps"": [{""type"": ""rotation"", ""angle"": 2.0}, {""type"": ""translation"", ""dx"": 4, ""dy"": 4}]}",13,0.40625,False,False,0.59375,43.26061845699296,0.9998805765723905,0.5406621000729501
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,identity,baseline,0.0,{},15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.47771050001028925
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,jpeg_q90,jpeg,0.1,"{""quality"": 90}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.504183900076896
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,jpeg_q70,jpeg,0.3,"{""quality"": 70}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.48032030009198934
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,jpeg_q50,jpeg,0.5,"{""quality"": 50}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.4956302000209689
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,jpeg_q40,jpeg,0.6,"{""quality"": 40}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.474368599941954
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,jpeg_q20,jpeg,0.8,"{""quality"": 20}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.4877818999812007
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,crop_resize_90,crop,0.2,"{""crop_ratio"": 0.9}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.48579900001641363
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,crop_resize_75,crop,0.4,"{""crop_ratio"": 0.75}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.4922341000055894
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,crop_resize_50,crop,0.7,"{""crop_ratio"": 0.5}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.4732761000050232
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,crop_native_75,crop,0.5,"{""crop_ratio"": 0.75, ""native"": true, ""location"": ""center""}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.3046468000393361
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,crop_native_50,crop,0.8,"{""crop_ratio"": 0.5, ""native"": true, ""location"": ""top_left""}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.2009123999159783
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,resize_0.75_bilinear,resize,0.25,"{""scale"": 0.75, ""interpolation"": ""bilinear""}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.29968069994356483
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,resize_0.50_bilinear,resize,0.5,"{""scale"": 0.5, ""interpolation"": ""bilinear""}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.19415979995392263
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,resize_0.50_bicubic,resize,0.5,"{""scale"": 0.5, ""interpolation"": ""bicubic""}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.20346150000113994
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,resize_1.25_bilinear,resize,0.25,"{""scale"": 1.25, ""interpolation"": ""bilinear""}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.665363899897784
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,resize_1.50_bicubic,resize,0.4,"{""scale"": 1.5, ""interpolation"": ""bicubic""}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.9302968999836594
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,blur_r0.5,blur,0.15,"{""radius"": 0.5}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.5119373999768868
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,blur_r1.0,blur,0.3,"{""radius"": 1.0}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.5459346999414265
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,blur_r2.0,blur,0.55,"{""radius"": 2.0}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.4843622000189498
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,blur_r3.0,blur,0.8,"{""radius"": 3.0}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.4725863999919966
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,noise_s5,noise,0.15,"{""sigma"": 5.0}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.4803573000244796
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,noise_s15,noise,0.4,"{""sigma"": 15.0}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.4743882000911981
+held_out_06_woodgrain.png,f0f0f0f0,28cec952,noise_s25,noise,0.65,"{""sigma"": 25.0}",16,0.5,False,False,0.5,42.14513453749737,0.9998484100204034,0.44211790000554174
+held_out_06_woodgrain.png,f0f0f0f0,28cec952,noise_s35,noise,0.85,"{""sigma"": 35.0}",16,0.5,False,False,0.5,42.14513453749737,0.9998484100204034,0.4547989999409765
+held_out_06_woodgrain.png,f0f0f0f0,2886c952,bright_1.25,color,0.25,"{""brightness"": 1.25, ""contrast"": 1.0}",16,0.5,False,False,0.5,42.14513453749737,0.9998484100204034,0.4594290000386536
+held_out_06_woodgrain.png,f0f0f0f0,2886c952,dark_0.80,color,0.25,"{""brightness"": 0.8, ""contrast"": 1.0}",16,0.5,False,False,0.5,42.14513453749737,0.9998484100204034,0.45417010004166514
+held_out_06_woodgrain.png,f0f0f0f0,28cec952,contrast_1.25,color,0.25,"{""brightness"": 1.0, ""contrast"": 1.25}",16,0.5,False,False,0.5,42.14513453749737,0.9998484100204034,0.457584600080736
+held_out_06_woodgrain.png,f0f0f0f0,2886c952,contrast_0.80,color,0.25,"{""brightness"": 1.0, ""contrast"": 0.8}",16,0.5,False,False,0.5,42.14513453749737,0.9998484100204034,0.4783012999687344
+held_out_06_woodgrain.png,f0f0f0f0,28cec952,bright_contrast_high,color,0.4,"{""brightness"": 1.2, ""contrast"": 1.2}",16,0.5,False,False,0.5,42.14513453749737,0.9998484100204034,0.5311200000578538
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,rot_1deg,geometry,0.2,"{""angle"": 1.0}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.4755723999114707
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,rot_2deg,geometry,0.4,"{""angle"": 2.0}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.48035530000925064
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,rot_5deg,geometry,0.7,"{""angle"": 5.0}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.5129468000959605
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,trans_dx4_dy4,geometry,0.3,"{""dx"": 4, ""dy"": 4}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.49592280003707856
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,trans_dx8_dy8,geometry,0.55,"{""dx"": 8, ""dy"": 8}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.5326002000365406
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,combo_jpeg70_blur1,combined,0.5,"{""steps"": [{""type"": ""jpeg"", ""quality"": 70}, {""type"": ""blur"", ""radius"": 1.0}]}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.5084545999998227
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,combo_jpeg70_scale75,combined,0.55,"{""steps"": [{""type"": ""jpeg"", ""quality"": 70}, {""type"": ""scale"", ""scale"": 0.75}]}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.4895912000210956
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,combo_noise15_blur1,combined,0.6,"{""steps"": [{""type"": ""noise"", ""sigma"": 15.0}, {""type"": ""blur"", ""radius"": 1.0}]}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.48476599995046854
+held_out_06_woodgrain.png,f0f0f0f0,28c6c952,combo_rot2_trans4,combined,0.65,"{""steps"": [{""type"": ""rotation"", ""angle"": 2.0}, {""type"": ""translation"", ""dx"": 4, ""dy"": 4}]}",15,0.46875,False,False,0.53125,42.14513453749737,0.9998484100204034,0.4775283000199124
+held_out_07_smooth_gradient.png,12345678,4ddc490a,identity,baseline,0.0,{},19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.47619830002076924
+held_out_07_smooth_gradient.png,12345678,4ddc490a,jpeg_q90,jpeg,0.1,"{""quality"": 90}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.4862341000698507
+held_out_07_smooth_gradient.png,12345678,4ddc490a,jpeg_q70,jpeg,0.3,"{""quality"": 70}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.48746570001821965
+held_out_07_smooth_gradient.png,12345678,4ddc490a,jpeg_q50,jpeg,0.5,"{""quality"": 50}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.4792032999685034
+held_out_07_smooth_gradient.png,12345678,4ddc490a,jpeg_q40,jpeg,0.6,"{""quality"": 40}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.4698580999393016
+held_out_07_smooth_gradient.png,12345678,4ddc490a,jpeg_q20,jpeg,0.8,"{""quality"": 20}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.45511579990852624
+held_out_07_smooth_gradient.png,12345678,4ddc490a,crop_resize_90,crop,0.2,"{""crop_ratio"": 0.9}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.4500860000262037
+held_out_07_smooth_gradient.png,12345678,0d9e491a,crop_resize_75,crop,0.4,"{""crop_ratio"": 0.75}",17,0.53125,False,False,0.46875,41.81423100098482,0.9997469551977975,0.454386500059627
+held_out_07_smooth_gradient.png,12345678,2896c95a,crop_resize_50,crop,0.7,"{""crop_ratio"": 0.5}",15,0.46875,False,False,0.53125,41.81423100098482,0.9997469551977975,0.45128829998429865
+held_out_07_smooth_gradient.png,12345678,099e491a,crop_native_75,crop,0.5,"{""crop_ratio"": 0.75, ""native"": true, ""location"": ""center""}",16,0.5,False,False,0.5,41.81423100098482,0.9997469551977975,0.2910584000637755
+held_out_07_smooth_gradient.png,12345678,4ddc490a,crop_native_50,crop,0.8,"{""crop_ratio"": 0.5, ""native"": true, ""location"": ""top_left""}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.18195750005543232
+held_out_07_smooth_gradient.png,12345678,4ddc490a,resize_0.75_bilinear,resize,0.25,"{""scale"": 0.75, ""interpolation"": ""bilinear""}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.2763431000057608
+held_out_07_smooth_gradient.png,12345678,4ddc490a,resize_0.50_bilinear,resize,0.5,"{""scale"": 0.5, ""interpolation"": ""bilinear""}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.17042209999635816
+held_out_07_smooth_gradient.png,12345678,4ddc490a,resize_0.50_bicubic,resize,0.5,"{""scale"": 0.5, ""interpolation"": ""bicubic""}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.18640179990325123
+held_out_07_smooth_gradient.png,12345678,4ddc490a,resize_1.25_bilinear,resize,0.25,"{""scale"": 1.25, ""interpolation"": ""bilinear""}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.6336558000184596
+held_out_07_smooth_gradient.png,12345678,4ddc490a,resize_1.50_bicubic,resize,0.4,"{""scale"": 1.5, ""interpolation"": ""bicubic""}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.9486687999451533
+held_out_07_smooth_gradient.png,12345678,4ddc490a,blur_r0.5,blur,0.15,"{""radius"": 0.5}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.4646620999556035
+held_out_07_smooth_gradient.png,12345678,4ddc490a,blur_r1.0,blur,0.3,"{""radius"": 1.0}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.457190899993293
+held_out_07_smooth_gradient.png,12345678,4ddc490a,blur_r2.0,blur,0.55,"{""radius"": 2.0}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.5468033999204636
+held_out_07_smooth_gradient.png,12345678,4ddc490a,blur_r3.0,blur,0.8,"{""radius"": 3.0}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.49403439997695386
+held_out_07_smooth_gradient.png,12345678,4ddc490a,noise_s5,noise,0.15,"{""sigma"": 5.0}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.48592120001558214
+held_out_07_smooth_gradient.png,12345678,4ddc490a,noise_s15,noise,0.4,"{""sigma"": 15.0}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.4801745000295341
+held_out_07_smooth_gradient.png,12345678,4ddc490a,noise_s25,noise,0.65,"{""sigma"": 25.0}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.46608329995069653
+held_out_07_smooth_gradient.png,12345678,4ddc490a,noise_s35,noise,0.85,"{""sigma"": 35.0}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.45654319995082915
+held_out_07_smooth_gradient.png,12345678,4ddc490a,bright_1.25,color,0.25,"{""brightness"": 1.25, ""contrast"": 1.0}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.45676500000990927
+held_out_07_smooth_gradient.png,12345678,4ddc690a,dark_0.80,color,0.25,"{""brightness"": 0.8, ""contrast"": 1.0}",20,0.625,False,False,0.375,41.81423100098482,0.9997469551977975,0.45616609998978674
+held_out_07_smooth_gradient.png,12345678,4ddc490a,contrast_1.25,color,0.25,"{""brightness"": 1.0, ""contrast"": 1.25}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.4565671000164002
+held_out_07_smooth_gradient.png,12345678,4ddc490a,contrast_0.80,color,0.25,"{""brightness"": 1.0, ""contrast"": 0.8}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.47681309992913157
+held_out_07_smooth_gradient.png,12345678,4ddc490a,bright_contrast_high,color,0.4,"{""brightness"": 1.2, ""contrast"": 1.2}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.4590945999370888
+held_out_07_smooth_gradient.png,12345678,4ddc490a,rot_1deg,geometry,0.2,"{""angle"": 1.0}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.4573098999680951
+held_out_07_smooth_gradient.png,12345678,4ddc490a,rot_2deg,geometry,0.4,"{""angle"": 2.0}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.5024414999643341
+held_out_07_smooth_gradient.png,12345678,4ddc490a,rot_5deg,geometry,0.7,"{""angle"": 5.0}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.5316304999869317
+held_out_07_smooth_gradient.png,12345678,4ddc490a,trans_dx4_dy4,geometry,0.3,"{""dx"": 4, ""dy"": 4}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.46729669999331236
+held_out_07_smooth_gradient.png,12345678,4ddc490a,trans_dx8_dy8,geometry,0.55,"{""dx"": 8, ""dy"": 8}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.4877920999424532
+held_out_07_smooth_gradient.png,12345678,4ddc490a,combo_jpeg70_blur1,combined,0.5,"{""steps"": [{""type"": ""jpeg"", ""quality"": 70}, {""type"": ""blur"", ""radius"": 1.0}]}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.4755767999449745
+held_out_07_smooth_gradient.png,12345678,4ddc490a,combo_jpeg70_scale75,combined,0.55,"{""steps"": [{""type"": ""jpeg"", ""quality"": 70}, {""type"": ""scale"", ""scale"": 0.75}]}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.4483085999963805
+held_out_07_smooth_gradient.png,12345678,4ddc490a,combo_noise15_blur1,combined,0.6,"{""steps"": [{""type"": ""noise"", ""sigma"": 15.0}, {""type"": ""blur"", ""radius"": 1.0}]}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.44974830001592636
+held_out_07_smooth_gradient.png,12345678,4ddc490a,combo_rot2_trans4,combined,0.65,"{""steps"": [{""type"": ""rotation"", ""angle"": 2.0}, {""type"": ""translation"", ""dx"": 4, ""dy"": 4}]}",19,0.59375,False,False,0.40625,41.81423100098482,0.9997469551977975,0.4532572999596596
+held_out_08_fabric_textile.png,87654321,2886c95a,identity,baseline,0.0,{},20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.4588726001093164
+held_out_08_fabric_textile.png,87654321,2886c95a,jpeg_q90,jpeg,0.1,"{""quality"": 90}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.494504600064829
+held_out_08_fabric_textile.png,87654321,2886c95a,jpeg_q70,jpeg,0.3,"{""quality"": 70}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.5531673000659794
+held_out_08_fabric_textile.png,87654321,2886c95a,jpeg_q50,jpeg,0.5,"{""quality"": 50}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.48230919998604804
+held_out_08_fabric_textile.png,87654321,2886c95a,jpeg_q40,jpeg,0.6,"{""quality"": 40}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.48416389990597963
+held_out_08_fabric_textile.png,87654321,2886c95a,jpeg_q20,jpeg,0.8,"{""quality"": 20}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.48758219997398555
+held_out_08_fabric_textile.png,87654321,2886c95a,crop_resize_90,crop,0.2,"{""crop_ratio"": 0.9}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.47425480000674725
+held_out_08_fabric_textile.png,87654321,2886c95a,crop_resize_75,crop,0.4,"{""crop_ratio"": 0.75}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.45548499992582947
+held_out_08_fabric_textile.png,87654321,2886c95a,crop_resize_50,crop,0.7,"{""crop_ratio"": 0.5}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.4536853999597952
+held_out_08_fabric_textile.png,87654321,2886c95a,crop_native_75,crop,0.5,"{""crop_ratio"": 0.75, ""native"": true, ""location"": ""center""}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.2904058999847621
+held_out_08_fabric_textile.png,87654321,2886c95a,crop_native_50,crop,0.8,"{""crop_ratio"": 0.5, ""native"": true, ""location"": ""top_left""}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.19080590002704412
+held_out_08_fabric_textile.png,87654321,2886c95a,resize_0.75_bilinear,resize,0.25,"{""scale"": 0.75, ""interpolation"": ""bilinear""}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.28597970004193485
+held_out_08_fabric_textile.png,87654321,2886c97a,resize_0.50_bilinear,resize,0.5,"{""scale"": 0.5, ""interpolation"": ""bilinear""}",19,0.59375,False,False,0.40625,43.32675815953063,0.9995231596740951,0.19013110001105815
+held_out_08_fabric_textile.png,87654321,2886c97a,resize_0.50_bicubic,resize,0.5,"{""scale"": 0.5, ""interpolation"": ""bicubic""}",19,0.59375,False,False,0.40625,43.32675815953063,0.9995231596740951,0.1827699999557808
+held_out_08_fabric_textile.png,87654321,2886c95a,resize_1.25_bilinear,resize,0.25,"{""scale"": 1.25, ""interpolation"": ""bilinear""}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.628756899968721
+held_out_08_fabric_textile.png,87654321,2886c95a,resize_1.50_bicubic,resize,0.4,"{""scale"": 1.5, ""interpolation"": ""bicubic""}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.8761633000103757
+held_out_08_fabric_textile.png,87654321,2886c95a,blur_r0.5,blur,0.15,"{""radius"": 0.5}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.47100569994654506
+held_out_08_fabric_textile.png,87654321,2886c97a,blur_r1.0,blur,0.3,"{""radius"": 1.0}",19,0.59375,False,False,0.40625,43.32675815953063,0.9995231596740951,0.48381649993825704
+held_out_08_fabric_textile.png,87654321,2886c97a,blur_r2.0,blur,0.55,"{""radius"": 2.0}",19,0.59375,False,False,0.40625,43.32675815953063,0.9995231596740951,0.5271609999472275
+held_out_08_fabric_textile.png,87654321,2886c97a,blur_r3.0,blur,0.8,"{""radius"": 3.0}",19,0.59375,False,False,0.40625,43.32675815953063,0.9995231596740951,0.4938811999745667
+held_out_08_fabric_textile.png,87654321,2886c95a,noise_s5,noise,0.15,"{""sigma"": 5.0}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.4663325999863446
+held_out_08_fabric_textile.png,87654321,2886c95a,noise_s15,noise,0.4,"{""sigma"": 15.0}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.4575632999185473
+held_out_08_fabric_textile.png,87654321,2886c95a,noise_s25,noise,0.65,"{""sigma"": 25.0}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.4474302999442443
+held_out_08_fabric_textile.png,87654321,2886c95a,noise_s35,noise,0.85,"{""sigma"": 35.0}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.4422667999751866
+held_out_08_fabric_textile.png,87654321,2886c95a,bright_1.25,color,0.25,"{""brightness"": 1.25, ""contrast"": 1.0}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.45774700003676116
+held_out_08_fabric_textile.png,87654321,2886495a,dark_0.80,color,0.25,"{""brightness"": 0.8, ""contrast"": 1.0}",19,0.59375,False,False,0.40625,43.32675815953063,0.9995231596740951,0.45280249998904765
+held_out_08_fabric_textile.png,87654321,2886c95a,contrast_1.25,color,0.25,"{""brightness"": 1.0, ""contrast"": 1.25}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.455619000014849
+held_out_08_fabric_textile.png,87654321,2886c95a,contrast_0.80,color,0.25,"{""brightness"": 1.0, ""contrast"": 0.8}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.44192749995272607
+held_out_08_fabric_textile.png,87654321,2886c95a,bright_contrast_high,color,0.4,"{""brightness"": 1.2, ""contrast"": 1.2}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.45110539998859167
+held_out_08_fabric_textile.png,87654321,2886c95a,rot_1deg,geometry,0.2,"{""angle"": 1.0}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.4587769000791013
+held_out_08_fabric_textile.png,87654321,2886c95a,rot_2deg,geometry,0.4,"{""angle"": 2.0}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.4685950999846682
+held_out_08_fabric_textile.png,87654321,2886c95a,rot_5deg,geometry,0.7,"{""angle"": 5.0}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.4809902999550104
+held_out_08_fabric_textile.png,87654321,2886c95a,trans_dx4_dy4,geometry,0.3,"{""dx"": 4, ""dy"": 4}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.4776651000138372
+held_out_08_fabric_textile.png,87654321,2886495a,trans_dx8_dy8,geometry,0.55,"{""dx"": 8, ""dy"": 8}",19,0.59375,False,False,0.40625,43.32675815953063,0.9995231596740951,0.48738970002159476
+held_out_08_fabric_textile.png,87654321,2886c95a,combo_jpeg70_blur1,combined,0.5,"{""steps"": [{""type"": ""jpeg"", ""quality"": 70}, {""type"": ""blur"", ""radius"": 1.0}]}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.47600769996643066
+held_out_08_fabric_textile.png,87654321,2886c95a,combo_jpeg70_scale75,combined,0.55,"{""steps"": [{""type"": ""jpeg"", ""quality"": 70}, {""type"": ""scale"", ""scale"": 0.75}]}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.44922529999166727
+held_out_08_fabric_textile.png,87654321,2886c97a,combo_noise15_blur1,combined,0.6,"{""steps"": [{""type"": ""noise"", ""sigma"": 15.0}, {""type"": ""blur"", ""radius"": 1.0}]}",19,0.59375,False,False,0.40625,43.32675815953063,0.9995231596740951,0.5070149999810383
+held_out_08_fabric_textile.png,87654321,2886c95a,combo_rot2_trans4,combined,0.65,"{""steps"": [{""type"": ""rotation"", ""angle"": 2.0}, {""type"": ""translation"", ""dx"": 4, ""dy"": 4}]}",20,0.625,False,False,0.375,43.32675815953063,0.9995231596740951,0.44715200003702193
+held_out_09_brick_masonry.png,beefc0de,2886c95a,identity,baseline,0.0,{},12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.46063089999370277
+held_out_09_brick_masonry.png,beefc0de,2886c95a,jpeg_q90,jpeg,0.1,"{""quality"": 90}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.4667417999589816
+held_out_09_brick_masonry.png,beefc0de,2886c95a,jpeg_q70,jpeg,0.3,"{""quality"": 70}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.45039549993816763
+held_out_09_brick_masonry.png,beefc0de,2886c95a,jpeg_q50,jpeg,0.5,"{""quality"": 50}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.4734120999928564
+held_out_09_brick_masonry.png,beefc0de,2886c95a,jpeg_q40,jpeg,0.6,"{""quality"": 40}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.47058510000351816
+held_out_09_brick_masonry.png,beefc0de,2886c95a,jpeg_q20,jpeg,0.8,"{""quality"": 20}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.47766129998490214
+held_out_09_brick_masonry.png,beefc0de,2886c95a,crop_resize_90,crop,0.2,"{""crop_ratio"": 0.9}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.4556146999821067
+held_out_09_brick_masonry.png,beefc0de,2886c95a,crop_resize_75,crop,0.4,"{""crop_ratio"": 0.75}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.4513011999661103
+held_out_09_brick_masonry.png,beefc0de,2886c95a,crop_resize_50,crop,0.7,"{""crop_ratio"": 0.5}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.4579611000372097
+held_out_09_brick_masonry.png,beefc0de,2886c95a,crop_native_75,crop,0.5,"{""crop_ratio"": 0.75, ""native"": true, ""location"": ""center""}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.27902770007494837
+held_out_09_brick_masonry.png,beefc0de,2886c95a,crop_native_50,crop,0.8,"{""crop_ratio"": 0.5, ""native"": true, ""location"": ""top_left""}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.18693800002802163
+held_out_09_brick_masonry.png,beefc0de,2886c95a,resize_0.75_bilinear,resize,0.25,"{""scale"": 0.75, ""interpolation"": ""bilinear""}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.2835934000322595
+held_out_09_brick_masonry.png,beefc0de,28c6c95a,resize_0.50_bilinear,resize,0.5,"{""scale"": 0.5, ""interpolation"": ""bilinear""}",11,0.34375,False,True,0.65625,43.34823725851105,0.9999553888412335,0.1835117000155151
+held_out_09_brick_masonry.png,beefc0de,2886c95a,resize_0.50_bicubic,resize,0.5,"{""scale"": 0.5, ""interpolation"": ""bicubic""}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.19058239995501935
+held_out_09_brick_masonry.png,beefc0de,2886c95a,resize_1.25_bilinear,resize,0.25,"{""scale"": 1.25, ""interpolation"": ""bilinear""}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.640484599978663
+held_out_09_brick_masonry.png,beefc0de,2886c95a,resize_1.50_bicubic,resize,0.4,"{""scale"": 1.5, ""interpolation"": ""bicubic""}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.9230717000318691
+held_out_09_brick_masonry.png,beefc0de,2886c95a,blur_r0.5,blur,0.15,"{""radius"": 0.5}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.4841584999812767
+held_out_09_brick_masonry.png,beefc0de,28c6c95a,blur_r1.0,blur,0.3,"{""radius"": 1.0}",11,0.34375,False,True,0.65625,43.34823725851105,0.9999553888412335,0.5025114000309259
+held_out_09_brick_masonry.png,beefc0de,28c6c95a,blur_r2.0,blur,0.55,"{""radius"": 2.0}",11,0.34375,False,True,0.65625,43.34823725851105,0.9999553888412335,0.477417099988088
+held_out_09_brick_masonry.png,beefc0de,28c6c95a,blur_r3.0,blur,0.8,"{""radius"": 3.0}",11,0.34375,False,True,0.65625,43.34823725851105,0.9999553888412335,0.4682887999806553
+held_out_09_brick_masonry.png,beefc0de,2886c95a,noise_s5,noise,0.15,"{""sigma"": 5.0}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.45994279999285936
+held_out_09_brick_masonry.png,beefc0de,28c6c95a,noise_s15,noise,0.4,"{""sigma"": 15.0}",11,0.34375,False,True,0.65625,43.34823725851105,0.9999553888412335,0.4545094999484718
+held_out_09_brick_masonry.png,beefc0de,28c6c952,noise_s25,noise,0.65,"{""sigma"": 25.0}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.4547337999101728
+held_out_09_brick_masonry.png,beefc0de,28c6c952,noise_s35,noise,0.85,"{""sigma"": 35.0}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.44507170002907515
+held_out_09_brick_masonry.png,beefc0de,2886c952,bright_1.25,color,0.25,"{""brightness"": 1.25, ""contrast"": 1.0}",13,0.40625,False,False,0.59375,43.34823725851105,0.9999553888412335,0.45088989997748286
+held_out_09_brick_masonry.png,beefc0de,2886c95a,dark_0.80,color,0.25,"{""brightness"": 0.8, ""contrast"": 1.0}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.4492512000724673
+held_out_09_brick_masonry.png,beefc0de,28c6c952,contrast_1.25,color,0.25,"{""brightness"": 1.0, ""contrast"": 1.25}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.4596469000680372
+held_out_09_brick_masonry.png,beefc0de,2886c95a,contrast_0.80,color,0.25,"{""brightness"": 1.0, ""contrast"": 0.8}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.4486577999778092
+held_out_09_brick_masonry.png,beefc0de,28c6c952,bright_contrast_high,color,0.4,"{""brightness"": 1.2, ""contrast"": 1.2}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.4763212000252679
+held_out_09_brick_masonry.png,beefc0de,2886c95a,rot_1deg,geometry,0.2,"{""angle"": 1.0}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.5365109000122175
+held_out_09_brick_masonry.png,beefc0de,2886c95a,rot_2deg,geometry,0.4,"{""angle"": 2.0}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.47730370005592704
+held_out_09_brick_masonry.png,beefc0de,2886c95a,rot_5deg,geometry,0.7,"{""angle"": 5.0}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.4750209000194445
+held_out_09_brick_masonry.png,beefc0de,2886c95a,trans_dx4_dy4,geometry,0.3,"{""dx"": 4, ""dy"": 4}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.4592434000223875
+held_out_09_brick_masonry.png,beefc0de,2886c95a,trans_dx8_dy8,geometry,0.55,"{""dx"": 8, ""dy"": 8}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.4462087000720203
+held_out_09_brick_masonry.png,beefc0de,2886c95a,combo_jpeg70_blur1,combined,0.5,"{""steps"": [{""type"": ""jpeg"", ""quality"": 70}, {""type"": ""blur"", ""radius"": 1.0}]}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.44433710002340376
+held_out_09_brick_masonry.png,beefc0de,2886c95a,combo_jpeg70_scale75,combined,0.55,"{""steps"": [{""type"": ""jpeg"", ""quality"": 70}, {""type"": ""scale"", ""scale"": 0.75}]}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.4518594000255689
+held_out_09_brick_masonry.png,beefc0de,28c6c95a,combo_noise15_blur1,combined,0.6,"{""steps"": [{""type"": ""noise"", ""sigma"": 15.0}, {""type"": ""blur"", ""radius"": 1.0}]}",11,0.34375,False,True,0.65625,43.34823725851105,0.9999553888412335,0.46022170002106577
+held_out_09_brick_masonry.png,beefc0de,2886c95a,combo_rot2_trans4,combined,0.65,"{""steps"": [{""type"": ""rotation"", ""angle"": 2.0}, {""type"": ""translation"", ""dx"": 4, ""dy"": 4}]}",12,0.375,False,False,0.625,43.34823725851105,0.9999553888412335,0.45152999996207654
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,identity,baseline,0.0,{},14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.43931820010766387
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,jpeg_q90,jpeg,0.1,"{""quality"": 90}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.4548776000738144
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,jpeg_q70,jpeg,0.3,"{""quality"": 70}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.45572680002078414
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,jpeg_q50,jpeg,0.5,"{""quality"": 50}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.4490944999270141
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,jpeg_q40,jpeg,0.6,"{""quality"": 40}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.4515140999574214
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,jpeg_q20,jpeg,0.8,"{""quality"": 20}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.44449609995353967
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,crop_resize_90,crop,0.2,"{""crop_ratio"": 0.9}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.5247760000638664
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,crop_resize_75,crop,0.4,"{""crop_ratio"": 0.75}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.49064209999050945
+held_out_10_cellular_voronoi.png,cafe9999,5ddc690a,crop_resize_50,crop,0.7,"{""crop_ratio"": 0.5}",15,0.46875,False,False,0.53125,43.33963873060078,0.9996682111294486,0.1481671999208629
+held_out_10_cellular_voronoi.png,cafe9999,5ddc690a,crop_native_75,crop,0.5,"{""crop_ratio"": 0.75, ""native"": true, ""location"": ""center""}",15,0.46875,False,False,0.53125,43.33963873060078,0.9996682111294486,0.30783449998125434
+held_out_10_cellular_voronoi.png,cafe9999,4ddc490a,crop_native_50,crop,0.8,"{""crop_ratio"": 0.5, ""native"": true, ""location"": ""top_left""}",13,0.40625,False,False,0.59375,43.33963873060078,0.9996682111294486,0.19525500002782792
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,resize_0.75_bilinear,resize,0.25,"{""scale"": 0.75, ""interpolation"": ""bilinear""}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.2948220999678597
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,resize_0.50_bilinear,resize,0.5,"{""scale"": 0.5, ""interpolation"": ""bilinear""}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.1888658000389114
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,resize_0.50_bicubic,resize,0.5,"{""scale"": 0.5, ""interpolation"": ""bicubic""}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.1891209000023082
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,resize_1.25_bilinear,resize,0.25,"{""scale"": 1.25, ""interpolation"": ""bilinear""}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.6344587000785396
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,resize_1.50_bicubic,resize,0.4,"{""scale"": 1.5, ""interpolation"": ""bicubic""}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.8643393000820652
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,blur_r0.5,blur,0.15,"{""radius"": 0.5}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.49160910001955926
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,blur_r1.0,blur,0.3,"{""radius"": 1.0}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.462476099957712
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,blur_r2.0,blur,0.55,"{""radius"": 2.0}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.44993200001772493
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,blur_r3.0,blur,0.8,"{""radius"": 3.0}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.4541580000659451
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,noise_s5,noise,0.15,"{""sigma"": 5.0}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.4938416000222787
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,noise_s15,noise,0.4,"{""sigma"": 15.0}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.4788239999907091
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,noise_s25,noise,0.65,"{""sigma"": 25.0}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.4761368000181392
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,noise_s35,noise,0.85,"{""sigma"": 35.0}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.47820709994994104
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,bright_1.25,color,0.25,"{""brightness"": 1.25, ""contrast"": 1.0}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.4895341000519693
+held_out_10_cellular_voronoi.png,cafe9999,5ddc690a,dark_0.80,color,0.25,"{""brightness"": 0.8, ""contrast"": 1.0}",15,0.46875,False,False,0.53125,43.33963873060078,0.9996682111294486,0.4777378999860957
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,contrast_1.25,color,0.25,"{""brightness"": 1.0, ""contrast"": 1.25}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.14696709997951984
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,contrast_0.80,color,0.25,"{""brightness"": 1.0, ""contrast"": 0.8}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.46104289998766035
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,bright_contrast_high,color,0.4,"{""brightness"": 1.2, ""contrast"": 1.2}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.13933649996761233
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,rot_1deg,geometry,0.2,"{""angle"": 1.0}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.47532399999909103
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,rot_2deg,geometry,0.4,"{""angle"": 2.0}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.472682400024496
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,rot_5deg,geometry,0.7,"{""angle"": 5.0}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.4821541999699548
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,trans_dx4_dy4,geometry,0.3,"{""dx"": 4, ""dy"": 4}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.4698084000265226
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,trans_dx8_dy8,geometry,0.55,"{""dx"": 8, ""dy"": 8}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.4611511999974027
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,combo_jpeg70_blur1,combined,0.5,"{""steps"": [{""type"": ""jpeg"", ""quality"": 70}, {""type"": ""blur"", ""radius"": 1.0}]}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.4575126999989152
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,combo_jpeg70_scale75,combined,0.55,"{""steps"": [{""type"": ""jpeg"", ""quality"": 70}, {""type"": ""scale"", ""scale"": 0.75}]}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.45228840003255755
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,combo_noise15_blur1,combined,0.6,"{""steps"": [{""type"": ""noise"", ""sigma"": 15.0}, {""type"": ""blur"", ""radius"": 1.0}]}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.4515762000810355
+held_out_10_cellular_voronoi.png,cafe9999,4ddc690a,combo_rot2_trans4,combined,0.65,"{""steps"": [{""type"": ""rotation"", ""angle"": 2.0}, {""type"": ""translation"", ""dx"": 4, ""dy"": 4}]}",14,0.4375,False,False,0.5625,43.33963873060078,0.9996682111294486,0.4503629000391811
+held_out_11_real_photographic.png,77777777,2886495a,identity,baseline,0.0,{},20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.46047269995324314
+held_out_11_real_photographic.png,77777777,2886495a,jpeg_q90,jpeg,0.1,"{""quality"": 90}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.4502172999782488
+held_out_11_real_photographic.png,77777777,2886495a,jpeg_q70,jpeg,0.3,"{""quality"": 70}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.45756509993225336
+held_out_11_real_photographic.png,77777777,2886495a,jpeg_q50,jpeg,0.5,"{""quality"": 50}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.4791976000415161
+held_out_11_real_photographic.png,77777777,2886495a,jpeg_q40,jpeg,0.6,"{""quality"": 40}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.5326002000365406
+held_out_11_real_photographic.png,77777777,2886495a,jpeg_q20,jpeg,0.8,"{""quality"": 20}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.4811707999324426
+held_out_11_real_photographic.png,77777777,2886495a,crop_resize_90,crop,0.2,"{""crop_ratio"": 0.9}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.4791757999919355
+held_out_11_real_photographic.png,77777777,2886c95a,crop_resize_75,crop,0.4,"{""crop_ratio"": 0.75}",21,0.65625,False,False,0.34375,41.40731414810794,0.9995858707941083,0.4541734999511391
+held_out_11_real_photographic.png,77777777,2886c95a,crop_resize_50,crop,0.7,"{""crop_ratio"": 0.5}",21,0.65625,False,False,0.34375,41.40731414810794,0.9995858707941083,0.4433538999874145
+held_out_11_real_photographic.png,77777777,2886c95a,crop_native_75,crop,0.5,"{""crop_ratio"": 0.75, ""native"": true, ""location"": ""center""}",21,0.65625,False,False,0.34375,41.40731414810794,0.9995858707941083,0.2827402000548318
+held_out_11_real_photographic.png,77777777,2886497a,crop_native_50,crop,0.8,"{""crop_ratio"": 0.5, ""native"": true, ""location"": ""top_left""}",19,0.59375,False,False,0.40625,41.40731414810794,0.9995858707941083,0.17743059992790222
+held_out_11_real_photographic.png,77777777,2886495a,resize_0.75_bilinear,resize,0.25,"{""scale"": 0.75, ""interpolation"": ""bilinear""}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.2922073999652639
+held_out_11_real_photographic.png,77777777,2886495a,resize_0.50_bilinear,resize,0.5,"{""scale"": 0.5, ""interpolation"": ""bilinear""}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.19631289993412793
+held_out_11_real_photographic.png,77777777,2886495a,resize_0.50_bicubic,resize,0.5,"{""scale"": 0.5, ""interpolation"": ""bicubic""}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.19885020004585385
+held_out_11_real_photographic.png,77777777,2886495a,resize_1.25_bilinear,resize,0.25,"{""scale"": 1.25, ""interpolation"": ""bilinear""}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.6498731999890879
+held_out_11_real_photographic.png,77777777,2886495a,resize_1.50_bicubic,resize,0.4,"{""scale"": 1.5, ""interpolation"": ""bicubic""}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.8936541000148281
+held_out_11_real_photographic.png,77777777,2886495a,blur_r0.5,blur,0.15,"{""radius"": 0.5}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.4748009000904858
+held_out_11_real_photographic.png,77777777,2886495a,blur_r1.0,blur,0.3,"{""radius"": 1.0}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.49868710001464933
+held_out_11_real_photographic.png,77777777,2886495a,blur_r2.0,blur,0.55,"{""radius"": 2.0}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.48795829992741346
+held_out_11_real_photographic.png,77777777,2886495a,blur_r3.0,blur,0.8,"{""radius"": 3.0}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.4764551999978721
+held_out_11_real_photographic.png,77777777,2886495a,noise_s5,noise,0.15,"{""sigma"": 5.0}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.45952119992580265
+held_out_11_real_photographic.png,77777777,2886495a,noise_s15,noise,0.4,"{""sigma"": 15.0}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.5458007999695837
+held_out_11_real_photographic.png,77777777,2886495a,noise_s25,noise,0.65,"{""sigma"": 25.0}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.5088578999275342
+held_out_11_real_photographic.png,77777777,288e495a,noise_s35,noise,0.85,"{""sigma"": 35.0}",21,0.65625,False,False,0.34375,41.40731414810794,0.9995858707941083,0.5499800000106916
+held_out_11_real_photographic.png,77777777,2886c95a,bright_1.25,color,0.25,"{""brightness"": 1.25, ""contrast"": 1.0}",21,0.65625,False,False,0.34375,41.40731414810794,0.9995858707941083,0.48624059988651425
+held_out_11_real_photographic.png,77777777,2886495a,dark_0.80,color,0.25,"{""brightness"": 0.8, ""contrast"": 1.0}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.47462960006669164
+held_out_11_real_photographic.png,77777777,2886c95a,contrast_1.25,color,0.25,"{""brightness"": 1.0, ""contrast"": 1.25}",21,0.65625,False,False,0.34375,41.40731414810794,0.9995858707941083,0.4582767999963835
+held_out_11_real_photographic.png,77777777,2886495a,contrast_0.80,color,0.25,"{""brightness"": 1.0, ""contrast"": 0.8}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.46521699998993427
+held_out_11_real_photographic.png,77777777,2886c95a,bright_contrast_high,color,0.4,"{""brightness"": 1.2, ""contrast"": 1.2}",21,0.65625,False,False,0.34375,41.40731414810794,0.9995858707941083,0.4507200999651104
+held_out_11_real_photographic.png,77777777,2886495a,rot_1deg,geometry,0.2,"{""angle"": 1.0}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.4565042000031099
+held_out_11_real_photographic.png,77777777,2886495a,rot_2deg,geometry,0.4,"{""angle"": 2.0}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.4896831000223756
+held_out_11_real_photographic.png,77777777,2886495a,rot_5deg,geometry,0.7,"{""angle"": 5.0}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.5173667999915779
+held_out_11_real_photographic.png,77777777,2886495a,trans_dx4_dy4,geometry,0.3,"{""dx"": 4, ""dy"": 4}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.49542740010656416
+held_out_11_real_photographic.png,77777777,2886495a,trans_dx8_dy8,geometry,0.55,"{""dx"": 8, ""dy"": 8}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.4746305999578908
+held_out_11_real_photographic.png,77777777,2886495a,combo_jpeg70_blur1,combined,0.5,"{""steps"": [{""type"": ""jpeg"", ""quality"": 70}, {""type"": ""blur"", ""radius"": 1.0}]}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.46134919999167323
+held_out_11_real_photographic.png,77777777,2886495a,combo_jpeg70_scale75,combined,0.55,"{""steps"": [{""type"": ""jpeg"", ""quality"": 70}, {""type"": ""scale"", ""scale"": 0.75}]}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.4528197000036016
+held_out_11_real_photographic.png,77777777,2886495a,combo_noise15_blur1,combined,0.6,"{""steps"": [{""type"": ""noise"", ""sigma"": 15.0}, {""type"": ""blur"", ""radius"": 1.0}]}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.45472140004858375
+held_out_11_real_photographic.png,77777777,2886495a,combo_rot2_trans4,combined,0.65,"{""steps"": [{""type"": ""rotation"", ""angle"": 2.0}, {""type"": ""translation"", ""dx"": 4, ""dy"": 4}]}",20,0.625,False,False,0.375,41.40731414810794,0.9995858707941083,0.5219913999317214
+held_out_12_real_urban_phot.png,31415926,2886c95a,identity,baseline,0.0,{},15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.440208499901928
+held_out_12_real_urban_phot.png,31415926,2886c95a,jpeg_q90,jpeg,0.1,"{""quality"": 90}",15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.45306009997148067
+held_out_12_real_urban_phot.png,31415926,2886c95a,jpeg_q70,jpeg,0.3,"{""quality"": 70}",15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.4875563000096008
+held_out_12_real_urban_phot.png,31415926,2886c95a,jpeg_q50,jpeg,0.5,"{""quality"": 50}",15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.5198344000382349
+held_out_12_real_urban_phot.png,31415926,2886c95a,jpeg_q40,jpeg,0.6,"{""quality"": 40}",15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.5410988999065012
+held_out_12_real_urban_phot.png,31415926,2886c95a,jpeg_q20,jpeg,0.8,"{""quality"": 20}",15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.5006040000589564
+held_out_12_real_urban_phot.png,31415926,2886c95a,crop_resize_90,crop,0.2,"{""crop_ratio"": 0.9}",15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.47948910004924983
+held_out_12_real_urban_phot.png,31415926,2886c95a,crop_resize_75,crop,0.4,"{""crop_ratio"": 0.75}",15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.4849651000695303
+held_out_12_real_urban_phot.png,31415926,2886c95a,crop_resize_50,crop,0.7,"{""crop_ratio"": 0.5}",15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.45210389990825206
+held_out_12_real_urban_phot.png,31415926,2886c95a,crop_native_75,crop,0.5,"{""crop_ratio"": 0.75, ""native"": true, ""location"": ""center""}",15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.28739369998220354
+held_out_12_real_urban_phot.png,31415926,2886495a,crop_native_50,crop,0.8,"{""crop_ratio"": 0.5, ""native"": true, ""location"": ""top_left""}",14,0.4375,False,False,0.5625,43.33843688025627,0.9997792862930216,0.2124931999715045
+held_out_12_real_urban_phot.png,31415926,2886c95a,resize_0.75_bilinear,resize,0.25,"{""scale"": 0.75, ""interpolation"": ""bilinear""}",15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.30433429998811334
+held_out_12_real_urban_phot.png,31415926,2886c95a,resize_0.50_bilinear,resize,0.5,"{""scale"": 0.5, ""interpolation"": ""bilinear""}",15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.1902301999507472
+held_out_12_real_urban_phot.png,31415926,2886c95a,resize_0.50_bicubic,resize,0.5,"{""scale"": 0.5, ""interpolation"": ""bicubic""}",15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.20524999999906868
+held_out_12_real_urban_phot.png,31415926,2886495a,resize_1.25_bilinear,resize,0.25,"{""scale"": 1.25, ""interpolation"": ""bilinear""}",14,0.4375,False,False,0.5625,43.33843688025627,0.9997792862930216,0.6755764000117779
+held_out_12_real_urban_phot.png,31415926,2886495a,resize_1.50_bicubic,resize,0.4,"{""scale"": 1.5, ""interpolation"": ""bicubic""}",14,0.4375,False,False,0.5625,43.33843688025627,0.9997792862930216,0.9063706999877468
+held_out_12_real_urban_phot.png,31415926,2886c95a,blur_r0.5,blur,0.15,"{""radius"": 0.5}",15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.5313628999283537
+held_out_12_real_urban_phot.png,31415926,2886c95a,blur_r1.0,blur,0.3,"{""radius"": 1.0}",15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.47824939992278814
+held_out_12_real_urban_phot.png,31415926,2886495a,blur_r2.0,blur,0.55,"{""radius"": 2.0}",14,0.4375,False,False,0.5625,43.33843688025627,0.9997792862930216,0.4580612999852747
+held_out_12_real_urban_phot.png,31415926,2886495a,blur_r3.0,blur,0.8,"{""radius"": 3.0}",14,0.4375,False,False,0.5625,43.33843688025627,0.9997792862930216,0.4474059999920428
+held_out_12_real_urban_phot.png,31415926,2886c95a,noise_s5,noise,0.15,"{""sigma"": 5.0}",15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.4924151999875903
+held_out_12_real_urban_phot.png,31415926,2886495a,noise_s15,noise,0.4,"{""sigma"": 15.0}",14,0.4375,False,False,0.5625,43.33843688025627,0.9997792862930216,0.48885409999638796
+held_out_12_real_urban_phot.png,31415926,2886495a,noise_s25,noise,0.65,"{""sigma"": 25.0}",14,0.4375,False,False,0.5625,43.33843688025627,0.9997792862930216,0.4612183999270201
+held_out_12_real_urban_phot.png,31415926,2886495a,noise_s35,noise,0.85,"{""sigma"": 35.0}",14,0.4375,False,False,0.5625,43.33843688025627,0.9997792862930216,0.4778655000263825
+held_out_12_real_urban_phot.png,31415926,2886c95a,bright_1.25,color,0.25,"{""brightness"": 1.25, ""contrast"": 1.0}",15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.4737991999136284
+held_out_12_real_urban_phot.png,31415926,2886495a,dark_0.80,color,0.25,"{""brightness"": 0.8, ""contrast"": 1.0}",14,0.4375,False,False,0.5625,43.33843688025627,0.9997792862930216,0.45877779996953905
+held_out_12_real_urban_phot.png,31415926,2886c95a,contrast_1.25,color,0.25,"{""brightness"": 1.0, ""contrast"": 1.25}",15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.4422121000243351
+held_out_12_real_urban_phot.png,31415926,2886495a,contrast_0.80,color,0.25,"{""brightness"": 1.0, ""contrast"": 0.8}",14,0.4375,False,False,0.5625,43.33843688025627,0.9997792862930216,0.45055770000908524
+held_out_12_real_urban_phot.png,31415926,2886c95a,bright_contrast_high,color,0.4,"{""brightness"": 1.2, ""contrast"": 1.2}",15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.4486968000419438
+held_out_12_real_urban_phot.png,31415926,2886c95a,rot_1deg,geometry,0.2,"{""angle"": 1.0}",15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.45683919999282807
+held_out_12_real_urban_phot.png,31415926,2886c95a,rot_2deg,geometry,0.4,"{""angle"": 2.0}",15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.4544247000012547
+held_out_12_real_urban_phot.png,31415926,2886c95a,rot_5deg,geometry,0.7,"{""angle"": 5.0}",15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.4500193999847397
+held_out_12_real_urban_phot.png,31415926,2886495a,trans_dx4_dy4,geometry,0.3,"{""dx"": 4, ""dy"": 4}",14,0.4375,False,False,0.5625,43.33843688025627,0.9997792862930216,0.45700769999530166
+held_out_12_real_urban_phot.png,31415926,2886495a,trans_dx8_dy8,geometry,0.55,"{""dx"": 8, ""dy"": 8}",14,0.4375,False,False,0.5625,43.33843688025627,0.9997792862930216,0.4569821000332013
+held_out_12_real_urban_phot.png,31415926,2886c95a,combo_jpeg70_blur1,combined,0.5,"{""steps"": [{""type"": ""jpeg"", ""quality"": 70}, {""type"": ""blur"", ""radius"": 1.0}]}",15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.5091494000516832
+held_out_12_real_urban_phot.png,31415926,2886c95a,combo_jpeg70_scale75,combined,0.55,"{""steps"": [{""type"": ""jpeg"", ""quality"": 70}, {""type"": ""scale"", ""scale"": 0.75}]}",15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.5108826000941917
+held_out_12_real_urban_phot.png,31415926,2886c95a,combo_noise15_blur1,combined,0.6,"{""steps"": [{""type"": ""noise"", ""sigma"": 15.0}, {""type"": ""blur"", ""radius"": 1.0}]}",15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.4942700000246987
+held_out_12_real_urban_phot.png,31415926,2886c95a,combo_rot2_trans4,combined,0.65,"{""steps"": [{""type"": ""rotation"", ""angle"": 2.0}, {""type"": ""translation"", ""dx"": 4, ""dy"": 4}]}",15,0.46875,False,False,0.53125,43.33843688025627,0.9997792862930216,0.5143164999317378

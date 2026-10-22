@@ -1,0 +1,1104 @@
+{
+  "metadata": {
+    "evaluation_title": "Phase 5.7 False-Positive Remediation & Provenance Calibration",
+    "carrier": "HiDDeN-32",
+    "carrier_version": "2.2.0-neural32",
+    "checkpoint_path": "models/checkpoints/hidden_32bit_robust_v3.pt",
+    "decision_threshold_bits": 7,
+    "decision_threshold_ber": 0.21875,
+    "evaluation_timestamp": "2026-10-22T04:32:01Z",
+    "total_benchmark_images": 20
+  },
+  "statistical_summary": {
+    "blind_false_positive_rate": 0.0,
+    "blind_false_positive_count": 0,
+    "blind_clean_sample_size": 20,
+    "blind_fpr_95_ci": [
+      0.0,
+      0.16112460848604168
+    ],
+    "watermarked_true_positives": 12,
+    "watermarked_sample_size": 20,
+    "false_negative_rate": 0.4,
+    "fnr_95_ci": [
+      0.2188068161466652,
+      0.6134181055505432
+    ],
+    "precision": 1.0,
+    "mismatch_rejection_rate": 1.0,
+    "jpeg_q50_recovery_rate": 0.55,
+    "crop_80pct_recovery_rate": 0.6
+  },
+  "raw_trials": {
+    "case_a_blind_clean": [
+      {
+        "image": "held_out_01_natural_landscape.png",
+        "mode": "blind_decode",
+        "reference_payload": null,
+        "recovered_payload": "da3dbeeb",
+        "watermark_detected": false,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.8497642278671265,
+        "elapsed_seconds": 0.12147929996717721,
+        "error": "Blind candidate payload extracted without reference claim. Provenance authentication requires anchor verification."
+      },
+      {
+        "image": "held_out_02_portrait_face.png",
+        "mode": "blind_decode",
+        "reference_payload": null,
+        "recovered_payload": "1337c0de",
+        "watermark_detected": false,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.8390080332756042,
+        "elapsed_seconds": 0.08039200003258884,
+        "error": "Blind candidate payload extracted without reference claim. Provenance authentication requires anchor verification."
+      },
+      {
+        "image": "held_out_03_urban_architecture.png",
+        "mode": "blind_decode",
+        "reference_payload": null,
+        "recovered_payload": "513556a2",
+        "watermark_detected": false,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.7323212623596191,
+        "elapsed_seconds": 0.07861219998449087,
+        "error": "Blind candidate payload extracted without reference claim. Provenance authentication requires anchor verification."
+      },
+      {
+        "image": "held_out_04_document_text.png",
+        "mode": "blind_decode",
+        "reference_payload": null,
+        "recovered_payload": "42424242",
+        "watermark_detected": false,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.9886006116867065,
+        "elapsed_seconds": 0.07765449990984052,
+        "error": "Blind candidate payload extracted without reference claim. Provenance authentication requires anchor verification."
+      },
+      {
+        "image": "held_out_05_checkerboard.png",
+        "mode": "blind_decode",
+        "reference_payload": null,
+        "recovered_payload": "4f07464b",
+        "watermark_detected": false,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.9122539758682251,
+        "elapsed_seconds": 0.0821701999520883,
+        "error": "Blind candidate payload extracted without reference claim. Provenance authentication requires anchor verification."
+      },
+      {
+        "image": "held_out_06_woodgrain.png",
+        "mode": "blind_decode",
+        "reference_payload": null,
+        "recovered_payload": "16e7c4de",
+        "watermark_detected": false,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.8597456812858582,
+        "elapsed_seconds": 0.083492900012061,
+        "error": "Blind candidate payload extracted without reference claim. Provenance authentication requires anchor verification."
+      },
+      {
+        "image": "held_out_07_smooth_gradient.png",
+        "mode": "blind_decode",
+        "reference_payload": null,
+        "recovered_payload": "12345678",
+        "watermark_detected": false,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.9193494319915771,
+        "elapsed_seconds": 0.08344870002474636,
+        "error": "Blind candidate payload extracted without reference claim. Provenance authentication requires anchor verification."
+      },
+      {
+        "image": "held_out_08_fabric_textile.png",
+        "mode": "blind_decode",
+        "reference_payload": null,
+        "recovered_payload": "f3e6f1f0",
+        "watermark_detected": false,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.7101293206214905,
+        "elapsed_seconds": 0.08104840002488345,
+        "error": "Blind candidate payload extracted without reference claim. Provenance authentication requires anchor verification."
+      },
+      {
+        "image": "held_out_09_brick_masonry.png",
+        "mode": "blind_decode",
+        "reference_payload": null,
+        "recovered_payload": "beefc0de",
+        "watermark_detected": false,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.8987077474594116,
+        "elapsed_seconds": 0.07646140002179891,
+        "error": "Blind candidate payload extracted without reference claim. Provenance authentication requires anchor verification."
+      },
+      {
+        "image": "held_out_10_cellular_voronoi.png",
+        "mode": "blind_decode",
+        "reference_payload": null,
+        "recovered_payload": "9efec889",
+        "watermark_detected": false,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.7547149062156677,
+        "elapsed_seconds": 0.08253470005001873,
+        "error": "Blind candidate payload extracted without reference claim. Provenance authentication requires anchor verification."
+      },
+      {
+        "image": "held_out_11_real_photographic.png",
+        "mode": "blind_decode",
+        "reference_payload": null,
+        "recovered_payload": "d7637767",
+        "watermark_detected": false,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.7707566618919373,
+        "elapsed_seconds": 0.07981289993040264,
+        "error": "Blind candidate payload extracted without reference claim. Provenance authentication requires anchor verification."
+      },
+      {
+        "image": "held_out_12_real_urban_phot.png",
+        "mode": "blind_decode",
+        "reference_payload": null,
+        "recovered_payload": "57437767",
+        "watermark_detected": false,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.8133212327957153,
+        "elapsed_seconds": 0.08064330008346587,
+        "error": "Blind candidate payload extracted without reference claim. Provenance authentication requires anchor verification."
+      },
+      {
+        "image": "img_calibration_000_phot.png",
+        "mode": "blind_decode",
+        "reference_payload": null,
+        "recovered_payload": "53437767",
+        "watermark_detected": false,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.8620047569274902,
+        "elapsed_seconds": 0.5475638000061736,
+        "error": "Blind candidate payload extracted without reference claim. Provenance authentication requires anchor verification."
+      },
+      {
+        "image": "img_calibration_001_geom.png",
+        "mode": "blind_decode",
+        "reference_payload": null,
+        "recovered_payload": "1b074642",
+        "watermark_detected": false,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.9573285579681396,
+        "elapsed_seconds": 0.5427853000583127,
+        "error": "Blind candidate payload extracted without reference claim. Provenance authentication requires anchor verification."
+      },
+      {
+        "image": "img_calibration_002_high.png",
+        "mode": "blind_decode",
+        "reference_payload": null,
+        "recovered_payload": "1b4d770b",
+        "watermark_detected": false,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.7521743774414062,
+        "elapsed_seconds": 0.553869100054726,
+        "error": "Blind candidate payload extracted without reference claim. Provenance authentication requires anchor verification."
+      },
+      {
+        "image": "img_calibration_003_smoo.png",
+        "mode": "blind_decode",
+        "reference_payload": null,
+        "recovered_payload": "1f4d5f03",
+        "watermark_detected": false,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.9426296949386597,
+        "elapsed_seconds": 0.5274724999908358,
+        "error": "Blind candidate payload extracted without reference claim. Provenance authentication requires anchor verification."
+      },
+      {
+        "image": "img_test_004_phot.png",
+        "mode": "blind_decode",
+        "reference_payload": null,
+        "recovered_payload": "53627767",
+        "watermark_detected": false,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.8265136480331421,
+        "elapsed_seconds": 0.6498470000224188,
+        "error": "Blind candidate payload extracted without reference claim. Provenance authentication requires anchor verification."
+      },
+      {
+        "image": "img_test_005_geom.png",
+        "mode": "blind_decode",
+        "reference_payload": null,
+        "recovered_payload": "13474642",
+        "watermark_detected": false,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.9519188404083252,
+        "elapsed_seconds": 0.5986433000070974,
+        "error": "Blind candidate payload extracted without reference claim. Provenance authentication requires anchor verification."
+      },
+      {
+        "image": "img_test_006_high.png",
+        "mode": "blind_decode",
+        "reference_payload": null,
+        "recovered_payload": "1b4d770b",
+        "watermark_detected": false,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.7531856894493103,
+        "elapsed_seconds": 0.5466037999140099,
+        "error": "Blind candidate payload extracted without reference claim. Provenance authentication requires anchor verification."
+      },
+      {
+        "image": "img_test_007_smoo.png",
+        "mode": "blind_decode",
+        "reference_payload": null,
+        "recovered_payload": "133744ca",
+        "watermark_detected": false,
+        "hamming_distance": null,
+        "bit_error_rate": null,
+        "confidence": 0.9556039571762085,
+        "elapsed_seconds": 0.539210099959746,
+        "error": "Blind candidate payload extracted without reference claim. Provenance authentication requires anchor verification."
+      }
+    ],
+    "case_b_unwatermarked_with_reference": [
+      {
+        "image": "held_out_01_natural_landscape.png",
+        "mode": "reference_decode",
+        "reference_payload": "deadbeef",
+        "recovered_payload": "da3dbeeb",
+        "watermark_detected": true,
+        "hamming_distance": 4,
+        "bit_error_rate": 0.125,
+        "confidence": 0.875,
+        "elapsed_seconds": 0.08052930003032088,
+        "error": null
+      },
+      {
+        "image": "held_out_02_portrait_face.png",
+        "mode": "reference_decode",
+        "reference_payload": "1337c0de",
+        "recovered_payload": "1337c0de",
+        "watermark_detected": true,
+        "hamming_distance": 0,
+        "bit_error_rate": 0.0,
+        "confidence": 1.0,
+        "elapsed_seconds": 0.08353649999480695,
+        "error": null
+      },
+      {
+        "image": "held_out_03_urban_architecture.png",
+        "mode": "reference_decode",
+        "reference_payload": "a5a5a5a5",
+        "recovered_payload": "513556a2",
+        "watermark_detected": false,
+        "hamming_distance": 16,
+        "bit_error_rate": 0.5,
+        "confidence": 0.5,
+        "elapsed_seconds": 0.08005989994853735,
+        "error": "Watermark verification rejected: Bit error rate 50.0% exceeds detection tolerance (Hamming distance 16/32 bits)."
+      },
+      {
+        "image": "held_out_04_document_text.png",
+        "mode": "reference_decode",
+        "reference_payload": "42424242",
+        "recovered_payload": "42424242",
+        "watermark_detected": true,
+        "hamming_distance": 0,
+        "bit_error_rate": 0.0,
+        "confidence": 1.0,
+        "elapsed_seconds": 0.07895120000466704,
+        "error": null
+      },
+      {
+        "image": "held_out_05_checkerboard.png",
+        "mode": "reference_decode",
+        "reference_payload": "0f0f0f0f",
+        "recovered_payload": "4f07464b",
+        "watermark_detected": true,
+        "hamming_distance": 7,
+        "bit_error_rate": 0.21875,
+        "confidence": 0.78125,
+        "elapsed_seconds": 0.07864790002349764,
+        "error": null
+      },
+      {
+        "image": "held_out_06_woodgrain.png",
+        "mode": "reference_decode",
+        "reference_payload": "f0f0f0f0",
+        "recovered_payload": "16e7c4de",
+        "watermark_detected": false,
+        "hamming_distance": 16,
+        "bit_error_rate": 0.5,
+        "confidence": 0.5,
+        "elapsed_seconds": 0.09092340001370758,
+        "error": "Watermark verification rejected: Bit error rate 50.0% exceeds detection tolerance (Hamming distance 16/32 bits)."
+      },
+      {
+        "image": "held_out_07_smooth_gradient.png",
+        "mode": "reference_decode",
+        "reference_payload": "12345678",
+        "recovered_payload": "12345678",
+        "watermark_detected": true,
+        "hamming_distance": 0,
+        "bit_error_rate": 0.0,
+        "confidence": 1.0,
+        "elapsed_seconds": 0.07987160002812743,
+        "error": null
+      },
+      {
+        "image": "held_out_08_fabric_textile.png",
+        "mode": "reference_decode",
+        "reference_payload": "87654321",
+        "recovered_payload": "f3e6f1f0",
+        "watermark_detected": false,
+        "hamming_distance": 15,
+        "bit_error_rate": 0.46875,
+        "confidence": 0.53125,
+        "elapsed_seconds": 0.08340649993624538,
+        "error": "Watermark verification rejected: Bit error rate 46.9% exceeds detection tolerance (Hamming distance 15/32 bits)."
+      },
+      {
+        "image": "held_out_09_brick_masonry.png",
+        "mode": "reference_decode",
+        "reference_payload": "beefc0de",
+        "recovered_payload": "beefc0de",
+        "watermark_detected": true,
+        "hamming_distance": 0,
+        "bit_error_rate": 0.0,
+        "confidence": 1.0,
+        "elapsed_seconds": 0.08242069999687374,
+        "error": null
+      },
+      {
+        "image": "held_out_10_cellular_voronoi.png",
+        "mode": "reference_decode",
+        "reference_payload": "cafe9999",
+        "recovered_payload": "9efec889",
+        "watermark_detected": true,
+        "hamming_distance": 7,
+        "bit_error_rate": 0.21875,
+        "confidence": 0.78125,
+        "elapsed_seconds": 0.12457390001509339,
+        "error": null
+      },
+      {
+        "image": "held_out_11_real_photographic.png",
+        "mode": "reference_decode",
+        "reference_payload": "77777777",
+        "recovered_payload": "d7637767",
+        "watermark_detected": true,
+        "hamming_distance": 5,
+        "bit_error_rate": 0.15625,
+        "confidence": 0.84375,
+        "elapsed_seconds": 0.12342980003450066,
+        "error": null
+      },
+      {
+        "image": "held_out_12_real_urban_phot.png",
+        "mode": "reference_decode",
+        "reference_payload": "31415926",
+        "recovered_payload": "57437767",
+        "watermark_detected": false,
+        "hamming_distance": 11,
+        "bit_error_rate": 0.34375,
+        "confidence": 0.65625,
+        "elapsed_seconds": 0.09411050006747246,
+        "error": "Watermark verification rejected: Bit error rate 34.4% exceeds detection tolerance (Hamming distance 11/32 bits)."
+      },
+      {
+        "image": "img_calibration_000_phot.png",
+        "mode": "reference_decode",
+        "reference_payload": "cafebabe",
+        "recovered_payload": "53437767",
+        "watermark_detected": false,
+        "hamming_distance": 20,
+        "bit_error_rate": 0.625,
+        "confidence": 0.375,
+        "elapsed_seconds": 0.6001396999927238,
+        "error": "Watermark verification rejected: Bit error rate 62.5% exceeds detection tolerance (Hamming distance 20/32 bits)."
+      },
+      {
+        "image": "img_calibration_001_geom.png",
+        "mode": "reference_decode",
+        "reference_payload": "feedface",
+        "recovered_payload": "1b074642",
+        "watermark_detected": false,
+        "hamming_distance": 18,
+        "bit_error_rate": 0.5625,
+        "confidence": 0.4375,
+        "elapsed_seconds": 0.5838712999830022,
+        "error": "Watermark verification rejected: Bit error rate 56.2% exceeds detection tolerance (Hamming distance 18/32 bits)."
+      },
+      {
+        "image": "img_calibration_002_high.png",
+        "mode": "reference_decode",
+        "reference_payload": "c001d00d",
+        "recovered_payload": "1b4d770b",
+        "watermark_detected": false,
+        "hamming_distance": 16,
+        "bit_error_rate": 0.5,
+        "confidence": 0.5,
+        "elapsed_seconds": 0.6038674999726936,
+        "error": "Watermark verification rejected: Bit error rate 50.0% exceeds detection tolerance (Hamming distance 16/32 bits)."
+      },
+      {
+        "image": "img_calibration_003_smoo.png",
+        "mode": "reference_decode",
+        "reference_payload": "baadf00d",
+        "recovered_payload": "1f4d5f03",
+        "watermark_detected": false,
+        "hamming_distance": 16,
+        "bit_error_rate": 0.5,
+        "confidence": 0.5,
+        "elapsed_seconds": 0.519597899983637,
+        "error": "Watermark verification rejected: Bit error rate 50.0% exceeds detection tolerance (Hamming distance 16/32 bits)."
+      },
+      {
+        "image": "img_test_004_phot.png",
+        "mode": "reference_decode",
+        "reference_payload": "55555555",
+        "recovered_payload": "53627767",
+        "watermark_detected": false,
+        "hamming_distance": 12,
+        "bit_error_rate": 0.375,
+        "confidence": 0.625,
+        "elapsed_seconds": 0.5501720999600366,
+        "error": "Watermark verification rejected: Bit error rate 37.5% exceeds detection tolerance (Hamming distance 12/32 bits)."
+      },
+      {
+        "image": "img_test_005_geom.png",
+        "mode": "reference_decode",
+        "reference_payload": "aaaaaaaa",
+        "recovered_payload": "13474642",
+        "watermark_detected": false,
+        "hamming_distance": 20,
+        "bit_error_rate": 0.625,
+        "confidence": 0.375,
+        "elapsed_seconds": 0.7220973999937996,
+        "error": "Watermark verification rejected: Bit error rate 62.5% exceeds detection tolerance (Hamming distance 20/32 bits)."
+      },
+      {
+        "image": "img_test_006_high.png",
+        "mode": "reference_decode",
+        "reference_payload": "10203040",
+        "recovered_payload": "1b4d770b",
+        "watermark_detected": false,
+        "hamming_distance": 16,
+        "bit_error_rate": 0.5,
+        "confidence": 0.5,
+        "elapsed_seconds": 0.6192538000177592,
+        "error": "Watermark verification rejected: Bit error rate 50.0% exceeds detection tolerance (Hamming distance 16/32 bits)."
+      },
+      {
+        "image": "img_test_007_smoo.png",
+        "mode": "reference_decode",
+        "reference_payload": "aabbccdd",
+        "recovered_payload": "133744ca",
+        "watermark_detected": false,
+        "hamming_distance": 14,
+        "bit_error_rate": 0.4375,
+        "confidence": 0.5625,
+        "elapsed_seconds": 0.6113660000264645,
+        "error": "Watermark verification rejected: Bit error rate 43.8% exceeds detection tolerance (Hamming distance 14/32 bits)."
+      }
+    ],
+    "case_c_watermarked_matching_reference": [
+      {
+        "image": "held_out_01_natural_landscape.png",
+        "payload_embedded": "deadbeef",
+        "reference_payload": "deadbeef",
+        "recovered_payload": "deadbeef",
+        "watermark_detected": true,
+        "hamming_distance": 0,
+        "bit_error_rate": 0.0,
+        "psnr_db": 27.781939738670722,
+        "elapsed_seconds": 0.0010836999863386154
+      },
+      {
+        "image": "held_out_02_portrait_face.png",
+        "payload_embedded": "1337c0de",
+        "reference_payload": "1337c0de",
+        "recovered_payload": "1337c0de",
+        "watermark_detected": true,
+        "hamming_distance": 0,
+        "bit_error_rate": 0.0,
+        "psnr_db": 41.440735799093346,
+        "elapsed_seconds": 0.0007473999867215753
+      },
+      {
+        "image": "held_out_03_urban_architecture.png",
+        "payload_embedded": "a5a5a5a5",
+        "reference_payload": "a5a5a5a5",
+        "recovered_payload": "b7e565a1",
+        "watermark_detected": true,
+        "hamming_distance": 6,
+        "bit_error_rate": 0.1875,
+        "psnr_db": 28.11257578110306,
+        "elapsed_seconds": 0.0007711000507697463
+      },
+      {
+        "image": "held_out_04_document_text.png",
+        "payload_embedded": "42424242",
+        "reference_payload": "42424242",
+        "recovered_payload": "42424242",
+        "watermark_detected": true,
+        "hamming_distance": 0,
+        "bit_error_rate": 0.0,
+        "psnr_db": 41.440735799093346,
+        "elapsed_seconds": 0.0006765000289306045
+      },
+      {
+        "image": "held_out_05_checkerboard.png",
+        "payload_embedded": "0f0f0f0f",
+        "reference_payload": "0f0f0f0f",
+        "recovered_payload": "0f0f0f0f",
+        "watermark_detected": true,
+        "hamming_distance": 0,
+        "bit_error_rate": 0.0,
+        "psnr_db": 27.458637357294112,
+        "elapsed_seconds": 0.0007209000177681446
+      },
+      {
+        "image": "held_out_06_woodgrain.png",
+        "payload_embedded": "f0f0f0f0",
+        "reference_payload": "f0f0f0f0",
+        "recovered_payload": "f0f0f0f0",
+        "watermark_detected": true,
+        "hamming_distance": 0,
+        "bit_error_rate": 0.0,
+        "psnr_db": 26.803234697934656,
+        "elapsed_seconds": 0.0007165999850258231
+      },
+      {
+        "image": "held_out_07_smooth_gradient.png",
+        "payload_embedded": "12345678",
+        "reference_payload": "12345678",
+        "recovered_payload": "12345678",
+        "watermark_detected": true,
+        "hamming_distance": 0,
+        "bit_error_rate": 0.0,
+        "psnr_db": 41.440735799093346,
+        "elapsed_seconds": 0.0006910000229254365
+      },
+      {
+        "image": "held_out_08_fabric_textile.png",
+        "payload_embedded": "87654321",
+        "reference_payload": "87654321",
+        "recovered_payload": "87654321",
+        "watermark_detected": true,
+        "hamming_distance": 0,
+        "bit_error_rate": 0.0,
+        "psnr_db": 26.791805713854057,
+        "elapsed_seconds": 0.0006844999734312296
+      },
+      {
+        "image": "held_out_09_brick_masonry.png",
+        "payload_embedded": "beefc0de",
+        "reference_payload": "beefc0de",
+        "recovered_payload": "beefc0de",
+        "watermark_detected": true,
+        "hamming_distance": 0,
+        "bit_error_rate": 0.0,
+        "psnr_db": 41.46503885534585,
+        "elapsed_seconds": 0.0007801000028848648
+      },
+      {
+        "image": "held_out_10_cellular_voronoi.png",
+        "payload_embedded": "cafe9999",
+        "reference_payload": "cafe9999",
+        "recovered_payload": "dafed881",
+        "watermark_detected": true,
+        "hamming_distance": 5,
+        "bit_error_rate": 0.15625,
+        "psnr_db": 27.960012310415095,
+        "elapsed_seconds": 0.0007603999692946672
+      },
+      {
+        "image": "held_out_11_real_photographic.png",
+        "payload_embedded": "77777777",
+        "reference_payload": "77777777",
+        "recovered_payload": "57737767",
+        "watermark_detected": true,
+        "hamming_distance": 3,
+        "bit_error_rate": 0.09375,
+        "psnr_db": 41.530745365486354,
+        "elapsed_seconds": 0.0007205000147223473
+      },
+      {
+        "image": "held_out_12_real_urban_phot.png",
+        "payload_embedded": "31415926",
+        "reference_payload": "31415926",
+        "recovered_payload": "31415926",
+        "watermark_detected": true,
+        "hamming_distance": 0,
+        "bit_error_rate": 0.0,
+        "psnr_db": 27.538126520171076,
+        "elapsed_seconds": 0.0006527999648824334
+      },
+      {
+        "image": "img_calibration_000_phot.png",
+        "payload_embedded": "cafebabe",
+        "reference_payload": "cafebabe",
+        "recovered_payload": "1b056b07",
+        "watermark_detected": false,
+        "hamming_distance": 20,
+        "bit_error_rate": 0.625,
+        "psnr_db": 28.24480293418555,
+        "elapsed_seconds": 0.0011026000138372183
+      },
+      {
+        "image": "img_calibration_001_geom.png",
+        "payload_embedded": "feedface",
+        "reference_payload": "feedface",
+        "recovered_payload": "1b05664b",
+        "watermark_detected": false,
+        "hamming_distance": 16,
+        "bit_error_rate": 0.5,
+        "psnr_db": 29.420932536103418,
+        "elapsed_seconds": 0.0010449000401422381
+      },
+      {
+        "image": "img_calibration_002_high.png",
+        "payload_embedded": "c001d00d",
+        "reference_payload": "c001d00d",
+        "recovered_payload": "5b0d3a2f",
+        "watermark_detected": false,
+        "hamming_distance": 14,
+        "bit_error_rate": 0.4375,
+        "psnr_db": 30.27580941658904,
+        "elapsed_seconds": 0.000994799891486764
+      },
+      {
+        "image": "img_calibration_003_smoo.png",
+        "payload_embedded": "baadf00d",
+        "reference_payload": "baadf00d",
+        "recovered_payload": "1b4d762b",
+        "watermark_detected": false,
+        "hamming_distance": 12,
+        "bit_error_rate": 0.375,
+        "psnr_db": 30.369725742724697,
+        "elapsed_seconds": 0.0010287999175488949
+      },
+      {
+        "image": "img_test_004_phot.png",
+        "payload_embedded": "55555555",
+        "reference_payload": "55555555",
+        "recovered_payload": "57637767",
+        "watermark_detected": false,
+        "hamming_distance": 10,
+        "bit_error_rate": 0.3125,
+        "psnr_db": 41.63124710056152,
+        "elapsed_seconds": 0.000985399936325848
+      },
+      {
+        "image": "img_test_005_geom.png",
+        "payload_embedded": "aaaaaaaa",
+        "reference_payload": "aaaaaaaa",
+        "recovered_payload": "5a07664b",
+        "watermark_detected": false,
+        "hamming_distance": 17,
+        "bit_error_rate": 0.53125,
+        "psnr_db": 28.652726471937612,
+        "elapsed_seconds": 0.0010255000088363886
+      },
+      {
+        "image": "img_test_006_high.png",
+        "payload_embedded": "10203040",
+        "reference_payload": "10203040",
+        "recovered_payload": "1f4d7f0f",
+        "watermark_detected": false,
+        "hamming_distance": 19,
+        "bit_error_rate": 0.59375,
+        "psnr_db": 32.54547662124755,
+        "elapsed_seconds": 0.0011107000755146146
+      },
+      {
+        "image": "img_test_007_smoo.png",
+        "payload_embedded": "aabbccdd",
+        "reference_payload": "aabbccdd",
+        "recovered_payload": "1305444a",
+        "watermark_detected": false,
+        "hamming_distance": 18,
+        "bit_error_rate": 0.5625,
+        "psnr_db": 29.224604298725666,
+        "elapsed_seconds": 0.001205500098876655
+      }
+    ],
+    "case_d_watermarked_mismatched_reference": [
+      {
+        "image": "held_out_01_natural_landscape.png",
+        "payload_embedded": "deadbeef",
+        "reference_payload": "1337c0de",
+        "recovered_payload": "deadbeef",
+        "watermark_detected": false,
+        "hamming_distance": 18,
+        "bit_error_rate": 0.5625,
+        "elapsed_seconds": 0.0007412999402731657
+      },
+      {
+        "image": "held_out_02_portrait_face.png",
+        "payload_embedded": "1337c0de",
+        "reference_payload": "a5a5a5a5",
+        "recovered_payload": "1337c0de",
+        "watermark_detected": false,
+        "hamming_distance": 18,
+        "bit_error_rate": 0.5625,
+        "elapsed_seconds": 0.0007169999880716205
+      },
+      {
+        "image": "held_out_03_urban_architecture.png",
+        "payload_embedded": "a5a5a5a5",
+        "reference_payload": "42424242",
+        "recovered_payload": "b7e565a1",
+        "watermark_detected": false,
+        "hamming_distance": 20,
+        "bit_error_rate": 0.625,
+        "elapsed_seconds": 0.0006900000153109431
+      },
+      {
+        "image": "held_out_04_document_text.png",
+        "payload_embedded": "42424242",
+        "reference_payload": "0f0f0f0f",
+        "recovered_payload": "42424242",
+        "watermark_detected": false,
+        "hamming_distance": 16,
+        "bit_error_rate": 0.5,
+        "elapsed_seconds": 0.0006418999982997775
+      },
+      {
+        "image": "held_out_05_checkerboard.png",
+        "payload_embedded": "0f0f0f0f",
+        "reference_payload": "f0f0f0f0",
+        "recovered_payload": "0f0f0f0f",
+        "watermark_detected": false,
+        "hamming_distance": 32,
+        "bit_error_rate": 1.0,
+        "elapsed_seconds": 0.0008465000428259373
+      },
+      {
+        "image": "held_out_06_woodgrain.png",
+        "payload_embedded": "f0f0f0f0",
+        "reference_payload": "12345678",
+        "recovered_payload": "f0f0f0f0",
+        "watermark_detected": false,
+        "hamming_distance": 13,
+        "bit_error_rate": 0.40625,
+        "elapsed_seconds": 0.0006809999467805028
+      },
+      {
+        "image": "held_out_07_smooth_gradient.png",
+        "payload_embedded": "12345678",
+        "reference_payload": "87654321",
+        "recovered_payload": "12345678",
+        "watermark_detected": false,
+        "hamming_distance": 14,
+        "bit_error_rate": 0.4375,
+        "elapsed_seconds": 0.000637899967841804
+      },
+      {
+        "image": "held_out_08_fabric_textile.png",
+        "payload_embedded": "87654321",
+        "reference_payload": "beefc0de",
+        "recovered_payload": "87654321",
+        "watermark_detected": false,
+        "hamming_distance": 18,
+        "bit_error_rate": 0.5625,
+        "elapsed_seconds": 0.0006891000084578991
+      },
+      {
+        "image": "held_out_09_brick_masonry.png",
+        "payload_embedded": "beefc0de",
+        "reference_payload": "cafe9999",
+        "recovered_payload": "beefc0de",
+        "watermark_detected": false,
+        "hamming_distance": 14,
+        "bit_error_rate": 0.4375,
+        "elapsed_seconds": 0.0007558000506833196
+      },
+      {
+        "image": "held_out_10_cellular_voronoi.png",
+        "payload_embedded": "cafe9999",
+        "reference_payload": "77777777",
+        "recovered_payload": "dafed881",
+        "watermark_detected": false,
+        "hamming_distance": 20,
+        "bit_error_rate": 0.625,
+        "elapsed_seconds": 0.0007922999793663621
+      },
+      {
+        "image": "held_out_11_real_photographic.png",
+        "payload_embedded": "77777777",
+        "reference_payload": "31415926",
+        "recovered_payload": "57737767",
+        "watermark_detected": false,
+        "hamming_distance": 13,
+        "bit_error_rate": 0.40625,
+        "elapsed_seconds": 0.0006458999123424292
+      },
+      {
+        "image": "held_out_12_real_urban_phot.png",
+        "payload_embedded": "31415926",
+        "reference_payload": "cafebabe",
+        "recovered_payload": "31415926",
+        "watermark_detected": false,
+        "hamming_distance": 22,
+        "bit_error_rate": 0.6875,
+        "elapsed_seconds": 0.0006675999611616135
+      },
+      {
+        "image": "img_calibration_000_phot.png",
+        "payload_embedded": "cafebabe",
+        "reference_payload": "feedface",
+        "recovered_payload": "1b056b07",
+        "watermark_detected": false,
+        "hamming_distance": 16,
+        "bit_error_rate": 0.5,
+        "elapsed_seconds": 0.0010221999837085605
+      },
+      {
+        "image": "img_calibration_001_geom.png",
+        "payload_embedded": "feedface",
+        "reference_payload": "c001d00d",
+        "recovered_payload": "1b05664b",
+        "watermark_detected": false,
+        "hamming_distance": 15,
+        "bit_error_rate": 0.46875,
+        "elapsed_seconds": 0.001052199979312718
+      },
+      {
+        "image": "img_calibration_002_high.png",
+        "payload_embedded": "c001d00d",
+        "reference_payload": "baadf00d",
+        "recovered_payload": "5b0d3a2f",
+        "watermark_detected": false,
+        "hamming_distance": 12,
+        "bit_error_rate": 0.375,
+        "elapsed_seconds": 0.001114599988795817
+      },
+      {
+        "image": "img_calibration_003_smoo.png",
+        "payload_embedded": "baadf00d",
+        "reference_payload": "55555555",
+        "recovered_payload": "1b4d762b",
+        "watermark_detected": false,
+        "hamming_distance": 15,
+        "bit_error_rate": 0.46875,
+        "elapsed_seconds": 0.0010354999685660005
+      },
+      {
+        "image": "img_test_004_phot.png",
+        "payload_embedded": "55555555",
+        "reference_payload": "aaaaaaaa",
+        "recovered_payload": "57637767",
+        "watermark_detected": false,
+        "hamming_distance": 22,
+        "bit_error_rate": 0.6875,
+        "elapsed_seconds": 0.0010098000057041645
+      },
+      {
+        "image": "img_test_005_geom.png",
+        "payload_embedded": "aaaaaaaa",
+        "reference_payload": "10203040",
+        "recovered_payload": "5a07664b",
+        "watermark_detected": false,
+        "hamming_distance": 14,
+        "bit_error_rate": 0.4375,
+        "elapsed_seconds": 0.0012094000121578574
+      },
+      {
+        "image": "img_test_006_high.png",
+        "payload_embedded": "10203040",
+        "reference_payload": "aabbccdd",
+        "recovered_payload": "1f4d7f0f",
+        "watermark_detected": false,
+        "hamming_distance": 20,
+        "bit_error_rate": 0.625,
+        "elapsed_seconds": 0.0011297999881207943
+      },
+      {
+        "image": "img_test_007_smoo.png",
+        "payload_embedded": "aabbccdd",
+        "reference_payload": "deadbeef",
+        "recovered_payload": "1305444a",
+        "watermark_detected": false,
+        "hamming_distance": 18,
+        "bit_error_rate": 0.5625,
+        "elapsed_seconds": 0.0011718999594449997
+      }
+    ],
+    "case_e_watermarked_under_attacks": [
+      {
+        "image": "held_out_01_natural_landscape.png",
+        "payload": "deadbeef",
+        "jpeg_hamming": 0,
+        "jpeg_detected": true,
+        "crop_hamming": 1,
+        "crop_detected": true
+      },
+      {
+        "image": "held_out_02_portrait_face.png",
+        "payload": "1337c0de",
+        "jpeg_hamming": 0,
+        "jpeg_detected": true,
+        "crop_hamming": 0,
+        "crop_detected": true
+      },
+      {
+        "image": "held_out_03_urban_architecture.png",
+        "payload": "a5a5a5a5",
+        "jpeg_hamming": 10,
+        "jpeg_detected": false,
+        "crop_hamming": 6,
+        "crop_detected": true
+      },
+      {
+        "image": "held_out_04_document_text.png",
+        "payload": "42424242",
+        "jpeg_hamming": 0,
+        "jpeg_detected": true,
+        "crop_hamming": 0,
+        "crop_detected": true
+      },
+      {
+        "image": "held_out_05_checkerboard.png",
+        "payload": "0f0f0f0f",
+        "jpeg_hamming": 0,
+        "jpeg_detected": true,
+        "crop_hamming": 1,
+        "crop_detected": true
+      },
+      {
+        "image": "held_out_06_woodgrain.png",
+        "payload": "f0f0f0f0",
+        "jpeg_hamming": 0,
+        "jpeg_detected": true,
+        "crop_hamming": 0,
+        "crop_detected": true
+      },
+      {
+        "image": "held_out_07_smooth_gradient.png",
+        "payload": "12345678",
+        "jpeg_hamming": 0,
+        "jpeg_detected": true,
+        "crop_hamming": 1,
+        "crop_detected": true
+      },
+      {
+        "image": "held_out_08_fabric_textile.png",
+        "payload": "87654321",
+        "jpeg_hamming": 0,
+        "jpeg_detected": true,
+        "crop_hamming": 0,
+        "crop_detected": true
+      },
+      {
+        "image": "held_out_09_brick_masonry.png",
+        "payload": "beefc0de",
+        "jpeg_hamming": 0,
+        "jpeg_detected": true,
+        "crop_hamming": 0,
+        "crop_detected": true
+      },
+      {
+        "image": "held_out_10_cellular_voronoi.png",
+        "payload": "cafe9999",
+        "jpeg_hamming": 5,
+        "jpeg_detected": true,
+        "crop_hamming": 5,
+        "crop_detected": true
+      },
+      {
+        "image": "held_out_11_real_photographic.png",
+        "payload": "77777777",
+        "jpeg_hamming": 4,
+        "jpeg_detected": true,
+        "crop_hamming": 4,
+        "crop_detected": true
+      },
+      {
+        "image": "held_out_12_real_urban_phot.png",
+        "payload": "31415926",
+        "jpeg_hamming": 0,
+        "jpeg_detected": true,
+        "crop_hamming": 0,
+        "crop_detected": true
+      },
+      {
+        "image": "img_calibration_000_phot.png",
+        "payload": "cafebabe",
+        "jpeg_hamming": 20,
+        "jpeg_detected": false,
+        "crop_hamming": 20,
+        "crop_detected": false
+      },
+      {
+        "image": "img_calibration_001_geom.png",
+        "payload": "feedface",
+        "jpeg_hamming": 17,
+        "jpeg_detected": false,
+        "crop_hamming": 14,
+        "crop_detected": false
+      },
+      {
+        "image": "img_calibration_002_high.png",
+        "payload": "c001d00d",
+        "jpeg_hamming": 15,
+        "jpeg_detected": false,
+        "crop_hamming": 15,
+        "crop_detected": false
+      },
+      {
+        "image": "img_calibration_003_smoo.png",
+        "payload": "baadf00d",
+        "jpeg_hamming": 13,
+        "jpeg_detected": false,
+        "crop_hamming": 13,
+        "crop_detected": false
+      },
+      {
+        "image": "img_test_004_phot.png",
+        "payload": "55555555",
+        "jpeg_hamming": 10,
+        "jpeg_detected": false,
+        "crop_hamming": 9,
+        "crop_detected": false
+      },
+      {
+        "image": "img_test_005_geom.png",
+        "payload": "aaaaaaaa",
+        "jpeg_hamming": 19,
+        "jpeg_detected": false,
+        "crop_hamming": 20,
+        "crop_detected": false
+      },
+      {
+        "image": "img_test_006_high.png",
+        "payload": "10203040",
+        "jpeg_hamming": 18,
+        "jpeg_detected": false,
+        "crop_hamming": 18,
+        "crop_detected": false
+      },
+      {
+        "image": "img_test_007_smoo.png",
+        "payload": "aabbccdd",
+        "jpeg_hamming": 16,
+        "jpeg_detected": false,
+        "crop_hamming": 11,
+        "crop_detected": false
+      }
+    ]
+  }
+}

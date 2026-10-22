@@ -84,6 +84,64 @@ class AttackRegistry:
         return enh_c.enhance(contrast)
 
     @staticmethod
+    def rotation(img: Image.Image, angle: float) -> Image.Image:
+        """Rotate image by angle (degrees) using Bicubic interpolation with border reflection."""
+        # Convert to RGB, rotate with BICUBIC, expand=False
+        return img.convert("RGB").rotate(angle, resample=Image.Resampling.BICUBIC, expand=False)
+
+    @staticmethod
+    def translation(img: Image.Image, dx: int, dy: int) -> Image.Image:
+        """Translate image by (dx, dy) pixels with edge reflection/clamping."""
+        arr = np.array(img.convert("RGB"))
+        h, w, c = arr.shape
+        translated = np.zeros_like(arr)
+        
+        # Source and destination slice calculation
+        src_y1 = max(0, -dy)
+        src_y2 = min(h, h - dy)
+        dst_y1 = max(0, dy)
+        dst_y2 = min(h, h + dy)
+        
+        src_x1 = max(0, -dx)
+        src_x2 = min(w, w - dx)
+        dst_x1 = max(0, dx)
+        dst_x2 = min(w, w + dx)
+        
+        if dst_y2 > dst_y1 and dst_x2 > dst_x1:
+            translated[dst_y1:dst_y2, dst_x1:dst_x2] = arr[src_y1:src_y2, src_x1:src_x2]
+        return Image.fromarray(translated)
+
+    @staticmethod
+    def unresized_crop(img: Image.Image, crop_ratio: float = 0.75, location: str = "center") -> Image.Image:
+        """Crop a sub-region of the image without resizing back to original size."""
+        w, h = img.size
+        cw, ch = max(32, int(w * crop_ratio)), max(32, int(h * crop_ratio))
+        if location == "center":
+            left = (w - cw) // 2
+            top = (h - ch) // 2
+        elif location == "top_left":
+            left, top = 0, 0
+        elif location == "bottom_right":
+            left, top = w - cw, h - ch
+        else:
+            left = (w - cw) // 2
+            top = (h - ch) // 2
+        return img.crop((left, top, left + cw, top + ch))
+
+    @staticmethod
+    def scaling(img: Image.Image, scale: float = 0.5, interpolation: str = "bilinear") -> Image.Image:
+        """Resize image by scale factor without resizing back."""
+        w, h = img.size
+        nw, nh = max(16, int(w * scale)), max(16, int(h * scale))
+        interp_map = {
+            "bilinear": Image.Resampling.BILINEAR,
+            "bicubic": Image.Resampling.BICUBIC,
+            "nearest": Image.Resampling.NEAREST,
+        }
+        resample_mode = interp_map.get(interpolation.lower(), Image.Resampling.BILINEAR)
+        return img.resize((nw, nh), resample_mode)
+
+    @staticmethod
     def simulated_ai_regeneration(
         img: Image.Image, strength: float = 0.50, seed: Optional[int] = 42
     ) -> Image.Image:
@@ -146,6 +204,82 @@ def get_standard_attack_suite() -> list[AttackSpec]:
     ]
 
 
+def get_seven_attack_suite() -> list[AttackSpec]:
+    """
+    Returns the comprehensive 7-attack evaluation suite meeting the research specification:
+    1. Clean / Identity
+    2. JPEG Compression (Q=90, 70, 50, 40, 20)
+    3. Cropping (center crop 90%, 75%, 50% with resize, and unresized crop)
+    4. Resizing (scale 0.75, 0.50, 1.25, 1.50 with bilinear and bicubic)
+    5. Gaussian Blur (radius 0.5, 1.0, 2.0, 3.0)
+    6. Gaussian Noise (sigma 5.0, 15.0, 25.0, 35.0)
+    7. Brightness & Contrast (bright 1.25, dark 0.8, high contrast 1.25, low contrast 0.8)
+    8. Rotation & Translation (rot 1 deg, 2 deg, 5 deg; trans dx=4, dy=4; dx=8, dy=8)
+    9. Combined attacks (JPEG 70 + blur 1.0, JPEG 70 + scale 0.75, noise 15 + blur 1.0, rot 2 + trans 4)
+    """
+    return [
+        # 1. Clean
+        AttackSpec(name="identity", category="baseline", params={}, severity=0.0),
+        # 2. JPEG
+        AttackSpec(name="jpeg_q90", category="jpeg", params={"quality": 90}, severity=0.10),
+        AttackSpec(name="jpeg_q70", category="jpeg", params={"quality": 70}, severity=0.30),
+        AttackSpec(name="jpeg_q50", category="jpeg", params={"quality": 50}, severity=0.50),
+        AttackSpec(name="jpeg_q40", category="jpeg", params={"quality": 40}, severity=0.60),
+        AttackSpec(name="jpeg_q20", category="jpeg", params={"quality": 20}, severity=0.80),
+        # 3. Cropping
+        AttackSpec(name="crop_resize_90", category="crop", params={"crop_ratio": 0.90}, severity=0.20),
+        AttackSpec(name="crop_resize_75", category="crop", params={"crop_ratio": 0.75}, severity=0.40),
+        AttackSpec(name="crop_resize_50", category="crop", params={"crop_ratio": 0.50}, severity=0.70),
+        AttackSpec(name="crop_native_75", category="crop", params={"crop_ratio": 0.75, "native": True, "location": "center"}, severity=0.50),
+        AttackSpec(name="crop_native_50", category="crop", params={"crop_ratio": 0.50, "native": True, "location": "top_left"}, severity=0.80),
+        # 4. Resizing
+        AttackSpec(name="resize_0.75_bilinear", category="resize", params={"scale": 0.75, "interpolation": "bilinear"}, severity=0.25),
+        AttackSpec(name="resize_0.50_bilinear", category="resize", params={"scale": 0.50, "interpolation": "bilinear"}, severity=0.50),
+        AttackSpec(name="resize_0.50_bicubic", category="resize", params={"scale": 0.50, "interpolation": "bicubic"}, severity=0.50),
+        AttackSpec(name="resize_1.25_bilinear", category="resize", params={"scale": 1.25, "interpolation": "bilinear"}, severity=0.25),
+        AttackSpec(name="resize_1.50_bicubic", category="resize", params={"scale": 1.50, "interpolation": "bicubic"}, severity=0.40),
+        # 5. Gaussian Blur
+        AttackSpec(name="blur_r0.5", category="blur", params={"radius": 0.5}, severity=0.15),
+        AttackSpec(name="blur_r1.0", category="blur", params={"radius": 1.0}, severity=0.30),
+        AttackSpec(name="blur_r2.0", category="blur", params={"radius": 2.0}, severity=0.55),
+        AttackSpec(name="blur_r3.0", category="blur", params={"radius": 3.0}, severity=0.80),
+        # 6. Gaussian Noise
+        AttackSpec(name="noise_s5", category="noise", params={"sigma": 5.0}, severity=0.15),
+        AttackSpec(name="noise_s15", category="noise", params={"sigma": 15.0}, severity=0.40),
+        AttackSpec(name="noise_s25", category="noise", params={"sigma": 25.0}, severity=0.65),
+        AttackSpec(name="noise_s35", category="noise", params={"sigma": 35.0}, severity=0.85),
+        # 7. Brightness & Contrast
+        AttackSpec(name="bright_1.25", category="color", params={"brightness": 1.25, "contrast": 1.0}, severity=0.25),
+        AttackSpec(name="dark_0.80", category="color", params={"brightness": 0.80, "contrast": 1.0}, severity=0.25),
+        AttackSpec(name="contrast_1.25", category="color", params={"brightness": 1.0, "contrast": 1.25}, severity=0.25),
+        AttackSpec(name="contrast_0.80", category="color", params={"brightness": 1.0, "contrast": 0.80}, severity=0.25),
+        AttackSpec(name="bright_contrast_high", category="color", params={"brightness": 1.20, "contrast": 1.20}, severity=0.40),
+        # 8. Rotation & Translation
+        AttackSpec(name="rot_1deg", category="geometry", params={"angle": 1.0}, severity=0.20),
+        AttackSpec(name="rot_2deg", category="geometry", params={"angle": 2.0}, severity=0.40),
+        AttackSpec(name="rot_5deg", category="geometry", params={"angle": 5.0}, severity=0.70),
+        AttackSpec(name="trans_dx4_dy4", category="geometry", params={"dx": 4, "dy": 4}, severity=0.30),
+        AttackSpec(name="trans_dx8_dy8", category="geometry", params={"dx": 8, "dy": 8}, severity=0.55),
+        # 9. Combined
+        AttackSpec(name="combo_jpeg70_blur1", category="combined", params={"steps": [
+            {"type": "jpeg", "quality": 70},
+            {"type": "blur", "radius": 1.0},
+        ]}, severity=0.50),
+        AttackSpec(name="combo_jpeg70_scale75", category="combined", params={"steps": [
+            {"type": "jpeg", "quality": 70},
+            {"type": "scale", "scale": 0.75},
+        ]}, severity=0.55),
+        AttackSpec(name="combo_noise15_blur1", category="combined", params={"steps": [
+            {"type": "noise", "sigma": 15.0},
+            {"type": "blur", "radius": 1.0},
+        ]}, severity=0.60),
+        AttackSpec(name="combo_rot2_trans4", category="combined", params={"steps": [
+            {"type": "rotation", "angle": 2.0},
+            {"type": "translation", "dx": 4, "dy": 4},
+        ]}, severity=0.65),
+    ]
+
+
 def apply_attack(img: Image.Image, spec: AttackSpec) -> Image.Image:
     """Execute the attack specified by an AttackSpec on a PIL Image."""
     name = spec.name
@@ -157,12 +291,53 @@ def apply_attack(img: Image.Image, spec: AttackSpec) -> Image.Image:
         return AttackRegistry.jpeg_compression(img, quality=p.get("quality", 75))
     if "blur" in name:
         return AttackRegistry.gaussian_blur(img, radius=p.get("radius", 1.0))
+    if "crop_native" in name or p.get("native"):
+        return AttackRegistry.unresized_crop(
+            img,
+            crop_ratio=p.get("crop_ratio", 0.75),
+            location=p.get("location", "center"),
+        )
     if "crop" in name:
         return AttackRegistry.center_crop_and_resize(img, crop_ratio=p.get("crop_ratio", 0.8))
+    if "resize" in name:
+        if "scale" in p:
+            return AttackRegistry.scaling(
+                img,
+                scale=p.get("scale", 0.5),
+                interpolation=p.get("interpolation", "bilinear"),
+            )
+        return AttackRegistry.resize_down_up(img, scale=p.get("scale", 0.5))
     if "scale" in name:
         return AttackRegistry.resize_down_up(img, scale=p.get("scale", 0.5))
     if "noise" in name:
         return AttackRegistry.additive_noise(img, sigma=p.get("sigma", 15.0))
+    if "bright" in name or "dark" in name or "contrast" in name or spec.category == "color":
+        return AttackRegistry.brightness_contrast(
+            img,
+            brightness=p.get("brightness", 1.0),
+            contrast=p.get("contrast", 1.0),
+        )
+    if "rot" in name or "angle" in p:
+        return AttackRegistry.rotation(img, angle=p.get("angle", 0.0))
+    if "trans" in name or ("dx" in p and "dy" in p):
+        return AttackRegistry.translation(img, dx=p.get("dx", 0), dy=p.get("dy", 0))
+    if "combo" in name or spec.category == "combined":
+        out = img.copy()
+        for step in p.get("steps", []):
+            stype = step.get("type")
+            if stype == "jpeg":
+                out = AttackRegistry.jpeg_compression(out, quality=step.get("quality", 75))
+            elif stype == "blur":
+                out = AttackRegistry.gaussian_blur(out, radius=step.get("radius", 1.0))
+            elif stype == "scale":
+                out = AttackRegistry.scaling(out, scale=step.get("scale", 0.75))
+            elif stype == "noise":
+                out = AttackRegistry.additive_noise(out, sigma=step.get("sigma", 15.0))
+            elif stype == "rotation":
+                out = AttackRegistry.rotation(out, angle=step.get("angle", 0.0))
+            elif stype == "translation":
+                out = AttackRegistry.translation(out, dx=step.get("dx", 0), dy=step.get("dy", 0))
+        return out
     if "ai_regen" in name:
         return AttackRegistry.simulated_ai_regeneration(
             img, strength=p.get("strength", 0.5), seed=p.get("seed", 42)

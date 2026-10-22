@@ -67,7 +67,8 @@ export const BlockchainAuditPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Sub-tab selection */}
+          {/* Sub-tab selection - Temporarily sealed (unseal whenever needed) */}
+          {/*
           <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 self-start sm:self-auto">
             <button
               onClick={() => setActiveSubTab('anchors')}
@@ -90,6 +91,7 @@ export const BlockchainAuditPage: React.FC = () => {
               Commit-Reveal Entropy
             </button>
           </div>
+          */}
         </div>
       </div>
 

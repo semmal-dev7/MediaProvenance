@@ -34,15 +34,11 @@ export const DashboardPage: React.FC<DashboardProps> = ({ onNavigate }) => {
   return (
     <div className="space-y-6">
       {/* Hero Banner */}
-      <div className="bg-gradient-to-r from-slate-900 via-blue-950/40 to-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+      <div className="bg-gradient-to-r from-white via-blue-50/60 to-white border border-slate-200 rounded-2xl p-6 shadow-sm">
         <div className="max-w-3xl">
-          <h2 className="text-2xl font-bold text-white tracking-tight">
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
             ProvenanceLab Research Dashboard
           </h2>
-          <p className="text-slate-300 text-sm mt-2 leading-relaxed">
-            Demonstrating end-to-end integration of neural watermarking, zero-knowledge verifiable
-            computation, and public Ethereum smart-contract anchoring for tamper-evident media authentication.
-          </p>
         </div>
 
         {/* Quick Workflow Action Buttons */}
