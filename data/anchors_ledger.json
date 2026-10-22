@@ -11,7 +11,8 @@
     "exists": true,
     "is_onchain": true,
     "is_simulated": false,
-    "status": "CONFIRMED_ON_CHAIN"
+    "status": "CONFIRMED_ON_CHAIN",
+    "payload_hex": "a5620d3fbae33c003a3a06575"
   },
   {
     "asset_id": "0x791a9e12dbeef5aeed70ba520e6feb667e400d968c514d0c7ecd0028416acbe9",
@@ -25,7 +26,8 @@
     "exists": true,
     "is_onchain": true,
     "is_simulated": false,
-    "status": "CONFIRMED_ON_CHAIN"
+    "status": "CONFIRMED_ON_CHAIN",
+    "payload_hex": "a5620d3fbae33c003a3a06575"
   },
   {
     "asset_id": "0xc6cf636895d7f1d79c20306e745340878846f4fcda8fdc49fde8697fb0636037",
@@ -39,7 +41,8 @@
     "exists": true,
     "is_onchain": true,
     "is_simulated": false,
-    "status": "CONFIRMED_ON_CHAIN"
+    "status": "CONFIRMED_ON_CHAIN",
+    "payload_hex": "a5620d3fbae33c003a3a06575"
   },
   {
     "asset_id": "0x1cb16bb27afd7425ccbca793bb52c867ad50ce56f0fde65a895b285378307475",
@@ -53,7 +56,8 @@
     "exists": true,
     "is_onchain": true,
     "is_simulated": false,
-    "status": "CONFIRMED_ON_CHAIN"
+    "status": "CONFIRMED_ON_CHAIN",
+    "payload_hex": "a5620d3fbae33c003a3a06575"
   },
   {
     "asset_id": "0xfb9131c5187780d9ce0bd4133ef20bff85a26921b5a5022fda0db104ef2cda87",
@@ -67,7 +71,8 @@
     "exists": true,
     "is_onchain": true,
     "is_simulated": false,
-    "status": "CONFIRMED_ON_CHAIN"
+    "status": "CONFIRMED_ON_CHAIN",
+    "payload_hex": "a5620d3fbae33c003a3a06575"
   },
   {
     "asset_id": "0xc147e8b6c73d28256f484ba6bf1377efb78d54776f455c3564c5723735a9ecbb",
@@ -81,7 +86,8 @@
     "exists": true,
     "is_onchain": true,
     "is_simulated": false,
-    "status": "CONFIRMED_ON_CHAIN"
+    "status": "CONFIRMED_ON_CHAIN",
+    "payload_hex": "a5620d3fbae33c003a3a06575"
   },
   {
     "asset_id": "0xe765be9cd4f47e1bc53b54ccb4af4cf6fb2856ecdbd9b8a720a45eb31b645530",
@@ -95,7 +101,8 @@
     "exists": true,
     "is_onchain": true,
     "is_simulated": false,
-    "status": "CONFIRMED_ON_CHAIN"
+    "status": "CONFIRMED_ON_CHAIN",
+    "payload_hex": "a5620d3fbae33c003a3a06575"
   },
   {
     "asset_id": "0x2624d7e93a9eac969601b4eca25888f57eb69b9d13302854d3743eabafb425f1",
@@ -109,7 +116,8 @@
     "exists": true,
     "is_onchain": true,
     "is_simulated": false,
-    "status": "CONFIRMED_ON_CHAIN"
+    "status": "CONFIRMED_ON_CHAIN",
+    "payload_hex": "a5620d3fbae33c003a3a06575"
   },
   {
     "asset_id": "0x9460c5797c0deb409a9df1fa4102c694cf72898fac4e3df37efda63be208e3d6",
@@ -123,7 +131,8 @@
     "exists": true,
     "is_onchain": true,
     "is_simulated": false,
-    "status": "CONFIRMED_ON_CHAIN"
+    "status": "CONFIRMED_ON_CHAIN",
+    "payload_hex": "a5620d3fbae33c003a3a06575"
   },
   {
     "asset_id": "0xc43540d2b7c6e5b49607e2ec629c78e685d91ca40040163fc0018d505c3d2dca",
@@ -137,7 +146,8 @@
     "exists": true,
     "is_onchain": true,
     "is_simulated": false,
-    "status": "CONFIRMED_ON_CHAIN"
+    "status": "CONFIRMED_ON_CHAIN",
+    "payload_hex": "a5620d3fbae33c003a3a06575"
   },
   {
     "asset_id": "0xfbd0a8b036f43bf0d2c074720a697c2abb291f23b4bc282d038947d79a057d10",
@@ -151,7 +161,8 @@
     "exists": true,
     "is_onchain": true,
     "is_simulated": false,
-    "status": "CONFIRMED_ON_CHAIN"
+    "status": "CONFIRMED_ON_CHAIN",
+    "payload_hex": "a5620d3fbae33c003a3a06575"
   },
   {
     "asset_id": "0xa39c3fd198ed285040ed0c6c5b0f2866306ee53e3e98ff348e2e1597bd4a2ab0",
@@ -165,7 +176,8 @@
     "exists": true,
     "is_onchain": true,
     "is_simulated": false,
-    "status": "CONFIRMED_ON_CHAIN"
+    "status": "CONFIRMED_ON_CHAIN",
+    "payload_hex": "a5620d3fbae33c003a3a06575"
   },
   {
     "asset_id": "0x829626773756267a96089c985ec0c8948101df94c37ecac9daa5bdd8be3a76df",
@@ -179,6 +191,7 @@
     "exists": true,
     "is_onchain": true,
     "is_simulated": false,
-    "status": "CONFIRMED_ON_CHAIN"
+    "status": "CONFIRMED_ON_CHAIN",
+    "payload_hex": "a5620d3fbae33c003a3a06575"
   }
 ]

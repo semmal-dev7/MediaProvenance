@@ -57,6 +57,7 @@ class AnchorRecord:
     is_onchain: bool = True
     is_simulated: bool = False
     status: str = "CONFIRMED_ON_CHAIN"
+    payload_hex: Optional[str] = None
 
 
 @dataclass
@@ -105,6 +106,7 @@ class JobManager:
                             is_onchain=item.get("is_onchain", True),
                             is_simulated=item.get("is_simulated", False),
                             status=item.get("status", "CONFIRMED_ON_CHAIN"),
+                            payload_hex=item.get("payload_hex"),
                         )
                         self._anchors[rec.asset_id.lower()] = rec
                 logger.info("Loaded %d anchors from ledger file %s", len(self._anchors), LEDGER_FILE)
@@ -546,14 +548,21 @@ class JobManager:
     def get_anchor_by_payload(self, payload_hex: str) -> Optional[AnchorRecord]:
         """Reverse lookup an on-chain or registered anchor record by watermark payload."""
         clean = payload_hex.lower().replace("0x", "").strip()
-        # 1. Match against registered embedded assets
+        # 1. Match against registered anchors directly by payload
+        for rec in self._anchors.values():
+            if rec.payload_hex:
+                rp = rec.payload_hex.lower().replace("0x", "").strip()
+                if rp == clean or rp.startswith(clean) or clean.startswith(rp):
+                    return rec
+
+        # 2. Match against registered embedded assets
         for aid, p in self._embedded_assets.items():
             if p == clean or p.startswith(clean) or clean.startswith(p):
                 rec = self.get_anchor("0x" + aid) or self.get_anchor(aid)
                 if rec:
                     return rec
 
-        # 2. Match against commitments in anchors ledger
+        # 3. Match against commitments in anchors ledger
         try:
             from backend.zk.engine import zk_engine
             for rec in self._anchors.values():
@@ -567,12 +576,24 @@ class JobManager:
         except Exception:
             pass
 
-        # 3. Match against known jobs
+        # 4. Match against known jobs
         for job in self._jobs.values():
             if job.payload_hex.lower().replace("0x", "").strip() == clean:
                 rec = self.get_anchor(job.image_sha256)
                 if rec:
                     return rec
+        return None
+
+    def get_payload_for_anchor(self, anchor: AnchorRecord) -> Optional[str]:
+        """Retrieve original payload string for a given anchor record."""
+        if anchor.payload_hex:
+            return anchor.payload_hex
+        clean_aid = anchor.asset_id.lower().replace("0x", "").strip()
+        if clean_aid in self._embedded_assets:
+            return self._embedded_assets[clean_aid]
+        for job in self._jobs.values():
+            if job.image_sha256.lower().replace("0x", "").strip() == clean_aid:
+                return job.payload_hex
         return None
 
     def get_anchor(self, query: str) -> Optional[AnchorRecord]:

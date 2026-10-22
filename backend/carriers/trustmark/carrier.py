@@ -257,8 +257,8 @@ class TrustMarkCarrier(BaseCarrier):
             # Blind decoding requires valid synchronization preamble
             if sync_ok:
                 decodable = True
-                ber = 0.0
-                hamming = 0
+                ber = None
+                hamming = None
 
         return DecodeResult(
             payload_hex=decoded_hex if decodable else None,

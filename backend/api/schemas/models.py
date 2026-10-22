@@ -63,6 +63,9 @@ class DecodeResponse(BaseModel):
     publisher_authenticated: Optional[bool] = None
     anchor_found: Optional[bool] = None
     registered_anchor: Optional[Dict[str, Any]] = None
+    is_derivative: Optional[bool] = None
+    tamper_detected: Optional[bool] = None
+    original_asset_id: Optional[str] = None
     error: Optional[str] = None
 
 

@@ -163,19 +163,39 @@ async def decode_watermark(
     except Exception as e:
         logger.warning("Could not cache features during decode: %s", e)
 
-    # If anchor not found by image SHA (e.g. cropped/compressed media), reverse-lookup by decoded payload
+    original_anchor_payload = None
+    if anchor:
+        original_anchor_payload = job_manager.get_payload_for_anchor(anchor)
+
+    # If anchor not found by image SHA (e.g. cropped/compressed/AI-modified media), reverse-lookup by decoded payload
     if not anchor and dec_res.payload_hex:
         anchor = job_manager.get_anchor_by_payload(dec_res.payload_hex)
         if anchor:
             anchor_found = True
             registered_anchor_dict = anchor.__dict__
+            original_anchor_payload = job_manager.get_payload_for_anchor(anchor)
             if not effective_ref_payload:
-                effective_ref_payload = dec_res.payload_hex
+                effective_ref_payload = original_anchor_payload or dec_res.payload_hex
                 trusted_from_registry = True
-                # Re-evaluate decode against discovered authentic payload
-                if dec_res.hamming_distance is None:
-                    dec_res.hamming_distance = 0
-                    dec_res.bit_error_rate = 0.0
+
+    # Re-evaluate decode against discovered authentic payload if reference wasn't passed initially
+    if effective_ref_payload and dec_res.payload_hex and dec_res.hamming_distance is None:
+        try:
+            n_bits = c.info.payload_bits
+            n_hex = (n_bits + 3) // 4
+            clean_ref = effective_ref_payload.lower().replace("0x", "").strip()
+            clean_rec = dec_res.payload_hex.lower().replace("0x", "").strip()
+            if carrier == "trustmark" and not clean_ref.startswith("a5"):
+                clean_ref = "a5" + clean_ref
+            clean_ref = clean_ref[:n_hex].ljust(n_hex, "0")
+            clean_rec = clean_rec[:n_hex].ljust(n_hex, "0")
+            bin_ref = bin(int(clean_ref, 16))[2:].zfill(n_bits)
+            bin_rec = bin(int(clean_rec, 16))[2:].zfill(n_bits)
+            hd = sum(b1 != b2 for b1, b2 in zip(bin_ref, bin_rec))
+            dec_res.hamming_distance = hd
+            dec_res.bit_error_rate = hd / float(n_bits)
+        except Exception as e:
+            logger.warning("Could not compute Hamming distance against effective reference: %s", e)
 
     log10_lr = None
     posterior_h1 = None
@@ -185,14 +205,27 @@ async def decode_watermark(
     proof_valid = False
     image_binding_verified = False
     publisher_authenticated = False
+    is_exact_original = False
+    is_derivative = False
+    tamper_detected = False
+    original_asset_id = None
+
+    if anchor:
+        original_asset_id = anchor.asset_id
+        clean_anchor_asset = anchor.asset_id.lower().replace("0x", "").strip()
+        is_exact_original = (clean_sha == clean_anchor_asset)
+        if not is_exact_original:
+            is_derivative = True
+            tamper_detected = True
 
     payload_recovered = dec_res.payload_hex is not None
 
     if effective_ref_payload:
         clean_ref = effective_ref_payload.lower().replace("0x", "").strip()
         if dec_res.hamming_distance is not None:
-            # Calibrated detection threshold: d_H <= 7 (BER <= 21.9%, P(H0) < 0.0011)
-            payload_matches = (dec_res.hamming_distance <= 7)
+            # Calibrated detection threshold: d_H <= 7 for 32-bit (BER <= 21.9%); d_H <= 35 for 100-bit (BER <= 35%)
+            max_allowed_hd = 35 if c.info.payload_bits >= 100 else 7
+            payload_matches = (dec_res.hamming_distance <= max_allowed_hd)
             is_detected = bool(dec_res.watermark_detected or payload_matches)
 
             # Genuine Bayesian Likelihood Ratio on measured Hamming distance
@@ -207,8 +240,9 @@ async def decode_watermark(
             if payload_matches:
                 if anchor_found and (trusted_from_registry or anchor.status == "CONFIRMED_ON_CHAIN"):
                     publisher_authenticated = True
-                    image_binding_verified = True
                     proof_valid = True
+                    # Only verified if image SHA matches original anchor asset ID
+                    image_binding_verified = is_exact_original
             else:
                 failure_reason = "PAYLOAD_MISMATCH"
         else:
@@ -259,5 +293,8 @@ async def decode_watermark(
         publisher_authenticated=publisher_authenticated,
         anchor_found=anchor_found,
         registered_anchor=registered_anchor_dict,
+        is_derivative=is_derivative,
+        tamper_detected=tamper_detected,
+        original_asset_id=original_asset_id,
         error=dec_res.error,
     )

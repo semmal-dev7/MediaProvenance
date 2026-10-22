@@ -429,9 +429,19 @@ export const VerifyPage: React.FC = () => {
                   </span>
                 </div>
                 <div>
-                  <span className="text-slate-500 block text-[10px] uppercase font-semibold">Payload Recovered:</span>
-                  <span className={`font-mono font-bold ${decodeResult.payload_recovered ? 'text-emerald-400' : 'text-slate-400'}`}>
-                    {decodeResult.payload_recovered ? 'YES' : 'NO'}
+                  <span className="text-slate-500 block text-[10px] uppercase font-semibold">Image Integrity:</span>
+                  <span className={`font-mono font-bold ${
+                    decodeResult.image_binding_verified && !decodeResult.is_derivative
+                      ? 'text-emerald-400'
+                      : decodeResult.is_derivative
+                      ? 'text-amber-400'
+                      : 'text-slate-400'
+                  }`}>
+                    {decodeResult.image_binding_verified && !decodeResult.is_derivative
+                      ? 'ORIGINAL (UNTOUCHED)'
+                      : decodeResult.is_derivative
+                      ? 'MODIFIED / DERIVATIVE'
+                      : 'UNCHECKED'}
                   </span>
                 </div>
                 <div>
@@ -453,21 +463,38 @@ export const VerifyPage: React.FC = () => {
                 <div>
                   <span className="text-slate-500 block text-[10px] uppercase font-semibold">Diagnostic:</span>
                   <span className="text-slate-400 font-mono text-[11px] truncate block" title={decodeResult.failure_reason || decodeResult.error || 'Normal'}>
-                    {decodeResult.mean_logit_magnitude
-                      ? `RMS: ${decodeResult.rms_energy?.toFixed(2) || '0.00'} | CNN Act: ±${decodeResult.mean_logit_magnitude.toFixed(2)}`
-                      : (decodeResult.failure_reason || (decodeResult.watermark_detected ? 'Authentic' : 'No Signal'))}
+                    {decodeResult.is_derivative
+                      ? 'Altered / AI-Edited Media'
+                      : (decodeResult.mean_logit_magnitude
+                        ? `RMS: ${decodeResult.rms_energy?.toFixed(2) || '0.00'} | Act: ±${decodeResult.mean_logit_magnitude.toFixed(2)}`
+                        : (decodeResult.failure_reason || (decodeResult.watermark_detected ? 'Authentic' : 'No Signal')))}
                   </span>
                 </div>
               </div>
 
-              {decodeResult.watermark_detected && decodeResult.payload_matches === true && (
+              {decodeResult.watermark_detected && decodeResult.payload_matches === true && !decodeResult.is_derivative && (
                 <div className="p-3.5 bg-emerald-500/10 border border-emerald-500/30 rounded-lg text-emerald-900 text-xs space-y-1">
                   <div className="flex items-center gap-2 font-bold text-emerald-700">
                     <CheckCircle2 className="w-4 h-4" />
-                    Watermark Signal Detected &amp; Verified (Hypothesis H1)
+                    Exact Original Media Verified (Untouched &amp; Bound)
                   </div>
                   <p className="text-[11px] text-emerald-950 leading-relaxed font-normal">
-                    Extracted 32-bit payload <span className="font-mono font-bold text-slate-900">0x{decodeResult.payload_hex}</span> with Bayesian log-likelihood ratio {decodeResult.log10_likelihood_ratio !== null ? (decodeResult.log10_likelihood_ratio >= 0 ? `+${decodeResult.log10_likelihood_ratio.toFixed(2)}` : decodeResult.log10_likelihood_ratio.toFixed(2)) : 'high'} and bit error rate {decodeResult.bit_error_rate !== null ? `${(decodeResult.bit_error_rate * 100).toFixed(1)}%` : '0.0%'}. Signal meets mathematical detection tolerance under hypothesis H1.
+                    Both the watermark signal and the cryptographic SHA-256 file hash match the registered on-chain asset record. Extracted payload <span className="font-mono font-bold text-slate-900">0x{decodeResult.payload_hex}</span> with bit error rate {decodeResult.bit_error_rate !== null ? `${(decodeResult.bit_error_rate * 100).toFixed(1)}%` : '0.0%'}. Zero modifications or pixel tampering detected.
+                  </p>
+                </div>
+              )}
+
+              {decodeResult.watermark_detected && decodeResult.payload_matches === true && decodeResult.is_derivative && (
+                <div className="p-3.5 bg-amber-500/10 border border-amber-500/30 rounded-lg text-amber-950 text-xs space-y-1.5">
+                  <div className="flex items-center gap-2 font-bold text-amber-800">
+                    <AlertTriangle className="w-4 h-4 text-amber-600" />
+                    Provenance Verified · AI Modification / Derivative Detected (Hypothesis H1)
+                  </div>
+                  <p className="text-[11px] text-amber-950 leading-relaxed font-normal">
+                    <strong>Creator Provenance: Confirmed.</strong> The neural watermark survived your edits (Bit Error Rate: <span className="font-semibold text-slate-900">{decodeResult.bit_error_rate !== null ? `${(decodeResult.bit_error_rate * 100).toFixed(1)}%` : 'low'}</span>), mathematically proving this derivative image originated from the publisher&apos;s registered artwork.
+                  </p>
+                  <p className="text-[11px] text-amber-900/90 leading-relaxed">
+                    <strong>Content Integrity: Altered / Tampered.</strong> The candidate file hash does not match the original asset ID (<code className="font-mono text-[10px] bg-amber-200/50 px-1 py-0.5 rounded text-amber-950">{decodeResult.registered_anchor?.asset_id ? `${decodeResult.registered_anchor.asset_id.slice(0, 14)}...` : 'Original Anchor'}</code>). This is an AI-edited, cropped, or filtered derivative work, not the untouched original.
                   </p>
                 </div>
               )}
@@ -555,9 +582,9 @@ export const VerifyPage: React.FC = () => {
                   {onChainRecord && (
                     <div className="mt-2 p-3 bg-slate-900 border border-slate-800 rounded-lg text-xs space-y-2">
                       <div className="flex items-center justify-between font-bold">
-                        <span className={onChainRecord.exists ? 'text-emerald-400 flex items-center gap-1' : 'text-amber-400 flex items-center gap-1'}>
+                        <span className={onChainRecord.exists ? (decodeResult.is_derivative ? 'text-amber-400 flex items-center gap-1' : 'text-emerald-400 flex items-center gap-1') : 'text-amber-400 flex items-center gap-1'}>
                           {onChainRecord.exists ? <CheckCircle2 className="w-3.5 h-3.5" /> : <AlertTriangle className="w-3.5 h-3.5" />}
-                          {onChainRecord.exists ? 'Authentic Record Confirmed on Sepolia' : 'Not Yet Anchored On-Chain'}
+                          {onChainRecord.exists ? (decodeResult.is_derivative ? 'Publisher Anchor Verified on Sepolia (Derivative Media)' : 'Authentic Original Confirmed on Sepolia') : 'Not Yet Anchored On-Chain'}
                         </span>
                         <span className="text-[10px] text-slate-500 font-mono">Cost: 0 Gas</span>
                       </div>
@@ -572,6 +599,16 @@ export const VerifyPage: React.FC = () => {
                             <span className="text-slate-500 font-semibold">Registered Timestamp: </span>
                             <span>{onChainRecord.dateFormatted}</span>
                           </div>
+                          <div>
+                            <span className="text-slate-500 font-semibold">Original Anchor Asset ID: </span>
+                            <code className="text-indigo-300 font-mono break-all block mt-0.5">{decodeResult.registered_anchor?.asset_id || onChainRecord.assetId}</code>
+                          </div>
+                          {decodeResult.is_derivative && (
+                            <div>
+                              <span className="text-slate-500 font-semibold">Suspect Media Hash: </span>
+                              <code className="text-amber-400 font-mono break-all block mt-0.5">{decodeResult.image_sha256} (Altered Pixels)</code>
+                            </div>
+                          )}
                           <div>
                             <span className="text-slate-500 font-semibold">On-Chain Commitment: </span>
                             <code className="text-blue-300 font-mono break-all block mt-0.5">{onChainRecord.commitment}</code>
