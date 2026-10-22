@@ -5,6 +5,7 @@ ProvenanceLab — Blockchain Anchors API Routes
 
 from __future__ import annotations
 
+import asyncio
 from typing import Optional
 from pydantic import BaseModel, Field
 from fastapi import APIRouter, HTTPException
@@ -58,13 +59,15 @@ async def record_metamask_anchor(req: RecordMetamaskTxRequest):
     }
 
 
-@router.get("/{asset_id}")
-async def get_anchor(asset_id: str):
-    """Retrieve an anchored provenance record by asset ID."""
-    record = job_manager.get_anchor(asset_id)
-    if not record:
-        raise HTTPException(status_code=404, detail=f"No anchor record found for asset {asset_id}")
-    return record.__dict__
+@router.post("/sync")
+async def sync_anchors():
+    """Trigger an on-chain event sync to pull latest Sepolia transactions."""
+    new_count = await asyncio.to_thread(job_manager.sync_onchain_anchors)
+    return {
+        "success": True,
+        "synced_new_records": new_count,
+        "total_records": len(job_manager.list_anchors()),
+    }
 
 
 @router.get("")
@@ -72,3 +75,12 @@ async def list_anchors():
     """List all registered provenance anchor records."""
     anchors = job_manager.list_anchors()
     return [a.__dict__ for a in anchors]
+
+
+@router.get("/{query}")
+async def get_anchor(query: str):
+    """Retrieve an anchored provenance record by asset ID or transaction hash."""
+    record = job_manager.get_anchor(query)
+    if not record:
+        raise HTTPException(status_code=404, detail=f"No anchor record found for {query}")
+    return record.__dict__

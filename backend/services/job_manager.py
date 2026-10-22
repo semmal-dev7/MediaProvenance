@@ -17,7 +17,9 @@ from __future__ import annotations
 
 import asyncio
 import hashlib
+import json
 import logging
+from pathlib import Path
 import secrets
 import time
 from dataclasses import asdict, dataclass, field
@@ -27,6 +29,8 @@ from typing import Any, Dict, List, Optional
 from backend.zk.engine import zk_engine
 
 logger = logging.getLogger(__name__)
+
+LEDGER_FILE = Path(__file__).resolve().parent.parent.parent / "data" / "anchors_ledger.json"
 
 
 class JobStatus(str, Enum):
@@ -79,7 +83,129 @@ class JobManager:
         self._jobs: Dict[str, JobRecord] = {}
         self._anchors: Dict[str, AnchorRecord] = {}
         self._embedded_assets: Dict[str, str] = {}
-        self._init_seed_anchors()
+        self._load_ledger()
+
+    def _load_ledger(self):
+        """Load on-chain anchor transactions from disk ledger, with fallback to initial seeds."""
+        if LEDGER_FILE.exists():
+            try:
+                with open(LEDGER_FILE, "r", encoding="utf-8") as fp:
+                    records = json.load(fp)
+                    for item in records:
+                        rec = AnchorRecord(
+                            asset_id=item["asset_id"],
+                            commitment=item["commitment"],
+                            submitter=item["submitter"],
+                            timestamp=int(item["timestamp"]),
+                            block_number=int(item["block_number"]),
+                            tx_hash=item["tx_hash"],
+                            network=item.get("network", "sepolia"),
+                            etherscan_url=item.get("etherscan_url") or f"https://sepolia.etherscan.io/tx/{item['tx_hash']}",
+                            exists=item.get("exists", True),
+                            is_onchain=item.get("is_onchain", True),
+                            is_simulated=item.get("is_simulated", False),
+                            status=item.get("status", "CONFIRMED_ON_CHAIN"),
+                        )
+                        self._anchors[rec.asset_id.lower()] = rec
+                logger.info("Loaded %d anchors from ledger file %s", len(self._anchors), LEDGER_FILE)
+            except Exception as e:
+                logger.error("Failed loading anchors ledger from %s: %s", LEDGER_FILE, e)
+
+        # Fallback if no records loaded
+        if not self._anchors:
+            self._init_seed_anchors()
+            self._save_ledger()
+
+    def _save_ledger(self):
+        """Save all anchors to data/anchors_ledger.json ordered by block_number desc."""
+        try:
+            LEDGER_FILE.parent.mkdir(parents=True, exist_ok=True)
+            records = [
+                asdict(a) for a in sorted(
+                    self._anchors.values(),
+                    key=lambda x: (x.block_number, x.timestamp),
+                    reverse=True,
+                )
+            ]
+            with open(LEDGER_FILE, "w", encoding="utf-8") as fp:
+                json.dump(records, fp, indent=2)
+            logger.info("Persisted %d anchors to %s", len(records), LEDGER_FILE)
+        except Exception as e:
+            logger.error("Failed saving anchors ledger: %s", e)
+
+    def sync_onchain_anchors(self) -> int:
+        """Query Sepolia for new ProvenanceAnchored events and append to ledger."""
+        try:
+            from web3 import Web3
+            from backend.core.config import settings
+
+            rpc_url = settings.SEPOLIA_RPC_URL or "https://ethereum-sepolia-rpc.publicnode.com"
+            contract_addr = settings.PROVENANCE_ANCHOR_ADDRESS or "0x6D8C82dc761Ed9bac93ca99987b91614B90Ad43F"
+            w3 = Web3(Web3.HTTPProvider(rpc_url))
+            if not w3.is_connected():
+                logger.warning("Sepolia RPC not connected during anchor sync")
+                return 0
+
+            latest_block = w3.eth.block_number
+            max_known_block = max(
+                [a.block_number for a in self._anchors.values() if a.is_onchain and a.block_number > 0] or [11963000]
+            )
+            from_block = max(max_known_block + 1, 11963000)
+            if from_block > latest_block:
+                return 0
+
+            topic0 = "0x" + w3.keccak(text="ProvenanceAnchored(bytes32,bytes32,address,uint256)").hex()
+            contract_checksum = Web3.to_checksum_address(contract_addr)
+
+            new_records_count = 0
+            current_from = from_block
+            while current_from <= latest_block:
+                current_to = min(current_from + 2400, latest_block)
+                logs = w3.eth.get_logs({
+                    "address": contract_checksum,
+                    "fromBlock": current_from,
+                    "toBlock": current_to,
+                    "topics": [topic0],
+                })
+                for log in logs:
+                    tx_hash = log["transactionHash"].hex()
+                    if not tx_hash.startswith("0x"):
+                        tx_hash = "0x" + tx_hash
+                    asset_id = "0x" + log["topics"][1].hex()[-64:]
+                    submitter = Web3.to_checksum_address("0x" + log["topics"][2].hex()[-40:])
+                    data_hex = log["data"].hex() if hasattr(log["data"], "hex") else log["data"]
+                    if data_hex.startswith("0x"):
+                        data_hex = data_hex[2:]
+                    commit_hex = "0x" + data_hex[:64]
+                    ts_int = int(data_hex[64:128], 16) if len(data_hex) >= 128 else int(time.time())
+
+                    norm_id = asset_id.lower()
+                    rec = AnchorRecord(
+                        asset_id=asset_id,
+                        commitment=commit_hex,
+                        submitter=submitter,
+                        timestamp=ts_int,
+                        block_number=log["blockNumber"],
+                        tx_hash=tx_hash,
+                        network="sepolia",
+                        etherscan_url=f"https://sepolia.etherscan.io/tx/{tx_hash}",
+                        exists=True,
+                        is_onchain=True,
+                        is_simulated=False,
+                        status="CONFIRMED_ON_CHAIN",
+                    )
+                    self._anchors[norm_id] = rec
+                    new_records_count += 1
+
+                current_from = current_to + 1
+
+            if new_records_count > 0:
+                self._save_ledger()
+                logger.info("Synced %d new on-chain anchors from Sepolia", new_records_count)
+            return new_records_count
+        except Exception as e:
+            logger.error("Error during on-chain anchor sync: %s", e)
+            return 0
 
     def _init_seed_anchors(self):
         """Seed historical verification anchors, strictly labeling mock records as simulated."""
@@ -354,6 +480,7 @@ class JobManager:
                         status="CONFIRMED_ON_CHAIN",
                     )
                     self._anchors[normalized_asset_id] = rec
+                    self._save_ledger()
                     return rec
             except Exception as e:
                 logger.error("Sepolia on-chain transaction failed: %s", e)
@@ -374,6 +501,7 @@ class JobManager:
             status="LOCAL_SANDBOX_UNCONFIRMED",
         )
         self._anchors[normalized_asset_id] = rec
+        self._save_ledger()
         return rec
 
     def record_onchain_anchor(
@@ -401,6 +529,7 @@ class JobManager:
             status="CONFIRMED_ON_CHAIN",
         )
         self._anchors[normalized_asset_id] = rec
+        self._save_ledger()
         return rec
 
     def register_embedded_asset(self, asset_id: str, payload_hex: str) -> None:
@@ -414,14 +543,23 @@ class JobManager:
         clean_id = asset_id.lower().replace("0x", "").strip()
         return self._embedded_assets.get(clean_id)
 
-    def get_anchor(self, asset_id: str) -> Optional[AnchorRecord]:
-        clean_id = asset_id.lower()
-        if not clean_id.startswith("0x"):
-            clean_id = "0x" + clean_id
-        return self._anchors.get(clean_id)
+    def get_anchor(self, query: str) -> Optional[AnchorRecord]:
+        clean = query.lower().strip()
+        if not clean.startswith("0x"):
+            clean = "0x" + clean
+        if clean in self._anchors:
+            return self._anchors[clean]
+        for rec in self._anchors.values():
+            if rec.asset_id.lower() == clean or rec.tx_hash.lower() == clean:
+                return rec
+        return None
 
     def list_anchors(self) -> List[AnchorRecord]:
-        return sorted(self._anchors.values(), key=lambda a: a.timestamp, reverse=True)
+        return sorted(
+            self._anchors.values(),
+            key=lambda a: (a.block_number, a.timestamp),
+            reverse=True,
+        )
 
 
 # Global singleton

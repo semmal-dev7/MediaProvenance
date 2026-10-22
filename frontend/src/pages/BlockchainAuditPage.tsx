@@ -9,13 +9,22 @@ export const BlockchainAuditPage: React.FC = () => {
   const [searchError, setSearchError] = useState<string | null>(null);
   const [anchorsList, setAnchorsList] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
 
   useEffect(() => {
-    fetchAnchors();
+    fetchAnchors(true);
   }, []);
 
-  const fetchAnchors = async () => {
+  const fetchAnchors = async (triggerSync: boolean = false) => {
+    setIsRefreshing(true);
     try {
+      if (triggerSync) {
+        try {
+          await fetch('/api/v1/anchors/sync', { method: 'POST' });
+        } catch {
+          // Sync warning handled silently
+        }
+      }
       const res = await fetch('/api/v1/anchors');
       const data = await res.json();
       if (Array.isArray(data)) {
@@ -23,6 +32,8 @@ export const BlockchainAuditPage: React.FC = () => {
       }
     } catch (e) {
       console.error(e);
+    } finally {
+      setIsRefreshing(false);
     }
   };
 
@@ -190,14 +201,16 @@ export const BlockchainAuditPage: React.FC = () => {
                   Live ProvenanceAnchor Ledger ({anchorsList.length} Records)
                 </h3>
                 <span className="text-[11px] text-slate-400">
-                  Target Network: Ethereum Sepolia (Chain ID 11155111)
+                  Target Network: Ethereum Sepolia (Contract: 0x6D8C82dc761Ed9bac93ca99987b91614B90Ad43F)
                 </span>
               </div>
               <button
-                onClick={fetchAnchors}
-                className="text-xs text-slate-400 hover:text-slate-200 flex items-center gap-1"
+                onClick={() => fetchAnchors(true)}
+                disabled={isRefreshing}
+                className="text-xs text-slate-400 hover:text-slate-200 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-800 transition"
               >
-                <RefreshCw className="w-3.5 h-3.5" /> Refresh
+                <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-amber-400' : ''}`} />
+                {isRefreshing ? 'Syncing...' : 'Refresh'}
               </button>
             </div>
 
@@ -216,25 +229,30 @@ export const BlockchainAuditPage: React.FC = () => {
                 <tbody className="divide-y divide-slate-800/60 font-mono text-[11px]">
                   {anchorsList.map((a, i) => (
                     <tr key={i} className="hover:bg-slate-950/40 transition">
-                      <td className="py-3 text-slate-200 truncate max-w-[140px] font-semibold">
-                        {a.asset_id.slice(0, 14)}...{a.asset_id.slice(-6)}
+                      <td className="py-3 text-slate-200 truncate max-w-[140px] font-semibold" title={a.asset_id}>
+                        {a.asset_id.slice(0, 10)}...{a.asset_id.slice(-6)}
                       </td>
-                      <td className="py-3 text-amber-300/90 truncate max-w-[140px]">
-                        {a.commitment.slice(0, 14)}...
+                      <td className="py-3 text-amber-300/90 truncate max-w-[140px]" title={a.commitment}>
+                        {a.commitment.slice(0, 10)}...{a.commitment.slice(-6)}
                       </td>
-                      <td className="py-3 text-blue-300 truncate max-w-[120px]">
-                        {a.submitter.slice(0, 10)}...
+                      <td className="py-3 text-blue-300 truncate max-w-[120px]" title={a.submitter}>
+                        {a.submitter.slice(0, 8)}...{a.submitter.slice(-4)}
                       </td>
-                      <td className="py-3 text-slate-400">#{a.block_number}</td>
+                      <td className="py-3 text-slate-300 font-semibold">
+                        #{a.block_number}
+                      </td>
                       <td className="py-3 text-slate-400 font-sans text-xs">
-                        {new Date(a.timestamp * 1000).toLocaleTimeString()}
+                        <div>{new Date(a.timestamp * 1000).toLocaleDateString()}</div>
+                        <div className="text-[10px] text-slate-500">
+                          {new Date(a.timestamp * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                        </div>
                       </td>
                       <td className="py-3 text-right">
                         <a
                           href={a.etherscan_url || `https://sepolia.etherscan.io/tx/${a.tx_hash}`}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-1 text-blue-400 hover:text-blue-300 text-[11px] font-sans"
+                          className="inline-flex items-center gap-1 text-emerald-400 hover:text-emerald-300 font-sans font-medium text-[11px] hover:underline"
                         >
                           Verify <ExternalLink className="w-3 h-3" />
                         </a>
@@ -243,7 +261,7 @@ export const BlockchainAuditPage: React.FC = () => {
                   ))}
                   {anchorsList.length === 0 && (
                     <tr>
-                      <td colSpan={5} className="py-6 text-center text-slate-500 font-sans">
+                      <td colSpan={6} className="py-6 text-center text-slate-500 font-sans">
                         No blockchain records anchored yet.
                       </td>
                     </tr>
