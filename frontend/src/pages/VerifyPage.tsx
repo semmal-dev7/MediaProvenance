@@ -458,48 +458,48 @@ export const VerifyPage: React.FC = () => {
               </div>
 
               {decodeResult.watermark_detected && decodeResult.payload_matches === true && (
-                <div className="p-3.5 bg-emerald-500/10 border border-emerald-500/30 rounded-lg text-emerald-300 text-xs space-y-1">
-                  <div className="flex items-center gap-2 font-bold text-emerald-400">
+                <div className="p-3.5 bg-emerald-500/10 border border-emerald-500/30 rounded-lg text-emerald-900 text-xs space-y-1">
+                  <div className="flex items-center gap-2 font-bold text-emerald-700">
                     <CheckCircle2 className="w-4 h-4" />
                     Watermark Signal Detected &amp; Verified (Hypothesis H1)
                   </div>
-                  <p className="text-[11px] text-emerald-200/90 leading-relaxed">
-                    Extracted 32-bit payload <code className="font-mono text-white bg-emerald-950 px-1 py-0.5 rounded">0x{decodeResult.payload_hex}</code> with Bayesian log-likelihood ratio {decodeResult.log10_likelihood_ratio !== null ? (decodeResult.log10_likelihood_ratio >= 0 ? `+${decodeResult.log10_likelihood_ratio.toFixed(2)}` : decodeResult.log10_likelihood_ratio.toFixed(2)) : 'high'} and bit error rate {decodeResult.bit_error_rate !== null ? `${(decodeResult.bit_error_rate * 100).toFixed(1)}%` : '0.0%'}. Signal meets mathematical detection tolerance under hypothesis H1.
+                  <p className="text-[11px] text-emerald-950 leading-relaxed font-normal">
+                    Extracted 32-bit payload <span className="font-mono font-bold text-slate-900">0x{decodeResult.payload_hex}</span> with Bayesian log-likelihood ratio {decodeResult.log10_likelihood_ratio !== null ? (decodeResult.log10_likelihood_ratio >= 0 ? `+${decodeResult.log10_likelihood_ratio.toFixed(2)}` : decodeResult.log10_likelihood_ratio.toFixed(2)) : 'high'} and bit error rate {decodeResult.bit_error_rate !== null ? `${(decodeResult.bit_error_rate * 100).toFixed(1)}%` : '0.0%'}. Signal meets mathematical detection tolerance under hypothesis H1.
                   </p>
                 </div>
               )}
 
               {!decodeResult.watermark_detected && decodeResult.payload_matches === false && (
-                <div className="p-3.5 bg-rose-500/10 border border-rose-500/30 rounded-lg text-rose-300 text-xs space-y-1">
-                  <div className="flex items-center gap-2 font-bold text-rose-400">
+                <div className="p-3.5 bg-rose-500/10 border border-rose-500/30 rounded-lg text-rose-900 text-xs space-y-1">
+                  <div className="flex items-center gap-2 font-bold text-rose-700">
                     <ShieldAlert className="w-4 h-4" />
                     Watermark Rejection (Payload Mismatch)
                   </div>
-                  <p className="text-[11px] text-rose-300/90 leading-relaxed">
+                  <p className="text-[11px] text-rose-950 leading-relaxed">
                     {decodeResult.error || 'This candidate image does not match the claimed publisher reference payload.'}
                   </p>
                 </div>
               )}
 
               {decodeResult.payload_hex && (decodeResult.payload_matches === null || decodeResult.payload_matches === undefined) && (
-                <div className="p-3.5 bg-blue-500/10 border border-blue-500/30 rounded-lg text-blue-300 text-xs space-y-1">
-                  <div className="flex items-center gap-2 font-bold text-blue-400">
+                <div className="p-3.5 bg-blue-500/10 border border-blue-500/30 rounded-lg text-blue-900 text-xs space-y-1">
+                  <div className="flex items-center gap-2 font-bold text-blue-700">
                     <ShieldCheck className="w-4 h-4" />
                     Candidate Payload Extracted (Unanchored Claim)
                   </div>
-                  <p className="text-[11px] text-blue-200/90 leading-relaxed">
-                    Extracted candidate payload <code className="font-mono text-white bg-blue-950 px-1 py-0.5 rounded">0x{decodeResult.payload_hex}</code> from neural decoder. Provenance is currently unanchored (state H2). To authenticate, enter your expected Reference Payload above, or run an on-chain audit below.
+                  <p className="text-[11px] text-blue-950 leading-relaxed">
+                    Extracted candidate payload <span className="font-mono font-bold text-slate-900">0x{decodeResult.payload_hex}</span> from neural decoder. Provenance is currently unanchored (state H2). To authenticate, enter your expected Reference Payload above, or run an on-chain audit below.
                   </p>
                 </div>
               )}
 
               {!decodeResult.payload_hex && (
-                <div className="p-3.5 bg-rose-500/10 border border-rose-500/30 rounded-lg text-rose-300 text-xs space-y-1">
-                  <div className="flex items-center gap-2 font-bold text-rose-400">
+                <div className="p-3.5 bg-rose-500/10 border border-rose-500/30 rounded-lg text-rose-900 text-xs space-y-1">
+                  <div className="flex items-center gap-2 font-bold text-rose-700">
                     <ShieldAlert className="w-4 h-4" />
                     No Watermark Recovered
                   </div>
-                  <p className="text-[11px] text-rose-300/90 leading-relaxed">
+                  <p className="text-[11px] text-rose-950 leading-relaxed">
                     {decodeResult.error || 'No decodable watermark signal was recovered from this candidate image.'}
                   </p>
                 </div>
