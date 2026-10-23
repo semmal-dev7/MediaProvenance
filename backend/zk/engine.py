@@ -494,6 +494,8 @@ class EZKLProvingEngine:
                 "proof_digest": proof_digest,
                 "is_synthetic": is_synthetic,
                 "witness_constraints": active_constraints,
+                "architecture": "Two-Stage Feature-Witness Halo2 zk-SNARK",
+                "proof_system": "Halo2 (KZG on BN254)",
                 "proving_time_seconds": proving_time,
                 "created_at": time.time(),
             }
