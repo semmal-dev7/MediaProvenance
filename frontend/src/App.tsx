@@ -3,72 +3,69 @@ import { DashboardPage } from './pages/DashboardPage';
 import { EmbedPage } from './pages/EmbedPage';
 import { VerifyPage } from './pages/VerifyPage';
 import { BlockchainAuditPage } from './pages/BlockchainAuditPage';
-import { Shield, Blocks, Cpu, CheckCircle2, LayoutDashboard } from 'lucide-react';
+import { Shield, ArrowLeft } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'dashboard' | 'embed' | 'verify' | 'audit'>('dashboard');
 
-  return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
-      {/* Top Banner / Capstone Registered Title */}
-      <header className="bg-slate-900 border-b border-slate-800 py-3.5 px-6 sticky top-0 z-50 shadow-md">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-3">
-          <div className="flex items-center">
-            <h1 className="text-xl font-bold text-white tracking-tight">ProvenanceLab</h1>
-          </div>
+  const isHome = activeTab === 'dashboard';
 
-          {/* Navigation Tabs */}
-          <nav className="flex items-center gap-1 bg-slate-950/90 p-1 rounded-xl border border-slate-800 self-start md:self-auto overflow-x-auto max-w-full">
-            <button
+  return (
+    <div className={`min-h-screen flex flex-col font-sans transition-colors duration-200 ${
+      isHome ? 'bg-[#f4f6f9] text-slate-800' : 'bg-slate-950 text-slate-100'
+    }`}>
+      {/* Top Banner */}
+      <header className="py-3.5 px-6 sticky top-0 z-50 shadow-md transition-colors duration-200 vtop-header">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          {isHome ? (
+            /* Home page: ProvenanceLab on left */
+            <div
+              className="vtop-brand flex items-center gap-2.5 cursor-pointer hover:opacity-90 transition active:scale-95"
               onClick={() => setActiveTab('dashboard')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
-                activeTab === 'dashboard'
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
-              }`}
+              title="ProvenanceLab"
             >
-              <LayoutDashboard className="w-3.5 h-3.5" />
-              Dashboard
-            </button>
-            <button
-              onClick={() => setActiveTab('embed')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
-                activeTab === 'embed'
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
-              }`}
-            >
-              <Cpu className="w-3.5 h-3.5" />
-              Embed Watermark
-            </button>
-            <button
-              onClick={() => setActiveTab('verify')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
-                activeTab === 'verify'
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
-              }`}
-            >
-              <CheckCircle2 className="w-3.5 h-3.5" />
-              Verify Image
-            </button>
-            <button
-              onClick={() => setActiveTab('audit')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
-                activeTab === 'audit'
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
-              }`}
-            >
-              <Blocks className="w-3.5 h-3.5" />
-              Blockchain Audit
-            </button>
-          </nav>
+              <div className="p-1.5 bg-white/20 rounded-lg backdrop-blur-sm border border-white/30 flex items-center justify-center">
+                <Shield className="w-5 h-5 text-white" />
+              </div>
+              <div className="flex items-baseline gap-2">
+                <span className="text-xl font-bold tracking-tight text-white">
+                  ProvenanceLab
+                </span>
+              </div>
+            </div>
+          ) : (
+            /* Workspace Pages: Back to Home on LEFT, ProvenanceLab on RIGHT */
+            <>
+              <button
+                onClick={() => setActiveTab('dashboard')}
+                className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-white bg-white/15 hover:bg-white/25 border border-white/30 backdrop-blur-sm transition active:scale-95 shadow-sm"
+                title="Return to Home Portal"
+              >
+                <ArrowLeft className="w-4 h-4 text-white" />
+                <span>Back to Home</span>
+              </button>
+
+              <div
+                className="vtop-brand flex items-center gap-2.5 cursor-pointer hover:opacity-90 transition active:scale-95"
+                onClick={() => setActiveTab('dashboard')}
+                title="ProvenanceLab — Return to Home"
+              >
+                <div className="p-1.5 bg-white/20 rounded-lg backdrop-blur-sm border border-white/30 flex items-center justify-center">
+                  <Shield className="w-5 h-5 text-white" />
+                </div>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-xl font-bold tracking-tight text-white">
+                    ProvenanceLab
+                  </span>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6">
         {activeTab === 'dashboard' && <DashboardPage onNavigate={(tab: any) => setActiveTab(tab)} />}
         {activeTab === 'embed' && <EmbedPage onProceedToVerify={() => setActiveTab('verify')} />}
         {activeTab === 'verify' && <VerifyPage />}

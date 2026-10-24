@@ -73,6 +73,45 @@ nav button[class*="text-slate-400"]:hover {
   color: var(--text-muted) !important;
 }
 
+/* VTOP Header & Navigation Specific Overrides */
+header.vtop-header {
+  background: linear-gradient(90deg, #2b7fc3 0%, #389de2 50%, #58bbf5 100%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25) !important;
+}
+
+header.vtop-header .vtop-brand,
+header.vtop-header .vtop-brand * {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+header.vtop-header nav {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+header.vtop-header nav button {
+  color: #334155 !important;
+}
+
+header.vtop-header nav button:hover {
+  color: #0f172a !important;
+  background-color: #f1f5f9 !important;
+}
+
+header.vtop-header nav button.vtop-active-tab,
+header.vtop-header nav button.bg-blue-600 {
+  background-color: #1a73e8 !important;
+  color: #ffffff !important;
+}
+
+header.vtop-header nav button.vtop-active-tab *,
+header.vtop-header nav button.bg-blue-600 * {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
 /* Maintain crisp white text on interactive action buttons and badges */
 .bg-blue-600, .bg-blue-500,
 .bg-emerald-600, .bg-emerald-500,

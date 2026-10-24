@@ -239,7 +239,16 @@ export const BlockchainAuditPage: React.FC = () => {
                         {a.submitter.slice(0, 8)}...{a.submitter.slice(-4)}
                       </td>
                       <td className="py-3 text-slate-300 font-semibold">
-                        #{a.block_number}
+                        <a
+                          href={`https://sepolia.etherscan.io/block/${a.block_number}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="hover:text-blue-400 hover:underline inline-flex items-center gap-1 text-slate-200"
+                          title={`View Ethereum Block #${a.block_number} on Etherscan`}
+                        >
+                          #{a.block_number}
+                          <ExternalLink className="w-2.5 h-2.5 opacity-60" />
+                        </a>
                       </td>
                       <td className="py-3 text-slate-400 font-sans text-xs">
                         <div>{new Date(a.timestamp * 1000).toLocaleDateString()}</div>
