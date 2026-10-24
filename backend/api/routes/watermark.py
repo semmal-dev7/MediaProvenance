@@ -167,16 +167,19 @@ async def decode_watermark(
     if anchor:
         original_anchor_payload = job_manager.get_payload_for_anchor(anchor)
 
-    # If anchor not found by image SHA (e.g. cropped/compressed/AI-modified media), reverse-lookup by decoded payload
-    if not anchor and dec_res.payload_hex:
-        anchor = job_manager.get_anchor_by_payload(dec_res.payload_hex)
-        if anchor:
-            anchor_found = True
-            registered_anchor_dict = anchor.__dict__
-            original_anchor_payload = job_manager.get_payload_for_anchor(anchor)
-            if not effective_ref_payload:
-                effective_ref_payload = original_anchor_payload or dec_res.payload_hex
-                trusted_from_registry = True
+    # If anchor not found by image SHA or if this image matches a later anchor, resolve the earliest root anchor
+    if dec_res.payload_hex:
+        root_anchor = job_manager.get_anchor_by_payload(dec_res.payload_hex)
+        if root_anchor:
+            # The earliest confirmed on-chain anchor takes precedence as the genuine publisher original root
+            if not anchor or (root_anchor.block_number and anchor.block_number and root_anchor.block_number < anchor.block_number):
+                anchor = root_anchor
+                anchor_found = True
+                registered_anchor_dict = anchor.__dict__
+                original_anchor_payload = job_manager.get_payload_for_anchor(anchor)
+                if not effective_ref_payload:
+                    effective_ref_payload = original_anchor_payload or dec_res.payload_hex
+                    trusted_from_registry = True
 
     # Re-evaluate decode against discovered authentic payload if reference wasn't passed initially
     if effective_ref_payload and dec_res.payload_hex and dec_res.hamming_distance is None:

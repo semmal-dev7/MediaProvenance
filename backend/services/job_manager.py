@@ -548,12 +548,18 @@ class JobManager:
     def get_anchor_by_payload(self, payload_hex: str) -> Optional[AnchorRecord]:
         """Reverse lookup an on-chain or registered anchor record by watermark payload."""
         clean = payload_hex.lower().replace("0x", "").strip()
+        candidates: List[AnchorRecord] = []
         # 1. Match against registered anchors directly by payload
         for rec in self._anchors.values():
             if rec.payload_hex:
                 rp = rec.payload_hex.lower().replace("0x", "").strip()
                 if rp == clean or rp.startswith(clean) or clean.startswith(rp):
-                    return rec
+                    candidates.append(rec)
+
+        if candidates:
+            # Sort by earliest confirmed block number / timestamp to ensure root provenance
+            candidates.sort(key=lambda r: (r.block_number if r.block_number > 0 else 999999999, r.timestamp))
+            return candidates[0]
 
         # 2. Match against registered embedded assets
         for aid, p in self._embedded_assets.items():

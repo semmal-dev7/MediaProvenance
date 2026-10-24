@@ -44,15 +44,21 @@ export const VerifyPage: React.FC = () => {
           if (anchorsRes.ok) {
             const allAnchors = await anchorsRes.json();
             const cleanPayload = decodeResult.payload_hex.toLowerCase().replace('0x', '').trim();
-            const matchingAnchor = Array.isArray(allAnchors) && allAnchors.find((a: any) =>
+            const matchingAnchors = Array.isArray(allAnchors) && allAnchors.filter((a: any) =>
               a.payload_hex && (
                 a.payload_hex.toLowerCase().replace('0x', '').trim() === cleanPayload
                 || cleanPayload.startsWith(a.payload_hex.toLowerCase().replace('0x', '').trim())
                 || a.payload_hex.toLowerCase().replace('0x', '').trim().startsWith(cleanPayload)
               )
             );
-            if (matchingAnchor?.asset_id) {
-              targetAssetId = matchingAnchor.asset_id;
+            if (matchingAnchors && matchingAnchors.length > 0) {
+              matchingAnchors.sort((a: any, b: any) => {
+                const bA = (a.block_number && a.block_number > 0) ? a.block_number : 999999999;
+                const bB = (b.block_number && b.block_number > 0) ? b.block_number : 999999999;
+                if (bA !== bB) return bA - bB;
+                return (a.timestamp || 0) - (b.timestamp || 0);
+              });
+              targetAssetId = matchingAnchors[0].asset_id;
             }
           }
         } catch {
@@ -125,17 +131,24 @@ export const VerifyPage: React.FC = () => {
             if (anchorsRes.ok) {
               const allAnchors = await anchorsRes.json();
               const cleanPayload = data.payload_hex.toLowerCase().replace('0x', '').trim();
-              const matchingAnchor = Array.isArray(allAnchors) && allAnchors.find((a: any) =>
+              const matchingAnchors = Array.isArray(allAnchors) && allAnchors.filter((a: any) =>
                 a.payload_hex && (
                   a.payload_hex.toLowerCase().replace('0x', '').trim() === cleanPayload
                   || cleanPayload.startsWith(a.payload_hex.toLowerCase().replace('0x', '').trim())
                   || a.payload_hex.toLowerCase().replace('0x', '').trim().startsWith(cleanPayload)
                 )
               );
-              if (matchingAnchor?.asset_id) {
-                data.registered_anchor = matchingAnchor;
-                data.original_asset_id = matchingAnchor.asset_id;
-                const cleanOrig = matchingAnchor.asset_id.toLowerCase().replace('0x', '').trim();
+              if (matchingAnchors && matchingAnchors.length > 0) {
+                matchingAnchors.sort((a: any, b: any) => {
+                  const bA = (a.block_number && a.block_number > 0) ? a.block_number : 999999999;
+                  const bB = (b.block_number && b.block_number > 0) ? b.block_number : 999999999;
+                  if (bA !== bB) return bA - bB;
+                  return (a.timestamp || 0) - (b.timestamp || 0);
+                });
+                const rootAnchor = matchingAnchors[0];
+                data.registered_anchor = rootAnchor;
+                data.original_asset_id = rootAnchor.asset_id;
+                const cleanOrig = rootAnchor.asset_id.toLowerCase().replace('0x', '').trim();
                 const cleanCand = (data.image_sha256 || '').toLowerCase().replace('0x', '').trim();
                 if (cleanOrig && cleanCand && cleanOrig !== cleanCand) {
                   data.is_derivative = true;
