@@ -75,10 +75,13 @@ export const VerifyPage: React.FC = () => {
       formData.append('carrier', carrier);
       if (refPayload) formData.append('reference_payload_hex', refPayload);
 
-      const res = await fetch('/api/v1/watermarks/decode', {
-        method: 'POST',
-        body: formData,
-      });
+  const res = await fetch(
+        'https://mediaprovenance-api.onrender.com/api/v1/watermarks/decode',
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
 
       if (!res.ok) {
         let errMsg = `Server returned status ${res.status}`;
