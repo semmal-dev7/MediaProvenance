@@ -7,8 +7,8 @@ interface EmbedPageProps {
 }
 
 export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
-  const [carrier, setCarrier] = useState<'pureconv' | 'hidden' | 'trustmark'>('pureconv');
-  const [payloadHex, setPayloadHex] = useState<string>('a1b2c3d4');
+  const [carrier, setCarrier] = useState<'pureconv' | 'hidden' | 'trustmark'>('trustmark');
+  const [payloadHex, setPayloadHex] = useState<string>('a51234567890abcdef12345678');
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [watermarkedImg, setWatermarkedImg] = useState<string | null>(null);

@@ -46,37 +46,50 @@ DEFAULT_PURECONV_ARTIFACTS_DIR = PROJECT_ROOT / "models" / "ezkl_artifacts_purec
 DEFAULT_PURECONV_CIRCUIT_MODEL_PATH = DEFAULT_PURECONV_ARTIFACTS_DIR / "pureconv_head.onnx"
 DEFAULT_PURECONV_FULL_MODEL_PATH = PROJECT_ROOT / "experiments" / "models_generalization_fix" / "hidden_decoder_conv_32bit.onnx"
 
+DEFAULT_TRUSTMARK_ARTIFACTS_DIR = PROJECT_ROOT / "models" / "ezkl_artifacts_trustmark"
+DEFAULT_TRUSTMARK_CIRCUIT_MODEL_PATH = DEFAULT_TRUSTMARK_ARTIFACTS_DIR / "trustmark_head.onnx"
+DEFAULT_TRUSTMARK_FULL_MODEL_PATH = PROJECT_ROOT / "models" / "checkpoints" / "trustmark_decoder_Q.ckpt"
+
 
 def extract_circuit_recovered_payload(proof: Dict[str, Any]) -> Optional[str]:
     """
-    Derives the 32-bit payload hex directly from the circuit's constrained outputs.
+    Derives the recovered payload hex directly from the circuit's constrained outputs.
     Inspects pretty_public_inputs.rescaled_outputs and instances field elements over BN254.
+    Supports 100-bit (TrustMark-Q) and 32-bit (PureConv / HiDDeN) circuits.
     """
     # 1. Inspect pretty_public_inputs.rescaled_outputs (signed floats)
     if "pretty_public_inputs" in proof and isinstance(proof["pretty_public_inputs"], dict):
         outputs = proof["pretty_public_inputs"].get("rescaled_outputs")
-        if outputs and len(outputs) > 0 and len(outputs[0]) >= 32:
-            logits = [float(v) for v in outputs[0][:32]]
+        if outputs and len(outputs) > 0 and len(outputs[0]) > 0:
+            logits = [float(v) for v in outputs[0]]
             bits = [1 if val >= 0.0 else 0 for val in logits]
             val = 0
             for b in bits:
                 val = (val << 1) | b
-            return f"{val:08x}"
+            n_hex = (len(bits) + 3) // 4
+            return f"{val:0{n_hex}x}"
 
     # 2. Extract directly from raw instances field elements over BN254 scalar field
     if "instances" in proof and proof["instances"] and len(proof["instances"]) > 0:
         inst_row = proof["instances"][0]
-        if len(inst_row) >= 32:
-            # Circuit outputs are the last 32 elements in instances[0]
-            out_inst = inst_row[-32:]
-            r = 21888242871839275222246405745257275088548364400416034343698204186575808495617
-            half_r = r // 2
+        r = 21888242871839275222246405745257275088548364400416034343698204186575808495617
+        half_r = r // 2
+
+        if len(inst_row) >= 100:  # TrustMark-Q has 100 outputs
+            out_inst = inst_row[-100:]
             bits = []
             for elem in out_inst:
-                if isinstance(elem, str):
-                    elem_int = int.from_bytes(bytes.fromhex(elem), byteorder="little")
-                else:
-                    elem_int = int(elem)
+                elem_int = int.from_bytes(bytes.fromhex(elem), byteorder="little") if isinstance(elem, str) else int(elem)
+                bits.append(1 if elem_int < half_r else 0)
+            val = 0
+            for b in bits:
+                val = (val << 1) | b
+            return f"{val:025x}"
+        elif len(inst_row) >= 32:  # PureConv / HiDDeN has 32 outputs
+            out_inst = inst_row[-32:]
+            bits = []
+            for elem in out_inst:
+                elem_int = int.from_bytes(bytes.fromhex(elem), byteorder="little") if isinstance(elem, str) else int(elem)
                 bits.append(1 if elem_int < half_r else 0)
             val = 0
             for b in bits:
@@ -100,22 +113,22 @@ def extract_circuit_input_features(proof: Dict[str, Any]) -> Optional[List[float
     # 2. Extract directly from raw instances field elements over BN254 scalar field
     if "instances" in proof and proof["instances"] and len(proof["instances"]) > 0:
         inst_row = proof["instances"][0]
-        if len(inst_row) >= 64:  # At least 32 inputs and 32 outputs
-            in_inst = inst_row[:-32]  # Input features are all elements preceding the 32 outputs
-            r = 21888242871839275222246405745257275088548364400416034343698204186575808495617
-            half_r = r // 2
-            features = []
-            for elem in in_inst:
-                if isinstance(elem, str):
-                    elem_int = int.from_bytes(bytes.fromhex(elem), byteorder="little")
-                else:
-                    elem_int = int(elem)
-                if elem_int >= half_r:
-                    val = (elem_int - r) / 128.0
-                else:
-                    val = elem_int / 128.0
-                features.append(val)
-            return features
+        r = 21888242871839275222246405745257275088548364400416034343698204186575808495617
+        half_r = r // 2
+
+        if len(inst_row) >= 2148:  # 2048 inputs + 100 outputs (TrustMark-Q)
+            in_inst = inst_row[:-100]
+        elif len(inst_row) >= 64:  # 32/64 inputs + 32 outputs (PureConv/HiDDeN)
+            in_inst = inst_row[:-32]
+        else:
+            return None
+
+        features = []
+        for elem in in_inst:
+            elem_int = int.from_bytes(bytes.fromhex(elem), byteorder="little") if isinstance(elem, str) else int(elem)
+            val = (elem_int - r) / 128.0 if elem_int >= half_r else elem_int / 128.0
+            features.append(val)
+        return features
 
     return None
 
@@ -170,7 +183,7 @@ class EZKLProvingEngine:
     """
 
     PROOF_SYSTEM = "EZKL-Halo2-KZG"
-    CIRCUIT_VERSION = "ezkl_halo2_hidden_decoder_v1"
+    CIRCUIT_VERSION = "ezkl_halo2_trustmark_decoder_v1"
 
     def __init__(
         self,
@@ -220,6 +233,18 @@ class EZKLProvingEngine:
         self.pureconv_vk_path = self.pureconv_artifacts_dir / "vk.key"
         self._pureconv_model_digest: Optional[str] = None
         self._pureconv_circuit_digest: Optional[str] = None
+
+        # TrustMark circuit artifacts configuration (2048-dim latent features -> 100-bit watermark)
+        self.trustmark_artifacts_dir = DEFAULT_TRUSTMARK_ARTIFACTS_DIR
+        self.trustmark_onnx_path = DEFAULT_TRUSTMARK_CIRCUIT_MODEL_PATH
+        self.trustmark_full_model_path = DEFAULT_TRUSTMARK_FULL_MODEL_PATH
+        self.trustmark_settings_path = self.trustmark_artifacts_dir / "settings.json"
+        self.trustmark_compiled_path = self.trustmark_artifacts_dir / "model.compiled"
+        self.trustmark_srs_path = self.trustmark_artifacts_dir / "kzg.srs"
+        self.trustmark_pk_path = self.trustmark_artifacts_dir / "pk.key"
+        self.trustmark_vk_path = self.trustmark_artifacts_dir / "vk.key"
+        self._trustmark_model_digest: Optional[str] = None
+        self._trustmark_circuit_digest: Optional[str] = None
 
     @property
     def model_digest(self) -> str:
@@ -276,6 +301,34 @@ class EZKLProvingEngine:
             else:
                 self._pureconv_circuit_digest = "0x" + hashlib.sha256(b"PureConvCircuitHeadModel").hexdigest()
         return self._pureconv_circuit_digest
+
+    @property
+    def trustmark_model_digest(self) -> str:
+        """Compute SHA-256 digest of the primary trained TrustMark-Q decoder checkpoint."""
+        if self._trustmark_model_digest is None:
+            if self.trustmark_full_model_path.exists():
+                hasher = hashlib.sha256()
+                with open(self.trustmark_full_model_path, "rb") as f:
+                    while chunk := f.read(65536):
+                        hasher.update(chunk)
+                self._trustmark_model_digest = "0x" + hasher.hexdigest()
+            else:
+                self._trustmark_model_digest = "0xe3d9cea5406a26590735719f8f15cb10802b11852ae69047eaf4cf17214df781"
+        return self._trustmark_model_digest
+
+    @property
+    def trustmark_circuit_digest(self) -> str:
+        """Compute SHA-256 digest of the compiled TrustMark circuit ONNX head."""
+        if self._trustmark_circuit_digest is None:
+            if self.trustmark_onnx_path.exists():
+                hasher = hashlib.sha256()
+                with open(self.trustmark_onnx_path, "rb") as f:
+                    while chunk := f.read(65536):
+                        hasher.update(chunk)
+                self._trustmark_circuit_digest = "0x" + hasher.hexdigest()
+            else:
+                self._trustmark_circuit_digest = "0x" + hashlib.sha256(b"TrustMarkCircuitHeadModel").hexdigest()
+        return self._trustmark_circuit_digest
 
     def ensure_artifacts(self) -> None:
         """Ensures that circuit compilation and KZG setup artifacts exist."""
@@ -337,7 +390,10 @@ class EZKLProvingEngine:
         t0 = time.perf_counter()
 
         # Determine target circuit architecture
-        is_pureconv = (carrier == "pureconv") or (image_features is not None and len(image_features) == 32)
+        carrier_lower = (carrier or "").lower()
+        is_pureconv = carrier_lower == "pureconv" or (image_features is not None and len(image_features) == 32)
+        is_hidden = carrier_lower == "hidden" or (image_features is not None and len(image_features) == 64 and len(payload_hex.replace("0x", "")) <= 8)
+        is_trustmark = not is_pureconv and not is_hidden
 
         is_synthetic = False
         if image_features is None:
@@ -358,9 +414,9 @@ class EZKLProvingEngine:
                     image_features = extract_pureconv_features(image_input)
                 else:
                     h = hashlib.sha256(image_sha256.encode("utf-8")).digest()
-                    image_features = [((b / 127.5) - 1.0) for b in h]  # exactly 32 dimensions
+                    image_features = [((b / 127.5) - 1.0) for b in h]  # 32 dimensions
                     is_synthetic = True
-            else:
+            elif is_hidden:
                 if image_input is not None:
                     from backend.zk.features import extract_hidden_features
                     image_features = extract_hidden_features(image_input)
@@ -368,14 +424,24 @@ class EZKLProvingEngine:
                     h = hashlib.sha256(image_sha256.encode("utf-8")).digest()
                     image_features = [((b / 127.5) - 1.0) for b in (h * 2)]  # 64 dimensions
                     is_synthetic = True
+            else:
+                # Default TrustMark-Q (2048-dim features)
+                if image_input is not None:
+                    from backend.zk.features import extract_trustmark_features
+                    image_features = extract_trustmark_features(image_input)
+                else:
+                    h = hashlib.sha256(image_sha256.encode("utf-8")).digest()
+                    image_features = [((b / 127.5) - 1.0) for b in (h * 64)]  # 2048 dimensions
+                    is_synthetic = True
+
+        if image_input is not None:
+            from backend.carriers.base import BaseCarrier
+            actual_sha = "0x" + BaseCarrier.image_sha256(image_input)
+            clean_image_sha_chk = image_sha256 if image_sha256.startswith("0x") else "0x" + image_sha256
+            if actual_sha.lower() != clean_image_sha_chk.lower():
+                raise ValueError(f"Image digest mismatch: image_sha256 {clean_image_sha_chk} does not match SHA-256 of image_input ({actual_sha})")
 
         if is_pureconv:
-            if image_input is not None:
-                from backend.carriers.base import BaseCarrier
-                actual_sha = "0x" + BaseCarrier.image_sha256(image_input)
-                clean_image_sha_chk = image_sha256 if image_sha256.startswith("0x") else "0x" + image_sha256
-                if actual_sha.lower() != clean_image_sha_chk.lower():
-                    raise ValueError(f"Image digest mismatch: image_sha256 {clean_image_sha_chk} does not match SHA-256 of image_input ({actual_sha})")
             if len(image_features) < 32:
                 raise ValueError(f"PureConv image_features must contain at least 32 dimensions, got {len(image_features)}")
             feat_dim = 32
@@ -386,23 +452,29 @@ class EZKLProvingEngine:
             active_model_digest = self.pureconv_model_digest
             active_circuit_digest = self.pureconv_circuit_digest
             active_constraints = 1216
-        else:
-            if image_input is not None:
-                from backend.carriers.base import BaseCarrier
-                actual_sha = "0x" + BaseCarrier.image_sha256(image_input)
-                clean_image_sha_chk = image_sha256 if image_sha256.startswith("0x") else "0x" + image_sha256
-                if actual_sha.lower() != clean_image_sha_chk.lower():
-                    raise ValueError(f"Image digest mismatch: image_sha256 {clean_image_sha_chk} does not match SHA-256 of image_input ({actual_sha})")
+        elif is_hidden:
             if len(image_features) < 64:
                 raise ValueError(f"HiDDeN image_features must contain at least 64 dimensions, got {len(image_features)}")
             feat_dim = 64
             active_compiled = self.compiled_model_path
             active_pk = self.pk_path
             active_srs = self.srs_path
-            active_circuit_version = self.CIRCUIT_VERSION
+            active_circuit_version = "ezkl_halo2_hidden_decoder_v1"
             active_model_digest = self.model_digest
             active_circuit_digest = self.circuit_digest
             active_constraints = 2432
+        else:
+            if len(image_features) < 2048:
+                # Pad to 2048 if needed
+                image_features = image_features + [0.0] * (2048 - len(image_features))
+            feat_dim = 2048
+            active_compiled = self.trustmark_compiled_path
+            active_pk = self.trustmark_pk_path
+            active_srs = self.trustmark_srs_path
+            active_circuit_version = "ezkl_halo2_trustmark_decoder_v1"
+            active_model_digest = self.trustmark_model_digest
+            active_circuit_digest = self.trustmark_circuit_digest
+            active_constraints = 232080
 
         td = tempfile.mkdtemp()
         data_path = os.path.join(td, "input.json")
@@ -532,6 +604,11 @@ class EZKLProvingEngine:
             circuit_ver == "ezkl_halo2_pureconv_decoder_v1"
             or claimed_digest == self.pureconv_model_digest.lower()
         )
+        is_hidden = (
+            circuit_ver == "ezkl_halo2_hidden_decoder_v1"
+            or claimed_digest == self.model_digest.lower()
+        )
+        is_trustmark = not is_pureconv and not is_hidden
 
         if is_pureconv:
             expected_digest = self.pureconv_model_digest.lower()
@@ -541,14 +618,22 @@ class EZKLProvingEngine:
             active_circuit_ver = "ezkl_halo2_pureconv_decoder_v1"
             active_circuit_digest = self.pureconv_circuit_digest
             expected_name = "PureConv decoder"
-        else:
+        elif is_hidden:
             expected_digest = self.model_digest.lower()
             active_settings = self.settings_path
             active_vk = self.vk_path
             active_srs = self.srs_path
-            active_circuit_ver = self.CIRCUIT_VERSION
+            active_circuit_ver = "ezkl_halo2_hidden_decoder_v1"
             active_circuit_digest = self.circuit_digest
             expected_name = "HiDDeN decoder"
+        else:
+            expected_digest = self.trustmark_model_digest.lower()
+            active_settings = self.trustmark_settings_path
+            active_vk = self.trustmark_vk_path
+            active_srs = self.trustmark_srs_path
+            active_circuit_ver = "ezkl_halo2_trustmark_decoder_v1"
+            active_circuit_digest = self.trustmark_circuit_digest
+            expected_name = "TrustMark-Q decoder"
 
         # 1. Model digest integrity check
         if claimed_digest and claimed_digest != expected_digest:
@@ -709,9 +794,12 @@ class EZKLProvingEngine:
                 if is_pureconv:
                     from backend.zk.features import extract_pureconv_features
                     actual_features = extract_pureconv_features(image_input)
-                else:
+                elif is_hidden:
                     from backend.zk.features import extract_hidden_features
                     actual_features = extract_hidden_features(image_input)
+                else:
+                    from backend.zk.features import extract_trustmark_features
+                    actual_features = extract_trustmark_features(image_input)
 
                 # Quantize actual features with circuit fixed-point scale (scale 7: step = 1/128.0)
                 # and compare against the circuit's public input features

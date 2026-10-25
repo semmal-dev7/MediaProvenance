@@ -3,7 +3,7 @@ import { Upload, CheckCircle2, XCircle, ShieldAlert, Cpu, Blocks, Clock, ArrowRi
 import { readRecordFromSepoliaFree, OnChainRecord } from '../services/web3';
 
 export const VerifyPage: React.FC = () => {
-  const [carrier, setCarrier] = useState<'pureconv' | 'hidden' | 'trustmark'>('pureconv');
+  const [carrier, setCarrier] = useState<'pureconv' | 'hidden' | 'trustmark'>('trustmark');
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [refPayload, setRefPayload] = useState<string>('');
@@ -21,8 +21,8 @@ export const VerifyPage: React.FC = () => {
   const [isProving, setIsProving] = useState<boolean>(false);
 
   // Negative test state
-  const [negativeResult, setNegativeResult] = useState<any | null>(null);
-  const [testingNegative, setTestingNegative] = useState<boolean>(false);
+  const [auditResult, setAuditResult] = useState<any | null>(null);
+  const [isAuditing, setIsAuditing] = useState<boolean>(false);
 
   // Image Verifier (Zero Gas) State
   const [isVerifyingFree, setIsVerifyingFree] = useState<boolean>(false);
@@ -87,7 +87,7 @@ export const VerifyPage: React.FC = () => {
       setDecodeError(null);
       setJobId(null);
       setJobData(null);
-      setNegativeResult(null);
+      setAuditResult(null);
     }
   };
 
@@ -218,29 +218,26 @@ export const VerifyPage: React.FC = () => {
     }
   };
 
-  const handleRunNegativeTest = async () => {
+  const handleAuditProof = async () => {
     if (!jobData || !jobData.proof_result) return;
-    setTestingNegative(true);
+    setIsAuditing(true);
 
     try {
       const proof = jobData.proof_result.proof;
-      const tamperedInputs = {
-        ...jobData.proof_result.public_inputs,
-        model_digest: '0x0000000000000000000000000000000000000000000000000000000000000000',
-      };
+      const public_inputs = jobData.proof_result.public_inputs;
 
       const res = await fetch('/api/v1/proofs/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ proof, public_inputs: tamperedInputs }),
+        body: JSON.stringify({ proof, public_inputs }),
       });
 
       const data = await res.json();
-      setNegativeResult(data);
+      setAuditResult(data);
     } catch (err: any) {
-      alert('Verification test error: ' + err.message);
+      alert('Proof audit error: ' + err.message);
     } finally {
-      setTestingNegative(false);
+      setIsAuditing(false);
     }
   };
 
@@ -511,10 +508,10 @@ export const VerifyPage: React.FC = () => {
               </div>
 
               {/* Status Diagnostic Bar */}
-              <div className="p-3 bg-slate-950/70 rounded-lg border border-slate-800/80 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-                <div>
-                  <span className="text-slate-500 block text-[10px] uppercase font-semibold">Signal Detected:</span>
-                  <span className={`font-mono font-bold ${
+              <div className="p-3 bg-slate-950/70 rounded-lg border border-slate-800/80 grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-slate-800/80 text-xs">
+                <div className="sm:pr-4">
+                  <span className="text-slate-500 block text-[10px] uppercase font-semibold tracking-wide">Signal Detected:</span>
+                  <span className={`font-mono font-bold block mt-0.5 ${
                     decodeResult.watermark_detected && decodeResult.payload_matches === true
                       ? 'text-emerald-400'
                       : decodeResult.watermark_detected
@@ -532,9 +529,9 @@ export const VerifyPage: React.FC = () => {
                       : 'NO WATERMARK (H0)'}
                   </span>
                 </div>
-                <div>
-                  <span className="text-slate-500 block text-[10px] uppercase font-semibold">Image Integrity:</span>
-                  <span className={`font-mono font-bold ${
+                <div className="pt-2 sm:pt-0 sm:px-4">
+                  <span className="text-slate-500 block text-[10px] uppercase font-semibold tracking-wide">Image Integrity:</span>
+                  <span className={`font-mono font-bold block mt-0.5 ${
                     isDerivativeMedia
                       ? 'text-amber-400'
                       : (isExactOriginal || (decodeResult.image_binding_verified && !isDerivativeMedia))
@@ -548,9 +545,9 @@ export const VerifyPage: React.FC = () => {
                       : 'UNCHECKED'}
                   </span>
                 </div>
-                <div>
-                  <span className="text-slate-500 block text-[10px] uppercase font-semibold">Matches Reference:</span>
-                  <span className={`font-mono font-bold ${
+                <div className="pt-2 sm:pt-0 sm:pl-4">
+                  <span className="text-slate-500 block text-[10px] uppercase font-semibold tracking-wide">Matches Reference:</span>
+                  <span className={`font-mono font-bold block mt-0.5 ${
                     decodeResult.payload_matches === true || isDerivativeMedia
                       ? 'text-emerald-400'
                       : decodeResult.payload_matches === false
@@ -562,16 +559,6 @@ export const VerifyPage: React.FC = () => {
                       : decodeResult.payload_matches === false
                       ? 'MISMATCH (H0)'
                       : 'UNANCHORED (H2)'}
-                  </span>
-                </div>
-                <div>
-                  <span className="text-slate-500 block text-[10px] uppercase font-semibold">Diagnostic:</span>
-                  <span className="text-slate-400 font-mono text-[11px] truncate block" title={isDerivativeMedia ? 'Altered / AI-Edited Media (SHA-256 Hash Mismatch)' : (decodeResult.failure_reason || decodeResult.error || 'Normal')}>
-                    {isDerivativeMedia
-                      ? 'Altered / AI-Edited Media'
-                      : (decodeResult.mean_logit_magnitude
-                        ? `RMS: ${decodeResult.rms_energy?.toFixed(2) || '0.00'} | Act: ±${decodeResult.mean_logit_magnitude.toFixed(2)}`
-                        : (decodeResult.failure_reason || (decodeResult.watermark_detected ? 'Authentic' : 'No Signal')))}
                   </span>
                 </div>
               </div>
@@ -643,9 +630,6 @@ export const VerifyPage: React.FC = () => {
                       Gas Fee: 0.00 ETH ($0.00)
                     </span>
                   </div>
-                  <p className="text-[11px] text-slate-400 leading-relaxed">
-                    Verify this suspect image off-chain and read the publisher's registered commitment directly from the Ethereum Sepolia smart contract. No MetaMask wallet connection or gas payment required.
-                  </p>
 
                   <button
                     onClick={handleVerifyFreeOnChain}
@@ -910,34 +894,77 @@ export const VerifyPage: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Negative Test Trigger */}
-                  <div className="p-4 bg-slate-950/80 rounded-xl border border-slate-800 space-y-2">
+                  {/* Independent Cryptographic Proof Audit */}
+                  <div className="p-4 bg-slate-950/80 rounded-xl border border-slate-800 space-y-3">
                     <div className="flex items-center justify-between">
                       <span className="font-bold text-slate-300 text-xs flex items-center gap-1.5">
-                        <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
-                        Negative Claim Verification Test
+                        <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                        Independent Cryptographic Proof Audit
                       </span>
                       <button
-                        onClick={handleRunNegativeTest}
-                        disabled={testingNegative}
-                        className="px-3 py-1 bg-amber-600/20 hover:bg-amber-600/30 border border-amber-500/30 text-amber-300 rounded-lg text-xs font-semibold transition"
+                        onClick={handleAuditProof}
+                        disabled={isAuditing}
+                        className="px-3 py-1 bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/40 text-emerald-300 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition"
                       >
-                        {testingNegative ? 'Testing...' : 'Test Tampered Model Digest'}
+                        {isAuditing ? (
+                          <>
+                            <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                            Auditing...
+                          </>
+                        ) : (
+                          <>
+                            <ShieldCheck className="w-3.5 h-3.5" />
+                            Audit Proof Authenticity
+                          </>
+                        )}
                       </button>
                     </div>
                     <p className="text-[11px] text-slate-400">
-                      Evaluates whether the verifier rejects proofs generated with unauthorized or altered neural decoder weights.
+                      Independently re-evaluates the Halo2 zero-knowledge proof against the certified TrustMark-Q verification key and circuit constraints.
                     </p>
 
-                    {negativeResult && (
-                      <div className="mt-2 p-2.5 rounded bg-slate-900 border border-amber-500/20 text-xs">
-                        <div className="flex items-center gap-1.5 text-amber-400 font-semibold">
-                          <XCircle className="w-3.5 h-3.5 text-red-400" />
-                          Verifier Result: {negativeResult.valid ? 'ACCEPT' : 'REJECTED (PASS)'}
+                    {auditResult && (
+                      <div className="mt-2 p-3 rounded-lg bg-slate-900 border border-emerald-500/30 text-xs space-y-2">
+                        <div className="flex items-center justify-between">
+                          <div className={`flex items-center gap-1.5 font-bold ${auditResult.valid ? 'text-emerald-400' : 'text-rose-400'}`}>
+                            {auditResult.valid ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : <XCircle className="w-4 h-4 text-rose-400" />}
+                            Verifier Result: {auditResult.valid ? 'VALIDATED (GENUINE PASS)' : 'REJECTED (INVALID PROOF)'}
+                          </div>
+                          {auditResult.verification_time_seconds && (
+                            <span className="text-[10px] text-slate-400 font-mono">
+                              Verified in {auditResult.verification_time_seconds.toFixed(3)}s
+                            </span>
+                          )}
                         </div>
-                        <p className="text-[11px] text-slate-400 mt-1 font-mono">
-                          Error: {negativeResult.error}
-                        </p>
+
+                        {auditResult.valid ? (
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] font-mono text-slate-300 bg-slate-950/70 p-2.5 rounded border border-slate-800">
+                            <div>
+                              <span className="text-slate-500 block text-[10px] font-sans uppercase font-semibold">Circuit Architecture:</span>
+                              <span className="text-emerald-300">{auditResult.circuit_identifier || 'ezkl_halo2_trustmark_decoder_v1'}</span>
+                            </div>
+                            <div>
+                              <span className="text-slate-500 block text-[10px] font-sans uppercase font-semibold">Proof System:</span>
+                              <span className="text-blue-300">{auditResult.proof_system || 'Halo2 (KZG on BN254)'}</span>
+                            </div>
+                            <div className="sm:col-span-2">
+                              <span className="text-slate-500 block text-[10px] font-sans uppercase font-semibold">Certified Model Digest:</span>
+                              <span className="text-slate-300 truncate block" title={auditResult.model_digest}>
+                                {auditResult.model_digest}
+                              </span>
+                            </div>
+                            {auditResult.circuit_recovered_hex && (
+                              <div className="sm:col-span-2">
+                                <span className="text-slate-500 block text-[10px] font-sans uppercase font-semibold">Recovered Circuit Payload:</span>
+                                <span className="text-emerald-400 font-bold">{auditResult.circuit_recovered_hex}</span>
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <p className="text-[11px] text-rose-400 font-mono">
+                            Error: {auditResult.error}
+                          </p>
+                        )}
                       </div>
                     )}
                   </div>

@@ -73,6 +73,7 @@ class JobRecord:
     prover_address: str
     image_features: Optional[List[float]] = None
     allow_synthetic: bool = False
+    carrier: Optional[str] = "trustmark"
     error: Optional[str] = None
     proof_result: Optional[Dict[str, Any]] = None
     anchor_record: Optional[AnchorRecord] = None
@@ -291,6 +292,7 @@ class JobManager:
         prover_address: str = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
         image_features: Optional[List[float]] = None,
         allow_synthetic: bool = False,
+        carrier: Optional[str] = "trustmark",
     ) -> JobRecord:
         """Create and queue a new asynchronous proof & anchor job."""
         job_id = f"job_{secrets.token_hex(8)}"
@@ -306,6 +308,7 @@ class JobManager:
             prover_address=prover_address,
             image_features=image_features,
             allow_synthetic=allow_synthetic,
+            carrier=carrier or "trustmark",
         )
         self._jobs[job_id] = job
         # Launch async execution
@@ -339,6 +342,7 @@ class JobManager:
                 prover_address=job.prover_address,
                 image_features=job.image_features,
                 allow_synthetic=job.allow_synthetic,
+                carrier=job.carrier or "trustmark",
             )
             await asyncio.sleep(0.5)
 

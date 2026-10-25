@@ -272,7 +272,7 @@ class TrustMarkCarrier(BaseCarrier):
             carrier_name=self.info.name,
             carrier_version=self._VERSION,
             elapsed_seconds=elapsed,
-            error=None if (decodable and watermark_detected) else ("No authentic TrustMark watermark detected (preamble sync failed)" if not sync_ok else "Bit error rate exceeds detection tolerance"),
+            error=None if (decodable and watermark_detected) else ("No authentic TrustMark watermark detected" if not sync_ok else "Bit error rate exceeds detection tolerance"),
             watermark_detected=watermark_detected,
             mean_logit_magnitude=mean_act,
             rms_energy=rms,

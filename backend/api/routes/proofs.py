@@ -69,6 +69,7 @@ async def submit_proof_job(req: CreateProofRequest):
         prover_address=req.prover_address or "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
         image_features=features,
         allow_synthetic=bool(req.allow_synthetic),
+        carrier=req.carrier or "trustmark",
     )
     return {
         "job_id": job.job_id,
