@@ -208,7 +208,7 @@ class HiddenCarrier(BaseCarrier):
 
         agg_logits = np.zeros(self._PAYLOAD_BITS, dtype=np.float32)
 
-        if cached_feat is not None:
+        if cached_feat is not None and len(cached_feat) == self.decoder.fc.weight.shape[1]:
             # High-fidelity evaluation directly through decoder linear head on authentic neural features
             w_fc = self.decoder.fc.weight.data.numpy()
             b_fc = self.decoder.fc.bias.data.numpy()
@@ -299,7 +299,7 @@ class HiddenCarrier(BaseCarrier):
                 error_msg = f"Watermark verification rejected: Bit error rate {ber*100:.1f}% exceeds detection tolerance (Hamming distance {hamming}/{self._PAYLOAD_BITS} bits)."
         else:
             # Blind / unconstrained recovery: no reference payload provided
-            if cached_feat is not None:
+            if cached_feat is not None and len(cached_feat) == self.decoder.fc.weight.shape[1]:
                 watermark_detected = True
                 error_msg = None
             else:
@@ -307,7 +307,6 @@ class HiddenCarrier(BaseCarrier):
                 error_msg = "No authentic HiDDeN watermark detected (carrier energy below detection threshold)"
             hamming = None
             ber = None
-            expected_ber = None
             confidence = None
 
         return DecodeResult(

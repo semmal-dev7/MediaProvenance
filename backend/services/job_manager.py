@@ -31,6 +31,7 @@ from backend.zk.engine import zk_engine
 logger = logging.getLogger(__name__)
 
 LEDGER_FILE = Path(__file__).resolve().parent.parent.parent / "data" / "anchors_ledger.json"
+EMBEDDED_ASSETS_FILE = Path(__file__).resolve().parent.parent.parent / "data" / "embedded_assets.json"
 
 
 class JobStatus(str, Enum):
@@ -85,6 +86,7 @@ class JobManager:
         self._anchors: Dict[str, AnchorRecord] = {}
         self._embedded_assets: Dict[str, str] = {}
         self._load_ledger()
+        self._load_embedded_assets()
 
     def _load_ledger(self):
         """Load on-chain anchor transactions from disk ledger, with fallback to initial seeds."""
@@ -117,6 +119,25 @@ class JobManager:
         if not self._anchors:
             self._init_seed_anchors()
             self._save_ledger()
+
+    def _load_embedded_assets(self):
+        """Load registered embedded assets mapping from disk."""
+        if EMBEDDED_ASSETS_FILE.exists():
+            try:
+                with open(EMBEDDED_ASSETS_FILE, "r", encoding="utf-8") as fp:
+                    self._embedded_assets = json.load(fp)
+                logger.info("Loaded %d embedded assets from %s", len(self._embedded_assets), EMBEDDED_ASSETS_FILE)
+            except Exception as e:
+                logger.error("Failed loading embedded assets from %s: %s", EMBEDDED_ASSETS_FILE, e)
+
+    def _save_embedded_assets(self):
+        """Persist registered embedded assets mapping to disk."""
+        try:
+            EMBEDDED_ASSETS_FILE.parent.mkdir(parents=True, exist_ok=True)
+            with open(EMBEDDED_ASSETS_FILE, "w", encoding="utf-8") as fp:
+                json.dump(self._embedded_assets, fp, indent=2)
+        except Exception as e:
+            logger.error("Failed saving embedded assets to %s: %s", EMBEDDED_ASSETS_FILE, e)
 
     def _save_ledger(self):
         """Save all anchors to data/anchors_ledger.json ordered by block_number desc."""
@@ -539,6 +560,7 @@ class JobManager:
         clean_id = asset_id.lower().replace("0x", "").strip()
         clean_payload = payload_hex.lower().replace("0x", "").strip()
         self._embedded_assets[clean_id] = clean_payload
+        self._save_embedded_assets()
 
     def get_embedded_asset(self, asset_id: str) -> Optional[str]:
         """Look up registered publisher payload for an asset ID / SHA-256."""

@@ -220,6 +220,10 @@ class PureConvCarrier(BaseCarrier):
 
         # Subspace carrier presence detection (statistically robust against unwatermarked noise floor)
         mean_abs_logit = float(np.mean(np.abs(logits_np)))
+        rms_energy = float(np.sqrt(np.mean(logits_np ** 2)))
+        expected_ber = float(np.mean(1.0 / (1.0 + np.exp(np.abs(logits_np)))))
+        neural_certainty = float(np.mean(2.0 * (1.0 / (1.0 + np.exp(-np.abs(logits_np))) - 0.5)))
+
         if reference_payload_hex:
             watermark_detected = (ber is not None and ber <= 0.25) or (mean_abs_logit >= 0.25)
         else:
@@ -230,12 +234,16 @@ class PureConvCarrier(BaseCarrier):
         return DecodeResult(
             payload_hex=recovered_hex if watermark_detected else None,
             payload_bits=self._PAYLOAD_BITS,
-            hamming_distance=hamming_dist if watermark_detected else None,
-            bit_error_rate=ber if watermark_detected else None,
+            hamming_distance=hamming_dist,
+            bit_error_rate=ber,
             confidence=confidence if watermark_detected else 0.0,
             carrier_name=self.info.name,
             carrier_version=self._VERSION,
             elapsed_seconds=elapsed,
             error=err_msg,
             watermark_detected=watermark_detected,
+            mean_logit_magnitude=mean_abs_logit,
+            rms_energy=rms_energy,
+            neural_certainty=neural_certainty,
+            expected_ber=expected_ber,
         )

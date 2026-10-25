@@ -54,6 +54,17 @@ app.include_router(anchors_router, prefix="/api/v1")
 app.include_router(experiments_router, prefix="/api/v1")
 
 
+@app.on_event("startup")
+async def startup_event():
+    """Sync on-chain anchors on startup in background."""
+    import asyncio
+    from backend.services.job_manager import job_manager
+    try:
+        asyncio.create_task(asyncio.to_thread(job_manager.sync_onchain_anchors))
+    except Exception as e:
+        logger.warning("Could not schedule on-chain anchor sync at startup: %s", e)
+
+
 @app.get("/health")
 @app.get("/api/v1/health")
 async def health_check():

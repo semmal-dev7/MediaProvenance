@@ -180,6 +180,13 @@ async def decode_watermark(
                 if not effective_ref_payload:
                     effective_ref_payload = original_anchor_payload or dec_res.payload_hex
                     trusted_from_registry = True
+        elif anchor and not effective_ref_payload:
+            # Image SHA matched on-chain anchor directly; bind recovered payload as the authentic asset payload
+            effective_ref_payload = original_anchor_payload or dec_res.payload_hex
+            if not anchor.payload_hex and dec_res.payload_hex:
+                anchor.payload_hex = dec_res.payload_hex
+                job_manager._save_ledger()
+            trusted_from_registry = True
 
     # Re-evaluate decode against discovered authentic payload if reference wasn't passed initially
     if effective_ref_payload and dec_res.payload_hex and dec_res.hamming_distance is None:
@@ -258,12 +265,16 @@ async def decode_watermark(
         log10_lr = None
         posterior_h1 = None
         payload_matches = None
-        is_detected = False
-        inferred = "H2"
-        if dec_res.payload_hex is None:
-            failure_reason = dec_res.error or "NO_WATERMARK_SIGNAL_DETECTED"
+        is_detected = bool(dec_res.watermark_detected and dec_res.payload_hex is not None)
+        if is_detected:
+            inferred = "H1"
+            failure_reason = None
         else:
-            failure_reason = "UNANCHORED_MEDIA_NO_REFERENCE_CLAIM"
+            inferred = "H2"
+            if dec_res.payload_hex is None:
+                failure_reason = dec_res.error or "NO_WATERMARK_SIGNAL_DETECTED"
+            else:
+                failure_reason = "UNANCHORED_MEDIA_NO_REFERENCE_CLAIM"
 
     if not is_detected and not failure_reason:
         failure_reason = dec_res.error or "NO_WATERMARK_SIGNAL_DETECTED"
@@ -278,8 +289,8 @@ async def decode_watermark(
         confidence=dec_res.confidence if effective_ref_payload else None,
         mean_logit_magnitude=dec_res.mean_logit_magnitude,
         rms_energy=dec_res.rms_energy,
-        neural_certainty=dec_res.neural_certainty if effective_ref_payload else None,
-        expected_ber=dec_res.expected_ber if effective_ref_payload else None,
+        neural_certainty=dec_res.neural_certainty,
+        expected_ber=dec_res.expected_ber,
         carrier_name=c.info.name,
         carrier_version=c.info.version,
         elapsed_seconds=dec_res.elapsed_seconds,
