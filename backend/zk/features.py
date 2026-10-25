@@ -20,6 +20,65 @@ from PIL import Image
 
 _HIDDEN_DECODER: Optional[Any] = None
 _PURECONV_DECODER: Optional[Any] = None
+_TRUSTMARK_DECODER: Optional[Any] = None
+
+
+def get_trustmark_decoder() -> Any:
+    """Lazily load and cache the TrustMark-Q decoder."""
+    global _TRUSTMARK_DECODER
+    if _TRUSTMARK_DECODER is None:
+        from backend.carriers.trustmark.carrier import TrustMarkCarrier
+        carrier = TrustMarkCarrier(model_type="Q", payload_bits=100)
+        _TRUSTMARK_DECODER = carrier._tm.decoder.decoder
+        _TRUSTMARK_DECODER.eval()
+    return _TRUSTMARK_DECODER
+
+
+def extract_trustmark_features(image_input: Union[Image.Image, bytes, str, Path]) -> List[float]:
+    """
+    Extracts the 2048-dimensional latent feature vector from an image
+    using the ResNet-50 backbone of the TrustMark-Q decoder (up to avgpool).
+    Strictly zero synthetic fallbacks.
+    """
+    import torch
+    from torchvision import transforms
+
+    if isinstance(image_input, (str, Path)):
+        img = Image.open(image_input).convert("RGB")
+    elif isinstance(image_input, bytes):
+        img = Image.open(io.BytesIO(image_input)).convert("RGB")
+    elif isinstance(image_input, Image.Image):
+        img = image_input.convert("RGB")
+    else:
+        raise ValueError(f"Unsupported image_input type: {type(image_input)}")
+
+    decoder = get_trustmark_decoder()
+    im_resized = img.resize((245, 245), Image.Resampling.BILINEAR)
+    device = getattr(decoder, "device", "cpu")
+    stego = (transforms.ToTensor()(im_resized).unsqueeze(0).to(device) * 2.0 - 1.0).float()
+
+    resnet = decoder.decoder
+    resnet.eval()
+    with torch.no_grad():
+        feat = resnet.avgpool(
+            resnet.layer4(
+                resnet.layer3(
+                    resnet.layer2(
+                        resnet.layer1(
+                            resnet.maxpool(
+                                resnet.relu(
+                                    resnet.bn1(
+                                        resnet.conv1(stego)
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+        features = torch.flatten(feat, 1).squeeze(0).cpu().tolist()
+    return features
 
 
 def get_pureconv_decoder() -> Any:
@@ -155,8 +214,11 @@ def cache_image_features(
         feats = [float(x) for x in image_input]
     elif carrier == "pureconv":
         feats = extract_pureconv_features(image_input)
-    else:
+    elif carrier == "hidden":
         feats = extract_hidden_features(image_input)
+    else:
+        # Default carrier: TrustMark-Q (2048-dim features)
+        feats = extract_trustmark_features(image_input)
     _FEATURE_CACHE[clean_key] = feats
     
     # Also persist to disk cache

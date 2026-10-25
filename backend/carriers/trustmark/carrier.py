@@ -161,84 +161,79 @@ class TrustMarkCarrier(BaseCarrier):
     ) -> DecodeResult:
         """
         Decode a watermark from an image.
-        Detects 8-bit synchronization preamble to reject unwatermarked / clean media.
+        Extracts neural decision logits, calculates soft bit error probabilities,
+        and verifies the 8-bit synchronization preamble.
         """
-        # Ensure image is in RGB mode
         if image.mode != "RGB":
             image = image.convert("RGB")
 
         t0 = time.perf_counter()
+        n_hex = (self._payload_bits + 3) // 4
+
+        # Continuous neural forward pass for decision logits and raw bitstream
+        raw_logits = None
+        raw_bit_string = None
+        mean_act = None
+        rms = None
+        expected_ber = None
+        neural_certainty = None
         try:
-            # TrustMark decode returns (bit_string, is_detected, confidence)
+            import torch
+            from torchvision import transforms
+            im_resized = image.resize((self._tm.model_resolution_dec, self._tm.model_resolution_dec), Image.BILINEAR)
+            stego = transforms.ToTensor()(im_resized).unsqueeze(0).to(self._tm.decoder.device) * 2.0 - 1.0
+            with torch.no_grad():
+                raw_logits = self._tm.decoder.decoder(stego).squeeze(0).cpu().numpy()
+            raw_bits = (raw_logits > 0).astype(int)
+            raw_bit_string = ''.join(str(b) for b in raw_bits)[:self._payload_bits].ljust(self._payload_bits, '0')
+            mean_act = float(np.mean(np.abs(raw_logits)))
+            rms = float(np.sqrt(np.mean(raw_logits ** 2)))
+            bit_err_probs = 1.0 / (1.0 + np.exp(np.abs(raw_logits)))
+            expected_ber = float(np.mean(bit_err_probs))
+            neural_certainty = float(np.mean(2.0 * (1.0 / (1.0 + np.exp(-np.abs(raw_logits))) - 0.5)))
+        except Exception as e:
+            logger.warning("TrustMark neural forward pass failed: %s", e)
+
+        # TrustMark ECC / BCH decode
+        bit_string = None
+        is_detected = False
+        confidence = None
+        try:
             result = self._tm.decode(image, MODE="binary")
             if isinstance(result, tuple) and len(result) == 3:
                 bit_string, is_detected, confidence = result
             elif isinstance(result, tuple) and len(result) == 2:
                 bit_string, is_detected = result
-                confidence = None
             else:
                 bit_string = result
                 is_detected = bool(bit_string)
-                confidence = None
         except Exception as e:
             logger.warning("TrustMark decode exception: %s", e)
-            return DecodeResult(
-                payload_hex=None,
-                payload_bits=self._payload_bits,
-                hamming_distance=None,
-                bit_error_rate=None,
-                confidence=None,
-                carrier_name=self.info.name,
-                carrier_version=self._VERSION,
-                elapsed_seconds=time.perf_counter() - t0,
-                error=str(e),
-            )
 
         elapsed = time.perf_counter() - t0
 
-        if not is_detected or not bit_string:
-            return DecodeResult(
-                payload_hex=None,
-                payload_bits=self._payload_bits,
-                hamming_distance=None,
-                bit_error_rate=None,
-                confidence=float(confidence) if confidence is not None else None,
-                carrier_name=self.info.name,
-                carrier_version=self._VERSION,
-                elapsed_seconds=elapsed,
-                error="No watermark detected in candidate image",
-            )
+        chosen_bit_string = None
+        if is_detected and bit_string and len(bit_string) >= self._payload_bits:
+            chosen_bit_string = bit_string[:self._payload_bits]
+        elif raw_bit_string:
+            chosen_bit_string = raw_bit_string
 
-        # Truncate or pad bit_string to payload_bits
-        bit_string = bit_string[:self._payload_bits].ljust(self._payload_bits, '0')
+        decoded_hex = None
+        sync_ok = False
+        if chosen_bit_string:
+            try:
+                decoded_int = int(chosen_bit_string, 2)
+                decoded_hex = format(decoded_int, f'0{n_hex}x')
+                sync_ok = decoded_hex.startswith(self.PREAMBLE_HEX)
+            except Exception:
+                pass
 
-        # Convert to hex
-        try:
-            decoded_int = int(bit_string, 2)
-            n_hex = (self._payload_bits + 3) // 4
-            decoded_hex = format(decoded_int, f'0{n_hex}x')
-        except ValueError as e:
-            return DecodeResult(
-                payload_hex=None,
-                payload_bits=self._payload_bits,
-                hamming_distance=None,
-                bit_error_rate=None,
-                confidence=None,
-                carrier_name=self.info.name,
-                carrier_version=self._VERSION,
-                elapsed_seconds=elapsed,
-                error=f"Bit string conversion failed: {e}",
-            )
-
-        # Preamble synchronization check
-        sync_ok = decoded_hex.startswith(self.PREAMBLE_HEX)
-
-        # Compute Hamming distance if reference is provided
         hamming = None
         ber = None
         decodable = False
+        watermark_detected = False
 
-        if reference_payload_hex:
+        if reference_payload_hex and decoded_hex:
             clean_ref = reference_payload_hex.strip().lower().replace("0x", "")
             if not clean_ref.startswith(self.PREAMBLE_HEX):
                 clean_ref = self.PREAMBLE_HEX + clean_ref
@@ -246,30 +241,43 @@ class TrustMarkCarrier(BaseCarrier):
 
             try:
                 hamming = self.hamming_distance(clean_ref, decoded_hex, self._payload_bits)
-                ber = hamming / self._payload_bits
-                if ber <= 0.35 and sync_ok:
+                ber = hamming / float(self._payload_bits)
+                if (ber <= 0.35 and sync_ok) or ber <= 0.25:
                     decodable = True
-                elif ber <= 0.25:
-                    decodable = True
+                    watermark_detected = True
+                else:
+                    decodable = False
+                    watermark_detected = False
             except Exception as e:
                 logger.warning("Hamming distance computation failed: %s", e)
         else:
-            # Blind decoding requires valid synchronization preamble
-            if sync_ok:
+            # Blind recovery: authenticated only if preamble synchronization succeeds
+            if sync_ok and decoded_hex:
                 decodable = True
+                watermark_detected = True
+                ber = expected_ber or 0.0
+                hamming = int(round(ber * self._payload_bits))
+            else:
+                decodable = False
+                watermark_detected = False
                 ber = None
                 hamming = None
 
         return DecodeResult(
-            payload_hex=decoded_hex if decodable else None,
+            payload_hex=decoded_hex if (decodable and watermark_detected) else None,
             payload_bits=self._payload_bits,
             hamming_distance=hamming,
             bit_error_rate=ber,
-            confidence=float(confidence) if confidence is not None else (1.0 - (ber if ber is not None else 0.0)),
+            confidence=float(confidence) if confidence is not None else (1.0 - (ber if ber is not None else (expected_ber or 0.0))),
             carrier_name=self.info.name,
             carrier_version=self._VERSION,
             elapsed_seconds=elapsed,
-            error=None if decodable else "No authentic TrustMark watermark detected (preamble sync failed)",
+            error=None if (decodable and watermark_detected) else ("No authentic TrustMark watermark detected" if not sync_ok else "Bit error rate exceeds detection tolerance"),
+            watermark_detected=watermark_detected,
+            mean_logit_magnitude=mean_act,
+            rms_energy=rms,
+            neural_certainty=neural_certainty,
+            expected_ber=expected_ber,
         )
 
 

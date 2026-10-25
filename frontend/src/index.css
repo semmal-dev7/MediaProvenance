@@ -140,3 +140,11 @@ input, textarea, select {
 input::placeholder {
   color: #94a3b8 !important;
 }
+
+/* High-contrast amber and warning fallbacks for light theme */
+.text-amber-400, .text-amber-300 {
+  color: #b45309 !important; /* amber-700 */
+}
+.text-amber-200 {
+  color: #78350f !important; /* amber-900 */
+}

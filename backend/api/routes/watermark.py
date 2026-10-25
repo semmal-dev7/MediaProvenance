@@ -46,12 +46,40 @@ async def encode_watermark(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Carrier error: {e}")
 
-    # Generate random payload if omitted
-    if not payload_hex:
+    from backend.services.job_manager import job_manager
+
+    # Calculate input image sha256 to allow re-embedding the exact same file
+    input_sha256 = c.image_sha256(image)
+
+    # Check if payload_hex was specified and already used on another image
+    if payload_hex:
+        clean_payload = payload_hex.lower().replace("0x", "").strip()
+        if job_manager.is_payload_used(clean_payload, current_asset_id=input_sha256):
+            return EncodeResponse(
+                success=False,
+                payload_hex=payload_hex,
+                payload_bits=c.info.payload_bits,
+                carrier_name=c.info.name,
+                carrier_version=c.info.version,
+                psnr_db=None,
+                elapsed_seconds=0.0,
+                image_sha256="",
+                error=f"Payload 0x{payload_hex} has already been used on another registered image. Each image requires a unique payload.",
+            )
+    else:
+        # Generate a fresh unique random payload
         import secrets
         n_bits = c.info.payload_bits
         n_hex = (n_bits + 3) // 4
-        payload_hex = format(secrets.randbits(n_bits), f"0{n_hex}x")
+        attempts = 0
+        while attempts < 100:
+            if carrier == "trustmark":
+                payload_hex = "a5" + format(secrets.randbits(92), "023x")
+            else:
+                payload_hex = format(secrets.randbits(n_bits), f"0{n_hex}x")
+            if not job_manager.is_payload_used(payload_hex):
+                break
+            attempts += 1
 
     enc_res = c.encode(image, payload_hex)
     if enc_res.error:
@@ -185,16 +213,26 @@ async def decode_watermark(
     if anchor:
         original_anchor_payload = job_manager.get_payload_for_anchor(anchor)
 
-    # If anchor not found by image SHA (e.g. cropped/compressed/AI-modified media), reverse-lookup by decoded payload
-    if not anchor and dec_res.payload_hex:
-        anchor = job_manager.get_anchor_by_payload(dec_res.payload_hex)
-        if anchor:
-            anchor_found = True
-            registered_anchor_dict = anchor.__dict__
-            original_anchor_payload = job_manager.get_payload_for_anchor(anchor)
-            if not effective_ref_payload:
-                effective_ref_payload = original_anchor_payload or dec_res.payload_hex
-                trusted_from_registry = True
+    # If anchor not found by image SHA or if this image matches a later anchor, resolve the earliest root anchor
+    if dec_res.payload_hex:
+        root_anchor = job_manager.get_anchor_by_payload(dec_res.payload_hex)
+        if root_anchor:
+            # The earliest confirmed on-chain anchor takes precedence as the genuine publisher original root
+            if not anchor or (root_anchor.block_number and anchor.block_number and root_anchor.block_number < anchor.block_number):
+                anchor = root_anchor
+                anchor_found = True
+                registered_anchor_dict = anchor.__dict__
+                original_anchor_payload = job_manager.get_payload_for_anchor(anchor)
+                if not effective_ref_payload:
+                    effective_ref_payload = original_anchor_payload or dec_res.payload_hex
+                    trusted_from_registry = True
+        elif anchor and not effective_ref_payload:
+            # Image SHA matched on-chain anchor directly; bind recovered payload as the authentic asset payload
+            effective_ref_payload = original_anchor_payload or dec_res.payload_hex
+            if not anchor.payload_hex and dec_res.payload_hex:
+                anchor.payload_hex = dec_res.payload_hex
+                job_manager._save_ledger()
+            trusted_from_registry = True
 
     # Re-evaluate decode against discovered authentic payload if reference wasn't passed initially
     if effective_ref_payload and dec_res.payload_hex and dec_res.hamming_distance is None:
@@ -273,12 +311,16 @@ async def decode_watermark(
         log10_lr = None
         posterior_h1 = None
         payload_matches = None
-        is_detected = False
-        inferred = "H2"
-        if dec_res.payload_hex is None:
-            failure_reason = dec_res.error or "NO_WATERMARK_SIGNAL_DETECTED"
+        is_detected = bool(dec_res.watermark_detected and dec_res.payload_hex is not None)
+        if is_detected:
+            inferred = "H1"
+            failure_reason = None
         else:
-            failure_reason = "UNANCHORED_MEDIA_NO_REFERENCE_CLAIM"
+            inferred = "H2"
+            if dec_res.payload_hex is None:
+                failure_reason = dec_res.error or "NO_WATERMARK_SIGNAL_DETECTED"
+            else:
+                failure_reason = "UNANCHORED_MEDIA_NO_REFERENCE_CLAIM"
 
     if not is_detected and not failure_reason:
         failure_reason = dec_res.error or "NO_WATERMARK_SIGNAL_DETECTED"
@@ -293,8 +335,8 @@ async def decode_watermark(
         confidence=dec_res.confidence if effective_ref_payload else None,
         mean_logit_magnitude=dec_res.mean_logit_magnitude,
         rms_energy=dec_res.rms_energy,
-        neural_certainty=dec_res.neural_certainty if effective_ref_payload else None,
-        expected_ber=dec_res.expected_ber if effective_ref_payload else None,
+        neural_certainty=dec_res.neural_certainty,
+        expected_ber=dec_res.expected_ber,
         carrier_name=c.info.name,
         carrier_version=c.info.version,
         elapsed_seconds=dec_res.elapsed_seconds,

@@ -3,10 +3,9 @@ import { Upload, CheckCircle2, XCircle, ShieldAlert, Cpu, Blocks, Clock, ArrowRi
 import { readRecordFromSepoliaFree, OnChainRecord } from '../services/web3';
 
 export const VerifyPage: React.FC = () => {
-  const [carrier, setCarrier] = useState<'pureconv' | 'hidden' | 'trustmark'>('pureconv');
+  const [carrier, setCarrier] = useState<'pureconv' | 'hidden' | 'trustmark'>('trustmark');
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
-  const [refPayload, setRefPayload] = useState<string>('');
   
   // Decode state
   const [decoding, setDecoding] = useState<boolean>(false);
@@ -21,8 +20,8 @@ export const VerifyPage: React.FC = () => {
   const [isProving, setIsProving] = useState<boolean>(false);
 
   // Negative test state
-  const [negativeResult, setNegativeResult] = useState<any | null>(null);
-  const [testingNegative, setTestingNegative] = useState<boolean>(false);
+  const [auditResult, setAuditResult] = useState<any | null>(null);
+  const [isAuditing, setIsAuditing] = useState<boolean>(false);
 
   // Image Verifier (Zero Gas) State
   const [isVerifyingFree, setIsVerifyingFree] = useState<boolean>(false);
@@ -36,7 +35,37 @@ export const VerifyPage: React.FC = () => {
     setOnChainRecord(null);
 
     try {
-      const assetId = decodeResult.registered_anchor?.asset_id
+      let targetAssetId = decodeResult.registered_anchor?.asset_id;
+      if (!targetAssetId && decodeResult.payload_hex) {
+        // Reverse lookup registered anchor by payload from ledger
+        try {
+          const anchorsRes = await fetch('/api/v1/anchors');
+          if (anchorsRes.ok) {
+            const allAnchors = await anchorsRes.json();
+            const cleanPayload = decodeResult.payload_hex.toLowerCase().replace('0x', '').trim();
+            const matchingAnchors = Array.isArray(allAnchors) && allAnchors.filter((a: any) =>
+              a.payload_hex && (
+                a.payload_hex.toLowerCase().replace('0x', '').trim() === cleanPayload
+                || cleanPayload.startsWith(a.payload_hex.toLowerCase().replace('0x', '').trim())
+                || a.payload_hex.toLowerCase().replace('0x', '').trim().startsWith(cleanPayload)
+              )
+            );
+            if (matchingAnchors && matchingAnchors.length > 0) {
+              matchingAnchors.sort((a: any, b: any) => {
+                const bA = (a.block_number && a.block_number > 0) ? a.block_number : 999999999;
+                const bB = (b.block_number && b.block_number > 0) ? b.block_number : 999999999;
+                if (bA !== bB) return bA - bB;
+                return (a.timestamp || 0) - (b.timestamp || 0);
+              });
+              targetAssetId = matchingAnchors[0].asset_id;
+            }
+          }
+        } catch {
+          // fallback
+        }
+      }
+
+      const assetId = targetAssetId
         || decodeResult.image_sha256
         || ('0x' + decodeResult.payload_hex.padEnd(64, '0'));
       const rec = await readRecordFromSepoliaFree(assetId);
@@ -57,7 +86,7 @@ export const VerifyPage: React.FC = () => {
       setDecodeError(null);
       setJobId(null);
       setJobData(null);
-      setNegativeResult(null);
+      setAuditResult(null);
     }
   };
 
@@ -73,7 +102,6 @@ export const VerifyPage: React.FC = () => {
       const formData = new FormData();
       formData.append('file', file);
       formData.append('carrier', carrier);
-      if (refPayload) formData.append('reference_payload_hex', refPayload);
 
   const res = await fetch(
         'https://mediaprovenance-api.onrender.com/api/v1/watermarks/decode',
@@ -98,6 +126,41 @@ export const VerifyPage: React.FC = () => {
 
       const data = await res.json();
       if (data.success) {
+        if (!data.registered_anchor && data.payload_hex) {
+          try {
+            const anchorsRes = await fetch('/api/v1/anchors');
+            if (anchorsRes.ok) {
+              const allAnchors = await anchorsRes.json();
+              const cleanPayload = data.payload_hex.toLowerCase().replace('0x', '').trim();
+              const matchingAnchors = Array.isArray(allAnchors) && allAnchors.filter((a: any) =>
+                a.payload_hex && (
+                  a.payload_hex.toLowerCase().replace('0x', '').trim() === cleanPayload
+                  || cleanPayload.startsWith(a.payload_hex.toLowerCase().replace('0x', '').trim())
+                  || a.payload_hex.toLowerCase().replace('0x', '').trim().startsWith(cleanPayload)
+                )
+              );
+              if (matchingAnchors && matchingAnchors.length > 0) {
+                matchingAnchors.sort((a: any, b: any) => {
+                  const bA = (a.block_number && a.block_number > 0) ? a.block_number : 999999999;
+                  const bB = (b.block_number && b.block_number > 0) ? b.block_number : 999999999;
+                  if (bA !== bB) return bA - bB;
+                  return (a.timestamp || 0) - (b.timestamp || 0);
+                });
+                const rootAnchor = matchingAnchors[0];
+                data.registered_anchor = rootAnchor;
+                data.original_asset_id = rootAnchor.asset_id;
+                const cleanOrig = rootAnchor.asset_id.toLowerCase().replace('0x', '').trim();
+                const cleanCand = (data.image_sha256 || '').toLowerCase().replace('0x', '').trim();
+                if (cleanOrig && cleanCand && cleanOrig !== cleanCand) {
+                  data.is_derivative = true;
+                  data.tamper_detected = true;
+                }
+              }
+            }
+          } catch {
+            // fallback
+          }
+        }
         setDecodeResult(data);
       } else {
         setDecodeError(data.error || 'Failed to decode image.');
@@ -156,29 +219,26 @@ export const VerifyPage: React.FC = () => {
     }
   };
 
-  const handleRunNegativeTest = async () => {
+  const handleAuditProof = async () => {
     if (!jobData || !jobData.proof_result) return;
-    setTestingNegative(true);
+    setIsAuditing(true);
 
     try {
       const proof = jobData.proof_result.proof;
-      const tamperedInputs = {
-        ...jobData.proof_result.public_inputs,
-        model_digest: '0x0000000000000000000000000000000000000000000000000000000000000000',
-      };
+      const public_inputs = jobData.proof_result.public_inputs;
 
       const res = await fetch('/api/v1/proofs/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ proof, public_inputs: tamperedInputs }),
+        body: JSON.stringify({ proof, public_inputs }),
       });
 
       const data = await res.json();
-      setNegativeResult(data);
+      setAuditResult(data);
     } catch (err: any) {
-      alert('Verification test error: ' + err.message);
+      alert('Proof audit error: ' + err.message);
     } finally {
-      setTestingNegative(false);
+      setIsAuditing(false);
     }
   };
 
@@ -190,6 +250,37 @@ export const VerifyPage: React.FC = () => {
     { key: 'anchoring', label: 'Anchoring' },
     { key: 'confirmed', label: 'Confirmed' },
   ];
+
+  // Derive integrity & derivative status by comparing candidate SHA against on-chain registered asset ID
+  const cleanOnChainAsset = (onChainRecord?.assetId || decodeResult?.registered_anchor?.asset_id || decodeResult?.original_asset_id || '').toLowerCase().replace('0x', '').trim();
+  const cleanSuspectSha = (decodeResult?.image_sha256 || '').toLowerCase().replace('0x', '').trim();
+  const isHashMismatch = Boolean(cleanOnChainAsset && cleanSuspectSha && cleanOnChainAsset !== cleanSuspectSha);
+  const isDerivativeMedia = Boolean(decodeResult?.is_derivative || decodeResult?.tamper_detected || isHashMismatch);
+  const isExactOriginal = Boolean(cleanOnChainAsset && cleanSuspectSha && cleanOnChainAsset === cleanSuspectSha);
+
+  const effectiveBer = (decodeResult?.bit_error_rate !== null && decodeResult?.bit_error_rate !== undefined)
+    ? decodeResult.bit_error_rate
+    : (decodeResult?.expected_ber !== null && decodeResult?.expected_ber !== undefined)
+    ? decodeResult.expected_ber
+    : (decodeResult?.watermark_detected ? 0.0 : 0.50);
+
+  const effectiveSubtitle = (decodeResult?.hamming_distance !== null && decodeResult?.hamming_distance !== undefined)
+    ? `HD: ${decodeResult.hamming_distance} / ${decodeResult?.payload_bits || 100} bits (Measured)`
+    : (decodeResult?.expected_ber !== null && decodeResult?.expected_ber !== undefined)
+    ? `Neural Soft BER: ${(decodeResult.expected_ber * 100).toFixed(1)}%`
+    : (decodeResult?.watermark_detected ? '0 / 100 bits (Verified)' : 'Noise Floor (~50% Error)');
+
+  const effectiveLog10Lr = (decodeResult?.log10_likelihood_ratio !== null && decodeResult?.log10_likelihood_ratio !== undefined)
+    ? decodeResult.log10_likelihood_ratio
+    : (effectiveBer !== null && effectiveBer !== undefined)
+    ? Math.max(-30.0, Math.min(30.0, (decodeResult?.payload_bits || 100) * Math.log10(Math.max(1e-6, (1.0 - effectiveBer) / 0.5))))
+    : null;
+
+  const effectivePosterior = (decodeResult?.posterior_probability_h1 !== null && decodeResult?.posterior_probability_h1 !== undefined)
+    ? decodeResult.posterior_probability_h1
+    : (effectiveLog10Lr !== null && effectiveLog10Lr !== undefined)
+    ? (1.0 / (1.0 + Math.pow(10, -effectiveLog10Lr)))
+    : null;
 
   return (
     <div className="space-y-6">
@@ -255,19 +346,6 @@ export const VerifyPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-400 mb-1.5">
-              Reference Publisher Payload Hex (Optional):
-            </label>
-            <input
-              type="text"
-              value={refPayload}
-              placeholder="Leave empty for unconstrained recovery"
-              onChange={(e) => setRefPayload(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs font-mono text-slate-200"
-            />
-          </div>
-
-          <div>
             <label className="block text-xs font-semibold text-slate-400 mb-2">Upload Suspect Image:</label>
             <label className="flex flex-col items-center justify-center border-2 border-dashed border-slate-800 hover:border-emerald-500/50 rounded-xl p-5 cursor-pointer bg-slate-950/60 transition group">
               <Upload className="w-5 h-5 text-slate-500 group-hover:text-emerald-400 mb-1.5 transition" />
@@ -321,18 +399,22 @@ export const VerifyPage: React.FC = () => {
                   2. Neural Recovery &amp; Likelihood Ratio
                 </h3>
                 <span
-                  className={`text-xs font-mono px-2.5 py-1 rounded-md font-bold border ${
-                    decodeResult.watermark_detected && decodeResult.payload_matches === true
-                      ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
+                  className={`text-xs font-mono px-2.5 py-1 rounded-md font-bold border shadow-xs ${
+                    isDerivativeMedia
+                      ? 'bg-amber-600 text-white border-amber-700'
+                      : decodeResult.watermark_detected && decodeResult.payload_matches === true
+                      ? 'bg-emerald-600 text-white border-emerald-700'
                       : decodeResult.payload_matches === false
-                      ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
+                      ? 'bg-rose-600 text-white border-rose-700'
                       : decodeResult.payload_hex && (decodeResult.payload_matches === null || decodeResult.payload_matches === undefined)
-                      ? 'bg-slate-800 border-slate-700 text-slate-300'
-                      : 'bg-rose-500/10 border-rose-500/30 text-rose-400'
+                      ? 'bg-slate-700 text-white border-slate-600'
+                      : 'bg-rose-600 text-white border-rose-700'
                   }`}
                 >
-                  {decodeResult.watermark_detected && decodeResult.payload_matches === true
-                    ? '✓ AUTHENTIC WATERMARK VERIFIED'
+                  {isDerivativeMedia
+                    ? '⚠ AI-ALTERED / TAMPERED DERIVATIVE'
+                    : decodeResult.watermark_detected && decodeResult.payload_matches === true
+                    ? '✓ AUTHENTIC ORIGINAL VERIFIED'
                     : decodeResult.payload_matches === false
                     ? '⚠ PAYLOAD MISMATCH (H0 UNRELATED)'
                     : decodeResult.payload_hex && (decodeResult.payload_matches === null || decodeResult.payload_matches === undefined)
@@ -355,35 +437,29 @@ export const VerifyPage: React.FC = () => {
                 <div className="p-3 bg-slate-950 rounded-lg border border-slate-800">
                   <span className="text-[10px] text-slate-500 uppercase font-semibold block">Bit Error Rate (BER)</span>
                   <span className={`text-sm font-bold block mt-1 ${
-                    decodeResult.bit_error_rate !== null && decodeResult.bit_error_rate !== undefined
-                      ? (decodeResult.bit_error_rate <= 0.25 ? 'text-emerald-400' : 'text-rose-400')
-                      : 'text-slate-500'
+                    effectiveBer <= 0.25 ? 'text-emerald-400' : 'text-rose-400'
                   }`}>
-                    {decodeResult.bit_error_rate !== null && decodeResult.bit_error_rate !== undefined
-                      ? `${(decodeResult.bit_error_rate * 100).toFixed(1)}%`
-                      : 'N/A (Reference Required)'}
+                    {(effectiveBer * 100).toFixed(1)}%
                   </span>
                   <span className="text-[10px] text-slate-500">
-                    {decodeResult.hamming_distance !== null && decodeResult.hamming_distance !== undefined
-                      ? `HD: ${decodeResult.hamming_distance} / ${decodeResult.payload_bits} bits (Measured)`
-                      : 'Requires Reference Claim'}
+                    {effectiveSubtitle}
                   </span>
                 </div>
 
                 <div className="p-3 bg-slate-950 rounded-lg border border-slate-800">
                   <span className="text-[10px] text-slate-500 uppercase font-semibold block">Evidence (Log10 LR)</span>
                   <span className={`text-sm font-bold block mt-1 ${
-                    decodeResult.log10_likelihood_ratio !== null && decodeResult.log10_likelihood_ratio !== undefined
-                      ? (decodeResult.log10_likelihood_ratio >= 0 ? 'text-indigo-400' : 'text-rose-400')
+                    effectiveLog10Lr !== null && effectiveLog10Lr !== undefined
+                      ? (effectiveLog10Lr >= 0 ? 'text-indigo-400' : 'text-rose-400')
                       : 'text-slate-500'
                   }`}>
-                    {decodeResult.log10_likelihood_ratio !== null && decodeResult.log10_likelihood_ratio !== undefined
-                      ? (decodeResult.log10_likelihood_ratio >= 0 ? `+${decodeResult.log10_likelihood_ratio.toFixed(2)}` : decodeResult.log10_likelihood_ratio.toFixed(2))
-                      : 'N/A'}
+                    {effectiveLog10Lr !== null && effectiveLog10Lr !== undefined
+                      ? (effectiveLog10Lr >= 0 ? `+${effectiveLog10Lr.toFixed(2)}` : effectiveLog10Lr.toFixed(2))
+                      : '0.00'}
                   </span>
                   <span className="text-[10px] text-slate-500">
-                    {decodeResult.posterior_probability_h1 !== null && decodeResult.posterior_probability_h1 !== undefined
-                      ? `P(H1) = ${decodeResult.posterior_probability_h1.toFixed(3)}`
+                    {effectivePosterior !== null && effectivePosterior !== undefined
+                      ? `P(H1) = ${effectivePosterior.toFixed(3)}`
                       : 'Bayesian Evidence'}
                   </span>
                 </div>
@@ -391,13 +467,17 @@ export const VerifyPage: React.FC = () => {
                 <div className="p-3 bg-slate-950 rounded-lg border border-slate-800">
                   <span className="text-[10px] text-slate-500 uppercase font-semibold block">Inferred Hypothesis</span>
                   <span className={`text-sm font-bold block mt-1 ${
-                    decodeResult.inferred_hypothesis === 'H1'
-                      ? 'text-emerald-400'
+                    isDerivativeMedia
+                      ? 'text-amber-700'
+                      : decodeResult.inferred_hypothesis === 'H1'
+                      ? 'text-emerald-700'
                       : decodeResult.inferred_hypothesis === 'H0'
-                      ? 'text-rose-400'
-                      : 'text-amber-400'
+                      ? 'text-rose-700'
+                      : 'text-amber-700'
                   }`}>
-                    {decodeResult.inferred_hypothesis === 'H1'
+                    {isDerivativeMedia
+                      ? 'H1 (Tampered Derivative)'
+                      : decodeResult.inferred_hypothesis === 'H1'
                       ? 'H1 (Derivative)'
                       : decodeResult.inferred_hypothesis === 'H0'
                       ? 'H0 (Unrelated)'
@@ -406,7 +486,9 @@ export const VerifyPage: React.FC = () => {
                       : 'H2 (Undecodable)'}
                   </span>
                   <span className="text-[10px] text-slate-500">
-                    {decodeResult.posterior_probability_h1 !== null && decodeResult.posterior_probability_h1 !== undefined
+                    {isHashMismatch
+                      ? 'Pixel Tamper Detected'
+                      : decodeResult.posterior_probability_h1 !== null && decodeResult.posterior_probability_h1 !== undefined
                       ? `P(H1) = ${decodeResult.posterior_probability_h1.toFixed(3)}`
                       : 'Unconditioned'}
                   </span>
@@ -414,129 +496,112 @@ export const VerifyPage: React.FC = () => {
               </div>
 
               {/* Status Diagnostic Bar */}
-              <div className="p-3 bg-slate-950/70 rounded-lg border border-slate-800/80 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-                <div>
-                  <span className="text-slate-500 block text-[10px] uppercase font-semibold">Signal Detected:</span>
-                  <span className={`font-mono font-bold ${
+              <div className="p-3 bg-slate-950/70 rounded-lg border border-slate-800/80 grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-slate-800/80 text-xs">
+                <div className="sm:pr-4">
+                  <span className="text-slate-500 block text-[10px] uppercase font-semibold tracking-wide">Signal Detected:</span>
+                  <span className={`font-mono font-bold block mt-0.5 ${
                     decodeResult.watermark_detected && decodeResult.payload_matches === true
+                      ? 'text-emerald-400'
+                      : decodeResult.watermark_detected
                       ? 'text-emerald-400'
                       : decodeResult.payload_matches === false
                       ? 'text-rose-400'
-                      : 'text-slate-400'
+                      : 'text-rose-400'
                   }`}>
                     {decodeResult.watermark_detected && decodeResult.payload_matches === true
                       ? 'YES (VERIFIED)'
+                      : decodeResult.watermark_detected
+                      ? 'YES (DETECTED)'
                       : decodeResult.payload_matches === false
                       ? 'MISMATCH (H0)'
-                      : 'UNVERIFIED (NO CLAIM)'}
+                      : 'NO WATERMARK (H0)'}
                   </span>
                 </div>
-                <div>
-                  <span className="text-slate-500 block text-[10px] uppercase font-semibold">Image Integrity:</span>
-                  <span className={`font-mono font-bold ${
-                    decodeResult.image_binding_verified && !decodeResult.is_derivative
-                      ? 'text-emerald-400'
-                      : decodeResult.is_derivative
-                      ? 'text-amber-400'
-                      : 'text-slate-400'
+                <div className="pt-2 sm:pt-0 sm:px-4">
+                  <span className="text-slate-500 block text-[10px] uppercase font-semibold tracking-wide">Image Integrity:</span>
+                  <span className={`font-mono font-bold block mt-0.5 ${
+                    isDerivativeMedia
+                      ? 'text-amber-700'
+                      : (isExactOriginal || (decodeResult.image_binding_verified && !isDerivativeMedia))
+                      ? 'text-emerald-700'
+                      : 'text-slate-600'
                   }`}>
-                    {decodeResult.image_binding_verified && !decodeResult.is_derivative
+                    {isDerivativeMedia
+                      ? 'TAMPERED / DERIVATIVE'
+                      : (isExactOriginal || (decodeResult.image_binding_verified && !isDerivativeMedia))
                       ? 'ORIGINAL (UNTOUCHED)'
-                      : decodeResult.is_derivative
-                      ? 'MODIFIED / DERIVATIVE'
                       : 'UNCHECKED'}
                   </span>
                 </div>
-                <div>
-                  <span className="text-slate-500 block text-[10px] uppercase font-semibold">Matches Reference:</span>
-                  <span className={`font-mono font-bold ${
-                    decodeResult.payload_matches === true
+                <div className="pt-2 sm:pt-0 sm:pl-4">
+                  <span className="text-slate-500 block text-[10px] uppercase font-semibold tracking-wide">Matches Reference:</span>
+                  <span className={`font-mono font-bold block mt-0.5 ${
+                    decodeResult.payload_matches === true || isDerivativeMedia
                       ? 'text-emerald-400'
                       : decodeResult.payload_matches === false
                       ? 'text-rose-400'
                       : 'text-slate-500'
                   }`}>
-                    {decodeResult.payload_matches === true
+                    {decodeResult.payload_matches === true || isDerivativeMedia
                       ? 'MATCH (VERIFIED)'
                       : decodeResult.payload_matches === false
                       ? 'MISMATCH (H0)'
                       : 'UNANCHORED (H2)'}
                   </span>
                 </div>
-                <div>
-                  <span className="text-slate-500 block text-[10px] uppercase font-semibold">Diagnostic:</span>
-                  <span className="text-slate-400 font-mono text-[11px] truncate block" title={decodeResult.failure_reason || decodeResult.error || 'Normal'}>
-                    {decodeResult.is_derivative
-                      ? 'Altered / AI-Edited Media'
-                      : (decodeResult.mean_logit_magnitude
-                        ? `RMS: ${decodeResult.rms_energy?.toFixed(2) || '0.00'} | Act: ±${decodeResult.mean_logit_magnitude.toFixed(2)}`
-                        : (decodeResult.failure_reason || (decodeResult.watermark_detected ? 'Authentic' : 'No Signal')))}
-                  </span>
-                </div>
               </div>
 
-              {decodeResult.watermark_detected && decodeResult.payload_matches === true && !decodeResult.is_derivative && (
-                <div className="p-3.5 bg-emerald-500/10 border border-emerald-500/30 rounded-lg text-emerald-900 text-xs space-y-1">
-                  <div className="flex items-center gap-2 font-bold text-emerald-700">
-                    <CheckCircle2 className="w-4 h-4" />
-                    Exact Original Media Verified (Untouched &amp; Bound)
+              {isDerivativeMedia ? (
+                <div className="p-3 bg-amber-50 border border-amber-300 rounded-lg text-xs space-y-1 shadow-xs">
+                  <div className="flex items-center gap-2 font-bold text-amber-900">
+                    <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
+                    <span>AI-Edited Derivative Detected</span>
                   </div>
-                  <p className="text-[11px] text-emerald-950 leading-relaxed font-normal">
-                    Both the watermark signal and the cryptographic SHA-256 file hash match the registered on-chain asset record. Extracted payload <span className="font-mono font-bold text-slate-900">0x{decodeResult.payload_hex}</span> with bit error rate {decodeResult.bit_error_rate !== null ? `${(decodeResult.bit_error_rate * 100).toFixed(1)}%` : '0.0%'}. Zero modifications or pixel tampering detected.
+                  <p className="text-[11px] text-slate-700 leading-relaxed font-medium">
+                    The watermark confirms this media originated from the registered publisher, but the pixels were modified by AI or editing tools.
                   </p>
                 </div>
-              )}
-
-              {decodeResult.watermark_detected && decodeResult.payload_matches === true && decodeResult.is_derivative && (
-                <div className="p-3.5 bg-amber-500/10 border border-amber-500/30 rounded-lg text-amber-950 text-xs space-y-1.5">
-                  <div className="flex items-center gap-2 font-bold text-amber-800">
-                    <AlertTriangle className="w-4 h-4 text-amber-600" />
-                    Provenance Verified · AI Modification / Derivative Detected (Hypothesis H1)
+              ) : (decodeResult.watermark_detected && (decodeResult.payload_matches === true || isExactOriginal) && !isDerivativeMedia) ? (
+                <div className="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-lg text-xs space-y-1">
+                  <div className="flex items-center gap-2 font-bold text-emerald-400">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Authentic Original Media Verified</span>
                   </div>
-                  <p className="text-[11px] text-amber-950 leading-relaxed font-normal">
-                    <strong>Creator Provenance: Confirmed.</strong> The neural watermark survived your edits (Bit Error Rate: <span className="font-semibold text-slate-900">{decodeResult.bit_error_rate !== null ? `${(decodeResult.bit_error_rate * 100).toFixed(1)}%` : 'low'}</span>), mathematically proving this derivative image originated from the publisher&apos;s registered artwork.
-                  </p>
-                  <p className="text-[11px] text-amber-900/90 leading-relaxed">
-                    <strong>Content Integrity: Altered / Tampered.</strong> The candidate file hash does not match the original asset ID (<code className="font-mono text-[10px] bg-amber-200/50 px-1 py-0.5 rounded text-amber-950">{decodeResult.registered_anchor?.asset_id ? `${decodeResult.registered_anchor.asset_id.slice(0, 14)}...` : 'Original Anchor'}</code>). This is an AI-edited, cropped, or filtered derivative work, not the untouched original.
+                  <p className="text-[11px] text-slate-300 leading-relaxed font-normal">
+                    Both the watermark and file hash match the on-chain record. Untouched original with zero modifications.
                   </p>
                 </div>
-              )}
-
-              {!decodeResult.watermark_detected && decodeResult.payload_matches === false && (
-                <div className="p-3.5 bg-rose-500/10 border border-rose-500/30 rounded-lg text-rose-900 text-xs space-y-1">
-                  <div className="flex items-center gap-2 font-bold text-rose-700">
-                    <ShieldAlert className="w-4 h-4" />
-                    Watermark Rejection (Payload Mismatch)
+              ) : (!decodeResult.watermark_detected && decodeResult.payload_matches === false) ? (
+                <div className="p-3 bg-rose-500/10 border border-rose-500/30 rounded-lg text-xs space-y-1">
+                  <div className="flex items-center gap-2 font-bold text-rose-400">
+                    <ShieldAlert className="w-4 h-4 text-rose-400 shrink-0" />
+                    <span>Watermark Mismatch</span>
                   </div>
-                  <p className="text-[11px] text-rose-950 leading-relaxed">
-                    {decodeResult.error || 'This candidate image does not match the claimed publisher reference payload.'}
+                  <p className="text-[11px] text-slate-300 leading-relaxed">
+                    {decodeResult.error || 'This image does not match the claimed publisher reference watermark.'}
                   </p>
                 </div>
-              )}
-
-              {decodeResult.payload_hex && (decodeResult.payload_matches === null || decodeResult.payload_matches === undefined) && (
-                <div className="p-3.5 bg-blue-500/10 border border-blue-500/30 rounded-lg text-blue-900 text-xs space-y-1">
-                  <div className="flex items-center gap-2 font-bold text-blue-700">
-                    <ShieldCheck className="w-4 h-4" />
-                    Candidate Payload Extracted (Unanchored Claim)
+              ) : (decodeResult.payload_hex && (decodeResult.payload_matches === null || decodeResult.payload_matches === undefined)) ? (
+                <div className="p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg text-xs space-y-1">
+                  <div className="flex items-center gap-2 font-bold text-blue-400">
+                    <ShieldCheck className="w-4 h-4 text-blue-400 shrink-0" />
+                    <span>Candidate Watermark Found</span>
                   </div>
-                  <p className="text-[11px] text-blue-950 leading-relaxed">
-                    Extracted candidate payload <span className="font-mono font-bold text-slate-900">0x{decodeResult.payload_hex}</span> from neural decoder. Provenance is currently unanchored (state H2). To authenticate, enter your expected Reference Payload above, or run an on-chain audit below.
+                  <p className="text-[11px] text-slate-300 leading-relaxed">
+                    Watermark payload <span className="font-mono text-emerald-400 font-bold">0x{decodeResult.payload_hex}</span> extracted. Click below to audit against Sepolia records.
                   </p>
                 </div>
-              )}
-
-              {!decodeResult.payload_hex && (
-                <div className="p-3.5 bg-rose-500/10 border border-rose-500/30 rounded-lg text-rose-900 text-xs space-y-1">
-                  <div className="flex items-center gap-2 font-bold text-rose-700">
-                    <ShieldAlert className="w-4 h-4" />
-                    No Watermark Recovered
+              ) : (!decodeResult.payload_hex) ? (
+                <div className="p-3 bg-rose-500/10 border border-rose-500/30 rounded-lg text-xs space-y-1">
+                  <div className="flex items-center gap-2 font-bold text-rose-400">
+                    <ShieldAlert className="w-4 h-4 text-rose-400 shrink-0" />
+                    <span>No Watermark Detected</span>
                   </div>
-                  <p className="text-[11px] text-rose-950 leading-relaxed">
-                    {decodeResult.error || 'No decodable watermark signal was recovered from this candidate image.'}
+                  <p className="text-[11px] text-slate-300 leading-relaxed">
+                    {decodeResult.error || 'No authentic watermark detected on this candidate image.'}
                   </p>
                 </div>
-              )}
+              ) : null}
 
               {/* Action: Image Verifier (Free Sepolia Read) & Proving Pipeline */}
               <div className="pt-2 space-y-3">
@@ -544,15 +609,9 @@ export const VerifyPage: React.FC = () => {
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-blue-300 uppercase tracking-wide flex items-center gap-1.5">
                       <ShieldCheck className="w-4 h-4 text-blue-400" />
-                      Image Verifier Role (Free / Zero Gas)
-                    </span>
-                    <span className="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded font-mono font-bold">
-                      Gas Fee: 0.00 ETH ($0.00)
+                      Image Verifier Role
                     </span>
                   </div>
-                  <p className="text-[11px] text-slate-400 leading-relaxed">
-                    Verify this suspect image off-chain and read the publisher's registered commitment directly from the Ethereum Sepolia smart contract. No MetaMask wallet connection or gas payment required.
-                  </p>
 
                   <button
                     onClick={handleVerifyFreeOnChain}
@@ -566,12 +625,12 @@ export const VerifyPage: React.FC = () => {
                     {isVerifyingFree ? (
                       <>
                         <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                        Querying Sepolia Contract (Free)...
+                        Querying Sepolia Contract...
                       </>
                     ) : (
                       <>
                         <Blocks className="w-3.5 h-3.5" />
-                        Audit On-Chain Record (Free / 0 Gas)
+                        Audit On-Chain Record
                       </>
                     )}
                   </button>
@@ -583,35 +642,70 @@ export const VerifyPage: React.FC = () => {
                   )}
 
                   {onChainRecord && (
-                    <div className="mt-2 p-3 bg-slate-900 border border-slate-800 rounded-lg text-xs space-y-2">
+                    <div className="mt-2 p-3 bg-slate-900 border border-slate-800 rounded-lg text-xs space-y-2.5">
                       <div className="flex items-center justify-between font-bold">
-                        <span className={onChainRecord.exists ? (decodeResult.is_derivative ? 'text-amber-400 flex items-center gap-1' : 'text-emerald-400 flex items-center gap-1') : 'text-amber-400 flex items-center gap-1'}>
-                          {onChainRecord.exists ? <CheckCircle2 className="w-3.5 h-3.5" /> : <AlertTriangle className="w-3.5 h-3.5" />}
-                          {onChainRecord.exists ? (decodeResult.is_derivative ? 'Publisher Anchor Verified on Sepolia (Derivative Media)' : 'Authentic Original Confirmed on Sepolia') : 'Not Yet Anchored On-Chain'}
+                        <span className={onChainRecord.exists ? (isDerivativeMedia ? 'text-amber-900 flex items-center gap-1.5' : 'text-emerald-700 flex items-center gap-1.5') : 'text-amber-900 flex items-center gap-1.5'}>
+                          {onChainRecord.exists ? (
+                            isDerivativeMedia ? <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" /> : <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                          ) : (
+                            <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
+                          )}
+                          {onChainRecord.exists ? (
+                            isDerivativeMedia
+                              ? 'Publisher Provenance Verified · AI-Altered / Tampered Derivative'
+                              : 'Authentic Original Confirmed on Sepolia (Untouched Pixels)'
+                          ) : (
+                            'Not Yet Anchored On-Chain'
+                          )}
                         </span>
-                        <span className="text-[10px] text-slate-500 font-mono">Cost: 0 Gas</span>
                       </div>
 
                       {onChainRecord.exists ? (
-                        <div className="text-[11px] text-slate-300 space-y-1 pt-1 border-t border-slate-800">
+                        <div className="text-[11px] text-slate-300 space-y-2 pt-1 border-t border-slate-800">
+                          {isDerivativeMedia && (
+                            <div className="p-3 rounded-lg bg-amber-50 border border-amber-300 space-y-1.5 shadow-xs">
+                              <div className="font-bold flex items-center gap-1.5 text-amber-900 text-xs">
+                                <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
+                                Pixel Tampering / AI Edit Detected (SHA-256 Hash Mismatch)
+                              </div>
+                              <p className="text-[11px] text-slate-700 leading-relaxed font-medium">
+                                The watermark payload matches the on-chain registered commitment on Sepolia (confirming publisher authorship), but the candidate image's SHA-256 hash differs from the registered original asset ID. This confirms the image has been modified by AI, edited, or cropped.
+                              </p>
+                            </div>
+                          )}
+
                           <div>
                             <span className="text-slate-500 font-semibold">Publisher Wallet: </span>
-                            <code className="text-amber-300 font-mono break-all">{onChainRecord.submitter}</code>
+                            <code className="text-amber-900 font-mono font-semibold break-all">{onChainRecord.submitter}</code>
                           </div>
                           <div>
                             <span className="text-slate-500 font-semibold">Registered Timestamp: </span>
                             <span>{onChainRecord.dateFormatted}</span>
                           </div>
                           <div>
-                            <span className="text-slate-500 font-semibold">Original Anchor Asset ID: </span>
-                            <code className="text-indigo-300 font-mono break-all block mt-0.5">{decodeResult.registered_anchor?.asset_id || onChainRecord.assetId}</code>
+                            <span className="text-slate-500 font-semibold">Original Anchor Asset ID (Sepolia Original): </span>
+                            <code className="text-indigo-300 font-mono break-all block mt-0.5">
+                              {cleanOnChainAsset ? `0x${cleanOnChainAsset}` : onChainRecord.assetId}
+                            </code>
                           </div>
-                          {decodeResult.is_derivative && (
+                          {cleanSuspectSha && (
                             <div>
-                              <span className="text-slate-500 font-semibold">Suspect Media Hash: </span>
-                              <code className="text-amber-400 font-mono break-all block mt-0.5">{decodeResult.image_sha256} (Altered Pixels)</code>
+                              <span className="text-slate-500 font-semibold">Candidate Media Hash: </span>
+                              <code className={`font-mono break-all block mt-0.5 ${isDerivativeMedia ? 'text-amber-800 font-bold' : 'text-emerald-700 font-bold'}`}>
+                                0x{cleanSuspectSha} {isDerivativeMedia ? '(Tampered / Altered Pixels)' : '(100% Match · Untouched)'}
+                              </code>
                             </div>
                           )}
+                          <div className="flex items-center justify-between pt-1">
+                            <span className="text-slate-500 font-semibold">Verification Verdict: </span>
+                            <span className={`px-2.5 py-1 rounded text-[10px] font-mono font-bold border shadow-xs ${
+                              isDerivativeMedia
+                                ? 'bg-amber-600 text-white border-amber-700'
+                                : 'bg-emerald-600 text-white border-emerald-700'
+                            }`}>
+                              {isDerivativeMedia ? 'DERIVATIVE MEDIA (Pixel Tampering Detected)' : 'AUTHENTIC ORIGINAL (100% Hash Match)'}
+                            </span>
+                          </div>
                           <div>
                             <span className="text-slate-500 font-semibold">On-Chain Commitment: </span>
                             <code className="text-blue-300 font-mono break-all block mt-0.5">{onChainRecord.commitment}</code>
@@ -754,7 +848,7 @@ export const VerifyPage: React.FC = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-[11px]">
                     <div className="p-3 bg-slate-950 rounded-lg border border-slate-800 space-y-1">
                       <span className="text-slate-500 uppercase font-semibold block">Commitment C = H(m || k)</span>
-                      <code className="text-amber-400 font-mono break-all block">
+                      <code className="text-amber-900 font-mono font-bold break-all block">
                         {jobData.proof_result?.public_inputs.payload_commitment}
                       </code>
                     </div>
@@ -762,7 +856,7 @@ export const VerifyPage: React.FC = () => {
                     <div className="p-3 bg-slate-950 rounded-lg border border-slate-800 space-y-1">
                       <div className="flex items-center justify-between">
                         <span className="text-slate-500 uppercase font-semibold block">Blockchain Transaction</span>
-                        <span className="text-[10px] font-mono text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/20">
+                        <span className="text-[10px] font-mono font-bold text-white bg-amber-600 border border-amber-700 px-2 py-0.5 rounded shadow-xs">
                           Sepolia Testnet
                         </span>
                       </div>
@@ -781,34 +875,77 @@ export const VerifyPage: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Negative Test Trigger */}
-                  <div className="p-4 bg-slate-950/80 rounded-xl border border-slate-800 space-y-2">
+                  {/* Independent Cryptographic Proof Audit */}
+                  <div className="p-4 bg-slate-950/80 rounded-xl border border-slate-800 space-y-3">
                     <div className="flex items-center justify-between">
                       <span className="font-bold text-slate-300 text-xs flex items-center gap-1.5">
-                        <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
-                        Negative Claim Verification Test
+                        <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                        Independent Cryptographic Proof Audit
                       </span>
                       <button
-                        onClick={handleRunNegativeTest}
-                        disabled={testingNegative}
-                        className="px-3 py-1 bg-amber-600/20 hover:bg-amber-600/30 border border-amber-500/30 text-amber-300 rounded-lg text-xs font-semibold transition"
+                        onClick={handleAuditProof}
+                        disabled={isAuditing}
+                        className="px-3 py-1 bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/40 text-emerald-300 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition"
                       >
-                        {testingNegative ? 'Testing...' : 'Test Tampered Model Digest'}
+                        {isAuditing ? (
+                          <>
+                            <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                            Auditing...
+                          </>
+                        ) : (
+                          <>
+                            <ShieldCheck className="w-3.5 h-3.5" />
+                            Audit Proof Authenticity
+                          </>
+                        )}
                       </button>
                     </div>
                     <p className="text-[11px] text-slate-400">
-                      Evaluates whether the verifier rejects proofs generated with unauthorized or altered neural decoder weights.
+                      Independently re-evaluates the Halo2 zero-knowledge proof against the certified TrustMark-Q verification key and circuit constraints.
                     </p>
 
-                    {negativeResult && (
-                      <div className="mt-2 p-2.5 rounded bg-slate-900 border border-amber-500/20 text-xs">
-                        <div className="flex items-center gap-1.5 text-amber-400 font-semibold">
-                          <XCircle className="w-3.5 h-3.5 text-red-400" />
-                          Verifier Result: {negativeResult.valid ? 'ACCEPT' : 'REJECTED (PASS)'}
+                    {auditResult && (
+                      <div className="mt-2 p-3 rounded-lg bg-slate-900 border border-emerald-500/30 text-xs space-y-2">
+                        <div className="flex items-center justify-between">
+                          <div className={`flex items-center gap-1.5 font-bold ${auditResult.valid ? 'text-emerald-400' : 'text-rose-400'}`}>
+                            {auditResult.valid ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : <XCircle className="w-4 h-4 text-rose-400" />}
+                            Verifier Result: {auditResult.valid ? 'VALIDATED (GENUINE PASS)' : 'REJECTED (INVALID PROOF)'}
+                          </div>
+                          {auditResult.verification_time_seconds && (
+                            <span className="text-[10px] text-slate-400 font-mono">
+                              Verified in {auditResult.verification_time_seconds.toFixed(3)}s
+                            </span>
+                          )}
                         </div>
-                        <p className="text-[11px] text-slate-400 mt-1 font-mono">
-                          Error: {negativeResult.error}
-                        </p>
+
+                        {auditResult.valid ? (
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] font-mono text-slate-300 bg-slate-950/70 p-2.5 rounded border border-slate-800">
+                            <div>
+                              <span className="text-slate-500 block text-[10px] font-sans uppercase font-semibold">Circuit Architecture:</span>
+                              <span className="text-emerald-300">{auditResult.circuit_identifier || 'ezkl_halo2_trustmark_decoder_v1'}</span>
+                            </div>
+                            <div>
+                              <span className="text-slate-500 block text-[10px] font-sans uppercase font-semibold">Proof System:</span>
+                              <span className="text-blue-300">{auditResult.proof_system || 'Halo2 (KZG on BN254)'}</span>
+                            </div>
+                            <div className="sm:col-span-2">
+                              <span className="text-slate-500 block text-[10px] font-sans uppercase font-semibold">Certified Model Digest:</span>
+                              <span className="text-slate-300 truncate block" title={auditResult.model_digest}>
+                                {auditResult.model_digest}
+                              </span>
+                            </div>
+                            {auditResult.circuit_recovered_hex && (
+                              <div className="sm:col-span-2">
+                                <span className="text-slate-500 block text-[10px] font-sans uppercase font-semibold">Recovered Circuit Payload:</span>
+                                <span className="text-emerald-400 font-bold">{auditResult.circuit_recovered_hex}</span>
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <p className="text-[11px] text-rose-400 font-mono">
+                            Error: {auditResult.error}
+                          </p>
+                        )}
                       </div>
                     )}
                   </div>

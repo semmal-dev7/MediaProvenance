@@ -212,7 +212,7 @@ export const DashboardPage: React.FC<DashboardProps> = ({ onNavigate }) => {
             >
               0x6D8C...d43F <ExternalLink className="w-3 h-3 flex-shrink-0" />
             </a>
-            <span className="text-[10px] text-slate-500">Free / Zero-Gas Auditing</span>
+            <span className="text-[10px] text-slate-500">Public Read Auditing</span>
           </div>
         </div>
       </div>

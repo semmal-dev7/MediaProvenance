@@ -31,6 +31,7 @@ from backend.zk.engine import zk_engine
 logger = logging.getLogger(__name__)
 
 LEDGER_FILE = Path(__file__).resolve().parent.parent.parent / "data" / "anchors_ledger.json"
+EMBEDDED_ASSETS_FILE = Path(__file__).resolve().parent.parent.parent / "data" / "embedded_assets.json"
 
 
 class JobStatus(str, Enum):
@@ -72,6 +73,7 @@ class JobRecord:
     prover_address: str
     image_features: Optional[List[float]] = None
     allow_synthetic: bool = False
+    carrier: Optional[str] = "trustmark"
     error: Optional[str] = None
     proof_result: Optional[Dict[str, Any]] = None
     anchor_record: Optional[AnchorRecord] = None
@@ -85,6 +87,7 @@ class JobManager:
         self._anchors: Dict[str, AnchorRecord] = {}
         self._embedded_assets: Dict[str, str] = {}
         self._load_ledger()
+        self._load_embedded_assets()
 
     def _load_ledger(self):
         """Load on-chain anchor transactions from disk ledger, with fallback to initial seeds."""
@@ -117,6 +120,25 @@ class JobManager:
         if not self._anchors:
             self._init_seed_anchors()
             self._save_ledger()
+
+    def _load_embedded_assets(self):
+        """Load registered embedded assets mapping from disk."""
+        if EMBEDDED_ASSETS_FILE.exists():
+            try:
+                with open(EMBEDDED_ASSETS_FILE, "r", encoding="utf-8") as fp:
+                    self._embedded_assets = json.load(fp)
+                logger.info("Loaded %d embedded assets from %s", len(self._embedded_assets), EMBEDDED_ASSETS_FILE)
+            except Exception as e:
+                logger.error("Failed loading embedded assets from %s: %s", EMBEDDED_ASSETS_FILE, e)
+
+    def _save_embedded_assets(self):
+        """Persist registered embedded assets mapping to disk."""
+        try:
+            EMBEDDED_ASSETS_FILE.parent.mkdir(parents=True, exist_ok=True)
+            with open(EMBEDDED_ASSETS_FILE, "w", encoding="utf-8") as fp:
+                json.dump(self._embedded_assets, fp, indent=2)
+        except Exception as e:
+            logger.error("Failed saving embedded assets to %s: %s", EMBEDDED_ASSETS_FILE, e)
 
     def _save_ledger(self):
         """Save all anchors to data/anchors_ledger.json ordered by block_number desc."""
@@ -270,6 +292,7 @@ class JobManager:
         prover_address: str = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
         image_features: Optional[List[float]] = None,
         allow_synthetic: bool = False,
+        carrier: Optional[str] = "trustmark",
     ) -> JobRecord:
         """Create and queue a new asynchronous proof & anchor job."""
         job_id = f"job_{secrets.token_hex(8)}"
@@ -285,6 +308,7 @@ class JobManager:
             prover_address=prover_address,
             image_features=image_features,
             allow_synthetic=allow_synthetic,
+            carrier=carrier or "trustmark",
         )
         self._jobs[job_id] = job
         # Launch async execution
@@ -318,6 +342,7 @@ class JobManager:
                 prover_address=job.prover_address,
                 image_features=job.image_features,
                 allow_synthetic=job.allow_synthetic,
+                carrier=job.carrier or "trustmark",
             )
             await asyncio.sleep(0.5)
 
@@ -539,6 +564,31 @@ class JobManager:
         clean_id = asset_id.lower().replace("0x", "").strip()
         clean_payload = payload_hex.lower().replace("0x", "").strip()
         self._embedded_assets[clean_id] = clean_payload
+        self._save_embedded_assets()
+
+    def is_payload_used(self, payload_hex: str, current_asset_id: Optional[str] = None) -> bool:
+        """Check if a payload has already been used on another registered asset or anchor."""
+        clean = payload_hex.lower().replace("0x", "").strip()
+        clean_current = current_asset_id.lower().replace("0x", "").strip() if current_asset_id else None
+
+        # 1. Check embedded assets registry (asset_id -> payload_hex)
+        for aid, p in self._embedded_assets.items():
+            if p == clean or p.startswith(clean) or clean.startswith(p):
+                if clean_current and aid == clean_current:
+                    continue  # re-embedding the same image is allowed
+                return True
+
+        # 2. Check anchor records
+        for rec in self._anchors.values():
+            if rec.payload_hex:
+                rp = rec.payload_hex.lower().replace("0x", "").strip()
+                if rp == clean or rp.startswith(clean) or clean.startswith(rp):
+                    rec_aid = rec.asset_id.lower().replace("0x", "").strip()
+                    if clean_current and rec_aid == clean_current:
+                        continue
+                    return True
+
+        return False
 
     def get_embedded_asset(self, asset_id: str) -> Optional[str]:
         """Look up registered publisher payload for an asset ID / SHA-256."""
@@ -548,12 +598,18 @@ class JobManager:
     def get_anchor_by_payload(self, payload_hex: str) -> Optional[AnchorRecord]:
         """Reverse lookup an on-chain or registered anchor record by watermark payload."""
         clean = payload_hex.lower().replace("0x", "").strip()
+        candidates: List[AnchorRecord] = []
         # 1. Match against registered anchors directly by payload
         for rec in self._anchors.values():
             if rec.payload_hex:
                 rp = rec.payload_hex.lower().replace("0x", "").strip()
                 if rp == clean or rp.startswith(clean) or clean.startswith(rp):
-                    return rec
+                    candidates.append(rec)
+
+        if candidates:
+            # Sort by earliest confirmed block number / timestamp to ensure root provenance
+            candidates.sort(key=lambda r: (r.block_number if r.block_number > 0 else 999999999, r.timestamp))
+            return candidates[0]
 
         # 2. Match against registered embedded assets
         for aid, p in self._embedded_assets.items():
