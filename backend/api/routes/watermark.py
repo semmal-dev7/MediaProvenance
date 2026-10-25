@@ -43,12 +43,40 @@ async def encode_watermark(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Carrier error: {e}")
 
-    # Generate random payload if omitted
-    if not payload_hex:
+    from backend.services.job_manager import job_manager
+
+    # Calculate input image sha256 to allow re-embedding the exact same file
+    input_sha256 = c.image_sha256(image)
+
+    # Check if payload_hex was specified and already used on another image
+    if payload_hex:
+        clean_payload = payload_hex.lower().replace("0x", "").strip()
+        if job_manager.is_payload_used(clean_payload, current_asset_id=input_sha256):
+            return EncodeResponse(
+                success=False,
+                payload_hex=payload_hex,
+                payload_bits=c.info.payload_bits,
+                carrier_name=c.info.name,
+                carrier_version=c.info.version,
+                psnr_db=None,
+                elapsed_seconds=0.0,
+                image_sha256="",
+                error=f"Payload 0x{payload_hex} has already been used on another registered image. Each image requires a unique payload.",
+            )
+    else:
+        # Generate a fresh unique random payload
         import secrets
         n_bits = c.info.payload_bits
         n_hex = (n_bits + 3) // 4
-        payload_hex = format(secrets.randbits(n_bits), f"0{n_hex}x")
+        attempts = 0
+        while attempts < 100:
+            if carrier == "trustmark":
+                payload_hex = "a5" + format(secrets.randbits(92), "023x")
+            else:
+                payload_hex = format(secrets.randbits(n_bits), f"0{n_hex}x")
+            if not job_manager.is_payload_used(payload_hex):
+                break
+            attempts += 1
 
     enc_res = c.encode(image, payload_hex)
     if enc_res.error:

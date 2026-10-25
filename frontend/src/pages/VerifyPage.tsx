@@ -6,7 +6,6 @@ export const VerifyPage: React.FC = () => {
   const [carrier, setCarrier] = useState<'pureconv' | 'hidden' | 'trustmark'>('trustmark');
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
-  const [refPayload, setRefPayload] = useState<string>('');
   
   // Decode state
   const [decoding, setDecoding] = useState<boolean>(false);
@@ -103,7 +102,6 @@ export const VerifyPage: React.FC = () => {
       const formData = new FormData();
       formData.append('file', file);
       formData.append('carrier', carrier);
-      if (refPayload) formData.append('reference_payload_hex', refPayload);
 
       const res = await fetch('/api/v1/watermarks/decode', {
         method: 'POST',
@@ -345,19 +343,6 @@ export const VerifyPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-400 mb-1.5">
-              Reference Publisher Payload Hex (Optional):
-            </label>
-            <input
-              type="text"
-              value={refPayload}
-              placeholder="Leave empty for unconstrained recovery"
-              onChange={(e) => setRefPayload(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs font-mono text-slate-200"
-            />
-          </div>
-
-          <div>
             <label className="block text-xs font-semibold text-slate-400 mb-2">Upload Suspect Image:</label>
             <label className="flex flex-col items-center justify-center border-2 border-dashed border-slate-800 hover:border-emerald-500/50 rounded-xl p-5 cursor-pointer bg-slate-950/60 transition group">
               <Upload className="w-5 h-5 text-slate-500 group-hover:text-emerald-400 mb-1.5 transition" />
@@ -411,16 +396,16 @@ export const VerifyPage: React.FC = () => {
                   2. Neural Recovery &amp; Likelihood Ratio
                 </h3>
                 <span
-                  className={`text-xs font-mono px-2.5 py-1 rounded-md font-bold border ${
+                  className={`text-xs font-mono px-2.5 py-1 rounded-md font-bold border shadow-xs ${
                     isDerivativeMedia
-                      ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
+                      ? 'bg-amber-600 text-white border-amber-700'
                       : decodeResult.watermark_detected && decodeResult.payload_matches === true
-                      ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
+                      ? 'bg-emerald-600 text-white border-emerald-700'
                       : decodeResult.payload_matches === false
-                      ? 'bg-rose-500/10 border-rose-500/30 text-rose-400'
+                      ? 'bg-rose-600 text-white border-rose-700'
                       : decodeResult.payload_hex && (decodeResult.payload_matches === null || decodeResult.payload_matches === undefined)
-                      ? 'bg-slate-800 border-slate-700 text-slate-300'
-                      : 'bg-rose-500/10 border-rose-500/30 text-rose-400'
+                      ? 'bg-slate-700 text-white border-slate-600'
+                      : 'bg-rose-600 text-white border-rose-700'
                   }`}
                 >
                   {isDerivativeMedia
@@ -480,12 +465,12 @@ export const VerifyPage: React.FC = () => {
                   <span className="text-[10px] text-slate-500 uppercase font-semibold block">Inferred Hypothesis</span>
                   <span className={`text-sm font-bold block mt-1 ${
                     isDerivativeMedia
-                      ? 'text-amber-400'
+                      ? 'text-amber-700'
                       : decodeResult.inferred_hypothesis === 'H1'
-                      ? 'text-emerald-400'
+                      ? 'text-emerald-700'
                       : decodeResult.inferred_hypothesis === 'H0'
-                      ? 'text-rose-400'
-                      : 'text-amber-400'
+                      ? 'text-rose-700'
+                      : 'text-amber-700'
                   }`}>
                     {isDerivativeMedia
                       ? 'H1 (Tampered Derivative)'
@@ -533,10 +518,10 @@ export const VerifyPage: React.FC = () => {
                   <span className="text-slate-500 block text-[10px] uppercase font-semibold tracking-wide">Image Integrity:</span>
                   <span className={`font-mono font-bold block mt-0.5 ${
                     isDerivativeMedia
-                      ? 'text-amber-400'
+                      ? 'text-amber-700'
                       : (isExactOriginal || (decodeResult.image_binding_verified && !isDerivativeMedia))
-                      ? 'text-emerald-400'
-                      : 'text-slate-400'
+                      ? 'text-emerald-700'
+                      : 'text-slate-600'
                   }`}>
                     {isDerivativeMedia
                       ? 'TAMPERED / DERIVATIVE'
@@ -564,12 +549,12 @@ export const VerifyPage: React.FC = () => {
               </div>
 
               {isDerivativeMedia ? (
-                <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg text-xs space-y-1">
-                  <div className="flex items-center gap-2 font-bold text-amber-400">
-                    <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+                <div className="p-3 bg-amber-50 border border-amber-300 rounded-lg text-xs space-y-1 shadow-xs">
+                  <div className="flex items-center gap-2 font-bold text-amber-900">
+                    <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
                     <span>AI-Edited Derivative Detected</span>
                   </div>
-                  <p className="text-[11px] text-slate-300 leading-relaxed font-normal">
+                  <p className="text-[11px] text-slate-700 leading-relaxed font-medium">
                     The watermark confirms this media originated from the registered publisher, but the pixels were modified by AI or editing tools.
                   </p>
                 </div>
@@ -656,11 +641,11 @@ export const VerifyPage: React.FC = () => {
                   {onChainRecord && (
                     <div className="mt-2 p-3 bg-slate-900 border border-slate-800 rounded-lg text-xs space-y-2.5">
                       <div className="flex items-center justify-between font-bold">
-                        <span className={onChainRecord.exists ? (isDerivativeMedia ? 'text-amber-400 flex items-center gap-1.5' : 'text-emerald-400 flex items-center gap-1.5') : 'text-amber-400 flex items-center gap-1.5'}>
+                        <span className={onChainRecord.exists ? (isDerivativeMedia ? 'text-amber-900 flex items-center gap-1.5' : 'text-emerald-700 flex items-center gap-1.5') : 'text-amber-900 flex items-center gap-1.5'}>
                           {onChainRecord.exists ? (
-                            isDerivativeMedia ? <AlertTriangle className="w-4 h-4 text-amber-400" /> : <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                            isDerivativeMedia ? <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" /> : <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                           ) : (
-                            <AlertTriangle className="w-4 h-4 text-amber-400" />
+                            <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
                           )}
                           {onChainRecord.exists ? (
                             isDerivativeMedia
@@ -675,12 +660,12 @@ export const VerifyPage: React.FC = () => {
                       {onChainRecord.exists ? (
                         <div className="text-[11px] text-slate-300 space-y-2 pt-1 border-t border-slate-800">
                           {isDerivativeMedia && (
-                            <div className="p-2.5 rounded bg-amber-500/10 border border-amber-500/30 text-amber-300 space-y-1">
-                              <div className="font-bold flex items-center gap-1.5 text-amber-400 text-xs">
-                                <AlertTriangle className="w-3.5 h-3.5" />
+                            <div className="p-3 rounded-lg bg-amber-50 border border-amber-300 space-y-1.5 shadow-xs">
+                              <div className="font-bold flex items-center gap-1.5 text-amber-900 text-xs">
+                                <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
                                 Pixel Tampering / AI Edit Detected (SHA-256 Hash Mismatch)
                               </div>
-                              <p className="text-[10px] text-amber-200/90 leading-relaxed font-normal">
+                              <p className="text-[11px] text-slate-700 leading-relaxed font-medium">
                                 The watermark payload matches the on-chain registered commitment on Sepolia (confirming publisher authorship), but the candidate image's SHA-256 hash differs from the registered original asset ID. This confirms the image has been modified by AI, edited, or cropped.
                               </p>
                             </div>
@@ -688,7 +673,7 @@ export const VerifyPage: React.FC = () => {
 
                           <div>
                             <span className="text-slate-500 font-semibold">Publisher Wallet: </span>
-                            <code className="text-amber-300 font-mono break-all">{onChainRecord.submitter}</code>
+                            <code className="text-amber-900 font-mono font-semibold break-all">{onChainRecord.submitter}</code>
                           </div>
                           <div>
                             <span className="text-slate-500 font-semibold">Registered Timestamp: </span>
@@ -703,17 +688,17 @@ export const VerifyPage: React.FC = () => {
                           {cleanSuspectSha && (
                             <div>
                               <span className="text-slate-500 font-semibold">Candidate Media Hash: </span>
-                              <code className={`font-mono break-all block mt-0.5 ${isDerivativeMedia ? 'text-amber-400 font-semibold' : 'text-emerald-400'}`}>
+                              <code className={`font-mono break-all block mt-0.5 ${isDerivativeMedia ? 'text-amber-800 font-bold' : 'text-emerald-700 font-bold'}`}>
                                 0x{cleanSuspectSha} {isDerivativeMedia ? '(Tampered / Altered Pixels)' : '(100% Match · Untouched)'}
                               </code>
                             </div>
                           )}
                           <div className="flex items-center justify-between pt-1">
                             <span className="text-slate-500 font-semibold">Verification Verdict: </span>
-                            <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold border ${
+                            <span className={`px-2.5 py-1 rounded text-[10px] font-mono font-bold border shadow-xs ${
                               isDerivativeMedia
-                                ? 'bg-amber-500/20 text-amber-300 border-amber-500/30'
-                                : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
+                                ? 'bg-amber-600 text-white border-amber-700'
+                                : 'bg-emerald-600 text-white border-emerald-700'
                             }`}>
                               {isDerivativeMedia ? 'DERIVATIVE MEDIA (Pixel Tampering Detected)' : 'AUTHENTIC ORIGINAL (100% Hash Match)'}
                             </span>
@@ -860,7 +845,7 @@ export const VerifyPage: React.FC = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-[11px]">
                     <div className="p-3 bg-slate-950 rounded-lg border border-slate-800 space-y-1">
                       <span className="text-slate-500 uppercase font-semibold block">Commitment C = H(m || k)</span>
-                      <code className="text-amber-400 font-mono break-all block">
+                      <code className="text-amber-900 font-mono font-bold break-all block">
                         {jobData.proof_result?.public_inputs.payload_commitment}
                       </code>
                     </div>
@@ -868,7 +853,7 @@ export const VerifyPage: React.FC = () => {
                     <div className="p-3 bg-slate-950 rounded-lg border border-slate-800 space-y-1">
                       <div className="flex items-center justify-between">
                         <span className="text-slate-500 uppercase font-semibold block">Blockchain Transaction</span>
-                        <span className="text-[10px] font-mono text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/20">
+                        <span className="text-[10px] font-mono font-bold text-white bg-amber-600 border border-amber-700 px-2 py-0.5 rounded shadow-xs">
                           Sepolia Testnet
                         </span>
                       </div>

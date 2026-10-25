@@ -183,7 +183,7 @@ export const BlockchainAuditPage: React.FC = () => {
                         <ExternalLink className="w-3 h-3 flex-shrink-0 opacity-70 group-hover:opacity-100" />
                       </a>
                     </div>
-                    <span className="text-[10px] font-mono text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+                    <span className="text-[10px] font-mono font-bold text-white bg-amber-600 border border-amber-700 px-2 py-0.5 rounded shadow-xs">
                       Sepolia Testnet
                     </span>
                   </div>

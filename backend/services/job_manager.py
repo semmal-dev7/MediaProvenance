@@ -566,6 +566,30 @@ class JobManager:
         self._embedded_assets[clean_id] = clean_payload
         self._save_embedded_assets()
 
+    def is_payload_used(self, payload_hex: str, current_asset_id: Optional[str] = None) -> bool:
+        """Check if a payload has already been used on another registered asset or anchor."""
+        clean = payload_hex.lower().replace("0x", "").strip()
+        clean_current = current_asset_id.lower().replace("0x", "").strip() if current_asset_id else None
+
+        # 1. Check embedded assets registry (asset_id -> payload_hex)
+        for aid, p in self._embedded_assets.items():
+            if p == clean or p.startswith(clean) or clean.startswith(p):
+                if clean_current and aid == clean_current:
+                    continue  # re-embedding the same image is allowed
+                return True
+
+        # 2. Check anchor records
+        for rec in self._anchors.values():
+            if rec.payload_hex:
+                rp = rec.payload_hex.lower().replace("0x", "").strip()
+                if rp == clean or rp.startswith(clean) or clean.startswith(rp):
+                    rec_aid = rec.asset_id.lower().replace("0x", "").strip()
+                    if clean_current and rec_aid == clean_current:
+                        continue
+                    return True
+
+        return False
+
     def get_embedded_asset(self, asset_id: str) -> Optional[str]:
         """Look up registered publisher payload for an asset ID / SHA-256."""
         clean_id = asset_id.lower().replace("0x", "").strip()

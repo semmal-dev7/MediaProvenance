@@ -6,9 +6,38 @@ interface EmbedPageProps {
   onProceedToVerify?: (imageFile: File, payloadHex: string) => void;
 }
 
+// Helper to generate a unique random payload that has never been used on another image
+const generateFreshPayload = (carrierType: 'pureconv' | 'hidden' | 'trustmark'): string => {
+  let usedSet: Set<string> = new Set();
+  try {
+    const stored = localStorage.getItem('used_watermark_payloads');
+    if (stored) usedSet = new Set(JSON.parse(stored));
+  } catch {
+    usedSet = new Set();
+  }
+
+  let candidate = '';
+  let attempts = 0;
+  do {
+    attempts++;
+    if (carrierType === 'pureconv' || carrierType === 'hidden') {
+      const array = new Uint32Array(1);
+      window.crypto.getRandomValues(array);
+      candidate = array[0].toString(16).padStart(8, '0');
+    } else {
+      const array = new Uint8Array(12);
+      window.crypto.getRandomValues(array);
+      const hexStr = Array.from(array, (b) => b.toString(16).padStart(2, '0')).join('');
+      candidate = 'a5' + hexStr.slice(0, 23);
+    }
+  } while (usedSet.has(candidate.toLowerCase()) && attempts < 100);
+
+  return candidate;
+};
+
 export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
   const [carrier, setCarrier] = useState<'pureconv' | 'hidden' | 'trustmark'>('trustmark');
-  const [payloadHex, setPayloadHex] = useState<string>('a51234567890abcdef12345678');
+  const [payloadHex, setPayloadHex] = useState<string>(() => generateFreshPayload('trustmark'));
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [watermarkedImg, setWatermarkedImg] = useState<string | null>(null);
@@ -142,30 +171,14 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
   const handleGeneratePayload = () => {
     setPublisherTxResult(null);
     setPublisherTxError(null);
-    if (carrier === 'pureconv' || carrier === 'hidden') {
-      // 32-bit: 8 hex chars
-      const val = Math.floor(Math.random() * 0xffffffff);
-      setPayloadHex(val.toString(16).padStart(8, '0'));
-    } else {
-      // 100-bit: 25 hex chars starting with a5 synchronization preamble
-      const chars = '0123456789abcdef';
-      let res = 'a5';
-      for (let i = 0; i < 23; i++) {
-        res += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      setPayloadHex(res);
-    }
+    setPayloadHex(generateFreshPayload(carrier));
   };
 
   const handleCarrierChange = (newCarrier: 'pureconv' | 'hidden' | 'trustmark') => {
     setCarrier(newCarrier);
     setPublisherTxResult(null);
     setPublisherTxError(null);
-    if (newCarrier === 'trustmark') {
-      setPayloadHex('a5123456789abcdef01234567');
-    } else {
-      setPayloadHex('deadbeef');
-    }
+    setPayloadHex(generateFreshPayload(newCarrier));
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -178,6 +191,10 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
       setPublisherTxResult(null);
       setPublisherTxError(null);
       setError(null);
+
+      // Automatically generate a fresh, unique random payload for this new image
+      const uniquePayload = generateFreshPayload(carrier);
+      setPayloadHex(uniquePayload);
 
       // Whenever publisher selects an image, prompt them to connect with their wallet if not already connected
       if (!publisherAccount) {
@@ -195,6 +212,21 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
       setError('Please select an image file first.');
       return;
     }
+    // Check if payload was already used on another image
+    let usedSet: Set<string> = new Set();
+    try {
+      const stored = localStorage.getItem('used_watermark_payloads');
+      if (stored) usedSet = new Set(JSON.parse(stored));
+    } catch {}
+
+    const cleanCurrent = payloadHex.toLowerCase().replace('0x', '').trim();
+    if (usedSet.has(cleanCurrent)) {
+      const fresh = generateFreshPayload(carrier);
+      setPayloadHex(fresh);
+      setError(`Payload 0x${cleanCurrent} has already been used on another image. A fresh unique payload (0x${fresh}) has been automatically generated.`);
+      return;
+    }
+
     setLoading(true);
     setError(null);
     setPublisherTxResult(null);
@@ -213,6 +245,13 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
 
       const data = await res.json();
       if (data.success) {
+        // Record this payload so it can never be reused for another image
+        const cleanUsed = (data.payload_hex || payloadHex).toLowerCase().replace('0x', '').trim();
+        usedSet.add(cleanUsed);
+        try {
+          localStorage.setItem('used_watermark_payloads', JSON.stringify(Array.from(usedSet)));
+        } catch {}
+
         setWatermarkedImg(data.watermarked_image_base64);
         setEmbedResult(data);
       } else {
@@ -248,22 +287,22 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
           </h3>
 
           {/* Publisher MetaMask Account Status & Connect Button */}
-          <div className={`p-4 rounded-xl border transition ${
+          <div className={`p-4 rounded-xl border transition shadow-xs ${
             publisherAccount 
-              ? 'bg-emerald-500/10 border-emerald-500/30' 
-              : 'bg-amber-500/10 border-amber-500/30'
+              ? 'bg-emerald-50 border-emerald-300' 
+              : 'bg-amber-50 border-amber-300'
           }`}>
             <div className="flex items-center justify-between mb-2">
-              <span className="flex items-center gap-1.5 text-xs font-bold text-slate-200">
-                <Wallet className={`w-4 h-4 ${publisherAccount ? 'text-emerald-400' : 'text-amber-400'}`} />
-                Publisher Identity (MetaMask)
+              <span className="flex items-center gap-1.5 text-xs font-bold text-slate-800">
+                <Wallet className={`w-4 h-4 ${publisherAccount ? 'text-emerald-600' : 'text-amber-600'}`} />
+                Publisher Identity
               </span>
               {publisherAccount ? (
-                <span className="text-[10px] px-2 py-0.5 rounded-full font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1">
-                  <CheckCircle className="w-3 h-3" /> Connected
+                <span className="text-[10px] px-2.5 py-0.5 rounded-full font-mono font-bold bg-emerald-600 text-white border border-emerald-700 flex items-center gap-1 shadow-xs">
+                  <CheckCircle className="w-3 h-3 text-white" /> Connected
                 </span>
               ) : (
-                <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                <span className="text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-amber-600 text-white border border-amber-700 shadow-xs">
                   Wallet Required
                 </span>
               )}
@@ -278,7 +317,7 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
                     </p>
                     <span className="text-[10px] text-slate-500 font-mono">Sepolia Testnet</span>
                   </div>
-                  <div className="font-mono text-xs text-emerald-300 bg-slate-950/80 p-2 rounded-lg border border-slate-800 break-all select-all flex items-center justify-between">
+                  <div className="font-mono text-xs text-emerald-900 bg-emerald-50 p-2 rounded-lg border border-emerald-300 break-all select-all flex items-center justify-between font-semibold">
                     <span>{publisherAccount}</span>
                   </div>
                 </div>
@@ -288,25 +327,22 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
                     type="button"
                     onClick={handleSwitchAccount}
                     disabled={isConnectingWallet}
-                    className="flex-1 py-1.5 px-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 border border-slate-700 transition disabled:opacity-50"
+                    className="flex-1 py-1.5 px-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 border border-slate-300 transition disabled:opacity-50 shadow-xs"
                     title="Choose a different MetaMask account"
                   >
-                    <RefreshCw className={`w-3.5 h-3.5 text-blue-400 ${isConnectingWallet ? 'animate-spin' : ''}`} />
+                    <RefreshCw className={`w-3.5 h-3.5 text-blue-600 ${isConnectingWallet ? 'animate-spin' : ''}`} />
                     Switch Wallet
                   </button>
                   <button
                     type="button"
                     onClick={handleDisconnectWallet}
-                    className="py-1.5 px-3 bg-red-950/40 hover:bg-red-900/50 text-red-300 rounded-lg text-xs font-semibold border border-red-800/40 transition flex items-center gap-1"
+                    className="py-1.5 px-3 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-xs"
                     title="Disconnect this wallet"
                   >
-                    <LogOut className="w-3.5 h-3.5 text-red-400" />
+                    <LogOut className="w-3.5 h-3.5 text-white shrink-0" />
                     Disconnect
                   </button>
                 </div>
-                <p className="text-[10px] text-slate-500">
-                  Switch to any other account in MetaMask anytime. Each image upload binds to your active wallet.
-                </p>
               </div>
             ) : (
               <div className="space-y-2.5">
@@ -320,7 +356,7 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
                   className="w-full py-2.5 px-3 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 shadow transition disabled:opacity-50"
                 >
                   <Wallet className="w-4 h-4" />
-                  {isConnectingWallet ? 'Connecting MetaMask...' : "Connect with User's Wallet (MetaMask)"}
+                  {isConnectingWallet ? 'Connecting Wallet...' : "Connect with User's Wallet"}
                 </button>
               </div>
             )}
@@ -586,23 +622,23 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
               </div>
 
               {/* Image Publisher (MetaMask Anchoring Card) */}
-              <div className="mt-4 p-4 rounded-xl border border-amber-500/30 bg-amber-500/5 space-y-3">
+              <div className="mt-4 p-4 rounded-xl border border-amber-300 bg-amber-50 space-y-3 shadow-xs">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="p-1.5 rounded-lg bg-amber-500/20 text-amber-400">
+                    <span className="p-1.5 rounded-lg bg-amber-100 text-amber-700">
                       <ShieldCheck className="w-4 h-4" />
                     </span>
                     <div>
-                      <h4 className="text-xs font-bold text-amber-300 uppercase tracking-wide">
-                        Image Publisher Role (MetaMask Required)
+                      <h4 className="text-xs font-bold text-amber-900 uppercase tracking-wide">
+                        Image Publisher Role
                       </h4>
-                      <p className="text-[11px] text-slate-400">
-                        Generate zero-knowledge proof and anchor commitment to Sepolia. Publisher pays transaction gas in SepoliaETH.
+                      <p className="text-[11px] text-slate-700">
+                        Generate zero-knowledge proof and anchor commitment to Sepolia.
                       </p>
                     </div>
                   </div>
                   {publisherAccount && (
-                    <span className="text-[10px] font-mono bg-slate-900 border border-slate-800 text-amber-400 px-2 py-0.5 rounded">
+                    <span className="text-[10px] font-mono bg-amber-100 border border-amber-300 text-amber-900 font-semibold px-2 py-0.5 rounded">
                       {publisherAccount.slice(0, 6)}...{publisherAccount.slice(-4)}
                     </span>
                   )}
@@ -689,12 +725,12 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
                         {isPublishing ? (
                           <>
                             <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                            {publishStep || 'Publishing with MetaMask...'}
+                            {publishStep || 'Publishing Proof & Anchor...'}
                           </>
                         ) : (
                           <>
                             <ShieldCheck className="w-3.5 h-3.5" />
-                            Publish Proof &amp; Anchor via MetaMask (Pay Gas)
+                            Publish Proof &amp; Anchor
                           </>
                         )}
                       </button>
