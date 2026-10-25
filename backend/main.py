@@ -80,11 +80,30 @@ async def health_check():
     }
 
 
-@app.get("/")
-async def root():
-    return {
-        "title": settings.PROJECT_NAME,
-        "capstone_title": settings.CAPSTONE_TITLE,
-        "docs_url": "/docs",
-        "health_url": "/api/v1/health",
-    }
+from pathlib import Path
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+from fastapi import HTTPException
+
+dist_dir = Path(__file__).resolve().parent.parent / "frontend" / "dist"
+if dist_dir.exists() and (dist_dir / "index.html").exists():
+    if (dist_dir / "assets").exists():
+        app.mount("/assets", StaticFiles(directory=str(dist_dir / "assets")), name="assets")
+
+    @app.get("/{full_path:path}")
+    async def serve_spa(full_path: str):
+        if full_path.startswith("api/") or full_path in ("docs", "redoc", "openapi.json", "health"):
+            raise HTTPException(status_code=404, detail="Not Found")
+        file_path = dist_dir / full_path
+        if full_path and file_path.exists() and file_path.is_file():
+            return FileResponse(file_path)
+        return FileResponse(dist_dir / "index.html")
+else:
+    @app.get("/")
+    async def root():
+        return {
+            "title": settings.PROJECT_NAME,
+            "capstone_title": settings.CAPSTONE_TITLE,
+            "docs_url": "/docs",
+            "health_url": "/api/v1/health",
+        }

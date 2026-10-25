@@ -1,3 +1,13 @@
+---
+title: MediaProvenance
+emoji: 🛡️
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # ProvenanceLab: Neural Watermark Provenance, Zero-Knowledge Verification, and Blockchain Auditing
 
 **Official Registered Capstone Title**:  
