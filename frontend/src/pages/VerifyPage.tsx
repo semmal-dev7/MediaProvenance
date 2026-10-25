@@ -564,56 +564,53 @@ export const VerifyPage: React.FC = () => {
               </div>
 
               {isDerivativeMedia ? (
-                <div className="p-3.5 bg-amber-500/10 border border-amber-500/30 rounded-lg text-amber-950 text-xs space-y-1.5">
-                  <div className="flex items-center gap-2 font-bold text-amber-800">
-                    <AlertTriangle className="w-4 h-4 text-amber-600" />
-                    Provenance Verified · AI Modification / Derivative Detected (Hypothesis H1)
+                <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg text-xs space-y-1">
+                  <div className="flex items-center gap-2 font-bold text-amber-400">
+                    <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span>AI-Edited Derivative Detected</span>
                   </div>
-                  <p className="text-[11px] text-amber-950 leading-relaxed font-normal">
-                    <strong>Creator Provenance: Confirmed.</strong> The neural watermark survived edits (Bit Error Rate: <span className="font-semibold text-slate-900">{decodeResult.bit_error_rate !== null && decodeResult.bit_error_rate !== undefined ? `${(decodeResult.bit_error_rate * 100).toFixed(1)}%` : 'Low / Robust'}</span>), mathematically proving this derivative image originated from the publisher&apos;s registered artwork.
-                  </p>
-                  <p className="text-[11px] text-amber-900/90 leading-relaxed">
-                    <strong>Content Integrity: Pixel Tampering Detected (SHA-256 Hash Mismatch).</strong> Candidate SHA-256 (<code className="font-mono text-[10px] bg-amber-200/50 px-1 py-0.5 rounded text-amber-950">{cleanSuspectSha ? `0x${cleanSuspectSha.slice(0, 14)}...` : 'Candidate SHA'}</code>) differs from registered Sepolia original (<code className="font-mono text-[10px] bg-amber-200/50 px-1 py-0.5 rounded text-amber-950">{cleanOnChainAsset ? `0x${cleanOnChainAsset.slice(0, 14)}...` : 'Original Anchor'}</code>). This is an AI-edited, deepfaked, or filtered derivative work, not the untouched original.
+                  <p className="text-[11px] text-slate-300 leading-relaxed font-normal">
+                    The watermark confirms this media originated from the registered publisher, but the pixels were modified by AI or editing tools.
                   </p>
                 </div>
               ) : (decodeResult.watermark_detected && (decodeResult.payload_matches === true || isExactOriginal) && !isDerivativeMedia) ? (
-                <div className="p-3.5 bg-emerald-500/10 border border-emerald-500/30 rounded-lg text-emerald-900 text-xs space-y-1">
-                  <div className="flex items-center gap-2 font-bold text-emerald-700">
-                    <CheckCircle2 className="w-4 h-4" />
-                    Exact Original Media Verified (Untouched &amp; Bound)
+                <div className="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-lg text-xs space-y-1">
+                  <div className="flex items-center gap-2 font-bold text-emerald-400">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Authentic Original Media Verified</span>
                   </div>
-                  <p className="text-[11px] text-emerald-950 leading-relaxed font-normal">
-                    Both the watermark signal and the cryptographic SHA-256 file hash match the registered on-chain asset record. Extracted payload <span className="font-mono font-bold text-slate-900">0x{decodeResult.payload_hex}</span> with bit error rate {decodeResult.bit_error_rate !== null ? `${(decodeResult.bit_error_rate * 100).toFixed(1)}%` : '0.0%'}. Zero modifications or pixel tampering detected.
+                  <p className="text-[11px] text-slate-300 leading-relaxed font-normal">
+                    Both the watermark and file hash match the on-chain record. Untouched original with zero modifications.
                   </p>
                 </div>
               ) : (!decodeResult.watermark_detected && decodeResult.payload_matches === false) ? (
-                <div className="p-3.5 bg-rose-500/10 border border-rose-500/30 rounded-lg text-rose-900 text-xs space-y-1">
-                  <div className="flex items-center gap-2 font-bold text-rose-700">
-                    <ShieldAlert className="w-4 h-4" />
-                    Watermark Rejection (Payload Mismatch)
+                <div className="p-3 bg-rose-500/10 border border-rose-500/30 rounded-lg text-xs space-y-1">
+                  <div className="flex items-center gap-2 font-bold text-rose-400">
+                    <ShieldAlert className="w-4 h-4 text-rose-400 shrink-0" />
+                    <span>Watermark Mismatch</span>
                   </div>
-                  <p className="text-[11px] text-rose-950 leading-relaxed">
-                    {decodeResult.error || 'This candidate image does not match the claimed publisher reference payload.'}
+                  <p className="text-[11px] text-slate-300 leading-relaxed">
+                    {decodeResult.error || 'This image does not match the claimed publisher reference watermark.'}
                   </p>
                 </div>
               ) : (decodeResult.payload_hex && (decodeResult.payload_matches === null || decodeResult.payload_matches === undefined)) ? (
-                <div className="p-3.5 bg-blue-500/10 border border-blue-500/30 rounded-lg text-blue-900 text-xs space-y-1">
-                  <div className="flex items-center gap-2 font-bold text-blue-700">
-                    <ShieldCheck className="w-4 h-4" />
-                    Candidate Payload Extracted (Unanchored Claim)
+                <div className="p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg text-xs space-y-1">
+                  <div className="flex items-center gap-2 font-bold text-blue-400">
+                    <ShieldCheck className="w-4 h-4 text-blue-400 shrink-0" />
+                    <span>Candidate Watermark Found</span>
                   </div>
-                  <p className="text-[11px] text-blue-950 leading-relaxed">
-                    Extracted candidate payload <span className="font-mono font-bold text-slate-900">0x{decodeResult.payload_hex}</span> from neural decoder. Provenance is currently unanchored (state H2). Click &ldquo;Audit On-Chain Record (Free)&rdquo; below to verify against Sepolia smart contract.
+                  <p className="text-[11px] text-slate-300 leading-relaxed">
+                    Watermark payload <span className="font-mono text-emerald-400 font-bold">0x{decodeResult.payload_hex}</span> extracted. Click below to audit against Sepolia records.
                   </p>
                 </div>
               ) : (!decodeResult.payload_hex) ? (
-                <div className="p-3.5 bg-rose-500/10 border border-rose-500/30 rounded-lg text-rose-900 text-xs space-y-1">
-                  <div className="flex items-center gap-2 font-bold text-rose-700">
-                    <ShieldAlert className="w-4 h-4" />
-                    No Watermark Recovered
+                <div className="p-3 bg-rose-500/10 border border-rose-500/30 rounded-lg text-xs space-y-1">
+                  <div className="flex items-center gap-2 font-bold text-rose-400">
+                    <ShieldAlert className="w-4 h-4 text-rose-400 shrink-0" />
+                    <span>No Watermark Detected</span>
                   </div>
-                  <p className="text-[11px] text-rose-950 leading-relaxed">
-                    {decodeResult.error || 'No decodable watermark signal was recovered from this candidate image.'}
+                  <p className="text-[11px] text-slate-300 leading-relaxed">
+                    {decodeResult.error || 'No authentic watermark detected on this candidate image.'}
                   </p>
                 </div>
               ) : null}
@@ -624,10 +621,7 @@ export const VerifyPage: React.FC = () => {
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-blue-300 uppercase tracking-wide flex items-center gap-1.5">
                       <ShieldCheck className="w-4 h-4 text-blue-400" />
-                      Image Verifier Role (Free / Zero Gas)
-                    </span>
-                    <span className="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded font-mono font-bold">
-                      Gas Fee: 0.00 ETH ($0.00)
+                      Image Verifier Role
                     </span>
                   </div>
 
@@ -643,12 +637,12 @@ export const VerifyPage: React.FC = () => {
                     {isVerifyingFree ? (
                       <>
                         <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                        Querying Sepolia Contract (Free)...
+                        Querying Sepolia Contract...
                       </>
                     ) : (
                       <>
                         <Blocks className="w-3.5 h-3.5" />
-                        Audit On-Chain Record (Free / 0 Gas)
+                        Audit On-Chain Record
                       </>
                     )}
                   </button>
@@ -676,7 +670,6 @@ export const VerifyPage: React.FC = () => {
                             'Not Yet Anchored On-Chain'
                           )}
                         </span>
-                        <span className="text-[10px] text-slate-500 font-mono">Cost: 0 Gas</span>
                       </div>
 
                       {onChainRecord.exists ? (
