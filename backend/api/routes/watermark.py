@@ -156,22 +156,23 @@ async def decode_watermark(
                     trusted_from_registry = True
                     break
 
+
     # Execute carrier decode
     try:
-    dec_res = c.decode(
-        image,
-        reference_payload_hex=effective_ref_payload,
-    )
-except Exception as exc:
-    logger.exception(
-        "Watermark decoding failed: carrier=%s, filename=%s",
-        carrier,
-        file.filename,
-    )
-    raise HTTPException(
-        status_code=500,
-        detail="Watermark decoding failed. Check server logs.",
-    ) from exc
+        dec_res = c.decode(
+            image,
+            reference_payload_hex=effective_ref_payload,
+        )
+    except Exception as exc:
+        logger.exception(
+            "Watermark decoding failed: carrier=%s, filename=%s",
+            carrier,
+            file.filename,
+        )
+        raise HTTPException(
+            status_code=500,
+            detail="Watermark decoding failed. Check server logs.",
+        ) from exc
 
     # Cache candidate image features for downstream ZK proof generation
     try:
