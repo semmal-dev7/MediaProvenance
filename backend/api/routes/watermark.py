@@ -1,18 +1,18 @@
+
 """
 ProvenanceLab — Watermark Embedding & Decoding API Routes
 """
-import logging
-
-logger = logging.getLogger(__name__)
-
 from __future__ import annotations
 
+import logging
 import base64
 import io
 import math
 from typing import Optional
 
 import numpy as np
+
+logger = logging.getLogger(__name__)
 
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 from PIL import Image
