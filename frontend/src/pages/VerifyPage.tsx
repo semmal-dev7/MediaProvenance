@@ -1050,29 +1050,40 @@ export const VerifyPage: React.FC = () => {
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                       2. Original Registered Media
                     </span>
-                    <button
-                      type="button"
-                      onClick={handleDownloadIpfsImage}
-                      className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white rounded border border-slate-700 text-[11px] font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-sm"
-                      title="Download original authentic media from IPFS"
-                    >
-                      <Download className="w-3.5 h-3.5 text-emerald-400" />
-                      Download
-                    </button>
+                    {(decodeResult.original_image_base64 || decodeResult.original_image_url || decodeResult.original_ipfs_cid) && (
+                      <button
+                        type="button"
+                        onClick={handleDownloadIpfsImage}
+                        className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white rounded border border-slate-700 text-[11px] font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-sm"
+                        title="Download original authentic media from IPFS"
+                      >
+                        <Download className="w-3.5 h-3.5 text-emerald-400" />
+                        Download
+                      </button>
+                    )}
                   </div>
-                  <div className="aspect-video bg-slate-900 rounded border border-slate-800 overflow-hidden flex items-center justify-center">
-                    <img
-                      src={decodeResult.original_image_base64 || decodeResult.original_image_url || (decodeResult.original_ipfs_cid ? `https://gateway.pinata.cloud/ipfs/${decodeResult.original_ipfs_cid}` : preview!)}
-                      alt="Original from IPFS"
-                      className="max-h-full object-contain"
-                    />
-                  </div>
-                  <div className="text-[11px] font-mono text-blue-700 font-semibold truncate select-all" title={decodeResult.original_ipfs_cid ? `ipfs://${decodeResult.original_ipfs_cid}` : undefined}>
-                    <span className="text-slate-500 mr-1 select-none font-normal">CID:</span>
-                    {decodeResult.original_ipfs_cid 
-                      ? `ipfs://${decodeResult.original_ipfs_cid}` 
-                      : `ipfs://Qm${(cleanOnChainAsset || cleanSuspectSha || 'PcuzdU7r322tSnAsNzT5BK6bVdMARi8NHu9aQL6yX6UW').slice(0, 44)}`}
-                  </div>
+                  {(decodeResult.original_image_base64 || decodeResult.original_image_url || decodeResult.original_ipfs_cid) ? (
+                    <>
+                      <div className="aspect-video bg-slate-900 rounded border border-slate-800 overflow-hidden flex items-center justify-center">
+                        <img
+                          src={decodeResult.original_image_base64 || decodeResult.original_image_url || `https://gateway.pinata.cloud/ipfs/${decodeResult.original_ipfs_cid}`}
+                          alt="Original from IPFS"
+                          className="max-h-full object-contain"
+                        />
+                      </div>
+                      <div className="text-[11px] font-mono text-blue-700 font-semibold truncate select-all" title={decodeResult.original_ipfs_cid ? `ipfs://${decodeResult.original_ipfs_cid}` : undefined}>
+                        <span className="text-slate-500 mr-1 select-none font-normal">CID:</span>
+                        {decodeResult.original_ipfs_cid ? `ipfs://${decodeResult.original_ipfs_cid}` : 'ipfs://Pinata-Registered'}
+                      </div>
+                    </>
+                  ) : (
+                    <div className="aspect-video bg-slate-900/60 rounded border border-dashed border-slate-700 p-4 flex flex-col items-center justify-center text-center space-y-1.5">
+                      <span className="text-amber-400 text-xs font-semibold">No Registered IPFS Provenance Record</span>
+                      <p className="text-[11px] text-slate-400 max-w-xs">
+                        This media watermark is not anchored to any publisher image in Pinata Cloud or Sepolia ledger.
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

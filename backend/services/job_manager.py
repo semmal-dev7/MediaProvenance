@@ -423,7 +423,8 @@ class JobManager:
         if payload_hex:
             clean_payload = payload_hex.lower().replace("0x", "").strip()
             for asset_key, meta in self._embedded_assets.items():
-                if meta.get("payload_hex") == clean_payload:
+                p_hex = meta if isinstance(meta, str) else (meta.get("payload_hex") if isinstance(meta, dict) else "")
+                if p_hex and p_hex.lower().replace("0x", "").strip() == clean_payload:
                     formatted_key = f"0x{asset_key}" if not asset_key.startswith("0x") else asset_key
                     if formatted_key.lower() in self._anchors:
                         return self._anchors[formatted_key.lower()]
@@ -625,6 +626,8 @@ class JobManager:
     ) -> AnchorRecord:
         """Register an on-chain anchor submitted directly via the publisher's MetaMask."""
         normalized_asset_id = asset_id.lower()
+        clean_aid = normalized_asset_id.replace("0x", "").strip()
+        meta = self.get_embedded_asset_meta(clean_aid) or self.get_embedded_asset_meta(normalized_asset_id)
         rec = AnchorRecord(
             asset_id=asset_id,
             commitment=commitment,
@@ -638,6 +641,9 @@ class JobManager:
             is_onchain=True,
             is_simulated=False,
             status="CONFIRMED_ON_CHAIN",
+            payload_hex=meta.get("payload_hex") if meta else None,
+            ipfs_cid=meta.get("ipfs_cid") if meta else None,
+            ipfs_url=meta.get("ipfs_url") if meta else None,
         )
         self._anchors[normalized_asset_id] = rec
         self._save_ledger()
@@ -752,7 +758,8 @@ class JobManager:
             return anchor.payload_hex
         clean_aid = anchor.asset_id.lower().replace("0x", "").strip()
         if clean_aid in self._embedded_assets:
-            return self._embedded_assets[clean_aid]
+            val = self._embedded_assets[clean_aid]
+            return val.get("payload_hex") if isinstance(val, dict) else val
         for job in self._jobs.values():
             if job.image_sha256.lower().replace("0x", "").strip() == clean_aid:
                 return job.payload_hex

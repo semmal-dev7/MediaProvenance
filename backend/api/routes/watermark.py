@@ -233,7 +233,8 @@ async def decode_watermark(
                 anchor = root_anchor
                 anchor_found = True
                 registered_anchor_dict = anchor.__dict__
-                original_anchor_payload = job_manager.get_payload_for_anchor(anchor)
+                raw_anc_pay = job_manager.get_payload_for_anchor(anchor)
+                original_anchor_payload = raw_anc_pay.get("payload_hex") if isinstance(raw_anc_pay, dict) else raw_anc_pay
                 if not effective_ref_payload:
                     effective_ref_payload = original_anchor_payload or dec_res.payload_hex
                     trusted_from_registry = True
@@ -353,9 +354,18 @@ async def decode_watermark(
                         meta = job_manager.get_embedded_asset_meta(aid)
                         break
         if not meta and effective_ref_payload:
+            clean_eff = str(effective_ref_payload).lower().replace("0x", "").strip()
             for aid, p in job_manager._embedded_assets.items():
                 p_val = p if isinstance(p, str) else p.get("payload_hex", "")
-                if p_val == effective_ref_payload.lower().replace("0x", "").strip():
+                if p_val and (p_val == clean_eff or p_val.startswith(clean_eff) or clean_eff.startswith(p_val)):
+                    meta = job_manager.get_embedded_asset_meta(aid)
+                    break
+
+        if not meta and dec_res.payload_hex:
+            clean_dec = str(dec_res.payload_hex).lower().replace("0x", "").strip()
+            for aid, p in job_manager._embedded_assets.items():
+                p_val = p if isinstance(p, str) else p.get("payload_hex", "")
+                if p_val and (p_val == clean_dec or p_val.startswith(clean_dec) or clean_dec.startswith(p_val)):
                     meta = job_manager.get_embedded_asset_meta(aid)
                     break
 
@@ -371,8 +381,8 @@ async def decode_watermark(
                 original_image_base64 = ipfs_service.get_image_base64(original_ipfs_cid)
             except Exception as e:
                 logger.warning("Could not encode original IPFS image base64: %s", e)
-        else:
-            # Auto-pin/cache existing asset to IPFS so it is immediately available
+        elif is_exact_original and anchor:
+            # Auto-pin authentic pristine original asset if not yet pinned
             try:
                 ipfs_pin = ipfs_service.pin_image(
                     image_bytes=contents,
