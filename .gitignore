@@ -106,3 +106,5 @@ models/onnx/*.data
 
 # Local compiler binaries
 bin/*.exe
+
+data/ipfs/

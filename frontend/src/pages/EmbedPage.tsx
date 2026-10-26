@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Upload, Cpu, Download, ArrowRight, ShieldCheck, RefreshCw, CheckCircle, Image as ImageIcon, Wallet, AlertCircle, LogOut } from 'lucide-react';
+import { Upload, Cpu, Download, ArrowRight, ShieldCheck, RefreshCw, CheckCircle, Image as ImageIcon, Wallet, AlertCircle, LogOut, ExternalLink } from 'lucide-react';
 import { connectMetaMask, switchMetaMaskAccount, anchorWithMetaMask, getConnectedAccount } from '../services/web3';
 
 interface EmbedPageProps {
@@ -600,6 +600,17 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
                   0x{embedResult.image_sha256}
                 </code>
               </div>
+              {/* Pinata IPFS Decentralized Storage Badge */}
+              {embedResult.ipfs_cid && (
+                <div className="p-3 bg-slate-950 rounded-lg border border-slate-800 text-xs">
+                  <span className="text-slate-400 block mb-1 font-semibold text-[11px]">
+                    Decentralized IPFS Content ID (CID):
+                  </span>
+                  <code className="text-blue-300 font-mono text-[11px] break-all select-all block">
+                    {embedResult.ipfs_cid}
+                  </code>
+                </div>
+              )}
 
               {/* Actions */}
               <div className="flex flex-wrap gap-3 pt-2">

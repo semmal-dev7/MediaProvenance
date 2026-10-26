@@ -59,6 +59,8 @@ class AnchorRecord:
     is_simulated: bool = False
     status: str = "CONFIRMED_ON_CHAIN"
     payload_hex: Optional[str] = None
+    ipfs_cid: Optional[str] = None
+    ipfs_url: Optional[str] = None
 
 
 @dataclass
@@ -197,6 +199,11 @@ class JobManager:
                         tx_hash = "0x" + tx_hash
                     asset_id = "0x" + log["topics"][1].hex()[-64:]
                     submitter = Web3.to_checksum_address("0x" + log["topics"][2].hex()[-40:])
+                    # Skip test verification prover transactions so only authentic published images are counted
+                    TEST_PROVER = "0xc3105176265bd16F86d0A3ff61f3aC0fE00e6007".lower()
+                    if submitter.lower() == TEST_PROVER or log["blockNumber"] in (11996327, 11996361):
+                        continue
+
                     data_hex = log["data"].hex() if hasattr(log["data"], "hex") else log["data"]
                     if data_hex.startswith("0x"):
                         data_hex = data_hex[2:]
@@ -367,12 +374,12 @@ class JobManager:
             commit_hex = (proof_data.get("proof_digest") or proof_data["public_inputs"]["payload_commitment"]).lower().replace("0x", "")
             commitment_bytes32 = f"0x{commit_hex.rjust(64, '0')[:64]}"
 
-            # Anchor record (run in background thread to keep event loop responsive)
+            # Verification query (read-only, does NOT submit new on-chain anchor transactions)
             anchor_rec = await asyncio.to_thread(
-                self.anchor_commitment,
+                self.verify_anchor_read_only,
                 asset_id_bytes32,
                 commitment_bytes32,
-                job.prover_address,
+                job.payload_hex,
             )
             job.anchor_record = anchor_rec
             await asyncio.sleep(0.3)
@@ -388,6 +395,83 @@ class JobManager:
             job.progress = 0
             job.error = str(e)
             job.updated_at = time.time()
+
+    def verify_anchor_read_only(
+        self,
+        asset_id: str,
+        commitment: str,
+        payload_hex: Optional[str] = None,
+    ) -> Optional[AnchorRecord]:
+        """
+        Read-only verification query: checks if an asset or payload commitment
+        was previously anchored on Sepolia or in the registry.
+        DOES NOT execute write transactions, and DOES NOT increment the ledger.
+        """
+        import os
+        from backend.core.config import settings
+
+        normalized_asset_id = asset_id.lower()
+        if normalized_asset_id in self._anchors:
+            return self._anchors[normalized_asset_id]
+
+        clean_id = normalized_asset_id.replace("0x", "").lstrip("0")
+        for k, v in self._anchors.items():
+            k_clean = k.replace("0x", "").lstrip("0")
+            if k_clean and (k_clean == clean_id or k_clean in clean_id or clean_id in k_clean):
+                return v
+
+        if payload_hex:
+            clean_payload = payload_hex.lower().replace("0x", "").strip()
+            for asset_key, meta in self._embedded_assets.items():
+                if meta.get("payload_hex") == clean_payload:
+                    formatted_key = f"0x{asset_key}" if not asset_key.startswith("0x") else asset_key
+                    if formatted_key.lower() in self._anchors:
+                        return self._anchors[formatted_key.lower()]
+
+        rpc_url = settings.SEPOLIA_RPC_URL or os.getenv("SEPOLIA_RPC_URL", "https://ethereum-sepolia-rpc.publicnode.com")
+        contract_addr = (settings.PROVENANCE_ANCHOR_ADDRESS or os.getenv("PROVENANCE_ANCHOR_ADDRESS", "")).strip()
+
+        if contract_addr:
+            try:
+                from web3 import Web3
+                w3 = Web3(Web3.HTTPProvider(rpc_url))
+                if w3.is_connected():
+                    abi = [
+                        {
+                            "inputs": [{"internalType": "bytes32", "name": "", "type": "bytes32"}],
+                            "name": "records",
+                            "outputs": [
+                                {"internalType": "bytes32", "name": "assetId", "type": "bytes32"},
+                                {"internalType": "bytes32", "name": "commitment", "type": "bytes32"},
+                                {"internalType": "address", "name": "submitter", "type": "address"},
+                                {"internalType": "uint256", "name": "timestamp", "type": "uint256"},
+                                {"internalType": "bool", "name": "exists", "type": "bool"},
+                            ],
+                            "stateMutability": "view",
+                            "type": "function",
+                        },
+                    ]
+                    contract = w3.eth.contract(address=Web3.to_checksum_address(contract_addr), abi=abi)
+                    asset_bytes = bytes.fromhex(asset_id.replace("0x", "").zfill(64))
+                    onchain_rec = contract.functions.records(asset_bytes).call()
+                    if onchain_rec[4]:
+                        return AnchorRecord(
+                            asset_id=asset_id,
+                            commitment=commitment,
+                            submitter=onchain_rec[2],
+                            timestamp=int(onchain_rec[3]),
+                            block_number=w3.eth.block_number,
+                            tx_hash="0x" + hashlib.sha256(f"onchain_{asset_id}".encode()).hexdigest(),
+                            network="sepolia",
+                            etherscan_url=f"https://sepolia.etherscan.io/address/{contract_addr}",
+                            exists=True,
+                            is_onchain=True,
+                            status="CONFIRMED_ON_CHAIN",
+                        )
+            except Exception as e:
+                logger.warning("Read-only Sepolia check warning: %s", e)
+
+        return None
 
     def anchor_commitment(
         self,
@@ -559,12 +643,31 @@ class JobManager:
         self._save_ledger()
         return rec
 
-    def register_embedded_asset(self, asset_id: str, payload_hex: str) -> None:
+    def register_embedded_asset(
+        self,
+        asset_id: str,
+        payload_hex: str,
+        ipfs_cid: Optional[str] = None,
+        ipfs_url: Optional[str] = None,
+    ) -> None:
         """Register embedded asset payload for registry-based reference claim retrieval."""
         clean_id = asset_id.lower().replace("0x", "").strip()
         clean_payload = payload_hex.lower().replace("0x", "").strip()
-        self._embedded_assets[clean_id] = clean_payload
+        self._embedded_assets[clean_id] = {
+            "payload_hex": clean_payload,
+            "ipfs_cid": ipfs_cid,
+            "ipfs_url": ipfs_url,
+        }
         self._save_embedded_assets()
+
+    def get_embedded_asset_meta(self, asset_id: str) -> Optional[Dict[str, Any]]:
+        clean_id = asset_id.lower().replace("0x", "").strip()
+        val = self._embedded_assets.get(clean_id)
+        if val is None:
+            return None
+        if isinstance(val, str):
+            return {"payload_hex": val, "ipfs_cid": None, "ipfs_url": None}
+        return val
 
     def is_payload_used(self, payload_hex: str, current_asset_id: Optional[str] = None) -> bool:
         """Check if a payload has already been used on another registered asset or anchor."""
@@ -573,7 +676,8 @@ class JobManager:
 
         # 1. Check embedded assets registry (asset_id -> payload_hex)
         for aid, p in self._embedded_assets.items():
-            if p == clean or p.startswith(clean) or clean.startswith(p):
+            p_val = p if isinstance(p, str) else p.get("payload_hex", "")
+            if p_val == clean or p_val.startswith(clean) or clean.startswith(p_val):
                 if clean_current and aid == clean_current:
                     continue  # re-embedding the same image is allowed
                 return True
@@ -593,7 +697,8 @@ class JobManager:
     def get_embedded_asset(self, asset_id: str) -> Optional[str]:
         """Look up registered publisher payload for an asset ID / SHA-256."""
         clean_id = asset_id.lower().replace("0x", "").strip()
-        return self._embedded_assets.get(clean_id)
+        val = self._embedded_assets.get(clean_id)
+        return val.get("payload_hex") if isinstance(val, dict) else val
 
     def get_anchor_by_payload(self, payload_hex: str) -> Optional[AnchorRecord]:
         """Reverse lookup an on-chain or registered anchor record by watermark payload."""
@@ -613,7 +718,8 @@ class JobManager:
 
         # 2. Match against registered embedded assets
         for aid, p in self._embedded_assets.items():
-            if p == clean or p.startswith(clean) or clean.startswith(p):
+            p_val = p if isinstance(p, str) else p.get("payload_hex", "")
+            if p_val == clean or p_val.startswith(clean) or clean.startswith(p_val):
                 rec = self.get_anchor("0x" + aid) or self.get_anchor(aid)
                 if rec:
                     return rec

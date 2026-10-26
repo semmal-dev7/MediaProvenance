@@ -109,13 +109,40 @@ async def encode_watermark(
     except Exception as e:
         logger.warning("Could not cache features for ZK: %s", e)
 
+    # Pin watermarked image to Pinata IPFS decentralized storage
+    ipfs_info = {"cid": None, "gateway_url": None}
+    try:
+        from backend.services.ipfs_service import ipfs_service
+        ipfs_info = ipfs_service.pin_image(
+            image_bytes=buf.getvalue(),
+            filename=f"watermarked_{sha256[:10]}.png",
+            metadata={
+                "asset_id": sha256,
+                "carrier": carrier,
+                "payload_hex": payload_hex,
+                "psnr_db": enc_res.psnr_db,
+            },
+        )
+    except Exception as e:
+        logger.warning("Could not pin watermarked media to IPFS: %s", e)
+
     # Register embedded asset in publisher registry for automated provenance retrieval
     try:
         import hashlib
         from backend.services.job_manager import job_manager
-        job_manager.register_embedded_asset(sha256, payload_hex)
+        job_manager.register_embedded_asset(
+            sha256,
+            payload_hex,
+            ipfs_cid=ipfs_info.get("cid"),
+            ipfs_url=ipfs_info.get("gateway_url"),
+        )
         raw_png_sha = hashlib.sha256(buf.getvalue()).hexdigest()
-        job_manager.register_embedded_asset(raw_png_sha, payload_hex)
+        job_manager.register_embedded_asset(
+            raw_png_sha,
+            payload_hex,
+            ipfs_cid=ipfs_info.get("cid"),
+            ipfs_url=ipfs_info.get("gateway_url"),
+        )
     except Exception as e:
         logger.warning("Could not register embedded asset in registry: %s", e)
 
@@ -130,6 +157,8 @@ async def encode_watermark(
         image_sha256=sha256,
         image_features=feats,
         watermarked_image_base64=f"data:image/png;base64,{b64_img}",
+        ipfs_cid=ipfs_info.get("cid"),
+        ipfs_url=ipfs_info.get("gateway_url"),
     )
 
 
@@ -307,6 +336,62 @@ async def decode_watermark(
     if not is_detected and not failure_reason:
         failure_reason = dec_res.error or "NO_WATERMARK_SIGNAL_DETECTED"
 
+    # Resolve or generate original image IPFS CID whenever watermark or anchor matches
+    original_ipfs_cid = None
+    original_ipfs_url = None
+    original_image_url = None
+    original_image_base64 = None
+
+    if is_detected and (payload_matches or anchor_found or is_exact_original or is_derivative):
+        meta = None
+        if anchor:
+            meta = job_manager.get_embedded_asset_meta(anchor.asset_id)
+            if not meta and anchor.payload_hex:
+                for aid, p in job_manager._embedded_assets.items():
+                    p_val = p if isinstance(p, str) else p.get("payload_hex", "")
+                    if p_val == anchor.payload_hex.lower().replace("0x", "").strip():
+                        meta = job_manager.get_embedded_asset_meta(aid)
+                        break
+        if not meta and effective_ref_payload:
+            for aid, p in job_manager._embedded_assets.items():
+                p_val = p if isinstance(p, str) else p.get("payload_hex", "")
+                if p_val == effective_ref_payload.lower().replace("0x", "").strip():
+                    meta = job_manager.get_embedded_asset_meta(aid)
+                    break
+
+        from backend.services.ipfs_service import ipfs_service
+        target_aid = (anchor.asset_id if anchor else clean_sha).lower().replace("0x", "")
+        target_payload = (effective_ref_payload or dec_res.payload_hex or "").lower().replace("0x", "")
+
+        if meta and meta.get("ipfs_cid"):
+            original_ipfs_cid = meta["ipfs_cid"]
+            original_ipfs_url = meta.get("ipfs_url") or f"https://{settings.PINATA_GATEWAY}/ipfs/{original_ipfs_cid}"
+            original_image_url = f"/api/v1/ipfs/{original_ipfs_cid}"
+            try:
+                original_image_base64 = ipfs_service.get_image_base64(original_ipfs_cid)
+            except Exception as e:
+                logger.warning("Could not encode original IPFS image base64: %s", e)
+        else:
+            # Auto-pin/cache existing asset to IPFS so it is immediately available
+            try:
+                ipfs_pin = ipfs_service.pin_image(
+                    image_bytes=contents,
+                    filename=f"provenance_{target_aid[:10]}.png",
+                    metadata={"asset_id": target_aid, "payload_hex": target_payload}
+                )
+                original_ipfs_cid = ipfs_pin["cid"]
+                original_ipfs_url = ipfs_pin["gateway_url"]
+                original_image_url = f"/api/v1/ipfs/{original_ipfs_cid}"
+                original_image_base64 = ipfs_service.get_image_base64(original_ipfs_cid)
+                job_manager.register_embedded_asset(
+                    target_aid,
+                    target_payload,
+                    ipfs_cid=original_ipfs_cid,
+                    ipfs_url=original_ipfs_url
+                )
+            except Exception as e:
+                logger.warning("Could not auto-pin candidate to IPFS: %s", e)
+
     return DecodeResponse(
         success=True,
         decodable=dec_res.decodable,
@@ -338,5 +423,9 @@ async def decode_watermark(
         is_derivative=is_derivative,
         tamper_detected=tamper_detected,
         original_asset_id=original_asset_id,
+        original_ipfs_cid=original_ipfs_cid,
+        original_ipfs_url=original_ipfs_url,
+        original_image_url=original_image_url,
+        original_image_base64=original_image_base64,
         error=dec_res.error,
     )

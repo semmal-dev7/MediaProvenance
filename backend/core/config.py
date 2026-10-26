@@ -40,6 +40,10 @@ class Settings(BaseSettings):
     PROVENANCE_ANCHOR_ADDRESS: str = ""
     PROVENANCE_AUDIT_ADDRESS: str = ""
 
+    # Pinata IPFS Configuration
+    PINATA_JWT: str = os.getenv("PINATA_JWT", "")
+    PINATA_GATEWAY: str = os.getenv("PINATA_GATEWAY", "gateway.pinata.cloud")
+
     class Config:
         case_sensitive = True
         env_file = ".env"

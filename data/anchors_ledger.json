@@ -12,7 +12,9 @@
     "is_onchain": true,
     "is_simulated": false,
     "status": "CONFIRMED_ON_CHAIN",
-    "payload_hex": null
+    "payload_hex": null,
+    "ipfs_cid": null,
+    "ipfs_url": null
   },
   {
     "asset_id": "0x0fe835c7e3052f37d8b882e75f64900d3128ee1e6ccf5ce891473341c7152b38",
@@ -27,7 +29,9 @@
     "is_onchain": true,
     "is_simulated": false,
     "status": "CONFIRMED_ON_CHAIN",
-    "payload_hex": null
+    "payload_hex": null,
+    "ipfs_cid": null,
+    "ipfs_url": null
   },
   {
     "asset_id": "0xb6e5e1b507985ff03fe48a81a288992ee8ba23dfd88d433d282c76ab86d59daa",
@@ -42,7 +46,9 @@
     "is_onchain": true,
     "is_simulated": false,
     "status": "CONFIRMED_ON_CHAIN",
-    "payload_hex": null
+    "payload_hex": null,
+    "ipfs_cid": null,
+    "ipfs_url": null
   },
   {
     "asset_id": "0x97972a6ca1244c37d864e42f1fbd72535019dfdf1f8c28495bd483d55752916f",
@@ -57,7 +63,9 @@
     "is_onchain": true,
     "is_simulated": false,
     "status": "CONFIRMED_ON_CHAIN",
-    "payload_hex": "a5123456789abcdef01234567"
+    "payload_hex": "a5123456789abcdef01234567",
+    "ipfs_cid": null,
+    "ipfs_url": null
   },
   {
     "asset_id": "0x08c0594015521541481db6bffef7cd0d435c8e8324199da781cff34487f45a6f",
@@ -72,7 +80,9 @@
     "is_onchain": true,
     "is_simulated": false,
     "status": "CONFIRMED_ON_CHAIN",
-    "payload_hex": null
+    "payload_hex": null,
+    "ipfs_cid": null,
+    "ipfs_url": null
   },
   {
     "asset_id": "0xe7234822d9e59b9587f3f2da6ae28f6603b36758f81dd6eb14fa5f782d14aac5",
@@ -87,7 +97,9 @@
     "is_onchain": true,
     "is_simulated": false,
     "status": "CONFIRMED_ON_CHAIN",
-    "payload_hex": null
+    "payload_hex": null,
+    "ipfs_cid": null,
+    "ipfs_url": null
   },
   {
     "asset_id": "0x0854e4d370a787c4f6922b68318aa4c10c3b98f4d5ec8a573a8529fdf634d8c5",
@@ -102,7 +114,9 @@
     "is_onchain": true,
     "is_simulated": false,
     "status": "CONFIRMED_ON_CHAIN",
-    "payload_hex": null
+    "payload_hex": null,
+    "ipfs_cid": null,
+    "ipfs_url": null
   },
   {
     "asset_id": "0xe07909a833588f6436c00f984e9aa0e0702771490064fbb788af7f3b7d925636",
@@ -117,7 +131,9 @@
     "is_onchain": true,
     "is_simulated": false,
     "status": "CONFIRMED_ON_CHAIN",
-    "payload_hex": null
+    "payload_hex": null,
+    "ipfs_cid": null,
+    "ipfs_url": null
   },
   {
     "asset_id": "0xcb26a0d7bb0dee8c600c0fe2fabfd826dd1115944df309bc3d7c20765b93ea10",
@@ -132,7 +148,9 @@
     "is_onchain": true,
     "is_simulated": false,
     "status": "CONFIRMED_ON_CHAIN",
-    "payload_hex": "a5620d3fbae33c003a3a06575"
+    "payload_hex": "a5620d3fbae33c003a3a06575",
+    "ipfs_cid": null,
+    "ipfs_url": null
   },
   {
     "asset_id": "0xce4a3c72340d0f1b947bf69c095ba736ff374261c2d6178de151a9f3e925d322",
@@ -147,7 +165,9 @@
     "is_onchain": true,
     "is_simulated": false,
     "status": "CONFIRMED_ON_CHAIN",
-    "payload_hex": "a5620d3fbae33c003a3a06575"
+    "payload_hex": "a5620d3fbae33c003a3a06575",
+    "ipfs_cid": null,
+    "ipfs_url": null
   },
   {
     "asset_id": "0x791a9e12dbeef5aeed70ba520e6feb667e400d968c514d0c7ecd0028416acbe9",
@@ -162,7 +182,9 @@
     "is_onchain": true,
     "is_simulated": false,
     "status": "CONFIRMED_ON_CHAIN",
-    "payload_hex": "a5620d3fbae33c003a3a06575"
+    "payload_hex": "a5620d3fbae33c003a3a06575",
+    "ipfs_cid": null,
+    "ipfs_url": null
   },
   {
     "asset_id": "0xc6cf636895d7f1d79c20306e745340878846f4fcda8fdc49fde8697fb0636037",
@@ -177,7 +199,9 @@
     "is_onchain": true,
     "is_simulated": false,
     "status": "CONFIRMED_ON_CHAIN",
-    "payload_hex": "a5620d3fbae33c003a3a06575"
+    "payload_hex": "a5620d3fbae33c003a3a06575",
+    "ipfs_cid": null,
+    "ipfs_url": null
   },
   {
     "asset_id": "0x1cb16bb27afd7425ccbca793bb52c867ad50ce56f0fde65a895b285378307475",
@@ -192,7 +216,9 @@
     "is_onchain": true,
     "is_simulated": false,
     "status": "CONFIRMED_ON_CHAIN",
-    "payload_hex": null
+    "payload_hex": null,
+    "ipfs_cid": null,
+    "ipfs_url": null
   },
   {
     "asset_id": "0xfb9131c5187780d9ce0bd4133ef20bff85a26921b5a5022fda0db104ef2cda87",
@@ -207,7 +233,9 @@
     "is_onchain": true,
     "is_simulated": false,
     "status": "CONFIRMED_ON_CHAIN",
-    "payload_hex": null
+    "payload_hex": null,
+    "ipfs_cid": null,
+    "ipfs_url": null
   },
   {
     "asset_id": "0xc147e8b6c73d28256f484ba6bf1377efb78d54776f455c3564c5723735a9ecbb",
@@ -222,7 +250,9 @@
     "is_onchain": true,
     "is_simulated": false,
     "status": "CONFIRMED_ON_CHAIN",
-    "payload_hex": null
+    "payload_hex": null,
+    "ipfs_cid": null,
+    "ipfs_url": null
   },
   {
     "asset_id": "0xe765be9cd4f47e1bc53b54ccb4af4cf6fb2856ecdbd9b8a720a45eb31b645530",
@@ -237,7 +267,9 @@
     "is_onchain": true,
     "is_simulated": false,
     "status": "CONFIRMED_ON_CHAIN",
-    "payload_hex": null
+    "payload_hex": null,
+    "ipfs_cid": null,
+    "ipfs_url": null
   },
   {
     "asset_id": "0x2624d7e93a9eac969601b4eca25888f57eb69b9d13302854d3743eabafb425f1",
@@ -252,7 +284,9 @@
     "is_onchain": true,
     "is_simulated": false,
     "status": "CONFIRMED_ON_CHAIN",
-    "payload_hex": null
+    "payload_hex": null,
+    "ipfs_cid": null,
+    "ipfs_url": null
   },
   {
     "asset_id": "0x9460c5797c0deb409a9df1fa4102c694cf72898fac4e3df37efda63be208e3d6",
@@ -267,7 +301,9 @@
     "is_onchain": true,
     "is_simulated": false,
     "status": "CONFIRMED_ON_CHAIN",
-    "payload_hex": null
+    "payload_hex": null,
+    "ipfs_cid": null,
+    "ipfs_url": null
   },
   {
     "asset_id": "0xc43540d2b7c6e5b49607e2ec629c78e685d91ca40040163fc0018d505c3d2dca",
@@ -282,7 +318,9 @@
     "is_onchain": true,
     "is_simulated": false,
     "status": "CONFIRMED_ON_CHAIN",
-    "payload_hex": null
+    "payload_hex": null,
+    "ipfs_cid": null,
+    "ipfs_url": null
   },
   {
     "asset_id": "0xfbd0a8b036f43bf0d2c074720a697c2abb291f23b4bc282d038947d79a057d10",
@@ -297,7 +335,9 @@
     "is_onchain": true,
     "is_simulated": false,
     "status": "CONFIRMED_ON_CHAIN",
-    "payload_hex": null
+    "payload_hex": null,
+    "ipfs_cid": null,
+    "ipfs_url": null
   },
   {
     "asset_id": "0xa39c3fd198ed285040ed0c6c5b0f2866306ee53e3e98ff348e2e1597bd4a2ab0",
@@ -312,7 +352,9 @@
     "is_onchain": true,
     "is_simulated": false,
     "status": "CONFIRMED_ON_CHAIN",
-    "payload_hex": null
+    "payload_hex": null,
+    "ipfs_cid": null,
+    "ipfs_url": null
   },
   {
     "asset_id": "0x829626773756267a96089c985ec0c8948101df94c37ecac9daa5bdd8be3a76df",
@@ -327,7 +369,9 @@
     "is_onchain": true,
     "is_simulated": false,
     "status": "CONFIRMED_ON_CHAIN",
-    "payload_hex": null
+    "payload_hex": null,
+    "ipfs_cid": null,
+    "ipfs_url": null
   },
   {
     "asset_id": "0x33d6285e86f4776d7bd246858dfd5814152a84f2b3ced2e5bf7656f0b14759f7",
@@ -342,6 +386,8 @@
     "is_onchain": false,
     "is_simulated": false,
     "status": "LOCAL_SANDBOX_UNCONFIRMED",
-    "payload_hex": null
+    "payload_hex": null,
+    "ipfs_cid": null,
+    "ipfs_url": null
   }
 ]

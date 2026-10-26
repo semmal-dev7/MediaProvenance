@@ -24,6 +24,8 @@ class EncodeResponse(BaseModel):
     image_sha256: str
     image_features: Optional[List[float]] = None
     watermarked_image_base64: Optional[str] = None
+    ipfs_cid: Optional[str] = None
+    ipfs_url: Optional[str] = None
     error: Optional[str] = None
 
 
@@ -66,6 +68,10 @@ class DecodeResponse(BaseModel):
     is_derivative: Optional[bool] = None
     tamper_detected: Optional[bool] = None
     original_asset_id: Optional[str] = None
+    original_ipfs_cid: Optional[str] = None
+    original_ipfs_url: Optional[str] = None
+    original_image_url: Optional[str] = None
+    original_image_base64: Optional[str] = None
     error: Optional[str] = None
 
 

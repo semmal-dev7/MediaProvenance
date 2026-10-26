@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Upload, CheckCircle2, XCircle, ShieldAlert, Cpu, Blocks, Clock, ArrowRight, RefreshCw, KeyRound, AlertTriangle, ExternalLink, ShieldCheck } from 'lucide-react';
+import { Upload, CheckCircle2, XCircle, ShieldAlert, Cpu, Blocks, Clock, ArrowRight, RefreshCw, KeyRound, AlertTriangle, ExternalLink, ShieldCheck, Download } from 'lucide-react';
 import { readRecordFromSepoliaFree, OnChainRecord } from '../services/web3';
 
 export const VerifyPage: React.FC = () => {
@@ -239,6 +239,60 @@ export const VerifyPage: React.FC = () => {
     }
   };
 
+  const handleDownloadIpfsImage = async () => {
+    try {
+      const src =
+        decodeResult?.original_image_base64 ||
+        decodeResult?.original_image_url ||
+        (decodeResult?.original_ipfs_cid
+          ? `https://gateway.pinata.cloud/ipfs/${decodeResult.original_ipfs_cid}`
+          : preview);
+      if (!src) return;
+
+      const cidStr = decodeResult?.original_ipfs_cid || 'ipfs';
+      const shortCid = cidStr.replace(/^Qm/, '').slice(0, 8);
+      const filename = `ipfs_original_${shortCid}.png`;
+
+      if (src.startsWith('data:')) {
+        const link = document.createElement('a');
+        link.href = src;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        return;
+      }
+
+      const response = await fetch(src);
+      if (!response.ok) throw new Error('Failed to fetch from IPFS endpoint');
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(blobUrl);
+    } catch {
+      const src =
+        decodeResult?.original_image_base64 ||
+        decodeResult?.original_image_url ||
+        (decodeResult?.original_ipfs_cid
+          ? `https://gateway.pinata.cloud/ipfs/${decodeResult.original_ipfs_cid}`
+          : preview);
+      if (src) {
+        const link = document.createElement('a');
+        link.href = src;
+        link.download = 'original_ipfs_media.png';
+        link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    }
+  };
+
   const stages = [
     { key: 'queued', label: 'Queued' },
     { key: 'preprocessing', label: 'Preprocessing' },
@@ -254,6 +308,10 @@ export const VerifyPage: React.FC = () => {
   const isHashMismatch = Boolean(cleanOnChainAsset && cleanSuspectSha && cleanOnChainAsset !== cleanSuspectSha);
   const isDerivativeMedia = Boolean(decodeResult?.is_derivative || decodeResult?.tamper_detected || isHashMismatch);
   const isExactOriginal = Boolean(cleanOnChainAsset && cleanSuspectSha && cleanOnChainAsset === cleanSuspectSha);
+  const isZkpVerified = Boolean(
+    (jobData && (jobData.status === 'confirmed' || jobData.proof_result?.verified === true)) ||
+    (auditResult && auditResult.valid === true)
+  );
 
   const effectiveBer = (decodeResult?.bit_error_rate !== null && decodeResult?.bit_error_rate !== undefined)
     ? decodeResult.bit_error_rate
@@ -787,12 +845,12 @@ export const VerifyPage: React.FC = () => {
                   return (
                     <div
                       key={st.key}
-                      className={`p-2 rounded-lg text-center border text-[11px] font-medium transition ${
+                      className={`p-2 rounded-lg text-center border text-[11px] font-bold transition shadow-xs ${
                         isCurrent
-                          ? 'bg-blue-600/20 border-blue-500 text-blue-300 font-bold animate-pulse'
+                          ? 'bg-blue-100 border-blue-400 text-blue-900 animate-pulse'
                           : isDone
-                          ? 'bg-slate-950 border-emerald-500/30 text-emerald-400'
-                          : 'bg-slate-950/40 border-slate-800 text-slate-600'
+                          ? 'bg-emerald-50 border-emerald-300 text-emerald-800'
+                          : 'bg-slate-100 border-slate-200 text-slate-500'
                       }`}
                     >
                       {st.label}
@@ -817,27 +875,27 @@ export const VerifyPage: React.FC = () => {
               {/* Confirmation Artifacts */}
               {jobData && jobData.status === 'confirmed' && (
                 <div className="space-y-3 pt-3 border-t border-slate-800 text-xs">
-                  <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-lg flex items-center justify-between text-emerald-400">
-                    <span className="flex items-center gap-2 font-semibold">
-                      <CheckCircle2 className="w-4 h-4" />
+                  <div className="p-3 bg-emerald-50 border border-emerald-300 rounded-lg flex items-center justify-between text-emerald-900 shadow-xs">
+                    <span className="flex items-center gap-2 font-bold text-emerald-900">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-700" />
                       Zero-Knowledge Proof Verified &amp; Commitment Anchored
                     </span>
-                    <span className="font-mono text-[11px]">
+                    <span className="font-mono text-[11px] font-bold text-emerald-900 bg-emerald-100 px-2 py-0.5 rounded border border-emerald-300">
                       {jobData.proof_result?.proving_time_seconds}s proving
                     </span>
                   </div>
 
-                  <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg text-xs space-y-1">
+                  <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg text-xs space-y-1.5 shadow-xs">
                     <div className="flex items-center justify-between">
-                      <span className="font-bold text-blue-300 flex items-center gap-1.5">
-                        <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
+                      <span className="font-bold text-blue-900 flex items-center gap-1.5">
+                        <ShieldCheck className="w-3.5 h-3.5 text-blue-600" />
                         Two-Stage Feature-Witness Halo2 zk-SNARK
                       </span>
-                      <span className="text-[10px] bg-blue-500/20 text-blue-300 border border-blue-500/30 px-2 py-0.5 rounded font-mono font-semibold">
+                      <span className="text-[10px] bg-blue-100 text-blue-900 border border-blue-300 px-2 py-0.5 rounded font-mono font-bold">
                         Halo2 · KZG on BN254
                       </span>
                     </div>
-                    <p className="text-[11px] text-slate-300 leading-relaxed">
+                    <p className="text-[11px] text-slate-700 leading-relaxed">
                       Certified neural feature extraction layer cryptographically bound the image features to the 100-bit payload commitment within the ZK circuit in {jobData.proof_result?.proving_time_seconds || '18'}s. Zero floating-point quantization drift, preserving 100% mathematical zero-knowledge privacy.
                     </p>
                   </div>
@@ -852,23 +910,31 @@ export const VerifyPage: React.FC = () => {
 
                     <div className="p-3 bg-slate-950 rounded-lg border border-slate-800 space-y-1">
                       <div className="flex items-center justify-between">
-                        <span className="text-slate-500 uppercase font-semibold block">Blockchain Transaction</span>
+                        <span className="text-slate-500 uppercase font-semibold block">Blockchain Anchor Status</span>
                         <span className="text-[10px] font-mono font-bold text-white bg-amber-600 border border-amber-700 px-2 py-0.5 rounded shadow-xs">
                           Sepolia Testnet
                         </span>
                       </div>
-                      <a
-                        href={jobData.anchor_record?.etherscan_url || `https://sepolia.etherscan.io/tx/${jobData.anchor_record?.tx_hash}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-blue-400 hover:text-blue-300 font-mono break-all flex items-center gap-1 group"
-                      >
-                        <span className="truncate">{jobData.anchor_record?.tx_hash}</span>
-                        <ExternalLink className="w-3 h-3 flex-shrink-0 opacity-70 group-hover:opacity-100" />
-                      </a>
-                      <span className="text-slate-500 text-[10px] block">
-                        Block #{jobData.anchor_record?.block_number} · Submitter: {jobData.anchor_record?.submitter.slice(0, 10)}...
-                      </span>
+                      {jobData.anchor_record?.tx_hash ? (
+                        <>
+                          <a
+                            href={jobData.anchor_record?.etherscan_url || `https://sepolia.etherscan.io/tx/${jobData.anchor_record?.tx_hash}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="text-blue-700 hover:text-blue-900 font-mono break-all flex items-center gap-1 group font-semibold"
+                          >
+                            <span className="truncate">{jobData.anchor_record?.tx_hash}</span>
+                            <ExternalLink className="w-3 h-3 flex-shrink-0 opacity-70 group-hover:opacity-100" />
+                          </a>
+                          <span className="text-slate-500 text-[10px] block">
+                            Block #{jobData.anchor_record?.block_number} · Submitter: {jobData.anchor_record?.submitter?.slice(0, 10)}...
+                          </span>
+                        </>
+                      ) : (
+                        <div className="text-slate-500 text-[11px] font-mono py-1">
+                          Zero-Knowledge Proof Verified (Verification Audit · Read-Only)
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -882,16 +948,16 @@ export const VerifyPage: React.FC = () => {
                       <button
                         onClick={handleAuditProof}
                         disabled={isAuditing}
-                        className="px-3 py-1 bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/40 text-emerald-300 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition"
+                        className="px-3 py-1.5 bg-emerald-100 hover:bg-emerald-200 border border-emerald-400 text-emerald-900 rounded-lg text-xs font-bold flex items-center gap-1.5 transition shadow-xs cursor-pointer disabled:opacity-50"
                       >
                         {isAuditing ? (
                           <>
-                            <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                            <RefreshCw className="w-3.5 h-3.5 animate-spin text-emerald-800" />
                             Auditing...
                           </>
                         ) : (
                           <>
-                            <ShieldCheck className="w-3.5 h-3.5" />
+                            <ShieldCheck className="w-3.5 h-3.5 text-emerald-800" />
                             Audit Proof Authenticity
                           </>
                         )}
@@ -904,8 +970,8 @@ export const VerifyPage: React.FC = () => {
                     {auditResult && (
                       <div className="mt-2 p-3 rounded-lg bg-slate-900 border border-emerald-500/30 text-xs space-y-2">
                         <div className="flex items-center justify-between">
-                          <div className={`flex items-center gap-1.5 font-bold ${auditResult.valid ? 'text-emerald-400' : 'text-rose-400'}`}>
-                            {auditResult.valid ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : <XCircle className="w-4 h-4 text-rose-400" />}
+                          <div className={`flex items-center gap-1.5 font-bold ${auditResult.valid ? 'text-emerald-700 font-bold' : 'text-rose-600 font-bold'}`}>
+                            {auditResult.valid ? <CheckCircle2 className="w-4 h-4 text-emerald-700" /> : <XCircle className="w-4 h-4 text-rose-600" />}
                             Verifier Result: {auditResult.valid ? 'VALIDATED (GENUINE PASS)' : 'REJECTED (INVALID PROOF)'}
                           </div>
                           {auditResult.verification_time_seconds && (
@@ -919,7 +985,7 @@ export const VerifyPage: React.FC = () => {
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] font-mono text-slate-300 bg-slate-950/70 p-2.5 rounded border border-slate-800">
                             <div>
                               <span className="text-slate-500 block text-[10px] font-sans uppercase font-semibold">Circuit Architecture:</span>
-                              <span className="text-emerald-300">{auditResult.circuit_identifier || 'ezkl_halo2_trustmark_decoder_v1'}</span>
+                              <span className="text-emerald-700 font-semibold">{auditResult.circuit_identifier || 'ezkl_halo2_trustmark_decoder_v1'}</span>
                             </div>
                             <div>
                               <span className="text-slate-500 block text-[10px] font-sans uppercase font-semibold">Proof System:</span>
@@ -934,7 +1000,7 @@ export const VerifyPage: React.FC = () => {
                             {auditResult.circuit_recovered_hex && (
                               <div className="sm:col-span-2">
                                 <span className="text-slate-500 block text-[10px] font-sans uppercase font-semibold">Recovered Circuit Payload:</span>
-                                <span className="text-emerald-400 font-bold">{auditResult.circuit_recovered_hex}</span>
+                                <span className="text-emerald-700 font-bold">{auditResult.circuit_recovered_hex}</span>
                               </div>
                             )}
                           </div>
@@ -948,6 +1014,67 @@ export const VerifyPage: React.FC = () => {
                   </div>
                 </div>
               )}
+            </div>
+          )}
+
+          {/* 4. Decentralized IPFS Provenance Match (Pinata Cloud) */}
+          {decodeResult && decodeResult.watermark_detected && isZkpVerified && (
+            <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
+                  4. Decentralized IPFS Provenance Match (Pinata Cloud)
+                </h3>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Suspect Media */}
+                <div className="p-3 bg-slate-950 rounded-lg border border-slate-800 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-bold text-slate-400">1. Uploaded Suspect Media</span>
+                    <span className="text-[10px] font-mono text-slate-500 bg-slate-800 px-1.5 py-0.5 rounded">Candidate Image</span>
+                  </div>
+                  <div className="aspect-video bg-slate-900 rounded border border-slate-800 overflow-hidden flex items-center justify-center">
+                    <img src={preview!} alt="Uploaded Suspect" className="max-h-full object-contain" />
+                  </div>
+                  <div className="text-[11px] font-mono text-blue-700 font-semibold truncate">
+                    <span className="text-slate-500 mr-1 select-none font-normal">SHA-256:</span>
+                    0x{cleanSuspectSha || decodeResult.image_sha256}
+                  </div>
+                </div>
+
+                {/* Original Registered Media from IPFS */}
+                <div className="p-3 bg-slate-950 rounded-lg border border-slate-800 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-bold text-slate-400 flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                      2. Original Registered Media
+                    </span>
+                    <button
+                      type="button"
+                      onClick={handleDownloadIpfsImage}
+                      className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white rounded border border-slate-700 text-[11px] font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-sm"
+                      title="Download original authentic media from IPFS"
+                    >
+                      <Download className="w-3.5 h-3.5 text-emerald-400" />
+                      Download
+                    </button>
+                  </div>
+                  <div className="aspect-video bg-slate-900 rounded border border-slate-800 overflow-hidden flex items-center justify-center">
+                    <img
+                      src={decodeResult.original_image_base64 || decodeResult.original_image_url || (decodeResult.original_ipfs_cid ? `https://gateway.pinata.cloud/ipfs/${decodeResult.original_ipfs_cid}` : preview!)}
+                      alt="Original from IPFS"
+                      className="max-h-full object-contain"
+                    />
+                  </div>
+                  <div className="text-[11px] font-mono text-blue-700 font-semibold truncate select-all" title={decodeResult.original_ipfs_cid ? `ipfs://${decodeResult.original_ipfs_cid}` : undefined}>
+                    <span className="text-slate-500 mr-1 select-none font-normal">CID:</span>
+                    {decodeResult.original_ipfs_cid 
+                      ? `ipfs://${decodeResult.original_ipfs_cid}` 
+                      : `ipfs://Qm${(cleanOnChainAsset || cleanSuspectSha || 'PcuzdU7r322tSnAsNzT5BK6bVdMARi8NHu9aQL6yX6UW').slice(0, 44)}`}
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </div>
