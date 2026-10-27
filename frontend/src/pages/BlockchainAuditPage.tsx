@@ -201,7 +201,7 @@ export const BlockchainAuditPage: React.FC = () => {
                   Live ProvenanceAnchor Ledger ({anchorsList.length} Records)
                 </h3>
                 <span className="text-[11px] text-slate-400">
-                  Target Network: Ethereum Sepolia (Contract: 0x6D8C82dc761Ed9bac93ca99987b91614B90Ad43F)
+                  Target Network: Ethereum Sepolia (Contract: 0xF54030f14b85705d8fD543CDD0fe12FDC9E71420)
                 </span>
               </div>
               <button

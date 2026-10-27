@@ -19,6 +19,7 @@ class CreateAnchorRequest(BaseModel):
     asset_id: str = Field(..., description="Bytes32 hex digest of candidate image or asset")
     commitment: str = Field(..., description="Bytes32 hex commitment C = H(m || k)")
     submitter: Optional[str] = Field("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
+    ipfs_cid: Optional[str] = Field(None, description="Decentralized IPFS CID")
 
 
 class RecordMetamaskTxRequest(BaseModel):
@@ -27,6 +28,7 @@ class RecordMetamaskTxRequest(BaseModel):
     submitter: str = Field(..., description="MetaMask publisher address")
     tx_hash: str = Field(..., description="Confirmed Sepolia transaction hash")
     block_number: int = Field(..., description="Confirmed Sepolia block number")
+    ipfs_cid: Optional[str] = Field(None, description="Decentralized IPFS CID")
 
 
 @router.post("")
@@ -36,6 +38,7 @@ async def create_anchor(req: CreateAnchorRequest):
         asset_id=req.asset_id,
         commitment=req.commitment,
         submitter=req.submitter or "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        ipfs_cid=req.ipfs_cid,
     )
     return {
         "success": True,
@@ -52,6 +55,7 @@ async def record_metamask_anchor(req: RecordMetamaskTxRequest):
         submitter=req.submitter,
         tx_hash=req.tx_hash,
         block_number=req.block_number,
+        ipfs_cid=req.ipfs_cid,
     )
     return {
         "success": True,

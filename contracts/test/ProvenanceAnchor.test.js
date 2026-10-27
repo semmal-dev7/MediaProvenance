@@ -7,8 +7,10 @@ describe("ProvenanceAnchor Contract", function () {
 
   const sampleAssetId1 = "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
   const sampleCommitment1 = "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
+  const sampleCid1 = "QmPJQuiFWZUuy2bH8kAfBAw348CM6jqgtyFaBzdcdrCubW";
   const sampleAssetId2 = "0xcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc";
   const sampleCommitment2 = "0xdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd";
+  const sampleCid2 = "bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi";
   const zeroBytes32 = "0x0000000000000000000000000000000000000000000000000000000000000000";
 
   beforeEach(async function () {
@@ -19,21 +21,45 @@ describe("ProvenanceAnchor Contract", function () {
   });
 
   describe("Anchoring Records", function () {
-    it("Should successfully anchor a verification record", async function () {
-      const tx = await provenanceAnchor.connect(submitter1).anchor(sampleAssetId1, sampleCommitment1);
+    it("Should successfully anchor a verification record with IPFS CID", async function () {
+      const tx = await provenanceAnchor.connect(submitter1)["anchor(bytes32,bytes32,string)"](
+        sampleAssetId1,
+        sampleCommitment1,
+        sampleCid1
+      );
       
       const receipt = await tx.wait();
       const block = await ethers.provider.getBlock(receipt.blockNumber);
 
       await expect(tx)
         .to.emit(provenanceAnchor, "ProvenanceAnchored")
-        .withArgs(sampleAssetId1, sampleCommitment1, submitter1.address, block.timestamp);
+        .withArgs(sampleAssetId1, sampleCommitment1, submitter1.address, sampleCid1, block.timestamp);
 
       const record = await provenanceAnchor.getRecord(sampleAssetId1);
       expect(record.assetId).to.equal(sampleAssetId1);
       expect(record.commitment).to.equal(sampleCommitment1);
       expect(record.submitter).to.equal(submitter1.address);
       expect(record.timestamp).to.equal(block.timestamp);
+      expect(record.exists).to.be.true;
+      expect(record.ipfsCid).to.equal(sampleCid1);
+    });
+
+    it("Should successfully anchor via backward-compatible 2-arg function", async function () {
+      const tx = await provenanceAnchor.connect(submitter1)["anchor(bytes32,bytes32)"](
+        sampleAssetId2,
+        sampleCommitment2
+      );
+
+      const receipt = await tx.wait();
+      const block = await ethers.provider.getBlock(receipt.blockNumber);
+
+      await expect(tx)
+        .to.emit(provenanceAnchor, "ProvenanceAnchored")
+        .withArgs(sampleAssetId2, sampleCommitment2, submitter1.address, "", block.timestamp);
+
+      const record = await provenanceAnchor.getRecord(sampleAssetId2);
+      expect(record.assetId).to.equal(sampleAssetId2);
+      expect(record.ipfsCid).to.equal("");
       expect(record.exists).to.be.true;
     });
 

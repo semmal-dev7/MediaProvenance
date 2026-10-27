@@ -15,16 +15,17 @@
 
 import { ethers } from 'ethers';
 
-export const PROVENANCE_ANCHOR_ADDRESS = "0x6D8C82dc761Ed9bac93ca99987b91614B90Ad43F";
+export const PROVENANCE_ANCHOR_ADDRESS = "0xF54030f14b85705d8fD543CDD0fe12FDC9E71420";
 export const SEPOLIA_CHAIN_ID_DEC = 11155111;
 export const SEPOLIA_CHAIN_ID_HEX = "0xaa36a7";
 export const SEPOLIA_RPC_URL = "https://ethereum-sepolia-rpc.publicnode.com";
 
 export const PROVENANCE_ANCHOR_ABI = [
+  "function anchor(bytes32 assetId, bytes32 commitment, string calldata ipfsCid) external",
   "function anchor(bytes32 assetId, bytes32 commitment) external",
-  "function getRecord(bytes32 assetId) external view returns (tuple(bytes32 assetId, bytes32 commitment, address submitter, uint256 timestamp, bool exists))",
-  "function records(bytes32) external view returns (bytes32 assetId, bytes32 commitment, address submitter, uint256 timestamp, bool exists)",
-  "event ProvenanceAnchored(bytes32 indexed assetId, bytes32 commitment, address indexed submitter, uint256 timestamp)"
+  "function getRecord(bytes32 assetId) external view returns (tuple(bytes32 assetId, bytes32 commitment, address submitter, uint256 timestamp, bool exists, string ipfsCid))",
+  "function records(bytes32) external view returns (bytes32 assetId, bytes32 commitment, address submitter, uint256 timestamp, bool exists, string ipfsCid)",
+  "event ProvenanceAnchored(bytes32 indexed assetId, bytes32 commitment, address indexed submitter, string ipfsCid, uint256 timestamp)"
 ];
 
 export interface WalletState {
@@ -43,6 +44,7 @@ export interface OnChainRecord {
   timestamp: number;
   dateFormatted?: string;
   etherscanUrl?: string;
+  ipfsCid?: string;
 }
 
 /**
@@ -150,7 +152,8 @@ export async function switchMetaMaskAccount(): Promise<{ address: string; provid
  */
 export async function anchorWithMetaMask(
   assetIdHex: string,
-  commitmentHex: string
+  commitmentHex: string,
+  ipfsCid: string = ""
 ): Promise<{
   txHash: string;
   blockNumber: number;
@@ -189,15 +192,15 @@ export async function anchorWithMetaMask(
   let tx;
   try {
     // Estimate gas with fallback
-    let gasLimit = 150000n;
+    let gasLimit = 160000n;
     try {
-      const est = await contract.anchor.estimateGas(formattedAssetId, formattedCommitment);
+      const est = await contract["anchor(bytes32,bytes32,string)"].estimateGas(formattedAssetId, formattedCommitment, ipfsCid || "");
       gasLimit = (est * 13n) / 10n; // 30% buffer
     } catch {
-      gasLimit = 200000n;
+      gasLimit = 220000n;
     }
 
-    tx = await contract.anchor(formattedAssetId, formattedCommitment, { gasLimit });
+    tx = await contract["anchor(bytes32,bytes32,string)"](formattedAssetId, formattedCommitment, ipfsCid || "", { gasLimit });
   } catch (txErr: any) {
     if (
       txErr?.message?.includes("Already anchored") ||
@@ -250,6 +253,7 @@ export async function anchorWithMetaMask(
         submitter: address,
         tx_hash: receipt.hash,
         block_number: Number(receipt.blockNumber),
+        ipfs_cid: ipfsCid || "",
       }),
     });
   } catch (err) {
@@ -291,6 +295,7 @@ export async function readRecordFromSepoliaFree(assetIdHex: string): Promise<OnC
       timestamp: ts,
       dateFormatted: ts > 0 ? new Date(ts * 1000).toLocaleString() : 'N/A',
       etherscanUrl: `https://sepolia.etherscan.io/address/${PROVENANCE_ANCHOR_ADDRESS}`,
+      ipfsCid: record.ipfsCid || "",
     };
   } catch (err: any) {
     return {

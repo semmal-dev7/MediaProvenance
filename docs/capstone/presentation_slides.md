@@ -134,7 +134,7 @@ Subjected the ZK engine to four targeted adversarial attempts:
 
 Deployed and tested live on the Ethereum Sepolia Testnet (Chain ID 11155111):
 
-### 1. `ProvenanceAnchor.sol` (`0x6D8C82dc761Ed9bac93ca99987b91614B90Ad43F`)
+### 1. `ProvenanceAnchor.sol` (`0xF54030f14b85705d8fD543CDD0fe12FDC9E71420`)
 - Lightweight, immutable commitment registry:
   $$\text{records}[\text{assetId}] = \{\text{assetId}, \text{commitment}, \text{submitter}, \text{timestamp}, \text{exists}\}$$
 - Prevents duplicate registration (`require(!records[assetId].exists)`).

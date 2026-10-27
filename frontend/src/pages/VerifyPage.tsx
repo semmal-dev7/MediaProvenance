@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Upload, CheckCircle2, XCircle, ShieldAlert, Cpu, Blocks, Clock, ArrowRight, RefreshCw, KeyRound, AlertTriangle, ExternalLink, ShieldCheck, Download } from 'lucide-react';
-import { readRecordFromSepoliaFree, OnChainRecord } from '../services/web3';
+import { readRecordFromSepoliaFree, OnChainRecord, PROVENANCE_ANCHOR_ADDRESS } from '../services/web3';
 
 export const VerifyPage: React.FC = () => {
   const [carrier, setCarrier] = useState<'pureconv' | 'hidden' | 'trustmark'>('trustmark');
@@ -241,16 +241,11 @@ export const VerifyPage: React.FC = () => {
 
   const handleDownloadIpfsImage = async () => {
     try {
-      const src =
-        decodeResult?.original_image_base64 ||
-        decodeResult?.original_image_url ||
-        (decodeResult?.original_ipfs_cid
-          ? `https://gateway.pinata.cloud/ipfs/${decodeResult.original_ipfs_cid}`
-          : preview);
+      const src = resolvedIpfsUrl || (resolvedIpfsCid ? `https://gateway.pinata.cloud/ipfs/${resolvedIpfsCid}` : preview);
       if (!src) return;
 
-      const cidStr = decodeResult?.original_ipfs_cid || 'ipfs';
-      const shortCid = cidStr.replace(/^Qm/, '').slice(0, 8);
+      const cidStr = resolvedIpfsCid || 'ipfs';
+      const shortCid = cidStr.replace(/^Qm/, '').replace(/^bafy/, '').slice(0, 8);
       const filename = `ipfs_original_${shortCid}.png`;
 
       if (src.startsWith('data:')) {
@@ -275,12 +270,7 @@ export const VerifyPage: React.FC = () => {
       document.body.removeChild(link);
       window.URL.revokeObjectURL(blobUrl);
     } catch {
-      const src =
-        decodeResult?.original_image_base64 ||
-        decodeResult?.original_image_url ||
-        (decodeResult?.original_ipfs_cid
-          ? `https://gateway.pinata.cloud/ipfs/${decodeResult.original_ipfs_cid}`
-          : preview);
+      const src = resolvedIpfsUrl || (resolvedIpfsCid ? `https://gateway.pinata.cloud/ipfs/${resolvedIpfsCid}` : preview);
       if (src) {
         const link = document.createElement('a');
         link.href = src;
@@ -305,6 +295,8 @@ export const VerifyPage: React.FC = () => {
   // Derive integrity & derivative status by comparing candidate SHA against on-chain registered asset ID
   const cleanOnChainAsset = (onChainRecord?.assetId || decodeResult?.registered_anchor?.asset_id || decodeResult?.original_asset_id || '').toLowerCase().replace('0x', '').trim();
   const cleanSuspectSha = (decodeResult?.image_sha256 || '').toLowerCase().replace('0x', '').trim();
+  const resolvedIpfsCid = decodeResult?.original_ipfs_cid || onChainRecord?.ipfsCid || '';
+  const resolvedIpfsUrl = decodeResult?.original_image_base64 || decodeResult?.original_image_url || (resolvedIpfsCid ? `https://gateway.pinata.cloud/ipfs/${resolvedIpfsCid}` : '');
   const isHashMismatch = Boolean(cleanOnChainAsset && cleanSuspectSha && cleanOnChainAsset !== cleanSuspectSha);
   const isDerivativeMedia = Boolean(decodeResult?.is_derivative || decodeResult?.tamper_detected || isHashMismatch);
   const isExactOriginal = Boolean(cleanOnChainAsset && cleanSuspectSha && cleanOnChainAsset === cleanSuspectSha);
@@ -765,15 +757,28 @@ export const VerifyPage: React.FC = () => {
                             <span className="text-slate-500 font-semibold">On-Chain Commitment: </span>
                             <code className="text-blue-300 font-mono break-all block mt-0.5">{onChainRecord.commitment}</code>
                           </div>
+                          {onChainRecord.ipfsCid && (
+                            <div>
+                              <span className="text-slate-500 font-semibold">Decentralized IPFS CID: </span>
+                              <a
+                                href={`https://gateway.pinata.cloud/ipfs/${onChainRecord.ipfsCid}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="text-emerald-400 hover:text-emerald-300 inline-flex items-center gap-1 font-mono break-all font-semibold"
+                              >
+                                ipfs://{onChainRecord.ipfsCid} <ExternalLink className="w-3 h-3 flex-shrink-0" />
+                              </a>
+                            </div>
+                          )}
                           <div>
                             <span className="text-slate-500 font-semibold">Contract: </span>
                             <a
-                              href="https://sepolia.etherscan.io/address/0x6D8C82dc761Ed9bac93ca99987b91614B90Ad43F"
+                              href={`https://sepolia.etherscan.io/address/${PROVENANCE_ANCHOR_ADDRESS}`}
                               target="_blank"
                               rel="noreferrer"
                               className="text-blue-400 hover:text-blue-300 inline-flex items-center gap-1 font-mono"
                             >
-                              0x6D8C82...d43F <ExternalLink className="w-3 h-3" />
+                              {PROVENANCE_ANCHOR_ADDRESS.slice(0, 8)}...{PROVENANCE_ANCHOR_ADDRESS.slice(-4)} <ExternalLink className="w-3 h-3" />
                             </a>
                           </div>
                         </div>
@@ -1050,7 +1055,7 @@ export const VerifyPage: React.FC = () => {
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                       2. Original Registered Media
                     </span>
-                    {(decodeResult.original_image_base64 || decodeResult.original_image_url || decodeResult.original_ipfs_cid) && (
+                    {(resolvedIpfsUrl || resolvedIpfsCid) && (
                       <button
                         type="button"
                         onClick={handleDownloadIpfsImage}
@@ -1062,18 +1067,18 @@ export const VerifyPage: React.FC = () => {
                       </button>
                     )}
                   </div>
-                  {(decodeResult.original_image_base64 || decodeResult.original_image_url || decodeResult.original_ipfs_cid) ? (
+                  {(resolvedIpfsUrl || resolvedIpfsCid) ? (
                     <>
                       <div className="aspect-video bg-slate-900 rounded border border-slate-800 overflow-hidden flex items-center justify-center">
                         <img
-                          src={decodeResult.original_image_base64 || decodeResult.original_image_url || `https://gateway.pinata.cloud/ipfs/${decodeResult.original_ipfs_cid}`}
+                          src={resolvedIpfsUrl || `https://gateway.pinata.cloud/ipfs/${resolvedIpfsCid}`}
                           alt="Original from IPFS"
                           className="max-h-full object-contain"
                         />
                       </div>
-                      <div className="text-[11px] font-mono text-blue-700 font-semibold truncate select-all" title={decodeResult.original_ipfs_cid ? `ipfs://${decodeResult.original_ipfs_cid}` : undefined}>
+                      <div className="text-[11px] font-mono text-blue-700 font-semibold truncate select-all" title={resolvedIpfsCid ? `ipfs://${resolvedIpfsCid}` : undefined}>
                         <span className="text-slate-500 mr-1 select-none font-normal">CID:</span>
-                        {decodeResult.original_ipfs_cid ? `ipfs://${decodeResult.original_ipfs_cid}` : 'ipfs://Pinata-Registered'}
+                        {resolvedIpfsCid ? `ipfs://${resolvedIpfsCid}` : 'ipfs://Pinata-Registered'}
                       </div>
                     </>
                   ) : (

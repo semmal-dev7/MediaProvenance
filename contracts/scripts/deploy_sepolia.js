@@ -33,8 +33,8 @@ async function main() {
     console.warn("  - https://faucets.chain.link/sepolia");
   }
 
-  // 1. Deploy ProvenanceAnchor
-  console.log("\n[1/2] Deploying ProvenanceAnchor.sol...");
+  // 1. Deploy ProvenanceAnchor (with IPFS CID support)
+  console.log("\n[1/2] Deploying ProvenanceAnchor.sol (with IPFS CID support)...");
   const ProvenanceAnchorFactory = await hre.ethers.getContractFactory("ProvenanceAnchor");
   const anchorContract = await ProvenanceAnchorFactory.deploy();
   await anchorContract.waitForDeployment();
@@ -42,17 +42,24 @@ async function main() {
   console.log(`  [PASS] ProvenanceAnchor deployed to: ${anchorAddress}`);
   console.log(`  Etherscan Link: https://sepolia.etherscan.io/address/${anchorAddress}`);
 
-  // 2. Deploy ProvenanceAudit
-  console.log("\n[2/2] Deploying ProvenanceAudit.sol...");
-  const ProvenanceAuditFactory = await hre.ethers.getContractFactory("ProvenanceAudit");
-  const auditContract = await ProvenanceAuditFactory.deploy();
-  await auditContract.waitForDeployment();
-  const auditAddress = await auditContract.getAddress();
-  console.log(`  [PASS] ProvenanceAudit deployed to: ${auditAddress}`);
+  // 2. ProvenanceAudit (preserve existing deployment to save Sepolia ETH)
+  let auditAddress = "0x97963d11353584c4f348b87784942f153646022A";
+  const deploymentsDir = path.join(__dirname, "../deployments");
+  const outPath = path.join(deploymentsDir, "sepolia.json");
+  if (fs.existsSync(outPath)) {
+    try {
+      const existing = JSON.parse(fs.readFileSync(outPath, "utf-8"));
+      if (existing?.contracts?.ProvenanceAudit?.address) {
+        auditAddress = existing.contracts.ProvenanceAudit.address;
+      }
+    } catch (e) {
+      // ignore
+    }
+  }
+  console.log(`\n[2/2] Reusing existing ProvenanceAudit at: ${auditAddress}`);
   console.log(`  Etherscan Link: https://sepolia.etherscan.io/address/${auditAddress}`);
 
   // Save deployment records
-  const deploymentsDir = path.join(__dirname, "../deployments");
   if (!fs.existsSync(deploymentsDir)) {
     fs.mkdirSync(deploymentsDir, { recursive: true });
   }
@@ -74,7 +81,6 @@ async function main() {
     },
   };
 
-  const outPath = path.join(deploymentsDir, "sepolia.json");
   fs.writeFileSync(outPath, JSON.stringify(deploymentData, null, 2));
   console.log(`\nDeployment manifest saved to: ${outPath}`);
   console.log("=================================================");

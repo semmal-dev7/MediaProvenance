@@ -13,6 +13,7 @@ contract ProvenanceAnchor {
         address submitter;
         uint256 timestamp;
         bool exists;
+        string ipfsCid;
     }
 
     // assetId => Record
@@ -22,15 +23,17 @@ contract ProvenanceAnchor {
         bytes32 indexed assetId,
         bytes32 commitment,
         address indexed submitter,
+        string ipfsCid,
         uint256 timestamp
     );
 
     /**
-     * @notice Anchor a verification commitment for a given asset ID.
+     * @notice Anchor a verification commitment and IPFS content identifier for a given asset ID.
      * @param assetId SHA-256 digest of candidate image or canonical asset identifier.
      * @param commitment Cryptographic commitment C = H(m || k) or Halo2/EZKL proof digest.
+     * @param ipfsCid Decentralized IPFS Content Identifier (e.g., Qm... or bafy...) pointing to original media.
      */
-    function anchor(bytes32 assetId, bytes32 commitment) external {
+    function anchor(bytes32 assetId, bytes32 commitment, string memory ipfsCid) public {
         require(assetId != bytes32(0), "Invalid asset ID");
         require(commitment != bytes32(0), "Invalid commitment");
         require(!records[assetId].exists, "Already anchored");
@@ -40,10 +43,18 @@ contract ProvenanceAnchor {
             commitment: commitment,
             submitter: msg.sender,
             timestamp: block.timestamp,
-            exists: true
+            exists: true,
+            ipfsCid: ipfsCid
         });
 
-        emit ProvenanceAnchored(assetId, commitment, msg.sender, block.timestamp);
+        emit ProvenanceAnchored(assetId, commitment, msg.sender, ipfsCid, block.timestamp);
+    }
+
+    /**
+     * @notice Backward-compatible overloaded anchor function (without ipfsCid).
+     */
+    function anchor(bytes32 assetId, bytes32 commitment) external {
+        anchor(assetId, commitment, "");
     }
 
     /**

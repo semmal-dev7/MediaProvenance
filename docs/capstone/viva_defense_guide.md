@@ -7,7 +7,7 @@
 - **System Name**: ProvenanceLab
 - **Repository**: `https://github.com/semmal-dev7/MediaProvenance` (Branch: `semmal`)
 - **Smart Contracts (Ethereum Sepolia)**:
-  - `ProvenanceAnchor`: `0x6D8C82dc761Ed9bac93ca99987b91614B90Ad43F`
+  - `ProvenanceAnchor`: `0xF54030f14b85705d8fD543CDD0fe12FDC9E71420`
   - `ProvenanceAudit`: `0x97963d11353584c4f348b87784942f153646022A`
 
 ---
@@ -89,7 +89,7 @@ Because future blockhashes cannot be predicted before the target block is mined,
 
 ### Q8: What on-chain transactions were verified on Ethereum Sepolia?
 **Answer**: 
-- Contract deployment: `ProvenanceAnchor` (`0x6D8C82dc761Ed9bac93ca99987b91614B90Ad43F`) and `ProvenanceAudit` (`0x97963d11353584c4f348b87784942f153646022A`).
+- Contract deployment: `ProvenanceAnchor` (`0xF54030f14b85705d8fD543CDD0fe12FDC9E71420`) and `ProvenanceAudit` (`0x97963d11353584c4f348b87784942f153646022A`).
 - Confirmed live on-chain anchor transactions:
   - Tx `0x432c2f47aebfcd859ce3aec4b33b0ea3b727f7e6cfc1380a388168378a9b76a9` at Block `#11946711` (569,353 gas, Status: 1 SUCCESS).
   - Tx `0x740e0672bd6244c1c25664ed1141e8d4ef04f5151ff2af5ad5fcf8760cbd1179` at Block `#11946898` (569,353 gas, Status: 1 SUCCESS).

@@ -1,12 +1,12 @@
 {
   "network": "sepolia",
   "chainId": 11155111,
-  "deployedAt": "2026-10-19T06:03:26.085Z",
+  "deployedAt": "2026-10-27T14:01:11.898Z",
   "deployer": "0xc3105176265bd16F86d0A3ff61f3aC0fE00e6007",
   "contracts": {
     "ProvenanceAnchor": {
-      "address": "0x6D8C82dc761Ed9bac93ca99987b91614B90Ad43F",
-      "etherscan": "https://sepolia.etherscan.io/address/0x6D8C82dc761Ed9bac93ca99987b91614B90Ad43F"
+      "address": "0xF54030f14b85705d8fD543CDD0fe12FDC9E71420",
+      "etherscan": "https://sepolia.etherscan.io/address/0xF54030f14b85705d8fD543CDD0fe12FDC9E71420"
     },
     "ProvenanceAudit": {
       "address": "0x97963d11353584c4f348b87784942f153646022A",

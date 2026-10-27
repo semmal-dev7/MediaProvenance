@@ -205,12 +205,12 @@ export const DashboardPage: React.FC<DashboardProps> = ({ onNavigate }) => {
           <div className="bg-slate-50 p-3 rounded-lg border border-slate-200/80">
             <span className="text-slate-500 font-medium text-[11px] block">Contract Address</span>
             <a
-              href="https://sepolia.etherscan.io/address/0x6D8C82dc761Ed9bac93ca99987b91614B90Ad43F"
+              href="https://sepolia.etherscan.io/address/0xF54030f14b85705d8fD543CDD0fe12FDC9E71420"
               target="_blank"
               rel="noreferrer"
               className="font-bold text-blue-600 hover:text-blue-700 mt-0.5 flex items-center gap-1 truncate"
             >
-              0x6D8C...d43F <ExternalLink className="w-3 h-3 flex-shrink-0" />
+              0xF540...1420 <ExternalLink className="w-3 h-3 flex-shrink-0" />
             </a>
             <span className="text-[10px] text-slate-500">Public Read Auditing</span>
           </div>

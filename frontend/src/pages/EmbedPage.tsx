@@ -158,7 +158,7 @@ export const EmbedPage: React.FC<EmbedPageProps> = ({ onProceedToVerify }) => {
       }
 
       setPublishStep('2/2 Prompting MetaMask to submit transaction...');
-      const txRes = await anchorWithMetaMask(genData.asset_id, genData.commitment);
+      const txRes = await anchorWithMetaMask(genData.asset_id, genData.commitment, embedResult.ipfs_cid || '');
       setPublisherTxResult(txRes);
     } catch (err: any) {
       setPublisherTxError(err.message || 'MetaMask transaction rejected or failed.');

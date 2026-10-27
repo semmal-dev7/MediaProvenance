@@ -166,7 +166,7 @@ class JobManager:
             from backend.core.config import settings
 
             rpc_url = settings.SEPOLIA_RPC_URL or "https://ethereum-sepolia-rpc.publicnode.com"
-            contract_addr = settings.PROVENANCE_ANCHOR_ADDRESS or "0x6D8C82dc761Ed9bac93ca99987b91614B90Ad43F"
+            contract_addr = settings.PROVENANCE_ANCHOR_ADDRESS or "0xF54030f14b85705d8fD543CDD0fe12FDC9E71420"
             w3 = Web3(Web3.HTTPProvider(rpc_url))
             if not w3.is_connected():
                 logger.warning("Sepolia RPC not connected during anchor sync")
@@ -180,7 +180,8 @@ class JobManager:
             if from_block > latest_block:
                 return 0
 
-            topic0 = "0x" + w3.keccak(text="ProvenanceAnchored(bytes32,bytes32,address,uint256)").hex()
+            topic_old = "0x" + w3.keccak(text="ProvenanceAnchored(bytes32,bytes32,address,uint256)").hex()
+            topic_new = "0x" + w3.keccak(text="ProvenanceAnchored(bytes32,bytes32,address,string,uint256)").hex()
             contract_checksum = Web3.to_checksum_address(contract_addr)
 
             new_records_count = 0
@@ -191,7 +192,7 @@ class JobManager:
                     "address": contract_checksum,
                     "fromBlock": current_from,
                     "toBlock": current_to,
-                    "topics": [topic0],
+                    "topics": [[topic_new, topic_old]],
                 })
                 for log in logs:
                     tx_hash = log["transactionHash"].hex()
@@ -204,11 +205,25 @@ class JobManager:
                     if submitter.lower() == TEST_PROVER or log["blockNumber"] in (11996327, 11996361):
                         continue
 
-                    data_hex = log["data"].hex() if hasattr(log["data"], "hex") else log["data"]
-                    if data_hex.startswith("0x"):
-                        data_hex = data_hex[2:]
-                    commit_hex = "0x" + data_hex[:64]
-                    ts_int = int(data_hex[64:128], 16) if len(data_hex) >= 128 else int(time.time())
+                    data_bytes = log["data"]
+                    if isinstance(data_bytes, str):
+                        data_bytes = bytes.fromhex(data_bytes.replace("0x", ""))
+
+                    log_topic0 = log["topics"][0].hex() if hasattr(log["topics"][0], "hex") else str(log["topics"][0])
+                    if not log_topic0.startswith("0x"):
+                        log_topic0 = "0x" + log_topic0
+
+                    cid_val = None
+                    if log_topic0.lower() == topic_new.lower():
+                        import eth_abi
+                        decoded = eth_abi.decode(['bytes32', 'string', 'uint256'], data_bytes)
+                        commit_hex = "0x" + decoded[0].hex()
+                        cid_val = decoded[1] if decoded[1] else None
+                        ts_int = int(decoded[2])
+                    else:
+                        data_hex = data_bytes.hex()
+                        commit_hex = "0x" + data_hex[:64]
+                        ts_int = int(data_hex[64:128], 16) if len(data_hex) >= 128 else int(time.time())
 
                     norm_id = asset_id.lower()
                     rec = AnchorRecord(
@@ -224,6 +239,8 @@ class JobManager:
                         is_onchain=True,
                         is_simulated=False,
                         status="CONFIRMED_ON_CHAIN",
+                        ipfs_cid=cid_val,
+                        ipfs_url=f"https://gateway.pinata.cloud/ipfs/{cid_val}" if cid_val else None,
                     )
                     self._anchors[norm_id] = rec
                     new_records_count += 1
@@ -447,6 +464,7 @@ class JobManager:
                                 {"internalType": "address", "name": "submitter", "type": "address"},
                                 {"internalType": "uint256", "name": "timestamp", "type": "uint256"},
                                 {"internalType": "bool", "name": "exists", "type": "bool"},
+                                {"internalType": "string", "name": "ipfsCid", "type": "string"},
                             ],
                             "stateMutability": "view",
                             "type": "function",
@@ -456,6 +474,8 @@ class JobManager:
                     asset_bytes = bytes.fromhex(asset_id.replace("0x", "").zfill(64))
                     onchain_rec = contract.functions.records(asset_bytes).call()
                     if onchain_rec[4]:
+                        cid = onchain_rec[5] if len(onchain_rec) > 5 and onchain_rec[5] else None
+                        ipfs_url = f"https://gateway.pinata.cloud/ipfs/{cid}" if cid else None
                         return AnchorRecord(
                             asset_id=asset_id,
                             commitment=commitment,
@@ -468,6 +488,8 @@ class JobManager:
                             exists=True,
                             is_onchain=True,
                             status="CONFIRMED_ON_CHAIN",
+                            ipfs_cid=cid,
+                            ipfs_url=ipfs_url,
                         )
             except Exception as e:
                 logger.warning("Read-only Sepolia check warning: %s", e)
@@ -479,6 +501,7 @@ class JobManager:
         asset_id: str,
         commitment: str,
         submitter: str = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        ipfs_cid: Optional[str] = None,
     ) -> AnchorRecord:
         """Store anchored commitment on Sepolia EVM or local registry."""
         import os
@@ -516,6 +539,17 @@ class JobManager:
                             "inputs": [
                                 {"internalType": "bytes32", "name": "assetId", "type": "bytes32"},
                                 {"internalType": "bytes32", "name": "commitment", "type": "bytes32"},
+                                {"internalType": "string", "name": "ipfsCid", "type": "string"},
+                            ],
+                            "name": "anchor",
+                            "outputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "function",
+                        },
+                        {
+                            "inputs": [
+                                {"internalType": "bytes32", "name": "assetId", "type": "bytes32"},
+                                {"internalType": "bytes32", "name": "commitment", "type": "bytes32"},
                             ],
                             "name": "anchor",
                             "outputs": [],
@@ -531,6 +565,7 @@ class JobManager:
                                 {"internalType": "address", "name": "submitter", "type": "address"},
                                 {"internalType": "uint256", "name": "timestamp", "type": "uint256"},
                                 {"internalType": "bool", "name": "exists", "type": "bool"},
+                                {"internalType": "string", "name": "ipfsCid", "type": "string"},
                             ],
                             "stateMutability": "view",
                             "type": "function",
@@ -543,6 +578,7 @@ class JobManager:
                     # Check if already anchored on-chain
                     onchain_rec = contract.functions.records(asset_bytes).call()
                     if onchain_rec[4]:  # exists == true
+                        cid = onchain_rec[5] if len(onchain_rec) > 5 and onchain_rec[5] else None
                         rec = AnchorRecord(
                             asset_id=asset_id,
                             commitment=commitment,
@@ -553,16 +589,20 @@ class JobManager:
                             network="sepolia",
                             etherscan_url=f"https://sepolia.etherscan.io/address/{contract_addr}",
                             exists=True,
+                            ipfs_cid=cid,
+                            ipfs_url=f"https://gateway.pinata.cloud/ipfs/{cid}" if cid else None,
                         )
                         self._anchors[normalized_asset_id] = rec
                         return rec
 
                     nonce = w3.eth.get_transaction_count(account.address)
                     gas_price = int(w3.eth.gas_price * 1.25)
+                    cid_str = ipfs_cid or ""
 
                     tx = contract.functions.anchor(
                         asset_bytes,
                         commit_bytes,
+                        cid_str,
                     ).build_transaction({
                         "from": account.address,
                         "nonce": nonce,
@@ -590,6 +630,8 @@ class JobManager:
                         exists=True,
                         is_onchain=True,
                         status="CONFIRMED_ON_CHAIN",
+                        ipfs_cid=cid_str if cid_str else None,
+                        ipfs_url=f"https://gateway.pinata.cloud/ipfs/{cid_str}" if cid_str else None,
                     )
                     self._anchors[normalized_asset_id] = rec
                     self._save_ledger()
@@ -623,11 +665,14 @@ class JobManager:
         submitter: str,
         tx_hash: str,
         block_number: int,
+        ipfs_cid: Optional[str] = None,
     ) -> AnchorRecord:
         """Register an on-chain anchor submitted directly via the publisher's MetaMask."""
         normalized_asset_id = asset_id.lower()
         clean_aid = normalized_asset_id.replace("0x", "").strip()
         meta = self.get_embedded_asset_meta(clean_aid) or self.get_embedded_asset_meta(normalized_asset_id)
+        cid = ipfs_cid or (meta.get("ipfs_cid") if meta else None)
+        url = (f"https://gateway.pinata.cloud/ipfs/{cid}") if cid else (meta.get("ipfs_url") if meta else None)
         rec = AnchorRecord(
             asset_id=asset_id,
             commitment=commitment,
@@ -642,8 +687,8 @@ class JobManager:
             is_simulated=False,
             status="CONFIRMED_ON_CHAIN",
             payload_hex=meta.get("payload_hex") if meta else None,
-            ipfs_cid=meta.get("ipfs_cid") if meta else None,
-            ipfs_url=meta.get("ipfs_url") if meta else None,
+            ipfs_cid=cid,
+            ipfs_url=url,
         )
         self._anchors[normalized_asset_id] = rec
         self._save_ledger()

@@ -373,9 +373,10 @@ async def decode_watermark(
         target_aid = (anchor.asset_id if anchor else clean_sha).lower().replace("0x", "")
         target_payload = (effective_ref_payload or dec_res.payload_hex or "").lower().replace("0x", "")
 
-        if meta and meta.get("ipfs_cid"):
-            original_ipfs_cid = meta["ipfs_cid"]
-            original_ipfs_url = meta.get("ipfs_url") or f"https://{settings.PINATA_GATEWAY}/ipfs/{original_ipfs_cid}"
+        anchor_cid = anchor.ipfs_cid if anchor else None
+        if anchor_cid or (meta and meta.get("ipfs_cid")):
+            original_ipfs_cid = anchor_cid or meta["ipfs_cid"]
+            original_ipfs_url = (anchor.ipfs_url if anchor and anchor.ipfs_url else None) or (meta.get("ipfs_url") if meta else None) or f"https://{settings.PINATA_GATEWAY}/ipfs/{original_ipfs_cid}"
             original_image_url = f"/api/v1/ipfs/{original_ipfs_cid}"
             try:
                 original_image_base64 = ipfs_service.get_image_base64(original_ipfs_cid)

@@ -89,7 +89,7 @@ To ensure academic rigor, we explicitly document what the system does **not** pr
 ## 6. Live Ethereum Sepolia Deployment & Production Verification
 
 The complete architecture is deployed live on the Ethereum Sepolia Testnet (Chain ID 11155111):
-- **ProvenanceAnchor Contract**: `0x6D8C82dc761Ed9bac93ca99987b91614B90Ad43F`
+- **ProvenanceAnchor Contract**: `0xF54030f14b85705d8fD543CDD0fe12FDC9E71420`
 - **ProvenanceAudit Contract**: `0x97963d11353584c4f348b87784942f153646022A`
 - **Prover Signer Address**: `0xc3105176265bd16F86d0A3ff61f3aC0fE00e6007`
 - **Confirmed On-Chain Transaction**: `0x432c2f47aebfcd859ce3aec4b33b0ea3b727f7e6cfc1380a388168378a9b76a9` at Block `#11946711` (Gas: 569,353; Status: 1 SUCCESS)

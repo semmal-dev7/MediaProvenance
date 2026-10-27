@@ -174,7 +174,7 @@ We evaluated and benchmarked two distinct neural watermark architectures within 
 
 ### Live Blockchain Anchoring on Ethereum Sepolia
 The system is deployed and verified live on the Ethereum Sepolia testnet (Chain ID 11155111):
-- **ProvenanceAnchor Contract**: `0x6D8C82dc761Ed9bac93ca99987b91614B90Ad43F`
+- **ProvenanceAnchor Contract**: `0xF54030f14b85705d8fD543CDD0fe12FDC9E71420`
 - **ProvenanceAudit Contract**: `0x97963d11353584c4f348b87784942f153646022A`
 - **Verified On-Chain Transaction**: `0x432c2f47aebfcd859ce3aec4b33b0ea3b727f7e6cfc1380a388168378a9b76a9` at Block `#11946711` (Gas used: 569,353; Status: 1 SUCCESS).
 
