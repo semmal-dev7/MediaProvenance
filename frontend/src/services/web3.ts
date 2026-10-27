@@ -28,6 +28,12 @@ export const PROVENANCE_ANCHOR_ABI = [
   "event ProvenanceAnchored(bytes32 indexed assetId, bytes32 commitment, address indexed submitter, string ipfsCid, uint256 timestamp)"
 ];
 
+export const LEGACY_PROVENANCE_ANCHOR_ADDRESS = "0x6D8C82dc761Ed9bac93ca99987b91614B90Ad43F";
+export const LEGACY_PROVENANCE_ANCHOR_ABI = [
+  "function getRecord(bytes32 assetId) external view returns (tuple(bytes32 assetId, bytes32 commitment, address submitter, uint256 timestamp, bool exists))",
+  "function records(bytes32) external view returns (bytes32 assetId, bytes32 commitment, address submitter, uint256 timestamp, bool exists)"
+];
+
 export interface WalletState {
   connected: boolean;
   address: string | null;
@@ -45,6 +51,7 @@ export interface OnChainRecord {
   dateFormatted?: string;
   etherscanUrl?: string;
   ipfsCid?: string;
+  contractAddress?: string;
 }
 
 /**
@@ -192,12 +199,12 @@ export async function anchorWithMetaMask(
   let tx;
   try {
     // Estimate gas with fallback
-    let gasLimit = 160000n;
+    let gasLimit = 1200000n;
     try {
       const est = await contract["anchor(bytes32,bytes32,string)"].estimateGas(formattedAssetId, formattedCommitment, ipfsCid || "");
       gasLimit = (est * 13n) / 10n; // 30% buffer
     } catch {
-      gasLimit = 220000n;
+      gasLimit = 1200000n;
     }
 
     tx = await contract["anchor(bytes32,bytes32,string)"](formattedAssetId, formattedCommitment, ipfsCid || "", { gasLimit });
@@ -275,38 +282,96 @@ export async function anchorWithMetaMask(
  */
 export async function readRecordFromSepoliaFree(assetIdHex: string): Promise<OnChainRecord> {
   const formattedAssetId = formatBytes32(assetIdHex);
-
-  // Use public read-only JSON-RPC provider (zero gas, no wallet required)
   const provider = new ethers.JsonRpcProvider(SEPOLIA_RPC_URL);
-  const contract = new ethers.Contract(
-    PROVENANCE_ANCHOR_ADDRESS,
-    PROVENANCE_ANCHOR_ABI,
-    provider
-  );
 
+  // 1. Query primary smart contract (0xF540... with on-chain string ipfsCid)
   try {
+    const contract = new ethers.Contract(
+      PROVENANCE_ANCHOR_ADDRESS,
+      PROVENANCE_ANCHOR_ABI,
+      provider
+    );
     const record = await contract.getRecord(formattedAssetId);
-    const ts = Number(record.timestamp);
-    return {
-      exists: Boolean(record.exists),
-      assetId: record.assetId,
-      commitment: record.commitment,
-      submitter: record.submitter,
-      timestamp: ts,
-      dateFormatted: ts > 0 ? new Date(ts * 1000).toLocaleString() : 'N/A',
-      etherscanUrl: `https://sepolia.etherscan.io/address/${PROVENANCE_ANCHOR_ADDRESS}`,
-      ipfsCid: record.ipfsCid || "",
-    };
-  } catch (err: any) {
-    return {
-      exists: false,
-      assetId: formattedAssetId,
-      commitment: '0x0000000000000000000000000000000000000000000000000000000000000000',
-      submitter: '0x0000000000000000000000000000000000000000',
-      timestamp: 0,
-      dateFormatted: 'Not Anchored On-Chain',
-    };
+    if (record && Boolean(record.exists)) {
+      const ts = Number(record.timestamp);
+      return {
+        exists: true,
+        assetId: record.assetId,
+        commitment: record.commitment,
+        submitter: record.submitter,
+        timestamp: ts,
+        dateFormatted: ts > 0 ? new Date(ts * 1000).toLocaleString() : 'N/A',
+        etherscanUrl: `https://sepolia.etherscan.io/address/${PROVENANCE_ANCHOR_ADDRESS}`,
+        ipfsCid: record.ipfsCid || "",
+        contractAddress: PROVENANCE_ANCHOR_ADDRESS,
+      };
+    }
+  } catch {
+    // Check legacy deployment
   }
+
+  // 2. Query legacy smart contract (0x6D8C... deployed earlier)
+  try {
+    const legacyContract = new ethers.Contract(
+      LEGACY_PROVENANCE_ANCHOR_ADDRESS,
+      LEGACY_PROVENANCE_ANCHOR_ABI,
+      provider
+    );
+    const legacyRecord = await legacyContract.getRecord(formattedAssetId);
+    if (legacyRecord && Boolean(legacyRecord.exists)) {
+      const ts = Number(legacyRecord.timestamp);
+      let resolvedCid = "";
+      try {
+        const res = await fetch(`/api/v1/anchors/${formattedAssetId}`).then(r => r.ok ? r.json() : null);
+        if (res?.ipfs_cid) resolvedCid = res.ipfs_cid;
+      } catch {
+        // ignore
+      }
+      return {
+        exists: true,
+        assetId: legacyRecord.assetId,
+        commitment: legacyRecord.commitment,
+        submitter: legacyRecord.submitter,
+        timestamp: ts,
+        dateFormatted: ts > 0 ? new Date(ts * 1000).toLocaleString() : 'N/A',
+        etherscanUrl: `https://sepolia.etherscan.io/address/${LEGACY_PROVENANCE_ANCHOR_ADDRESS}`,
+        ipfsCid: resolvedCid,
+        contractAddress: LEGACY_PROVENANCE_ANCHOR_ADDRESS,
+      };
+    }
+  } catch {
+    // Check local ledger
+  }
+
+  // 3. Fallback to registered ledger record
+  try {
+    const res = await fetch(`/api/v1/anchors/${formattedAssetId}`).then(r => r.ok ? r.json() : null);
+    if (res && res.exists && res.is_onchain) {
+      return {
+        exists: true,
+        assetId: res.asset_id,
+        commitment: res.commitment,
+        submitter: res.submitter,
+        timestamp: res.timestamp,
+        dateFormatted: res.timestamp > 0 ? new Date(res.timestamp * 1000).toLocaleString() : 'N/A',
+        etherscanUrl: res.etherscan_url || `https://sepolia.etherscan.io/address/${PROVENANCE_ANCHOR_ADDRESS}`,
+        ipfsCid: res.ipfs_cid || "",
+        contractAddress: res.etherscan_url?.includes("0x6D8C") ? LEGACY_PROVENANCE_ANCHOR_ADDRESS : PROVENANCE_ANCHOR_ADDRESS,
+      };
+    }
+  } catch {
+    // ignore
+  }
+
+  return {
+    exists: false,
+    assetId: formattedAssetId,
+    commitment: '0x0000000000000000000000000000000000000000000000000000000000000000',
+    submitter: '0x0000000000000000000000000000000000000000',
+    timestamp: 0,
+    dateFormatted: 'Not Anchored On-Chain',
+    contractAddress: PROVENANCE_ANCHOR_ADDRESS,
+  };
 }
 
 // =============================================================================

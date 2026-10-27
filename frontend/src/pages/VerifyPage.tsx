@@ -305,7 +305,9 @@ export const VerifyPage: React.FC = () => {
     (auditResult && auditResult.valid === true)
   );
 
-  const effectiveBer = (decodeResult?.bit_error_rate !== null && decodeResult?.bit_error_rate !== undefined)
+  const effectiveBer = (decodeResult?.hamming_distance !== null && decodeResult?.hamming_distance !== undefined)
+    ? (decodeResult.hamming_distance / (decodeResult?.payload_bits || 100))
+    : (decodeResult?.bit_error_rate !== null && decodeResult?.bit_error_rate !== undefined)
     ? decodeResult.bit_error_rate
     : (decodeResult?.expected_ber !== null && decodeResult?.expected_ber !== undefined)
     ? decodeResult.expected_ber
@@ -773,12 +775,12 @@ export const VerifyPage: React.FC = () => {
                           <div>
                             <span className="text-slate-500 font-semibold">Contract: </span>
                             <a
-                              href={`https://sepolia.etherscan.io/address/${PROVENANCE_ANCHOR_ADDRESS}`}
+                              href={`https://sepolia.etherscan.io/address/${onChainRecord.contractAddress || PROVENANCE_ANCHOR_ADDRESS}`}
                               target="_blank"
                               rel="noreferrer"
                               className="text-blue-400 hover:text-blue-300 inline-flex items-center gap-1 font-mono"
                             >
-                              {PROVENANCE_ANCHOR_ADDRESS.slice(0, 8)}...{PROVENANCE_ANCHOR_ADDRESS.slice(-4)} <ExternalLink className="w-3 h-3" />
+                              {(onChainRecord.contractAddress || PROVENANCE_ANCHOR_ADDRESS).slice(0, 8)}...{(onChainRecord.contractAddress || PROVENANCE_ANCHOR_ADDRESS).slice(-4)} <ExternalLink className="w-3 h-3" />
                             </a>
                           </div>
                         </div>

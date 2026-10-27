@@ -247,7 +247,7 @@ async def decode_watermark(
             trusted_from_registry = True
 
     # Re-evaluate decode against discovered authentic payload if reference wasn't passed initially
-    if effective_ref_payload and dec_res.payload_hex and dec_res.hamming_distance is None:
+    if effective_ref_payload and dec_res.payload_hex:
         try:
             n_bits = c.info.payload_bits
             n_hex = (n_bits + 3) // 4
