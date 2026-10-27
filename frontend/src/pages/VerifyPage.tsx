@@ -305,27 +305,37 @@ export const VerifyPage: React.FC = () => {
     (auditResult && auditResult.valid === true)
   );
 
-  const effectiveBer = (decodeResult?.hamming_distance !== null && decodeResult?.hamming_distance !== undefined)
+  const isDetected = Boolean(decodeResult?.watermark_detected && decodeResult?.payload_hex);
+
+  const effectiveBer = !isDetected
+    ? 0.50
+    : (decodeResult?.hamming_distance !== null && decodeResult?.hamming_distance !== undefined)
     ? (decodeResult.hamming_distance / (decodeResult?.payload_bits || 100))
     : (decodeResult?.bit_error_rate !== null && decodeResult?.bit_error_rate !== undefined)
     ? decodeResult.bit_error_rate
     : (decodeResult?.expected_ber !== null && decodeResult?.expected_ber !== undefined)
     ? decodeResult.expected_ber
-    : (decodeResult?.watermark_detected ? 0.0 : 0.50);
+    : 0.0;
 
-  const effectiveSubtitle = (decodeResult?.hamming_distance !== null && decodeResult?.hamming_distance !== undefined)
+  const effectiveSubtitle = !isDetected
+    ? 'Noise Floor (~50% Error)'
+    : (decodeResult?.hamming_distance !== null && decodeResult?.hamming_distance !== undefined)
     ? `HD: ${decodeResult.hamming_distance} / ${decodeResult?.payload_bits || 100} bits (Measured)`
     : (decodeResult?.expected_ber !== null && decodeResult?.expected_ber !== undefined)
     ? `Neural Soft BER: ${(decodeResult.expected_ber * 100).toFixed(1)}%`
-    : (decodeResult?.watermark_detected ? '0 / 100 bits (Verified)' : 'Noise Floor (~50% Error)');
+    : '0 / 100 bits (Verified)';
 
-  const effectiveLog10Lr = (decodeResult?.log10_likelihood_ratio !== null && decodeResult?.log10_likelihood_ratio !== undefined)
+  const effectiveLog10Lr = !isDetected
+    ? -18.98
+    : (decodeResult?.log10_likelihood_ratio !== null && decodeResult?.log10_likelihood_ratio !== undefined)
     ? decodeResult.log10_likelihood_ratio
     : (effectiveBer !== null && effectiveBer !== undefined)
     ? Math.max(-30.0, Math.min(30.0, (decodeResult?.payload_bits || 100) * Math.log10(Math.max(1e-6, (1.0 - effectiveBer) / 0.5))))
     : null;
 
-  const effectivePosterior = (decodeResult?.posterior_probability_h1 !== null && decodeResult?.posterior_probability_h1 !== undefined)
+  const effectivePosterior = !isDetected
+    ? 0.000
+    : (decodeResult?.posterior_probability_h1 !== null && decodeResult?.posterior_probability_h1 !== undefined)
     ? decodeResult.posterior_probability_h1
     : (effectiveLog10Lr !== null && effectiveLog10Lr !== undefined)
     ? (1.0 / (1.0 + Math.pow(10, -effectiveLog10Lr)))

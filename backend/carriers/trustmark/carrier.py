@@ -260,8 +260,9 @@ class TrustMarkCarrier(BaseCarrier):
             else:
                 decodable = False
                 watermark_detected = False
-                ber = None
+                ber = 0.50
                 hamming = None
+                expected_ber = 0.50
 
         return DecodeResult(
             payload_hex=decoded_hex if (decodable and watermark_detected) else None,
